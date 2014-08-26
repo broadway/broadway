@@ -67,7 +67,8 @@ class MongoDBRepository implements RepositoryInterface
 
         $queryBuilder = $this->collection->createQueryBuilder()
             ->addAnd($wheres)
-            ->addAnd(array('removed' => false, 'sagaId' => $sagaId));
+            ->addAnd(array('removed' => false, 'sagaId' => $sagaId))
+        ;
 
         return $queryBuilder->getQuery();
     }

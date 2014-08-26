@@ -22,7 +22,7 @@ class MockUuidSequenceGenerator extends UuidGenerator
     private $uuids;
 
     /**
-     * @param string[] $uuid
+     * @param string[] $uuids
      */
     public function __construct(array $uuids)
     {
