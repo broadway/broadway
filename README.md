@@ -9,6 +9,11 @@ together to provide a full CQRS\ES experience.
 > Note: while broadway is currently used in production, you should probably
 > know what you're doing. ;)
 
+## About
+
+Read the blog post about this repository at:
+- http://labs.qandidate.com/blog/2014/08/26/broadway-our-cqrs-es-framework-open-sourced/
+
 ## Installation
 
 ```
