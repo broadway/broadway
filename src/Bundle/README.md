@@ -4,7 +4,7 @@ Symfony Bundle
 Symfony bundle to integrate Broadway into your symfony application.
 
 > Note: this bundle is far from complete. Please let us know (or send a pull
-> request) if you mis any configuration options etc!
+> request) if you miss any configuration options, etc!
 
 ## Usage
 
@@ -13,7 +13,7 @@ Register the bundle in your application kernel:
 ```
 $bundles = array(
     // ..
-    new Broadway\Bundle\BroadwayBundle\BroadwayBundle()
+    new Broadway\Bundle\BroadwayBundle\BroadwayBundle(),
 );
 
 ```
@@ -63,7 +63,7 @@ user, an ip address or some request token.
 
 ## Configuration
 
-There are some basic configurations options available at this point. The
+There are some basic configuration options available at this point. The
 options are mostly targeted on providing different setups based on production
 or testing usage.
 
