@@ -3,7 +3,7 @@
 require_once __DIR__ . '/Invites.php';
 
 /**
- * We drive the tests of our aggregate root throught the command handler.
+ * We drive the tests of our aggregate root through the command handler.
  *
  * A command handler scenario consists of three steps:
  *

@@ -42,7 +42,7 @@ $simpleCommandBus = new Broadway\CommandHandling\SimpleCommandBus();
 $commandBus       = new Broadway\CommandHandling\EventDispatchingCommandBus($simpleCommandBus, $eventDispatcher);
 $commandBus->subscribe($commandHandler);
 
-// Dependencies of auditer
+// Dependencies of auditing logger
 $logger            = new StdoutLogger();
 $commandSerializer = new Broadway\Auditing\CommandSerializer();
 
@@ -50,7 +50,7 @@ $commandSerializer = new Broadway\Auditing\CommandSerializer();
  * The actual example!
  */
 
-// setup the command loger
+// setup the command logger
 $commandAuditLogger = new Broadway\Auditing\CommandLogger($logger, $commandSerializer);
 
 // register the command logger with the event dispatcher of the command bus
