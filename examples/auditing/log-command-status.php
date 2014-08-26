@@ -42,7 +42,7 @@ $simpleCommandBus = new Broadway\CommandHandling\SimpleCommandBus();
 $commandBus       = new Broadway\CommandHandling\EventDispatchingCommandBus($simpleCommandBus, $eventDispatcher);
 $commandBus->subscribe($commandHandler);
 
-// Dependecies of auditer
+// Dependencies of auditer
 $logger            = new StdoutLogger();
 $commandSerializer = new Broadway\Auditing\CommandSerializer();
 
