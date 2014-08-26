@@ -1,0 +1,162 @@
+<?php
+
+/*
+ * This file is part of the broadway/broadway package.
+ *
+ * (c) Qandidate.com <opensource@qandidate.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Broadway\ReadModel;
+
+use Broadway\TestCase;
+
+abstract class RepositoryTestCase extends TestCase
+{
+    protected $repository;
+
+    public function setUp()
+    {
+        $this->repository = $this->createRepository();
+    }
+
+    abstract protected function createRepository();
+
+    /**
+     * @test
+     */
+    public function it_saves_and_finds_read_models_by_id()
+    {
+        $model = $this->createReadModel('1', 'othillo', 'bar');
+
+        $this->repository->save($model);
+
+        $this->assertEquals($model, $this->repository->find(1));
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_null_if_not_found_on_empty_repo()
+    {
+        $this->assertEquals(null, $this->repository->find(2));
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_null_if_not_found()
+    {
+        $model = $this->createReadModel('1', 'othillo', 'bar');
+
+        $this->repository->save($model);
+
+        $this->assertNull($this->repository->find(2));
+    }
+
+    /**
+     * @test
+     */
+    public function it_finds_by_name()
+    {
+        $model1 = $this->createReadModel('1', 'othillo', 'bar');
+        $model2 = $this->createReadModel('2', 'asm89', 'baz');
+
+        $this->repository->save($model1);
+        $this->repository->save($model2);
+
+        $this->assertEquals(array($model1), $this->repository->findBy(array('name' => 'othillo')));
+        $this->assertEquals(array($model2), $this->repository->findBy(array('name' => 'asm89')));
+    }
+
+    /**
+     * @test
+     */
+    public function it_finds_by_one_element_in_array()
+    {
+        $model1 = $this->createReadModel('1', 'othillo', 'bar', array('elem1', 'elem2'));
+        $model2 = $this->createReadModel('2', 'asm89', 'baz', array('elem3', 'elem4'));
+
+        $this->repository->save($model1);
+        $this->repository->save($model2);
+
+        $this->assertEquals(array($model1), $this->repository->findBy(array('array' => 'elem1')));
+        $this->assertEquals(array($model2), $this->repository->findBy(array('array' => 'elem4')));
+    }
+
+    /**
+     * @test
+     */
+    public function it_finds_if_all_clauses_match()
+    {
+        $model1 = $this->createReadModel('1', 'othillo', 'bar');
+        $model2 = $this->createReadModel('2', 'asm89', 'baz');
+
+        $this->repository->save($model1);
+        $this->repository->save($model2);
+
+        $this->assertEquals(array($model1), $this->repository->findBy(array('name' => 'othillo', 'foo'=>'bar')));
+        $this->assertEquals(array($model2), $this->repository->findBy(array('name' => 'asm89', 'foo'=>'baz')));
+    }
+
+    /**
+     * @test
+     */
+    public function it_does_not_find_when_one_of_the_clauses_doesnt_match()
+    {
+        $model1 = $this->createReadModel('1', 'othillo', 'bar');
+        $model2 = $this->createReadModel('2', 'asm89', 'baz');
+
+        $this->repository->save($model1);
+        $this->repository->save($model2);
+
+        $this->assertEquals(array(), $this->repository->findBy(array('name' => 'othillo', 'foo'=>'baz')));
+        $this->assertEquals(array(), $this->repository->findBy(array('name' => 'asm89', 'foo'=>'bar')));
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_empty_array_when_found_nothing()
+    {
+        $model1 = $this->createReadModel('1', 'othillo', 'bar');
+        $model2 = $this->createReadModel('2', 'asm89', 'baz');
+
+        $this->repository->save($model1);
+        $this->repository->save($model2);
+
+        $this->assertEquals(array(), $this->repository->findBy(array('name' => 'Jan')));
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_empty_array_when_searching_for_empty_array()
+    {
+        $model = $this->createReadModel('1', 'othillo', 'bar');
+
+        $this->repository->save($model);
+
+        $this->assertEquals(array(), $this->repository->findBy(array()));
+    }
+
+    /**
+     * @test
+     */
+    public function it_removes_a_readmodel()
+    {
+        $model = $this->createReadModel('1', 'John', 'Foo', array('foo' => 'bar'));
+        $this->repository->save($model);
+
+        $this->repository->remove('1');
+
+        $this->assertEquals(array(), $this->repository->findAll());
+    }
+
+    private function createReadModel($id, $name, $foo, array $array = array())
+    {
+        return new RepositoryTestReadModel($id, $name, $foo, $array);
+    }
+}

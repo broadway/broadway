@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="broadway.event_store.dbal" class="Broadway\EventStore\DBALEventStore">
+            <argument type="service" id="doctrine.dbal.default_connection" />
+            <argument type="service" id="broadway.serializer.payload" />
+            <argument type="service" id="broadway.serializer.metadata" />
+            <argument>events</argument>
+        </service>
+
+        <service id="broadway.event_store.in_memory" class="Broadway\EventStore\InMemoryEventStore" />
+
+        <service id="broadway.event_store" alias="broadway.event_store.dbal" />
+
+        <service id="broadway.serializer.payload" class="Broadway\Serializer\SimpleInterfaceSerializer" />
+
+        <service id="broadway.serializer.metadata" class="Broadway\Serializer\SimpleInterfaceSerializer" />
+    </services>
+</container>

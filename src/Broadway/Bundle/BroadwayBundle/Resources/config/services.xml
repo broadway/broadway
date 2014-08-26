@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="broadway.command_handling.simple_command_bus" class="Broadway\CommandHandling\SimpleCommandBus"/>
+
+        <service id="broadway.command_handling.event_dispatching_command_bus" class="Broadway\CommandHandling\EventDispatchingCommandBus" public="false">
+            <argument type="service" id="broadway.command_handling.simple_command_bus" />
+            <argument type="service" id="broadway.event_dispatcher" />
+        </service>
+
+        <service id="broadway.auditing.command_logger" class="Broadway\Auditing\CommandLogger">
+            <argument><!-- logger --></argument>
+            <argument type="service" id="broadway.auditing.serializer" />
+            <tag name="broadway.event_listener" event="broadway.command_handling.command_success" method="onCommandHandlingSuccess" />
+            <tag name="broadway.event_listener" event="broadway.command_handling.command_failure" method="onCommandHandlingFailure" />
+        </service>
+
+        <service id="broadway.auditing.serializer" class="Broadway\Auditing\CommandSerializer" />
+
+        <service id="broadway.event_handling.event_bus" class="Broadway\EventHandling\SimpleEventBus"  lazy="true"/>
+
+        <service id="broadway.uuid.generator" class="Broadway\Uuid\Rfc4122\Version4Generator" />
+
+        <service id="broadway.metadata_enriching_event_stream_decorator" class="Broadway\EventSourcing\MetadataEnrichment\MetadataEnrichingEventStreamDecorator" />
+
+        <service id="broadway.metadata_enricher.console" class="Broadway\Bundle\BroadwayBundle\Command\CommandMetadataEnricher">
+            <tag name="kernel.event_listener" event="console.command" method="handleConsoleCommandEvent" />
+            <tag name="broadway.metadata_enricher" />
+        </service>
+
+        <service id="broadway.event_dispatcher" class="Broadway\EventDispatcher\EventDispatcher" />
+
+    </services>
+</container>

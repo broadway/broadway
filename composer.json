@@ -1,0 +1,61 @@
+{
+    "name": "broadway/broadway",
+    "description": "Infrastructure and testing helpers for creating CQRS and event sourced applications.",
+    "keywords": ["cqrs", "event sourcing", "domain-driven design", "ddd"],
+    "license": "MIT",
+    "require": {
+        "beberlei/assert": "1.6.*",
+        "php": ">=5.3.3",
+        "rhumsaa/uuid": "2.4.0"
+    },
+    "authors": [
+      {
+        "name": "Alexander",
+        "email": "iam.asm89@gmail.com"
+      },
+      {
+        "name": "Emil",
+        "email": "emil@broekmeulen.com"
+      },
+      {
+        "name": "Fritsjan",
+        "email": "fritsjan@qandidate.com"
+      },
+      {
+        "name": "othillo",
+        "email": "othillo@othillo.nl"
+      },
+      {
+        "name": "Willem-Jan",
+        "email": "wjzijderveld@gmail.com"
+      },
+      {
+        "name": "Qandidate.com",
+        "homepage": "http://labs.qandidate.com/"
+      }
+    ],
+    "require-dev": {
+        "doctrine/dbal": "~2.4",
+        "doctrine/mongodb": "~1.0",
+        "elasticsearch/elasticsearch": "~1.0",
+        "instaclick/base-test-bundle": "~0.5",
+        "monolog/monolog": "~1.8",
+        "symfony/console": "~2.4",
+        "symfony/proxy-manager-bridge": "~2.4"
+    },
+    "suggest": {
+        "doctrine/dbal": "For the BroadwayBundle (to persist events)",
+        "doctrine/mongodb": "For persisting saga states (required for BroadwayBundle)",
+        "elasticsearch/elasticsearch": "For persisting read models (required for BroadwayBundle)",
+        "psr/log-implementation": "Implementation for PSR3, LoggerInterface",
+        "symfony/console": "For the BroadwayBundle",
+        "symfony/proxy-manager-bridge": "For the BroadwayBundle"
+    },
+    "autoload": {
+        "psr-0": {
+            "Broadway\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
