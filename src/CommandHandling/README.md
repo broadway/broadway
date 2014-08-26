@@ -6,7 +6,7 @@ Primitives to use commands in your application.
 ## Command bus
 
 An interface and two simple implementations of a command bus where commands can
-be dispatched on.
+be dispatched from.
 
 ## Command handler
 
