@@ -46,24 +46,28 @@ class Scenario
 
     /**
      * @param array $events
+     * @param string $id
      *
      * @return Scenario
      */
-    public function given(array $events = null)
+    public function given(array $events = null, $id = null)
     {
         if ($events === null) {
             return $this;
+        }
+
+        if ($id === null) {
+            $id = 1;
         }
 
         $messages = array();
         $playhead = -1;
         foreach ($events as $event) {
             $playhead++;
-            $messages[] = DomainMessage::recordNow(1, $playhead, new Metadata(array()), $event);
+            $messages[] = DomainMessage::recordNow($id, $playhead, new Metadata(array()), $event);
         }
 
-        // todo: the hardcoded ID is probably wrong....
-        $this->eventStore->append(1, new DomainEventStream($messages));
+        $this->eventStore->append($id, new DomainEventStream($messages));
 
         return $this;
     }
