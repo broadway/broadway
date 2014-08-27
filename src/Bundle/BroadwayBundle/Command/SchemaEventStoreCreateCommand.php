@@ -37,7 +37,8 @@ connections database:
 
 <info>php app/console broadway:schema:event_store:create</info>
 EOT
-            );
+            )
+        ;
     }
 
     /**

@@ -19,7 +19,7 @@ use Broadway\Domain\DomainMessageInterface;
 interface EventListenerInterface
 {
     /**
-     * @param mixed $event
+     * @param DomainMessageInterface $domainMessage
      */
     public function handle(DomainMessageInterface $domainMessage);
 }

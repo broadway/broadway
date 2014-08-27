@@ -52,15 +52,13 @@
         "symfony/proxy-manager-bridge": "For the BroadwayBundle"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "Broadway\\": "src/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1.x-dev"
+            "dev-master": "0.2.x-dev"
         }
     }
 }

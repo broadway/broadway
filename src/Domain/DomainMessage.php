@@ -110,7 +110,6 @@ class DomainMessage implements DomainMessageInterface
      * @param int      $playhead
      * @param Metadata $metadata
      * @param mixed    $payload
-     * @param string   $type
      *
      * @return DomainMessage
      */
