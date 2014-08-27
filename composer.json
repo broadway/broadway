@@ -57,6 +57,11 @@
             "Broadway\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-0": {
+            "Broadway\\": "test/"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
