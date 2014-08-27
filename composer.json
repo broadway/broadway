@@ -4,9 +4,9 @@
     "keywords": ["cqrs", "event sourcing", "domain-driven design", "ddd"],
     "license": "MIT",
     "require": {
-        "beberlei/assert": "1.6.*",
+        "beberlei/assert": "~1.6",
         "php": ">=5.3.3",
-        "rhumsaa/uuid": "2.4.0"
+        "rhumsaa/uuid": "~2.4"
     },
     "authors": [
       {
