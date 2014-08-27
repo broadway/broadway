@@ -63,10 +63,10 @@ class ElasticSearchRepositoryTest extends RepositoryTestCase
         $mapping = $this->client->indices()->getMapping(array('index' => $index));
 
         $this->assertArrayHasKey($index, $mapping);
-        $this->assertArrayHasKey($type, $mapping[$index]);
+        $this->assertArrayHasKey($type, $mapping[$index]['mappings']);
         $nonAnalyzedTerms = array();
 
-        foreach ($mapping[$index][$type]['properties'] as $key => $value) {
+        foreach ($mapping[$index]['mappings'][$type]['properties'] as $key => $value) {
             $nonAnalyzedTerms[] = $key;
         }
 
