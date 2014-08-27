@@ -35,6 +35,7 @@
       }
     ],
     "require-dev": {
+        "phpunit/phpunit": "~4.2",
         "doctrine/dbal": "~2.4",
         "doctrine/mongodb": "~1.0",
         "elasticsearch/elasticsearch": "~1.0",
