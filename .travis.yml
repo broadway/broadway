@@ -6,10 +6,6 @@ php:
 
 before_script:
     - echo "extension=mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-    - wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.13.deb
-    - sudo service elasticsearch stop
-    - sudo dpkg -i elasticsearch-0.90.13.deb
-    - sudo service elasticsearch start
     - composer install --dev
 
 script:
