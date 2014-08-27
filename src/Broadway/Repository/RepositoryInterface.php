@@ -25,6 +25,8 @@ interface RepositoryInterface
      *
      * @param mixed $id
      *
+     * @return AggregateRoot
+     *
      * @throws AggregateNotFoundException
      */
     public function load($id);
