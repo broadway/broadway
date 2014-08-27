@@ -13,12 +13,12 @@ namespace Broadway\ReadModel\ElasticSearch;
 
 use Broadway\ReadModel\ReadModel;
 use Broadway\ReadModel\Repository;
-use Broadway\Serializer\SerializerInterface;
+use Broadway\Serializer\SerializesObjects;
 use Elasticsearch\Client;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 
 /**
- * Repository implementation using Elasticsearch as storage.
+ * StoresAggregates implementation using Elasticsearch as storage.
  */
 class ElasticSearchRepository extends Repository
 {
@@ -35,7 +35,7 @@ class ElasticSearchRepository extends Repository
      */
     public function __construct(
         Client $client,
-        SerializerInterface $serializer,
+        SerializesObjects $serializer,
         $index,
         $class,
         array $notAnalyzedFields = array()

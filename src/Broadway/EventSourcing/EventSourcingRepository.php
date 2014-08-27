@@ -15,16 +15,16 @@ use Assert\Assertion as Assert;
 use Assert\InvalidArgumentException;
 use Broadway\Domain\AggregateRoot;
 use Broadway\Domain\DomainEventStream;
-use Broadway\EventHandling\EventBusInterface;
-use Broadway\EventStore\EventStoreInterface;
+use Broadway\EventHandling\PublishesEvents;
+use Broadway\EventStore\EventStore;
 use Broadway\EventStore\EventStreamNotFoundException;
 use Broadway\Repository\AggregateNotFoundException;
-use Broadway\Repository\RepositoryInterface;
+use Broadway\Repository\StoresAggregates;
 
 /**
  * Naive initial implementation of an event sourced aggregate repository.
  */
-class EventSourcingRepository implements RepositoryInterface
+class EventSourcingRepository implements StoresAggregates
 {
     private $eventStore;
     private $eventBus;
@@ -34,8 +34,8 @@ class EventSourcingRepository implements RepositoryInterface
      * @param string $aggregateClass
      */
     public function __construct(
-        EventStoreInterface $eventStore,
-        EventBusInterface $eventBus,
+        EventStore $eventStore,
+        PublishesEvents $eventBus,
         $aggregateClass,
         array $eventStreamDecorators = array()
     ) {

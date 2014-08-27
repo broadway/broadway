@@ -16,7 +16,7 @@ use Broadway\Domain\DomainEventStream;
 /**
  * Simple synchronous publishing of events.
  */
-class SimpleEventBus implements EventBusInterface
+class SimpleEventBus implements PublishesEvents
 {
     private $eventListeners = array();
     private $queue          = array();
@@ -25,7 +25,7 @@ class SimpleEventBus implements EventBusInterface
     /**
      * {@inheritDoc}
      */
-    public function subscribe(EventListenerInterface $eventListener)
+    public function subscribe(ListensForEvents $eventListener)
     {
         $this->eventListeners[] = $eventListener;
     }

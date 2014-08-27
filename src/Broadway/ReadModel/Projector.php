@@ -11,18 +11,18 @@
 
 namespace Broadway\ReadModel;
 
-use Broadway\Domain\DomainMessageInterface;
-use Broadway\EventHandling\EventListenerInterface;
+use Broadway\Domain\RepresentsDomainChange;
+use Broadway\EventHandling\ListensForEvents;
 
 /**
  * Handles events and projects to a read model.
  */
-abstract class Projector implements EventListenerInterface
+abstract class Projector implements ListensForEvents
 {
     /**
      * {@inheritDoc}
      */
-    public function handle(DomainMessageInterface $domainMessage)
+    public function handle(RepresentsDomainChange $domainMessage)
     {
         $event  = $domainMessage->getPayload();
         $method = $this->getHandleMethod($event);

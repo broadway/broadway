@@ -14,7 +14,7 @@ namespace Broadway\Domain;
 /**
  * Represents an important change in the domain.
  */
-class DomainMessage implements DomainMessageInterface
+class DomainMessage implements RepresentsDomainChange
 {
     /**
      * @var int
@@ -110,7 +110,6 @@ class DomainMessage implements DomainMessageInterface
      * @param int      $playhead
      * @param Metadata $metadata
      * @param mixed    $payload
-     * @param string   $type
      *
      * @return DomainMessage
      */

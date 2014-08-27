@@ -12,7 +12,7 @@
 namespace Broadway\ReadModel\ElasticSearch;
 
 use Broadway\ReadModel\RepositoryFactory;
-use Broadway\Serializer\SerializerInterface;
+use Broadway\Serializer\SerializesObjects;
 use ElasticSearch\Client;
 
 /**
@@ -23,7 +23,7 @@ class ElasticSearchRepositoryFactory extends RepositoryFactory
     private $client;
     private $serializer;
 
-    public function __construct(Client $client, SerializerInterface $serializer)
+    public function __construct(Client $client, SerializesObjects $serializer)
     {
         $this->client     = $client;
         $this->serializer = $serializer;

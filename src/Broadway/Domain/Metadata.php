@@ -11,12 +11,12 @@
 
 namespace Broadway\Domain;
 
-use Broadway\Serializer\SerializableInterface;
+use Broadway\Serializer\Serializable;
 
 /**
  * Metadata adding extra information to the DomainMessage.
  */
-class Metadata implements SerializableInterface
+class Metadata implements Serializable
 {
     private $values = array();
 

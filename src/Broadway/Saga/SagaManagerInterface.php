@@ -11,9 +11,9 @@
 
 namespace Broadway\Saga;
 
-use Broadway\EventHandling\EventListenerInterface;
+use Broadway\EventHandling\ListensForEvents;
 
-interface SagaManagerInterface extends EventListenerInterface
+interface SagaManagerInterface extends ListensForEvents
 {
     const EVENT_PRE_HANDLE  = 'broadway.saga.pre_handle';
     const EVENT_POST_HANDLE = 'broadway.saga.post_handle';

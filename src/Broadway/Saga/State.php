@@ -11,7 +11,7 @@
 
 namespace Broadway\Saga;
 
-use Broadway\Serializer\SerializableInterface;
+use Broadway\Serializer\Serializable;
 
 /**
  * Encapsulates the state of a saga.
@@ -22,7 +22,7 @@ use Broadway\Serializer\SerializableInterface;
  *
  * @todo should it be immutable?
  */
-class State implements SerializableInterface
+class State implements Serializable
 {
     private $done = false;
     private $id;

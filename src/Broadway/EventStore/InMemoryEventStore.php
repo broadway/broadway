@@ -12,14 +12,14 @@
 namespace Broadway\EventStore;
 
 use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\StreamsDomainEvents;
 
 /**
  * In-memory implementation of an event store.
  *
  * Useful for testing code that uses an event store.
  */
-class InMemoryEventStore implements EventStoreInterface
+class InMemoryEventStore implements EventStore
 {
     private $events = array();
 
@@ -38,7 +38,7 @@ class InMemoryEventStore implements EventStoreInterface
     /**
      * {@inheritDoc}
      */
-    public function append($id, DomainEventStreamInterface $eventStream)
+    public function append($id, StreamsDomainEvents $eventStream)
     {
         if (! isset($this->events[$id])) {
             $this->events[$id] = array();

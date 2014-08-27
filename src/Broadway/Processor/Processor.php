@@ -11,18 +11,18 @@
 
 namespace Broadway\Processor;
 
-use Broadway\Domain\DomainMessageInterface;
-use Broadway\EventHandling\EventListenerInterface;
+use Broadway\Domain\RepresentsDomainChange;
+use Broadway\EventHandling\ListensForEvents;
 
 /**
  * Base class for event stream processors.
  */
-abstract class Processor implements EventListenerInterface
+abstract class Processor implements ListensForEvents
 {
     /**
      * {@inheritDoc}
      */
-    public function handle(DomainMessageInterface $domainMessage)
+    public function handle(RepresentsDomainChange $domainMessage)
     {
         $event  = $domainMessage->getPayload();
         $method = $this->getHandleMethod($event);

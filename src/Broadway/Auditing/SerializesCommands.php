@@ -9,15 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Broadway\CommandHandling;
+namespace Broadway\Auditing;
 
 /**
- * Handles dispatched commands.
+ * Serializes commands to an array of scalars.
  */
-interface CommandHandlerInterface
+interface SerializesCommands
 {
     /**
-     * @param mixed $command
+     * Serializes the command
+     *
+     * @return array
      */
-    public function handle($command);
+    public function serialize($command);
 }

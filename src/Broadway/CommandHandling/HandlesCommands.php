@@ -9,12 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Broadway\ReadModel;
+namespace Broadway\CommandHandling;
 
 /**
- * Represent a repository that can transfer its data to another repository.
+ * Handles dispatched commands.
  */
-interface TransferableInterface
+interface HandlesCommands
 {
-    public function transferTo(Repository $otherRepository);
+    /**
+     * @param mixed $command
+     */
+    public function handle($command);
 }

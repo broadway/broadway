@@ -14,7 +14,7 @@ namespace Broadway\EventDispatcher;
 /**
  * Event dispatcher implementation.
  */
-class EventDispatcher extends AbstractEventDispatcher
+class EventDispatcher implements DispatchesEvents
 {
     private $listeners = array();
 

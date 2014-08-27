@@ -11,23 +11,23 @@
 
 namespace Broadway\EventStore;
 
-use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\StreamsDomainEvents;
 
 /**
  * Loads and stores events.
  */
-interface EventStoreInterface
+interface EventStore
 {
     /**
      * @param mixed $id
      *
-     * @return DomainEventStreamInterface
+     * @return StreamsDomainEvents
      */
     public function load($id);
 
     /**
      * @param mixed $id
-     * @param DomainEventStreamInterface $eventStream
+     * @param StreamsDomainEvents $eventStream
      */
-    public function append($id, DomainEventStreamInterface $eventStream);
+    public function append($id, StreamsDomainEvents $eventStream);
 }

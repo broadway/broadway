@@ -13,7 +13,7 @@ namespace Broadway\EventHandling;
 
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
-use Broadway\Domain\DomainMessageInterface;
+use Broadway\Domain\RepresentsDomainChange;
 use Broadway\Domain\Metadata;
 use Broadway\TestCase;
 
@@ -108,7 +108,7 @@ class SimpleEventBusTest extends TestCase
 
     private function createEventListenerMock()
     {
-        return $this->getMockBuilder('Broadway\EventHandling\EventListenerInterface')->getMock();
+        return $this->getMockBuilder('Broadway\EventHandling\ListensForEvents')->getMock();
     }
 
     private function createDomainMessage($payload)
@@ -127,7 +127,7 @@ class SimpleEventBusTestEvent
     }
 }
 
-class SimpleEventBusTestListener implements EventListenerInterface
+class SimpleEventBusTestListener implements ListensForEvents
 {
     private $eventBus;
     private $handled = false;
@@ -139,7 +139,7 @@ class SimpleEventBusTestListener implements EventListenerInterface
         $this->publishableStream = $publishableStream;
     }
 
-    public function handle(DomainMessageInterface $domainMessage)
+    public function handle(RepresentsDomainChange $domainMessage)
     {
         if (! $this->handled) {
             $this->eventBus->publish($this->publishableStream);

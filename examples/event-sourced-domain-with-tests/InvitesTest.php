@@ -14,7 +14,7 @@ require_once __DIR__ . '/Invites.php';
  */
 class InvitationCommandHandlerTest extends Broadway\CommandHandling\Testing\CommandHandlerScenarioTestCase
 {
-    protected function createCommandHandler(Broadway\EventStore\EventStoreInterface $eventStore, Broadway\EventHandling\EventBusInterface $eventBus)
+    protected function createCommandHandler(Broadway\EventStore\EventStore $eventStore, Broadway\EventHandling\PublishesEvents $eventBus)
     {
         $repository = new InvitationRepository($eventStore, $eventBus);
 

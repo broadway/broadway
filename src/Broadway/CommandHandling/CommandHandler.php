@@ -12,14 +12,14 @@
 namespace Broadway\CommandHandling;
 
 /**
- * Convienence base class for command handlers.
+ * Convenience base class for command handlers.
  *
  * Command handlers using this base class will implement `handle<CommandName>`
  * methods for each command they can handle.
  *
  * Note: the convention used does not take namespaces into account.
  */
-abstract class CommandHandler implements CommandHandlerInterface
+abstract class CommandHandler implements HandlesCommands
 {
     /**
      * {@inheritDoc}

@@ -11,7 +11,7 @@
 
 namespace Broadway\EventDispatcher;
 
-class TraceableEventDispatcher extends AbstractEventDispatcher
+class TraceableEventDispatcher implements DispatchesEvents
 {
     private $dispatchedEvents = array();
 

@@ -9,17 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Broadway\EventHandling;
-
-use Broadway\Domain\DomainMessageInterface;
+namespace Broadway\ReadModel;
 
 /**
- * Handles dispatched events.
+ * Represent a repository that can transfer its data to another repository.
  */
-interface EventListenerInterface
+interface TransfersToAnotherRepository
 {
-    /**
-     * @param mixed $event
-     */
-    public function handle(DomainMessageInterface $domainMessage);
+    public function transferTo(Repository $otherRepository);
 }

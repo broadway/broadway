@@ -14,7 +14,7 @@ namespace Broadway\Domain;
 /**
  * Represents an important change in the domain.
  */
-interface DomainMessageInterface
+interface RepresentsDomainChange
 {
     /**
      * @return string

@@ -14,9 +14,9 @@ namespace Broadway\Domain;
 use ArrayIterator;
 
 /**
- * Implementation of the DomainEventStreamInterface.
+ * Implementation of the StreamsDomainEvents.
  */
-class DomainEventStream implements DomainEventStreamInterface
+class DomainEventStream implements StreamsDomainEvents
 {
     private $events;
 
