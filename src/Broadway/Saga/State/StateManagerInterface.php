@@ -14,7 +14,7 @@ namespace Broadway\Saga\State;
 use Broadway\Saga\State;
 
 /**
- * Responsible for retreiving the State object for a given criteria.
+ * Responsible for retrieving the State object for a given criteria.
  *
  * The State object can be an existing one that was persisted, or a new
  * object if appropriate.

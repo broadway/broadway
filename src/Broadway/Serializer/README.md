@@ -1,7 +1,7 @@
 Serializer Component
 ====================
 
-Serializer component providing serializers to your application.
+Serializer component provides serializers to your application.
 
 The component provides a simple serializer interface and a serializer
 implementation based on "handwritten" serializers. In the future it would be
