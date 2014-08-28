@@ -23,6 +23,9 @@ use PHPUnit_Framework_TestCase as TestCase;
  */
 abstract class CommandHandlerScenarioTestCase extends TestCase
 {
+    /**
+     * @var Scenario
+     */
     protected $scenario;
 
     public function setUp()
