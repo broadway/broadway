@@ -10,8 +10,7 @@
  */
 
 if (file_exists($file = __DIR__.'/../vendor/autoload.php')) {
-    $loader = require_once $file;
-    $loader->add('Broadway', __DIR__);
+    require_once $file;
 } else {
     throw new RuntimeException('Install dependencies to run test suite.');
 }

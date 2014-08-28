@@ -58,6 +58,20 @@ Contributions for integrations with other projects are appreciated!
 
 [bundle]: src/Broadway/Bundle/BroadwayBundle/
 
+## Testing
+
+To runs the test suite, first ensure you have phpunit installed on your system:
+
+```
+$ composer global require "phpunit/phpunit=4.1.*"
+```
+
+Make sure you have `~/.composer/vendor/bin/` in your path, then run:
+
+```
+$ phpunit
+```
+
 ## Acknowledgements
 
 The broadway project is heavily inspired by other open source project such as
