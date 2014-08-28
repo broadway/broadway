@@ -20,6 +20,7 @@ use Broadway\EventStore\EventStoreInterface;
 use Broadway\EventStore\EventStreamNotFoundException;
 use Broadway\Repository\AggregateNotFoundException;
 use Broadway\Repository\RepositoryInterface;
+use ReflectionClass;
 
 /**
  * Naive initial implementation of an event sourced aggregate repository.
@@ -55,7 +56,16 @@ class EventSourcingRepository implements RepositoryInterface
         try {
             $domainEventStream = $this->eventStore->load($id);
 
-            $aggregate = new $this->aggregateClass();
+            $aggregate = null;
+
+            if (PHP_VERSION_ID >= 504000) {
+                $reflectionClass = new ReflectionClass($this->aggregateClass);
+                $aggregate = $reflectionClass->newInstanceWithoutConstructor();
+            } else {
+                $class = $this->aggregateClass;
+                $aggregate = unserialize('O:'.strlen($class).':"'.$class.'":0:{}');
+            }
+
             $aggregate->initializeState($domainEventStream);
 
             return $aggregate;
