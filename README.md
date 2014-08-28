@@ -3,7 +3,7 @@ Broadway
 
 Broadway is a project providing infrastructure and testing helpers for creating
 CQRS and event sourced applications. Broadway tries hard to not get in your
-way. The project contains several loosly coupled components that can be used
+way. The project contains several loosely coupled components that can be used
 together to provide a full CQRS\ES experience.
 
 > Note: while broadway is currently used in production, you should probably
@@ -34,8 +34,8 @@ test your event sourced model.
 
 ## Components
 
-Broadway consists of several components. Check out the README's of the
-components for more information.
+Broadway consists of several components. Check out the README's of each
+component for more information.
 
 - [Auditing](src/Broadway/Auditing/)
 - [CommandHandling](src/Broadway/CommandHandling/)

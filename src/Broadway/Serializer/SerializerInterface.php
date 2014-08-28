@@ -25,7 +25,7 @@ interface SerializerInterface
     public function serialize($object);
 
     /**
-     * @param array $object
+     * @param array $serializedObject
      *
      * @return mixed
      *

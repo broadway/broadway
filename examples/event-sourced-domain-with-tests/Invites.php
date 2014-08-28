@@ -80,7 +80,7 @@ class Invitation extends Broadway\EventSourcing\EventSourcedAggregateRoot
     protected function applyAcceptedEvent(AcceptedEvent $event)
     {
         /* if we encounter an AcceptedEvent we change the internal state of the
-         * aggregate root. This happers if the aggregate root gets reconstituted.
+         * aggregate root. This happens if the aggregate root gets reconstituted.
          */
         $this->accepted = true;
     }
@@ -117,7 +117,7 @@ class InvitationRepository extends Broadway\EventSourcing\EventSourcingRepositor
  */
 
 /* All commands and events below will cary the id of the aggregate root. For
- * our convienence and readability lator on we provide base classas that hold
+ * our convenience and readability later on we provide base classes that hold
  * this data.
  */
 abstract class InvitationCommand

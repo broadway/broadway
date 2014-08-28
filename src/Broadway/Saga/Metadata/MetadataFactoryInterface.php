@@ -18,7 +18,7 @@ interface MetadataFactoryInterface
      *
      * @param string $saga
      *
-     * @return MetadataInterface
+     * @return \Broadway\Saga\MetadataInterface
      */
     public function create($saga);
 }
