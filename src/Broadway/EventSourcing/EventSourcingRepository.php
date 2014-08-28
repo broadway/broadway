@@ -20,6 +20,7 @@ use Broadway\EventStore\EventStoreInterface;
 use Broadway\EventStore\EventStreamNotFoundException;
 use Broadway\Repository\AggregateNotFoundException;
 use Broadway\Repository\RepositoryInterface;
+use Doctrine\Instantiator\Instantiator;
 
 /**
  * Naive initial implementation of an event sourced aggregate repository.
@@ -29,6 +30,8 @@ class EventSourcingRepository implements RepositoryInterface
     private $eventStore;
     private $eventBus;
     private $aggregateClass;
+    private $eventStreamDecorators:
+    private $instantiator;
 
     /**
      * @param string $aggregateClass
@@ -45,6 +48,7 @@ class EventSourcingRepository implements RepositoryInterface
         $this->eventBus              = $eventBus;
         $this->aggregateClass        = $aggregateClass; // todo: aggregate factory
         $this->eventStreamDecorators = $eventStreamDecorators;
+        $this->instantiator          = new Instantiator();
     }
 
     /**
@@ -55,7 +59,7 @@ class EventSourcingRepository implements RepositoryInterface
         try {
             $domainEventStream = $this->eventStore->load($id);
 
-            $aggregate = new $this->aggregateClass();
+            $aggregate = $this->instantiator->instantiate($this->aggregateClass);
             $aggregate->initializeState($domainEventStream);
 
             return $aggregate;
