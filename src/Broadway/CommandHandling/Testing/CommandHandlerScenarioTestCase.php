@@ -11,9 +11,9 @@
 
 namespace Broadway\CommandHandling\Testing;
 
-use Broadway\EventHandling\EventBusInterface;
+use Broadway\EventHandling\PublishesEvents;
 use Broadway\EventHandling\SimpleEventBus;
-use Broadway\EventStore\EventStoreInterface;
+use Broadway\EventStore\EventStore;
 use Broadway\EventStore\InMemoryEventStore;
 use Broadway\EventStore\TraceableEventStore;
 use PHPUnit_Framework_TestCase as TestCase;
@@ -45,7 +45,7 @@ abstract class CommandHandlerScenarioTestCase extends TestCase
     /**
      * @return Broadway\CommandHandling\CommandHandler
      */
-    protected function createCommandHandler(EventStoreInterface $eventStore, EventBusInterface $eventBus)
+    protected function createCommandHandler(EventStore $eventStore, PublishesEvents $eventBus)
     {
     }
 }

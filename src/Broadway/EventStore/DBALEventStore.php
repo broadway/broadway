@@ -13,9 +13,9 @@ namespace Broadway\EventStore;
 
 use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\StreamsDomainEvents;
 use Broadway\Domain\DomainMessage;
-use Broadway\Serializer\SerializerInterface;
+use Broadway\Serializer\SerializesObjects;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Schema\Schema;
@@ -26,7 +26,7 @@ use Doctrine\DBAL\Schema\Schema;
  * The implementation uses doctrine DBAL for the communication with the
  * underlying data store.
  */
-class DBALEventStore implements EventStoreInterface
+class DBALEventStore implements EventStore
 {
     private $connection;
 
@@ -43,8 +43,8 @@ class DBALEventStore implements EventStoreInterface
      */
     public function __construct(
         Connection $connection,
-        SerializerInterface $payloadSerializer,
-        SerializerInterface $metadataSerializer,
+        SerializesObjects $payloadSerializer,
+        SerializesObjects $metadataSerializer,
         $tableName
     ) {
         $this->connection         = $connection;
@@ -77,7 +77,7 @@ class DBALEventStore implements EventStoreInterface
     /**
      * {@inheritDoc}
      */
-    public function append($id, DomainEventStreamInterface $eventStream)
+    public function append($id, StreamsDomainEvents $eventStream)
     {
         $this->connection->beginTransaction();
 

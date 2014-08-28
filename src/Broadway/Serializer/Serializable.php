@@ -14,7 +14,7 @@ namespace Broadway\Serializer;
 /**
  * Contract for objects serializable by the SimpleInterfaceSerializer.
  */
-interface SerializableInterface
+interface Serializable
 {
     /**
      * @return mixed The object instance

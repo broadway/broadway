@@ -25,9 +25,9 @@ class SimpleInterfaceSerializerTest extends TestCase
     /**
      * @test
      * @expectedException Broadway\Serializer\SerializationException
-     * @expectedExceptionMessage Object does not implement Broadway\Serializer\SerializableInterface
+     * @expectedExceptionMessage Object does not implement Broadway\Serializer\Serializable
      */
-    public function it_throws_an_exception_if_an_object_does_not_implement_SerializableInterface()
+    public function it_throws_an_exception_if_an_object_does_not_implement_Serializable()
     {
         $this->serializer->serialize(new \stdClass());
     }
@@ -57,7 +57,7 @@ class SimpleInterfaceSerializerTest extends TestCase
     /**
      * @test
      */
-    public function it_serializes_objects_implementing_SerializableInterface()
+    public function it_serializes_objects_implementing_Serializable()
     {
         $object = new TestSerializable('bar');
 
@@ -70,7 +70,7 @@ class SimpleInterfaceSerializerTest extends TestCase
     /**
      * @test
      */
-    public function it_deserializes_classes_implementing_SerializableInterface()
+    public function it_deserializes_classes_implementing_Serializable()
     {
         $data = array('class' => 'Broadway\Serializer\TestSerializable', 'payload' => array('foo' => 'bar'));
 
@@ -91,7 +91,7 @@ class SimpleInterfaceSerializerTest extends TestCase
     }
 }
 
-class TestSerializable implements SerializableInterface
+class TestSerializable implements Serializable
 {
     private $foo;
 

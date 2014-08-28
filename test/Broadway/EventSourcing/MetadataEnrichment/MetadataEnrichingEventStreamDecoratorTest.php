@@ -96,7 +96,7 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
     }
 }
 
-class TracableMetadataEnricher implements MetadataEnricherInterface
+class TracableMetadataEnricher implements EnrichesMetadata
 {
     private $calls;
 

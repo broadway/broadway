@@ -14,17 +14,17 @@ namespace Broadway\EventDispatcher;
 /**
  * Base type for an event dispatcher.
  */
-abstract class AbstractEventDispatcher
+interface DispatchesEvents
 {
     /**
      * @param string $eventName
      * @param array  $arguments
      */
-    abstract public function dispatch($eventName, array $arguments);
+    public function dispatch($eventName, array $arguments);
 
     /**
      * @param string   $eventName
      * @param callable $callable
      */
-    abstract public function addListener($eventName, /* callable */ $callable);
+    public function addListener($eventName, /* callable */ $callable);
 }

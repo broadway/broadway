@@ -25,7 +25,7 @@ abstract class ReadModelTestCase extends TestCase
      */
     public function it_should_be_serializable()
     {
-        $this->assertInstanceOf('Broadway\Serializer\SerializableInterface', $this->createReadModel());
+        $this->assertInstanceOf('Broadway\Serializer\Serializable', $this->createReadModel());
     }
 
     /**

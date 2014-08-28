@@ -24,7 +24,7 @@ class CommandLoggerTest extends TestCase
     {
         $this->logger = new TraceableLogger();
 
-        $this->commandSerializer = $this->getMockBuilder('Broadway\Auditing\CommandSerializerInterface')
+        $this->commandSerializer = $this->getMockBuilder('Broadway\Auditing\SerializesCommands')
             ->disableOriginalConstructor()
             ->getMock();
 

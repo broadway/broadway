@@ -15,13 +15,13 @@ use Broadway\Domain\DomainEventStream;
 /**
  * Event bus that is able to record all dispatched events.
  */
-class TraceableEventBus implements EventBusInterface
+class TraceableEventBus implements PublishesEvents
 {
     private $eventBus;
     private $recorded = array();
     private $tracing  = false;
 
-    public function __construct(EventBusInterface $eventBus)
+    public function __construct(PublishesEvents $eventBus)
     {
         $this->eventBus = $eventBus;
     }
@@ -29,7 +29,7 @@ class TraceableEventBus implements EventBusInterface
     /**
      * {@inheritDoc}
      */
-    public function subscribe(EventListenerInterface $eventListener)
+    public function subscribe(ListensForEvents $eventListener)
     {
         $this->eventBus->subscribe($eventListener);
     }

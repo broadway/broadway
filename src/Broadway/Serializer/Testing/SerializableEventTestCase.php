@@ -15,7 +15,7 @@ use Broadway\Serializer\SimpleInterfaceSerializer;
 use PHPUnit_Framework_TestCase as TestCase;
 
 /**
- * Helper to test if events implement the SerializableInterface contract.
+ * Helper to test if events implement the Serializable contract.
  */
 abstract class SerializableEventTestCase extends TestCase
 {

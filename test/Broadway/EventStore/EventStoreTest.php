@@ -15,7 +15,7 @@ use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
-use Broadway\Serializer\SerializableInterface;
+use Broadway\Serializer\Serializable;
 use Broadway\TestCase;
 
 abstract class EventStoreTest extends TestCase
@@ -104,7 +104,7 @@ abstract class EventStoreTest extends TestCase
     }
 }
 
-class Event implements SerializableInterface
+class Event implements Serializable
 {
     public static function deserialize(array $data)
     {

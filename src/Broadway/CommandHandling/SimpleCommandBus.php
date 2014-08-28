@@ -14,7 +14,7 @@ namespace Broadway\CommandHandling;
 /**
  * Simple synchronous dispatching of commands.
  */
-class SimpleCommandBus implements CommandBusInterface
+class SimpleCommandBus implements DispatchesCommands
 {
     private $commandHandlers = array();
     private $queue           = array();
@@ -23,7 +23,7 @@ class SimpleCommandBus implements CommandBusInterface
     /**
      * {@inheritDoc}
      */
-    public function subscribe(CommandHandlerInterface $handler)
+    public function subscribe(HandlesCommands $handler)
     {
         $this->commandHandlers[] = $handler;
     }

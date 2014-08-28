@@ -14,9 +14,9 @@ namespace Broadway\Repository;
 use Broadway\Domain\AggregateRoot;
 
 /**
- * Repository for aggregate roots.
+ * StoresAggregates for aggregate roots.
  */
-interface RepositoryInterface
+interface StoresAggregates
 {
     public function add(AggregateRoot $aggregate);
 

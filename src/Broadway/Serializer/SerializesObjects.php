@@ -15,7 +15,7 @@ namespace Broadway\Serializer;
  * Interface for classes that can serialize arbitrary objects into arrays with
  * scalars (for now).
  */
-interface SerializerInterface
+interface SerializesObjects
 {
     /**
      * @return array

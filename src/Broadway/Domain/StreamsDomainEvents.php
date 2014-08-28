@@ -16,6 +16,6 @@ use IteratorAggregate;
 /**
  * Represents a stream of DomainEventMessages in sequence.
  */
-interface DomainEventStreamInterface extends IteratorAggregate
+interface StreamsDomainEvents extends IteratorAggregate
 {
 }

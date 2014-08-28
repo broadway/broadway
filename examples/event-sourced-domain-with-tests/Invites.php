@@ -103,7 +103,7 @@ class Invitation extends Broadway\EventSourcing\EventSourcedAggregateRoot
  */
 class InvitationRepository extends Broadway\EventSourcing\EventSourcingRepository
 {
-    public function __construct(Broadway\EventStore\EventStoreInterface $eventStore, Broadway\EventHandling\EventBusInterface $eventBus)
+    public function __construct(Broadway\EventStore\EventStore $eventStore, Broadway\EventHandling\PublishesEvents $eventBus)
     {
         parent::__construct($eventStore, $eventBus, 'Invitation');
     }

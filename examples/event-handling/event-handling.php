@@ -3,9 +3,9 @@
 require_once __DIR__ . '/../bootstrap.php';
 
 // An event listener implement the handle method
-class MyEventListener implements Broadway\EventHandling\EventListenerInterface
+class MyEventListener implements Broadway\EventHandling\ListensForEvents
 {
-    public function handle(Broadway\Domain\DomainMessageInterface $domainMessage)
+    public function handle(Broadway\Domain\RepresentsDomainChange $domainMessage)
     {
         echo "Got a domain message, yay!\n";
     }

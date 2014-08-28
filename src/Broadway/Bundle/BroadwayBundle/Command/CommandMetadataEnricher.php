@@ -12,13 +12,13 @@
 namespace Broadway\Bundle\BroadwayBundle\Command;
 
 use Broadway\Domain\Metadata;
-use Broadway\EventSourcing\MetadataEnrichment\MetadataEnricherInterface;
+use Broadway\EventSourcing\MetadataEnrichment\EnrichesMetadata;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
 
 /**
  * Enricher that adds information about the excecuted console command.
  */
-class CommandMetadataEnricher implements MetadataEnricherInterface
+class CommandMetadataEnricher implements EnrichesMetadata
 {
     private $event;
 

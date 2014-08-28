@@ -16,12 +16,12 @@ use Broadway\Domain\DomainEventStream;
 /**
  * Publishes events to the subscribed event listeners.
  */
-interface EventBusInterface
+interface PublishesEvents
 {
     /**
      * Subscribes the event listener to the event bus.
      */
-    public function subscribe(EventListenerInterface $eventListener);
+    public function subscribe(ListensForEvents $eventListener);
 
     /**
      * Publishes the events from the domain event stream to the listeners.

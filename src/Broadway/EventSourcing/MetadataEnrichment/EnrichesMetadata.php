@@ -16,7 +16,7 @@ use Broadway\Domain\Metadata;
 /**
  * Adds extra metadata to already existing metadata.
  */
-interface MetadataEnricherInterface
+interface EnrichesMetadata
 {
     /**
      * @return Metadata

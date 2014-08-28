@@ -11,7 +11,7 @@
 
 namespace Broadway\CommandHandling;
 
-use Broadway\EventDispatcher\AbstractEventDispatcher;
+use Broadway\EventDispatcher\DispatchesEvents;
 use Exception;
 
 /**
@@ -20,7 +20,7 @@ use Exception;
  * Dispatches events signalling whether a command was executed successfully or
  * if it failed.
  */
-class EventDispatchingCommandBus implements CommandBusInterface
+class EventDispatchingCommandBus implements DispatchesCommands
 {
     const EVENT_COMMAND_SUCCESS = 'broadway.command_handling.command_success';
     const EVENT_COMMAND_FAILURE = 'broadway.command_handling.command_failure';
@@ -28,7 +28,7 @@ class EventDispatchingCommandBus implements CommandBusInterface
     private $commandBus;
     private $dispatcher;
 
-    public function __construct(CommandBusInterface $commandBus, AbstractEventDispatcher $dispatcher)
+    public function __construct(DispatchesCommands $commandBus, DispatchesEvents $dispatcher)
     {
         $this->commandBus = $commandBus;
         $this->dispatcher = $dispatcher;
@@ -52,7 +52,7 @@ class EventDispatchingCommandBus implements CommandBusInterface
     /**
      * {@inheritDoc}
      */
-    public function subscribe(CommandHandlerInterface $handler)
+    public function subscribe(HandlesCommands $handler)
     {
         $this->commandBus->subscribe($handler);
     }

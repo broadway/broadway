@@ -20,7 +20,7 @@ class ElasticSearchRepositoryFactoryTest extends TestCase
      */
     public function it_creates_an_elastic_search_repository()
     {
-        $serializer = $this->getMock('Broadway\Serializer\SerializerInterface');
+        $serializer = $this->getMock('Broadway\Serializer\SerializesObjects');
         $client     = $this->getMockBuilder('\Elasticsearch\Client')
             ->disableOriginalConstructor()
             ->getMock();
@@ -36,7 +36,7 @@ class ElasticSearchRepositoryFactoryTest extends TestCase
      */
     public function it_creates_an_elastic_search_repository_containing_index_metadata()
     {
-        $serializer = $this->getMock('Broadway\Serializer\SerializerInterface');
+        $serializer = $this->getMock('Broadway\Serializer\SerializesObjects');
         $client     = $this->getMockBuilder('\Elasticsearch\Client')
             ->disableOriginalConstructor()
             ->getMock();

@@ -20,11 +20,12 @@ use Broadway\Domain\DomainEventStream;
  * written. An example would be adding metadata before writing the events to
  * storage.
  */
-interface EventStreamDecoratorInterface
+interface DecoratesEventStreamBeforePersisting
 {
     /**
-     * @param string $aggregateType
-     * @param string $aggregateIdentifier
+     * @param $aggregateType
+     * @param $aggregateIdentifier
+     * @param DomainEventStream $eventStream
      */
     public function decorateForWrite($aggregateType, $aggregateIdentifier, DomainEventStream $eventStream);
 }

@@ -12,7 +12,7 @@
 namespace Broadway\ReadModel\ElasticSearch;
 
 use Broadway\ReadModel\RepositoryTestCase;
-use Broadway\Serializer\SerializerInterface;
+use Broadway\Serializer\SerializesObjects;
 use Broadway\Serializer\SimpleInterfaceSerializer;
 use Elasticsearch\Client;
 
@@ -37,7 +37,7 @@ class ElasticSearchRepositoryTest extends RepositoryTestCase
         );
     }
 
-    protected function createElasticSearchRepository(Client $client, SerializerInterface $serializer, $index, $class)
+    protected function createElasticSearchRepository(Client $client, SerializesObjects $serializer, $index, $class)
     {
         return new ElasticSearchRepository($client, $serializer, $index, $class);
     }

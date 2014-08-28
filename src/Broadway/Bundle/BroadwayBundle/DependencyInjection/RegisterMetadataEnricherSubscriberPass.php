@@ -39,10 +39,8 @@ class RegisterMetadataEnricherSubscriberPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (
-            ! $container->hasDefinition($this->enrichingStreamDecoratorServiceId)
-            &&
-            ! $container->hasAlias($this->enrichingStreamDecoratorServiceId)
+        if (! $container->hasDefinition($this->enrichingStreamDecoratorServiceId)
+            && ! $container->hasAlias($this->enrichingStreamDecoratorServiceId)
         ) {
             throw new RuntimeException(
                 sprintf('Unknown Stream Decorator service known as %s', $this->enrichingStreamDecoratorServiceId)

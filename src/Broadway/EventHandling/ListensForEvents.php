@@ -9,17 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Broadway\Auditing;
+namespace Broadway\EventHandling;
+
+use Broadway\Domain\RepresentsDomainChange;
 
 /**
- * Serializes commands to an array of scalars.
+ * Handles dispatched events.
  */
-interface CommandSerializerInterface
+interface ListensForEvents
 {
     /**
-     * Serializes the command
-     *
-     * @return array
+     * @param RepresentsDomainChange $domainMessage
      */
-    public function serialize($command);
+    public function handle(RepresentsDomainChange $domainMessage);
 }
