@@ -6,7 +6,8 @@
     "require": {
         "beberlei/assert": "~1.6",
         "php": ">=5.3.3",
-        "rhumsaa/uuid": "~2.4"
+        "rhumsaa/uuid": "~2.4",
+        "doctrine/instantiator": "~1.0,>=1.0.2"
     },
     "authors": [
       {
