@@ -33,6 +33,7 @@ class Scenario
     private $eventStore;
     private $commandHandler;
     private $testCase;
+    private $aggregateId;
 
     public function __construct(
         PHPUnit_Framework_TestCase $testCase,
@@ -42,6 +43,17 @@ class Scenario
         $this->testCase       = $testCase;
         $this->eventStore     = $eventStore;
         $this->commandHandler = $commandHandler;
+        $this->aggregateId    = 1;
+    }
+
+    /**
+     * @param string $aggregateId
+     */
+    public function withAggregateId($aggregateId)
+    {
+        $this->aggregateId = $aggregateId;
+
+        return $this;
     }
 
     /**
@@ -50,24 +62,20 @@ class Scenario
      *
      * @return Scenario
      */
-    public function given(array $events = null, $id = null)
+    public function given(array $events = null)
     {
         if ($events === null) {
             return $this;
-        }
-
-        if ($id === null) {
-            $id = 1;
         }
 
         $messages = array();
         $playhead = -1;
         foreach ($events as $event) {
             $playhead++;
-            $messages[] = DomainMessage::recordNow($id, $playhead, new Metadata(array()), $event);
+            $messages[] = DomainMessage::recordNow($this->aggregateId, $playhead, new Metadata(array()), $event);
         }
 
-        $this->eventStore->append($id, new DomainEventStream($messages));
+        $this->eventStore->append($this->aggregateId, new DomainEventStream($messages));
 
         return $this;
     }
