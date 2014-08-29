@@ -56,9 +56,8 @@ class EventSourcingRepository implements RepositoryInterface
             $domainEventStream = $this->eventStore->load($id);
 
             $aggregate = new $this->aggregateClass();
-            $aggregate->initializeState($domainEventStream);
 
-            return $aggregate;
+            return $aggregate::reconstituteFromDomainEventStream($domainEventStream);
         } catch (EventStreamNotFoundException $e) {
             throw AggregateNotFoundException::create($id, $e);
         }

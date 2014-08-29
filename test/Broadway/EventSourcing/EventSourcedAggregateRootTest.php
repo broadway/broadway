@@ -11,6 +11,7 @@
 
 namespace Broadway\EventSourcing;
 
+use Broadway\Domain\AggregateRoot;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
@@ -41,8 +42,9 @@ class EventSourcedAggregateRootTest extends TestCase
      */
     public function initialize_state_should_set_internal_playhead()
     {
-        $aggregateRoot = new MyTestAggregateRoot();
-        $aggregateRoot->initializeState($this->toDomainEventStream(array(new AggregateEvent())));
+        $aggregateRoot = MyTestAggregateRoot::reconstituteFromDomainEventStream(
+            $this->toDomainEventStream(array(new AggregateEvent()))
+        );
 
         $aggregateRoot->apply(new AggregateEvent());
 
@@ -57,13 +59,35 @@ class EventSourcedAggregateRootTest extends TestCase
      */
     public function apply_should_call_the_apply_for_specific_event()
     {
-        $aggregateRoot = new MyTestAggregateRoot();
-
-        $this->assertFalse($aggregateRoot->isCalled);
-
-        $aggregateRoot->initializeState($this->toDomainEventStream(array(new AggregateEvent())));
+        $aggregateRoot = MyTestAggregateRoot::reconstituteFromDomainEventStream(
+            $this->toDomainEventStream(array(new AggregateEvent()))
+        );
 
         $this->assertTrue($aggregateRoot->isCalled);
+    }
+
+    /**
+     * @test
+     */
+    public function protected_constructors_should_be_called()
+    {
+        $aggregateRoot = MyTestAggregateRootWithProtectedConstructor::reconstituteFromDomainEventStream(
+            $this->toDomainEventStream(array())
+        );
+
+        $this->assertTrue($aggregateRoot->constructorWasCalled);
+    }
+
+    /**
+     * @test
+     */
+    public function custom_factories_should_be_used()
+    {
+        $aggregateRoot = MyTestAggregateRootWithCustomInstantiation::reconstituteFromDomainEventStream(
+            $this->toDomainEventStream(array())
+        );
+
+        $this->assertTrue($aggregateRoot->constructorWasCalledWithArgs);
     }
 
     private function toDomainEventStream(array $events)
@@ -91,6 +115,41 @@ class MyTestAggregateRoot extends EventSourcedAggregateRoot
     public function applyAggregateEvent($event)
     {
         $this->isCalled = true;
+    }
+}
+
+class MyTestAggregateRootWithProtectedConstructor extends EventSourcedAggregateRoot
+{
+    public $constructorWasCalled = false;
+
+    protected function __construct()
+    {
+        $this->constructorWasCalled = true;
+    }
+
+    public function getId()
+    {
+        return 'y0l0';
+    }
+}
+
+class MyTestAggregateRootWithCustomInstantiation extends EventSourcedAggregateRoot
+{
+    public $constructorWasCalledWithArgs = false;
+
+    private function __construct($constructorWasCalledWithArgs)
+    {
+        $this->constructorWasCalledWithArgs = $constructorWasCalledWithArgs;
+    }
+
+    public function getId()
+    {
+        return 'y0l0';
+    }
+
+    protected static function instantiateForReconstitution()
+    {
+        return new static(true);
     }
 }
 

@@ -59,9 +59,26 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     }
 
     /**
+     * Reconstitute the aggregate from an event stream.
+     */
+    public static function reconstituteFromDomainEventStream(DomainEventStream $stream)
+    {
+        $instance = static::instantiateForReconstitution();
+
+        $instance->initializeState($stream);
+
+        return $instance;
+    }
+
+    protected static function instantiateForReconstitution()
+    {
+        return new static;
+    }
+
+    /**
      * Initializes the aggregate using the given "history" of events.
      */
-    public function initializeState(DomainEventStream $stream)
+    protected function initializeState(DomainEventStream $stream)
     {
         foreach ($stream as $message) {
             $this->playhead++;
