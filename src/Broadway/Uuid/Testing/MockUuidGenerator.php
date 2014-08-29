@@ -11,12 +11,12 @@
 
 namespace Broadway\Uuid\Testing;
 
-use Broadway\Uuid\UuidGenerator;
+use Broadway\Uuid\UuidGeneratorInterface;
 
 /**
  * Mock uuid generator that always generates the same id.
  */
-class MockUuidGenerator extends UuidGenerator
+class MockUuidGenerator implements UuidGeneratorInterface
 {
     private $uuid;
 

@@ -12,14 +12,14 @@
 namespace Broadway\Saga\State;
 
 use Broadway\Saga\State;
-use Broadway\Uuid\UuidGenerator;
+use Broadway\Uuid\UuidGeneratorInterface;
 
 class StateManager implements StateManagerInterface
 {
     private $repository;
     private $generator;
 
-    public function __construct(RepositoryInterface $repository, UuidGenerator $generator)
+    public function __construct(RepositoryInterface $repository, UuidGeneratorInterface $generator)
     {
         $this->repository = $repository;
         $this->generator  = $generator;

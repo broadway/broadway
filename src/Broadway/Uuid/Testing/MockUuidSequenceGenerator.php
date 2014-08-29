@@ -12,12 +12,12 @@
 namespace Broadway\Uuid\Testing;
 
 use RuntimeException;
-use Broadway\Uuid\UuidGenerator;
+use Broadway\Uuid\UuidGeneratorInterface;
 
 /**
  * Mock uuid generator that always generates a given sequence of uuids.
  */
-class MockUuidSequenceGenerator extends UuidGenerator
+class MockUuidSequenceGenerator implements UuidGeneratorInterface
 {
     private $uuids;
 

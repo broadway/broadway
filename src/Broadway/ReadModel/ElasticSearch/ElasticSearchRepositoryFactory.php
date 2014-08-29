@@ -11,14 +11,14 @@
 
 namespace Broadway\ReadModel\ElasticSearch;
 
-use Broadway\ReadModel\RepositoryFactory;
+use Broadway\ReadModel\RepositoryFactoryInterface;
 use Broadway\Serializer\SerializerInterface;
 use ElasticSearch\Client;
 
 /**
  * Creates Elasticsearch repositories.
  */
-class ElasticSearchRepositoryFactory extends RepositoryFactory
+class ElasticSearchRepositoryFactory implements RepositoryFactoryInterface
 {
     private $client;
     private $serializer;

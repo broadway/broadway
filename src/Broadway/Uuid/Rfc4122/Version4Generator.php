@@ -11,13 +11,13 @@
 
 namespace Broadway\Uuid\Rfc4122;
 
-use Broadway\Uuid\UuidGenerator;
+use Broadway\Uuid\UuidGeneratorInterface;
 use Rhumsaa\Uuid\Uuid;
 
 /**
  * Generates a version4 uuid as defined in RFC 4122.
  */
-class Version4Generator extends UuidGenerator
+class Version4Generator implements UuidGeneratorInterface
 {
     /**
      * @return string

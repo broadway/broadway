@@ -23,7 +23,7 @@ class EventDispatchingCommandBusTest extends TestCase
 
     public function setUp()
     {
-        $this->eventDispatcher = $this->getMockBuilder('Broadway\EventDispatcher\AbstractEventDispatcher')
+        $this->eventDispatcher = $this->getMockBuilder('Broadway\EventDispatcher\EventDispatcherInterface')
             ->disableOriginalConstructor()
             ->getMock();
 

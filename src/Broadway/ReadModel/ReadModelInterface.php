@@ -14,10 +14,10 @@ namespace Broadway\ReadModel;
 /**
  * Represents a read model.
  */
-abstract class ReadModel
+interface ReadModelInterface
 {
     /**
      * @return string
      */
-    abstract public function getId();
+    public function getId();
 }
