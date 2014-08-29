@@ -51,11 +51,15 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
      */
     public function getUncommittedEvents()
     {
-        $stream = new DomainEventStream($this->uncommittedEvents);
+        return new DomainEventStream($this->uncommittedEvents);
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function clearUncommittedEvents()
+    {
         $this->uncommittedEvents = array();
-
-        return $stream;
     }
 
     /**

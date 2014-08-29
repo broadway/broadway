@@ -70,7 +70,8 @@ class EventSourcingRepository implements RepositoryInterface
         Assert::isInstanceOf($aggregate, $this->aggregateClass);
 
         $domainEventStream = $aggregate->getUncommittedEvents();
-        $eventStream       = $this->decorateForWrite($aggregate, $domainEventStream);
+        $aggregate->clearUncommittedEvents();
+        $eventStream = $this->decorateForWrite($aggregate, $domainEventStream);
         $this->eventStore->append($aggregate->getId(), $eventStream);
         $this->eventBus->publish($domainEventStream);
     }
