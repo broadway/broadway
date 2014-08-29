@@ -81,13 +81,13 @@ class EventSourcedAggregateRootTest extends TestCase
     /**
      * @test
      */
-    public function custom_factories_should_be_used()
+    public function private_constructors_should_be_called()
     {
-        $aggregateRoot = MyTestAggregateRootWithCustomInstantiation::reconstituteFromDomainEventStream(
+        $aggregateRoot = MyTestAggregateRootWithPrivateConstructor::reconstituteFromDomainEventStream(
             $this->toDomainEventStream(array())
         );
 
-        $this->assertTrue($aggregateRoot->constructorWasCalledWithArgs);
+        $this->assertTrue($aggregateRoot->constructorWasCalled);
     }
 
     private function toDomainEventStream(array $events)
@@ -133,13 +133,13 @@ class MyTestAggregateRootWithProtectedConstructor extends EventSourcedAggregateR
     }
 }
 
-class MyTestAggregateRootWithCustomInstantiation extends EventSourcedAggregateRoot
+class MyTestAggregateRootWithPrivateConstructor extends EventSourcedAggregateRoot
 {
-    public $constructorWasCalledWithArgs = false;
+    public $constructorWasCalled = false;
 
-    private function __construct($constructorWasCalledWithArgs)
+    private function __construct()
     {
-        $this->constructorWasCalledWithArgs = $constructorWasCalledWithArgs;
+        $this->constructorWasCalled = true;
     }
 
     public function getId()
@@ -149,7 +149,7 @@ class MyTestAggregateRootWithCustomInstantiation extends EventSourcedAggregateRo
 
     protected static function instantiateForReconstitution()
     {
-        return new static(true);
+        return new static();
     }
 }
 
