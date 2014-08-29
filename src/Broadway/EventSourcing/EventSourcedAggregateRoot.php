@@ -73,7 +73,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     }
 
     /**
-     * Used to insntatiate an aggregate for the purpose of reconstitution.
+     * Used to instantiate an aggregate for the purpose of reconstitution.
      *
      * The default implementation will allow for calling an empty constructor.
      * This will currently work on any EventSourcedAggregateRoot class that has
