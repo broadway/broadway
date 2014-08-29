@@ -58,7 +58,6 @@ class Scenario
 
     /**
      * @param array $events
-     * @param string $id
      *
      * @return Scenario
      */
