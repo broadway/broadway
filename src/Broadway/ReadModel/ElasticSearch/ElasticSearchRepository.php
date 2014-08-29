@@ -11,8 +11,8 @@
 
 namespace Broadway\ReadModel\ElasticSearch;
 
-use Broadway\ReadModel\ReadModel;
-use Broadway\ReadModel\Repository;
+use Broadway\ReadModel\ReadModelInterface;
+use Broadway\ReadModel\RepositoryInterface;
 use Broadway\Serializer\SerializerInterface;
 use Elasticsearch\Client;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
@@ -20,7 +20,7 @@ use Elasticsearch\Common\Exceptions\Missing404Exception;
 /**
  * Repository implementation using Elasticsearch as storage.
  */
-class ElasticSearchRepository extends Repository
+class ElasticSearchRepository implements RepositoryInterface
 {
     private $client;
     private $serializer;
@@ -50,7 +50,7 @@ class ElasticSearchRepository extends Repository
     /**
      * {@inhericDoc}
      */
-    public function save(ReadModel $data)
+    public function save(ReadModelInterface $data)
     {
         $serializedReadModel = $this->serializer->serialize($data);
 

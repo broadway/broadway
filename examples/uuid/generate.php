@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../bootstrap.php';
 
-function generateAndOutput5(Broadway\Uuid\UuidGenerator $generator) {
+function generateAndOutput5(Broadway\Uuid\UuidGeneratorInterface $generator) {
     for ($i = 0; $i < 8; $i++) {
         echo sprintf("[%d] %s\n", $i, $generator->generate());
     }

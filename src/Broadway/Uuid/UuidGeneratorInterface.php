@@ -9,18 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Broadway\ReadModel;
+namespace Broadway\Uuid;
 
 /**
- * Creates repositories.
+ * Generates uuids.
  */
-abstract class RepositoryFactory
+interface UuidGeneratorInterface
 {
     /**
-     * @param string $name
-     * @param string $class
-     *
-     * @return Repository
+     * @return string
      */
-    abstract public function create($name, $class);
+    public function generate();
 }

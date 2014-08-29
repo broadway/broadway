@@ -13,7 +13,7 @@ namespace Broadway\ReadModel;
 
 use Broadway\Serializer\SerializableInterface;
 
-class RepositoryTestReadModel extends ReadModel implements SerializableInterface
+class RepositoryTestReadModel implements ReadModelInterface, SerializableInterface
 {
     private $id;
     private $name;

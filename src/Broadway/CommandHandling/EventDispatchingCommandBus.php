@@ -11,7 +11,7 @@
 
 namespace Broadway\CommandHandling;
 
-use Broadway\EventDispatcher\AbstractEventDispatcher;
+use Broadway\EventDispatcher\EventDispatcherInterface;
 use Exception;
 
 /**
@@ -28,7 +28,7 @@ class EventDispatchingCommandBus implements CommandBusInterface
     private $commandBus;
     private $dispatcher;
 
-    public function __construct(CommandBusInterface $commandBus, AbstractEventDispatcher $dispatcher)
+    public function __construct(CommandBusInterface $commandBus, EventDispatcherInterface $dispatcher)
     {
         $this->commandBus = $commandBus;
         $this->dispatcher = $dispatcher;

@@ -13,7 +13,7 @@ namespace Broadway\Saga\Testing;
 
 use Broadway\CommandHandling\Testing\TraceableCommandBus;
 use Broadway\EventDispatcher\EventDispatcher;
-use Broadway\Uuid\UuidGenerator;
+use Broadway\Uuid\UuidGeneratorInterface;
 use Broadway\Saga\Metadata\StaticallyConfiguredSagaMetadataFactory;
 use Broadway\Saga\MultipleSagaManager;
 use Broadway\Saga\State\InMemoryRepository;
@@ -22,7 +22,7 @@ use PHPUnit_Framework_TestCase as TestCase;
 
 class SagaScenarioTestCase extends TestCase
 {
-    protected function createScenario($sagaClass, UuidGenerator $uuidGenerator)
+    protected function createScenario($sagaClass, UuidGeneratorInterface $uuidGenerator)
     {
         $traceableCommandBus = new TraceableCommandBus();
         $saga                = new $sagaClass($traceableCommandBus, $uuidGenerator);

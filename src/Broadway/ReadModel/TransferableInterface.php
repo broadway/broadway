@@ -16,5 +16,5 @@ namespace Broadway\ReadModel;
  */
 interface TransferableInterface
 {
-    public function transferTo(Repository $otherRepository);
+    public function transferTo(RepositoryInterface $otherRepository);
 }
