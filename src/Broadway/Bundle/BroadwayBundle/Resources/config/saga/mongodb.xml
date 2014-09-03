@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="broadway.saga.state.mongodb_repository" class="Broadway\Saga\State\MongoDBRepository">
+            <argument type="service" id="broadway.saga.state.mongodb_collection" />
+        </service>
+
+        <service id="broadway.saga.state.mongodb_database"
+                 class           = "Doctrine\MongoDB\Database"
+                 factory-service = "broadway.saga.state.mongodb_connection"
+                 factory-method  = "selectDatabase"
+                >
+            <argument>broadway_%kernel.environment%%storage_suffix%</argument>
+        </service>
+
+        <service id="broadway.saga.state.mongodb_connection" class="Doctrine\MongoDB\Connection" />
+
+        <service id="broadway.saga.state.mongodb_collection"
+                 class           = "Doctrine\MongoDB\Collection"
+                 factory-service = "broadway.saga.state.mongodb_database"
+                 factory-method  = "createCollection"
+                >
+            <argument>saga-state</argument>
+        </service>
+
+    </services>
+</container>

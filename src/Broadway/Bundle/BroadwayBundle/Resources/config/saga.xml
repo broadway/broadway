@@ -10,31 +10,8 @@
             <argument type="service" id="broadway.uuid.generator" />
         </service>
 
-        <service id="broadway.saga.state.in_memory_repository" class="Broadway\Saga\State\InMemoryRepository" />
-
+        
         <service id="broadway.saga.metadata.factory" class="Broadway\Saga\Metadata\StaticallyConfiguredSagaMetadataFactory" />
-
-        <service id="broadway.saga.state.mongodb_repository" class="Broadway\Saga\State\MongoDBRepository">
-            <argument type="service" id="broadway.saga.state.mongodb_collection" />
-        </service>
-
-        <service id="broadway.saga.state.mongodb_database"
-                 class           = "Doctrine\MongoDB\Database"
-                 factory-service = "broadway.saga.state.mongodb_connection"
-                 factory-method  = "selectDatabase"
-                >
-            <argument>broadway_%kernel.environment%%storage_suffix%</argument>
-        </service>
-
-        <service id="broadway.saga.state.mongodb_connection" class="Doctrine\MongoDB\Connection" />
-
-        <service id="broadway.saga.state.mongodb_collection"
-                 class           = "Doctrine\MongoDB\Collection"
-                 factory-service = "broadway.saga.state.mongodb_database"
-                 factory-method  = "createCollection"
-                >
-            <argument>saga-state</argument>
-        </service>
 
         <service id="broadway.saga.metadata_enricher" class="Broadway\Saga\SagaMetadataEnricher" >
             <tag name="broadway.event_listener" event="broadway.saga.post_handle" method="postHandleSaga" />
