@@ -45,7 +45,5 @@ abstract class CommandHandlerScenarioTestCase extends TestCase
     /**
      * @return Broadway\CommandHandling\CommandHandler
      */
-    protected function createCommandHandler(EventStoreInterface $eventStore, EventBusInterface $eventBus)
-    {
-    }
+    abstract protected function createCommandHandler(EventStoreInterface $eventStore, EventBusInterface $eventBus);
 }
