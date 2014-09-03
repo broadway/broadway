@@ -23,8 +23,11 @@ use Broadway\Domain\DomainEventStream;
 interface EventStreamDecoratorInterface
 {
     /**
-     * @param string $aggregateType
-     * @param string $aggregateIdentifier
+     * @param string            $aggregateType
+     * @param string            $aggregateIdentifier
+     * @param DomainEventStream $eventStream
+     *
+     * @return DomainEventStream
      */
     public function decorateForWrite($aggregateType, $aggregateIdentifier, DomainEventStream $eventStream);
 }
