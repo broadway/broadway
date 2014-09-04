@@ -11,6 +11,7 @@
 
 namespace Broadway\CommandHandling\Testing;
 
+use Broadway\CommandHandling\CommandHandlerInterface;
 use Broadway\EventHandling\EventBusInterface;
 use Broadway\EventHandling\SimpleEventBus;
 use Broadway\EventStore\EventStoreInterface;
@@ -33,6 +34,9 @@ abstract class CommandHandlerScenarioTestCase extends TestCase
         $this->scenario = $this->createScenario();
     }
 
+    /**
+     * @return Scenario
+     */
     protected function createScenario()
     {
         $eventStore     = new TraceableEventStore(new InMemoryEventStore());
@@ -43,7 +47,12 @@ abstract class CommandHandlerScenarioTestCase extends TestCase
     }
 
     /**
-     * @return Broadway\CommandHandling\CommandHandler
+     * Create a command handler for the given scenario test case.
+     *
+     * @param EventStoreInterface $eventStore
+     * @param EventBusInterface   $eventBus
+     *
+     * @return CommandHandlerInterface
      */
     abstract protected function createCommandHandler(EventStoreInterface $eventStore, EventBusInterface $eventBus);
 }
