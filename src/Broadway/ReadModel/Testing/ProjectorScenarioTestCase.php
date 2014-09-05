@@ -12,6 +12,7 @@
 namespace Broadway\ReadModel\Testing;
 
 use Broadway\ReadModel\InMemory\InMemoryRepository;
+use Broadway\ReadModel\Projector;
 use PHPUnit_Framework_TestCase as TestCase;
 
 /**
@@ -19,6 +20,9 @@ use PHPUnit_Framework_TestCase as TestCase;
  */
 abstract class ProjectorScenarioTestCase extends TestCase
 {
+    /**
+     * @var Scenario
+     */
     protected $scenario;
 
     public function setUp()
@@ -37,7 +41,7 @@ abstract class ProjectorScenarioTestCase extends TestCase
     }
 
     /**
-     * @return Broadway\ReadModel\Projector
+     * @return Projector
      */
     abstract protected function createProjector(InMemoryRepository $repository);
 }
