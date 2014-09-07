@@ -29,9 +29,13 @@ class EventSourcingRepository implements RepositoryInterface
     private $eventStore;
     private $eventBus;
     private $aggregateClass;
+    private $eventStreamDecorators = array();
 
     /**
-     * @param string $aggregateClass
+     * @param EventStoreInterface             $eventStore
+     * @param EventBusInterface               $eventBus
+     * @param string                          $aggregateClass
+     * @param EventStreamDecoratorInterface[] $eventStreamDecorators
      */
     public function __construct(
         EventStoreInterface $eventStore,
@@ -64,6 +68,9 @@ class EventSourcingRepository implements RepositoryInterface
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function add(AggregateRoot $aggregate)
     {
         // maybe we can get generics one day.... ;)
