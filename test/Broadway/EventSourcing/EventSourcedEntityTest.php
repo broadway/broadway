@@ -98,7 +98,7 @@ class Aggregate extends EventSourcedAggregateRoot
         $this->handleRecursively(new Event());
     }
 
-    public function getId()
+    public function getAggregateRootId()
     {
     }
 }

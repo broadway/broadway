@@ -24,5 +24,5 @@ interface AggregateRoot
     /**
      * @return string
      */
-    public function getId();
+    public function getAggregateRootId();
 }

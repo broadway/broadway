@@ -40,7 +40,7 @@ class TestEventSourcedAggregate extends EventSourcedAggregateRoot
 {
     public $numbers;
 
-    public function getId()
+    public function getAggregateRootId()
     {
         return 42;
     }

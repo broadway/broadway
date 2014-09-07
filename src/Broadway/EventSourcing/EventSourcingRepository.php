@@ -71,14 +71,14 @@ class EventSourcingRepository implements RepositoryInterface
 
         $domainEventStream = $aggregate->getUncommittedEvents();
         $eventStream       = $this->decorateForWrite($aggregate, $domainEventStream);
-        $this->eventStore->append($aggregate->getId(), $eventStream);
+        $this->eventStore->append($aggregate->getAggregateRootId(), $eventStream);
         $this->eventBus->publish($domainEventStream);
     }
 
     private function decorateForWrite(AggregateRoot $aggregate, DomainEventStream $eventStream)
     {
         $aggregateType       = $this->getType();
-        $aggregateIdentifier = $aggregate->getId();
+        $aggregateIdentifier = $aggregate->getAggregateRootId();
 
         foreach ($this->eventStreamDecorators as $eventStreamDecorator) {
             $eventStream = $eventStreamDecorator->decorateForWrite($aggregateType, $aggregateIdentifier, $eventStream);
