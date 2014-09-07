@@ -15,7 +15,7 @@ use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\ReadModel\InMemory\InMemoryRepository;
-use Broadway\ReadModel\Projector;
+use Broadway\ReadModel\ProjectorInterface;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -38,7 +38,7 @@ class Scenario
     public function __construct(
         PHPUnit_Framework_TestCase $testCase,
         InMemoryRepository $repository,
-        Projector $projector
+        ProjectorInterface $projector
     ) {
         $this->testCase   = $testCase;
         $this->repository = $repository;
