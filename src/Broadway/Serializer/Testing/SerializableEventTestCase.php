@@ -22,7 +22,7 @@ abstract class SerializableEventTestCase extends TestCase
     /**
      * @test
      */
-    public function it_should_be_serializable()
+    public function its_serializable()
     {
         $this->assertInstanceOf('Broadway\Serializer\SerializableInterface', $this->createEvent());
     }

@@ -26,7 +26,7 @@ abstract class EventStoreTest extends TestCase
      * @test
      * @dataProvider idDataProvider
      */
-    public function it_should_create_a_new_entry_when_id_is_new($id)
+    public function it_creates_a_new_entry_when_id_is_new($id)
     {
         $domainEventStream = new DomainEventStream(array(
             $this->createDomainMessage($id, 0),
@@ -44,7 +44,7 @@ abstract class EventStoreTest extends TestCase
      * @test
      * @dataProvider idDataProvider
      */
-    public function it_should_append_to_an_already_existing_stream($id)
+    public function it_appends_to_an_already_existing_stream($id)
     {
         $dateTime = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
         $domainEventStream = new DomainEventStream(array(
@@ -78,7 +78,7 @@ abstract class EventStoreTest extends TestCase
      * @dataProvider idDataProvider
      * @expectedException Broadway\EventStore\EventStreamNotFoundException
      */
-    public function it_should_throw_an_exception_when_requesting_the_stream_of_a_non_existing_aggregate($id)
+    public function it_throws_an_exception_when_requesting_the_stream_of_a_non_existing_aggregate($id)
     {
         $this->eventStore->load($id);
     }
@@ -88,7 +88,7 @@ abstract class EventStoreTest extends TestCase
      * @dataProvider idDataProvider
      * @expectedException Broadway\EventStore\EventStoreException
      */
-    public function it_should_throw_an_exception_when_appending_a_duplicate_playhead($id)
+    public function it_throws_an_exception_when_appending_a_duplicate_playhead($id)
     {
         $domainMessage     = $this->createDomainMessage($id, 0);
         $baseStream        = new DomainEventStream(array($domainMessage));
@@ -103,7 +103,7 @@ abstract class EventStoreTest extends TestCase
      * @expectedException PHPUnit_Framework_Error
      * @expectedExceptionMessage Object of class Broadway\EventStore\IdentityThatCannotBeConvertedToAString could not be converted to string
      */
-    public function it_should_throw_an_exception_when_an_id_cannot_be_converted_to_a_string()
+    public function it_throws_an_exception_when_an_id_cannot_be_converted_to_a_string()
     {
         $id = new IdentityThatCannotBeConvertedToAString(
             'Yolntbyaac' //You only live nine times because you are a cat

@@ -55,7 +55,7 @@ class RegisterBusSubscribersCompilerPassTest extends TestCase
     /**
      * @test
      */
-    public function command_handler_should_be_subscribed()
+    public function it_subscribes_command_handler()
     {
         $commandHandlerId = 'my_command_handler';
         $services = array(

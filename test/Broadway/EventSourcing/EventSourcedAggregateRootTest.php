@@ -21,7 +21,7 @@ class EventSourcedAggregateRootTest extends TestCase
     /**
      * @test
      */
-    public function apply_should_use_an_incrementing_playhead()
+    public function it_applies_using_an_incrementing_playhead()
     {
         $aggregateRoot = new MyTestAggregateRoot();
         $aggregateRoot->apply(new AggregateEvent());
@@ -39,7 +39,7 @@ class EventSourcedAggregateRootTest extends TestCase
     /**
      * @test
      */
-    public function initialize_state_should_set_internal_playhead()
+    public function it_sets_internal_playhead_when_initializing()
     {
         $aggregateRoot = new MyTestAggregateRoot();
         $aggregateRoot->initializeState($this->toDomainEventStream(array(new AggregateEvent())));
@@ -55,7 +55,7 @@ class EventSourcedAggregateRootTest extends TestCase
     /**
      * @test
      */
-    public function apply_should_call_the_apply_for_specific_event()
+    public function it_calls_apply_for_specific_events()
     {
         $aggregateRoot = new MyTestAggregateRoot();
         $aggregateRoot->initializeState($this->toDomainEventStream(array(new AggregateEvent())));

@@ -18,7 +18,7 @@ class DomainMessageTest extends TestCase
     /**
      * @test
      */
-    public function its_getters_should_work()
+    public function it_has_getters()
     {
         $id       = 'Hi thur';
         $payload  = new SomeEvent();
