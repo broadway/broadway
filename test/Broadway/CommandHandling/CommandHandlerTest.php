@@ -18,7 +18,7 @@ class CommandHandlerTest extends TestCase
     /**
      * @test
      */
-    public function handle_should_delegate_command_to_proper_handle_function()
+    public function it_delegates_command_to_proper_handle_function()
     {
         $commandHandler = new TestCommandHandler();
         $command        = new CommandHandlerTestCommand();

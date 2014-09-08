@@ -18,7 +18,7 @@ class DateTimeTest extends TestCase
     /**
      * @test
      */
-    public function it_should_convert_back_and_forth()
+    public function it_converts_back_and_forth()
     {
         $string   = '2014-03-12T14:17:19.176169+00:00';
         $dateTime = DateTime::fromString($string);
@@ -29,7 +29,7 @@ class DateTimeTest extends TestCase
     /**
      * @test
      */
-    public function it_should_create_now()
+    public function it_creates_now()
     {
         $this->assertInstanceOf('Broadway\Domain\DateTime', DateTime::now());
     }
