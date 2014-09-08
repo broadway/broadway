@@ -33,6 +33,7 @@ class Scenario
     private $eventStore;
     private $commandHandler;
     private $testCase;
+    private $aggregateId;
 
     public function __construct(
         PHPUnit_Framework_TestCase $testCase,
@@ -42,6 +43,17 @@ class Scenario
         $this->testCase       = $testCase;
         $this->eventStore     = $eventStore;
         $this->commandHandler = $commandHandler;
+        $this->aggregateId    = 1;
+    }
+
+    /**
+     * @param string $aggregateId
+     */
+    public function withAggregateId($aggregateId)
+    {
+        $this->aggregateId = $aggregateId;
+
+        return $this;
     }
 
     /**
@@ -59,11 +71,10 @@ class Scenario
         $playhead = -1;
         foreach ($events as $event) {
             $playhead++;
-            $messages[] = DomainMessage::recordNow(1, $playhead, new Metadata(array()), $event);
+            $messages[] = DomainMessage::recordNow($this->aggregateId, $playhead, new Metadata(array()), $event);
         }
 
-        // todo: the hardcoded ID is probably wrong....
-        $this->eventStore->append(1, new DomainEventStream($messages));
+        $this->eventStore->append($this->aggregateId, new DomainEventStream($messages));
 
         return $this;
     }
