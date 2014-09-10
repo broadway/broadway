@@ -11,8 +11,6 @@
 
 namespace Broadway\EventStore;
 
-use RuntimeException;
-
 /**
  * Exception thrown if an event stream is not found.
  */
