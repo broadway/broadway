@@ -11,6 +11,7 @@
 
 namespace Broadway\EventSourcing;
 
+use Broadway\Domain\AggregateRoot;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
@@ -41,7 +42,7 @@ class EventSourcedAggregateRootTest extends TestCase
      */
     public function initialize_state_should_set_internal_playhead()
     {
-        $aggregateRoot = new MyTestAggregateRoot();
+        $aggregateRoot = new MyTestAggregateRoot;
         $aggregateRoot->initializeState($this->toDomainEventStream(array(new AggregateEvent())));
 
         $aggregateRoot->apply(new AggregateEvent());
@@ -57,10 +58,7 @@ class EventSourcedAggregateRootTest extends TestCase
      */
     public function apply_should_call_the_apply_for_specific_event()
     {
-        $aggregateRoot = new MyTestAggregateRoot();
-
-        $this->assertFalse($aggregateRoot->isCalled);
-
+        $aggregateRoot = new MyTestAggregateRoot;
         $aggregateRoot->initializeState($this->toDomainEventStream(array(new AggregateEvent())));
 
         $this->assertTrue($aggregateRoot->isCalled);
