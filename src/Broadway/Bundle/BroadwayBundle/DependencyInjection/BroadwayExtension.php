@@ -29,16 +29,16 @@ class BroadwayExtension extends Extension
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
-        $loader->load('services.xml');
-        $loader->load('saga.xml');
-        $loader->load('read_model.xml');
-        $loader->load('event_store.xml');
-
         $configuration = $this->getConfiguration($configs, $container);
         $config        = $this->processConfiguration($configuration, $configs);
 
-        $this->loadSagaStateRepository($config['saga'], $container);
-        $this->loadReadModelRepository($config['read_model'], $container);
+        $loader->load('services.xml');
+        $loader->load('saga.xml');        
+        $loader->load('event_store.xml');
+
+
+        $this->loadSagaStateRepository($config['saga'], $container, $loader);
+        $this->loadReadModelRepository($config['read_model'], $container, $loader);
         $this->loadCommandBus($config['command_handling'], $container);
     }
 
@@ -60,16 +60,18 @@ class BroadwayExtension extends Extension
         }
     }
 
-    private function loadSagaStateRepository(array $config, ContainerBuilder $container)
+    private function loadSagaStateRepository(array $config, ContainerBuilder $container, XmlFileLoader $loader)
     {
         switch ($config['repository']) {
             case 'mongodb':
+                $loader->load('saga/mongodb.xml');
                 $container->setAlias(
                     'broadway.saga.state.repository',
                     'broadway.saga.state.mongodb_repository'
                 );
                 break;
             case 'in_memory':
+                $loader->load('saga/in_memory.xml');
                 $container->setAlias(
                     'broadway.saga.state.repository',
                     'broadway.saga.state.in_memory_repository'
@@ -78,13 +80,15 @@ class BroadwayExtension extends Extension
         }
     }
 
-    private function loadReadModelRepository(array $config, ContainerBuilder $container)
+    private function loadReadModelRepository(array $config, ContainerBuilder $container, XmlFileLoader $loader)
     {
         switch ($config['repository']) {
             case 'elasticsearch':
+                $loader->load('read_model/elasticsearch.xml');
                 $this->configElasticsearch($config['elasticsearch'], $container);
                 break;
             case 'in_memory':
+                $loader->load('read_model/in_memory.xml');
                 $this->configInMemory($container);
                 break;
         }

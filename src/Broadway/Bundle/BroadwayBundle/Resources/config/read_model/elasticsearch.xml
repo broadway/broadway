@@ -16,6 +16,5 @@
             <argument type="service" id="broadway.serializer.readmodel" />
         </service>
 
-        <service id="broadway.read_model.in_memory.repository_factory" class="Broadway\ReadModel\InMemory\InMemoryRepositoryFactory" />
     </services>
 </container>
