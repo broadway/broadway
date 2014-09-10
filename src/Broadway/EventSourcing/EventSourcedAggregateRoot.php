@@ -59,41 +59,9 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     }
 
     /**
-     * Reconstitute the aggregate from an event stream.
-     *
-     * @return EventSourcedAggregateRoot
-     */
-    public static function reconstituteFromDomainEventStream(DomainEventStream $stream)
-    {
-        $instance = static::instantiateForReconstitution();
-
-        $instance->initializeState($stream);
-
-        return $instance;
-    }
-
-    /**
-     * Used to instantiate an aggregate for the purpose of reconstitution.
-     *
-     * The default implementation will allow for calling an empty constructor.
-     * This will currently work on any EventSourcedAggregateRoot class that has
-     * no constructor, a public constructor, or a protected constructor.
-     *
-     * If an EventSourcedAggregateRoot has a private constructor the
-     * EventSourcedAggregateRoot should override this method and call the
-     * private constructor itself.
-     *
-     * @return EventSourcedAggregateRoot
-     */
-    protected static function instantiateForReconstitution()
-    {
-        return new static;
-    }
-
-    /**
      * Initializes the aggregate using the given "history" of events.
      */
-    protected function initializeState(DomainEventStream $stream)
+    public function initializeState(DomainEventStream $stream)
     {
         foreach ($stream as $message) {
             $this->playhead++;

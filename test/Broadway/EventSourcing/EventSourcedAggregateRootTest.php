@@ -42,9 +42,8 @@ class EventSourcedAggregateRootTest extends TestCase
      */
     public function initialize_state_should_set_internal_playhead()
     {
-        $aggregateRoot = MyTestAggregateRoot::reconstituteFromDomainEventStream(
-            $this->toDomainEventStream(array(new AggregateEvent()))
-        );
+        $aggregateRoot = new MyTestAggregateRoot;
+        $aggregateRoot->initializeState($this->toDomainEventStream(array(new AggregateEvent())));
 
         $aggregateRoot->apply(new AggregateEvent());
 
@@ -59,35 +58,10 @@ class EventSourcedAggregateRootTest extends TestCase
      */
     public function apply_should_call_the_apply_for_specific_event()
     {
-        $aggregateRoot = MyTestAggregateRoot::reconstituteFromDomainEventStream(
-            $this->toDomainEventStream(array(new AggregateEvent()))
-        );
+        $aggregateRoot = new MyTestAggregateRoot;
+        $aggregateRoot->initializeState($this->toDomainEventStream(array(new AggregateEvent())));
 
         $this->assertTrue($aggregateRoot->isCalled);
-    }
-
-    /**
-     * @test
-     */
-    public function protected_constructors_should_be_called()
-    {
-        $aggregateRoot = MyTestAggregateRootWithProtectedConstructor::reconstituteFromDomainEventStream(
-            $this->toDomainEventStream(array())
-        );
-
-        $this->assertTrue($aggregateRoot->constructorWasCalled);
-    }
-
-    /**
-     * @test
-     */
-    public function private_constructors_should_be_called()
-    {
-        $aggregateRoot = MyTestAggregateRootWithPrivateConstructor::reconstituteFromDomainEventStream(
-            $this->toDomainEventStream(array())
-        );
-
-        $this->assertTrue($aggregateRoot->constructorWasCalled);
     }
 
     private function toDomainEventStream(array $events)
@@ -115,41 +89,6 @@ class MyTestAggregateRoot extends EventSourcedAggregateRoot
     public function applyAggregateEvent($event)
     {
         $this->isCalled = true;
-    }
-}
-
-class MyTestAggregateRootWithProtectedConstructor extends EventSourcedAggregateRoot
-{
-    public $constructorWasCalled = false;
-
-    protected function __construct()
-    {
-        $this->constructorWasCalled = true;
-    }
-
-    public function getId()
-    {
-        return 'y0l0';
-    }
-}
-
-class MyTestAggregateRootWithPrivateConstructor extends EventSourcedAggregateRoot
-{
-    public $constructorWasCalled = false;
-
-    private function __construct()
-    {
-        $this->constructorWasCalled = true;
-    }
-
-    public function getId()
-    {
-        return 'y0l0';
-    }
-
-    protected static function instantiateForReconstitution()
-    {
-        return new static();
     }
 }
 
