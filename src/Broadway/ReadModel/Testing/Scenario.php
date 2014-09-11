@@ -61,7 +61,7 @@ class Scenario
     }
 
     /**
-     * @param array $event
+     * @param mixed $event
      *
      * @return Scenario
      */
