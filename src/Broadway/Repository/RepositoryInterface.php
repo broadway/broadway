@@ -18,6 +18,11 @@ use Broadway\Domain\AggregateRoot;
  */
 interface RepositoryInterface
 {
+    /**
+     * Adds the aggregate to the repository.
+     *
+     * @param AggregateRoot $aggregate
+     */
     public function add(AggregateRoot $aggregate);
 
     /**
