@@ -37,14 +37,14 @@ class BroadwayBundle extends Bundle
                 'broadway.command_handling.command_bus',
                 'command_handler',
                 'Broadway\CommandHandling\CommandHandlerInterface'
-            ), PassConfig::TYPE_BEFORE_REMOVING
+            ), PassConfig::TYPE_OPTIMIZE
         );
         $container->addCompilerPass(
             new RegisterBusSubscribersCompilerPass(
                 'broadway.event_handling.event_bus',
                 'broadway.domain.event_listener',
                 'Broadway\EventHandling\EventListenerInterface'
-            ), PassConfig::TYPE_BEFORE_REMOVING
+            ), PassConfig::TYPE_OPTIMIZE
         );
         $container->addCompilerPass(
             new RegisterEventListenerCompilerPass(
