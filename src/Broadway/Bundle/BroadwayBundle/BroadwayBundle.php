@@ -16,6 +16,7 @@ use Broadway\Bundle\BroadwayBundle\DependencyInjection\RegisterBusSubscribersCom
 use Broadway\Bundle\BroadwayBundle\DependencyInjection\RegisterEventListenerCompilerPass;
 use Broadway\Bundle\BroadwayBundle\DependencyInjection\RegisterMetadataEnricherSubscriberPass;
 use Symfony\Component\Console\Application;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -36,14 +37,14 @@ class BroadwayBundle extends Bundle
                 'broadway.command_handling.command_bus',
                 'command_handler',
                 'Broadway\CommandHandling\CommandHandlerInterface'
-            )
+            ), PassConfig::TYPE_BEFORE_REMOVING
         );
         $container->addCompilerPass(
             new RegisterBusSubscribersCompilerPass(
                 'broadway.event_handling.event_bus',
                 'broadway.domain.event_listener',
                 'Broadway\EventHandling\EventListenerInterface'
-            )
+            ), PassConfig::TYPE_BEFORE_REMOVING
         );
         $container->addCompilerPass(
             new RegisterEventListenerCompilerPass(
