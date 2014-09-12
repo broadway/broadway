@@ -52,8 +52,8 @@ class RegisterBusSubscribersCompilerPass implements CompilerPassInterface
 
         foreach ($container->findTaggedServiceIds($this->serviceTag) as $id => $attributes) {
             $def = $container->getDefinition($id);
-            // We must assume that the class value has been correctly filled, even if the service is created by a factory
-            $class = $def->getClass();
+            // Definition getClass can return a parameter
+            $class = $container->getParameterBag()->resolveValue($def->getClass());
 
             $refClass = new ReflectionClass($class);
 
