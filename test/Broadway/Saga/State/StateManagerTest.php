@@ -13,7 +13,7 @@ namespace Broadway\Saga\State;
 
 use Broadway\Saga\State;
 use Broadway\TestCase;
-use Broadway\Uuid\Testing\MockUuidGenerator;
+use Broadway\UuidGenerator\Testing\MockUuidGenerator;
 
 class StateManagerTest extends TestCase
 {
@@ -23,8 +23,8 @@ class StateManagerTest extends TestCase
     public function setUp()
     {
         $this->repository = new InMemoryRepository();
-        $this->generator = new MockUuidGenerator(42);
-        $this->manager = new StateManager($this->repository, $this->generator);
+        $this->generator  = new MockUuidGenerator(42);
+        $this->manager    = new StateManager($this->repository, $this->generator);
     }
 
     /**

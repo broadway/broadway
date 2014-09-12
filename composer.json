@@ -5,6 +5,7 @@
     "license": "MIT",
     "require": {
         "beberlei/assert": "~1.6",
+        "broadway/uuid-generator": "~0.1.0",
         "php": ">=5.3.3",
         "rhumsaa/uuid": "~2.4"
     },
