@@ -12,7 +12,7 @@
 namespace Broadway\Saga\State;
 
 use Broadway\Saga\State;
-use Broadway\Uuid\UuidGeneratorInterface;
+use Broadway\UuidGenerator\UuidGeneratorInterface;
 
 class StateManager implements StateManagerInterface
 {
