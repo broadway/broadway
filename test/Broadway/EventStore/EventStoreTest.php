@@ -24,10 +24,10 @@ abstract class EventStoreTest extends TestCase
 
     /**
      * @test
+     * @dataProvider idDataProvider
      */
-    public function it_should_create_a_new_entry_when_id_is_new()
+    public function it_should_create_a_new_entry_when_id_is_new($id)
     {
-        $id = 'Yolntbyaac'; //You only live nine times because you are a cat
         $domainEventStream = new DomainEventStream(array(
             $this->createDomainMessage($id, 0),
             $this->createDomainMessage($id, 1),
@@ -42,10 +42,10 @@ abstract class EventStoreTest extends TestCase
 
     /**
      * @test
+     * @dataProvider idDataProvider
      */
-    public function it_should_append_to_an_already_existing_stream()
+    public function it_should_append_to_an_already_existing_stream($id)
     {
-        $id       = 'Yolntbyaac';
         $dateTime = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
         $domainEventStream = new DomainEventStream(array(
             $this->createDomainMessage($id, 0, $dateTime),
@@ -75,27 +75,65 @@ abstract class EventStoreTest extends TestCase
 
     /**
      * @test
+     * @dataProvider idDataProvider
      * @expectedException Broadway\EventStore\EventStreamNotFoundException
      */
-    public function it_should_throw_an_exception_when_requesting_the_stream_of_a_non_existing_aggregate()
+    public function it_should_throw_an_exception_when_requesting_the_stream_of_a_non_existing_aggregate($id)
     {
-        $id = 'Yolntbyaac'; //You only live nine times because you are a cat
         $this->eventStore->load($id);
     }
 
     /**
      * @test
+     * @dataProvider idDataProvider
      * @expectedException Broadway\EventStore\EventStoreException
      */
-    public function it_should_throw_an_exception_when_appending_a_duplicate_playhead()
+    public function it_should_throw_an_exception_when_appending_a_duplicate_playhead($id)
     {
-        $id                = 'Yolntbyaac';
         $domainMessage     = $this->createDomainMessage($id, 0);
         $baseStream        = new DomainEventStream(array($domainMessage));
         $this->eventStore->append($id, $baseStream);
         $appendedEventStream = new DomainEventStream(array($domainMessage));
 
         $this->eventStore->append($id, $appendedEventStream);
+    }
+
+    /**
+     * @test
+     * @expectedException PHPUnit_Framework_Error
+     * @expectedExceptionMessage Object of class Broadway\EventStore\IdentityThatCannotBeConvertedToAString could not be converted to string
+     */
+    public function it_should_throw_an_exception_when_an_id_cannot_be_converted_to_a_string()
+    {
+        $id = new IdentityThatCannotBeConvertedToAString(
+            'Yolntbyaac' //You only live nine times because you are a cat
+        );
+
+        $domainEventStream = new DomainEventStream(array(
+            $this->createDomainMessage($id, 0),
+            $this->createDomainMessage($id, 1),
+            $this->createDomainMessage($id, 2),
+            $this->createDomainMessage($id, 3),
+        ));
+
+        $this->eventStore->append($id, $domainEventStream);
+    }
+
+    public function idDataProvider()
+    {
+        return array(
+            array(
+                'Yolntbyaac', //You only live nine times because you are a cat
+            ),
+            array(
+                new StringIdentity(
+                    'Yolntbyaac' //You only live nine times because you are a cat
+                )
+            ),
+            array(
+                42, // test an int
+            ),
+        );
     }
 
     private function createDomainMessage($id, $playhead, $recordedOn = null)
@@ -114,5 +152,28 @@ class Event implements SerializableInterface
     public function serialize()
     {
         return array();
+    }
+}
+
+class StringIdentity
+{
+    private $id;
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->id;
+    }
+}
+
+class IdentityThatCannotBeConvertedToAString
+{
+    private $id;
+    public function __construct($id)
+    {
+        $this->id = $id;
     }
 }

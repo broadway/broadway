@@ -59,7 +59,7 @@ class DBALEventStore implements EventStoreInterface
     public function load($id)
     {
         $statement = $this->prepareLoadStatement();
-        $statement->bindValue('uuid', $id, 'guid');
+        $statement->bindValue('uuid', (string) $id, 'guid');
         $statement->execute();
 
         $events = array();
@@ -79,6 +79,13 @@ class DBALEventStore implements EventStoreInterface
      */
     public function append($id, DomainEventStreamInterface $eventStream)
     {
+        // noop to ensure that an error will be thrown early if the ID
+        // is not something that can be converted to a string. If we
+        // let this move on without doing this DBAL will eventually
+        // give us a hard time but the true reason for the problem
+        // will be obfuscated.
+        $id = (string) $id;
+
         $this->connection->beginTransaction();
 
         try {

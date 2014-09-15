@@ -28,6 +28,8 @@ class InMemoryEventStore implements EventStoreInterface
      */
     public function load($id)
     {
+        $id = (string) $id;
+
         if (isset($this->events[$id])) {
             return new DomainEventStream($this->events[$id]);
         }
@@ -40,6 +42,8 @@ class InMemoryEventStore implements EventStoreInterface
      */
     public function append($id, DomainEventStreamInterface $eventStream)
     {
+        $id = (string) $id;
+
         if (! isset($this->events[$id])) {
             $this->events[$id] = array();
         }
