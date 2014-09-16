@@ -22,6 +22,11 @@ interface AggregateRoot
     public function getUncommittedEvents();
 
     /**
+     * @return void
+     */
+    public function clearUncommittedEvents();
+
+    /**
      * @return string
      */
     public function getId();

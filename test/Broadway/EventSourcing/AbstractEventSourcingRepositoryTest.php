@@ -86,7 +86,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
 
         $expectedAggregate = $this->createAggregate();
         $expectedAggregate->apply(new DidNumberEvent(1337));
-        $expectedAggregate->getUncommittedEvents();
+        $expectedAggregate->clearUncommittedEvents();
 
         $this->assertEquals($expectedAggregate, $aggregate);
     }
@@ -136,6 +136,23 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
         $this->assertSame($event, $events[0]->getPayload());
     }
 
+
+    /**
+     * @test
+     */
+    public function it_should_clear_uncommitted_events_after_adding_an_aggregate_root()
+    {
+        $aggregate = $this->createAggregate();
+        $aggregate->apply(new DidNumberEvent(42));
+        $aggregate->apply(new DidNumberEvent(1337));
+
+        $this->assertEquals(2, count($aggregate->getUncommittedEvents()->getIterator()));
+
+        $this->repository->add($aggregate);
+
+        $this->assertEquals(0, count($aggregate->getUncommittedEvents()->getIterator()));
+    }
+
     /**
      * @return EventSourcingRepository
      */
@@ -173,6 +190,15 @@ class TestAggregate implements AggregateRoot
     }
 
     public function getUncommittedEvents()
+    {
+    }
+
+    public function hasUncommittedEvents()
+    {
+        return false;
+    }
+
+    public function clearUncommittedEvents()
     {
     }
 }
