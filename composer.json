@@ -36,7 +36,6 @@
     ],
     "require-dev": {
         "doctrine/dbal": "~2.4",
-        "doctrine/orm": "~2.4",
         "doctrine/mongodb": "~1.0",
         "elasticsearch/elasticsearch": "~1.0",
         "instaclick/base-test-bundle": "~0.5",
