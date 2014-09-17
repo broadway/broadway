@@ -28,15 +28,15 @@ use Doctrine\DBAL\Schema\Schema;
  */
 class DBALEventStore implements EventStoreInterface
 {
-    private $connection;
+    protected $connection;
 
-    private $payloadSerializer;
+    protected $payloadSerializer;
 
-    private $metadataSerializer;
+    protected $metadataSerializer;
 
-    private $loadStatement = null;
+    protected $loadStatement = null;
 
-    private $tableName;
+    protected $tableName;
 
     /**
      * @param string $tableName
@@ -101,7 +101,7 @@ class DBALEventStore implements EventStoreInterface
         }
     }
 
-    private function insertMessage(Connection $connection, DomainMessage $domainMessage)
+    protected function insertMessage(Connection $connection, DomainMessage $domainMessage)
     {
         $data = array(
             'uuid'       => $domainMessage->getId(),
@@ -116,7 +116,7 @@ class DBALEventStore implements EventStoreInterface
     }
 
     /**
-     * @return Doctrine\DBAL\Schema\Table|null
+     * @return \Doctrine\DBAL\Schema\Table|null
      */
     public function configureSchema(Schema $schema)
     {
@@ -147,7 +147,7 @@ class DBALEventStore implements EventStoreInterface
         return $table;
     }
 
-    private function prepareLoadStatement()
+    protected function prepareLoadStatement()
     {
         if (null === $this->loadStatement) {
             $query = 'SELECT uuid, playhead, metadata, payload, recordedOn
@@ -160,7 +160,7 @@ class DBALEventStore implements EventStoreInterface
         return $this->loadStatement;
     }
 
-    private function deserializeEvent($row)
+    protected function deserializeEvent($row)
     {
         return new DomainMessage(
             $row['uuid'],
