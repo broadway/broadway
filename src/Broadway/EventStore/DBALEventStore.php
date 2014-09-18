@@ -150,7 +150,7 @@ class DBALEventStore implements EventStoreInterface
     private function prepareLoadStatement()
     {
         if (null === $this->loadStatement) {
-            $query = 'SELECT uuid, playhead, metadata, payload, recordedOn
+            $query = 'SELECT uuid, playhead, metadata, payload, recordedOn as "recordedOn"
                 FROM ' . $this->tableName . '
                 WHERE uuid = :uuid
                 ORDER BY playhead ASC';
