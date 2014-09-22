@@ -35,7 +35,7 @@ abstract class CommandHandler implements CommandHandlerInterface
         $this->$method($command);
     }
 
-    private function getHandleMethod($command)
+    protected function getHandleMethod($command)
     {
         $classParts = explode('\\', get_class($command));
 
