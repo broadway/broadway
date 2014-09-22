@@ -104,12 +104,12 @@ class DBALEventStore implements EventStoreInterface
     private function insertMessage(Connection $connection, DomainMessage $domainMessage)
     {
         $data = array(
-            'uuid'       => $domainMessage->getId(),
-            'playhead'   => $domainMessage->getPlayhead(),
-            'metadata'   => json_encode($this->metadataSerializer->serialize($domainMessage->getMetadata())),
-            'payload'    => json_encode($this->payloadSerializer->serialize($domainMessage->getPayload())),
-            'recordedOn' => $domainMessage->getRecordedOn()->toString(),
-            'type'       => $domainMessage->getType(),
+            'uuid'        => $domainMessage->getId(),
+            'playhead'    => $domainMessage->getPlayhead(),
+            'metadata'    => json_encode($this->metadataSerializer->serialize($domainMessage->getMetadata())),
+            'payload'     => json_encode($this->payloadSerializer->serialize($domainMessage->getPayload())),
+            'recorded_on' => $domainMessage->getRecordedOn()->toString(),
+            'type'        => $domainMessage->getType(),
         );
 
         $connection->insert($this->tableName, $data);
@@ -138,7 +138,7 @@ class DBALEventStore implements EventStoreInterface
         $table->addColumn('playhead', 'integer', array('unsigned' => true));
         $table->addColumn('payload', 'text');
         $table->addColumn('metadata', 'text');
-        $table->addColumn('recordedOn', 'string', array('length' => 32));
+        $table->addColumn('recorded_on', 'string', array('length' => 32));
         $table->addColumn('type', 'text');
 
         $table->setPrimaryKey(array('id'));
@@ -150,7 +150,7 @@ class DBALEventStore implements EventStoreInterface
     private function prepareLoadStatement()
     {
         if (null === $this->loadStatement) {
-            $query = 'SELECT uuid, playhead, metadata, payload, recordedOn
+            $query = 'SELECT uuid, playhead, metadata, payload, recorded_on
                 FROM ' . $this->tableName . '
                 WHERE uuid = :uuid
                 ORDER BY playhead ASC';
@@ -167,7 +167,7 @@ class DBALEventStore implements EventStoreInterface
             $row['playhead'],
             $this->metadataSerializer->deserialize(json_decode($row['metadata'], true)),
             $this->payloadSerializer->deserialize(json_decode($row['payload'], true)),
-            DateTime::fromString($row['recordedOn'])
+            DateTime::fromString($row['recorded_on'])
         );
     }
 }
