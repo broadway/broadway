@@ -39,7 +39,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
 
         $this->playhead++;
         $this->uncommittedEvents[] = DomainMessage::recordNow(
-            $this->getId(),
+            $this->getAggregateRootId(),
             $this->playhead,
             new Metadata(array()),
             $event

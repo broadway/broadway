@@ -127,7 +127,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
 
         $lastCall = $this->eventStreamDecorator->getLastCall();
 
-        $this->assertEquals($aggregate->getId(), $lastCall['aggregateIdentifier']);
+        $this->assertEquals($aggregate->getAggregateRootId(), $lastCall['aggregateIdentifier']);
         $this->assertEquals('\\' . get_class($aggregate), $lastCall['aggregateType']);
 
         $events = iterator_to_array($lastCall['eventStream']);
@@ -159,7 +159,7 @@ class DidNumberEvent
 
 class AnotherTestEventSourcedAggregate extends EventSourcedAggregateRoot
 {
-    public function getId()
+    public function getAggregateRootId()
     {
         return 1337;
     }
@@ -167,7 +167,7 @@ class AnotherTestEventSourcedAggregate extends EventSourcedAggregateRoot
 
 class TestAggregate implements AggregateRoot
 {
-    public function getId()
+    public function getAggregateRootId()
     {
         return 42;
     }
