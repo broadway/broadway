@@ -19,7 +19,7 @@ Read the blog post about this repository at:
 ## Installation
 
 ```
-$ composer require broadway/broadway ~0.1.0
+$ composer require broadway/broadway ~0.2.0
 ```
 
 ## Examples
