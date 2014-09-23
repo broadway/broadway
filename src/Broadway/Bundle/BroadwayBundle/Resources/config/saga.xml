@@ -10,7 +10,7 @@
             <argument type="service" id="broadway.uuid.generator" />
         </service>
 
-        
+
         <service id="broadway.saga.metadata.factory" class="Broadway\Saga\Metadata\StaticallyConfiguredSagaMetadataFactory" />
 
         <service id="broadway.saga.metadata_enricher" class="Broadway\Saga\SagaMetadataEnricher" >

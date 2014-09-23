@@ -26,7 +26,7 @@ interface EventSourcedEntityInterface
     /**
      * Registers aggregateRoot as this EventSourcedEntity's aggregate root
      *
-     * @param  EventSourcedAggregateRoot $aggregateRoot
+     * @param EventSourcedAggregateRoot $aggregateRoot
      *
      * @throws AggregateRootAlreadyRegisteredException
      */

@@ -50,7 +50,7 @@ class Scenario
             return $this;
         }
 
-        $this->aggregateRootInstance = new $this->aggregateRoot;
+        $this->aggregateRootInstance = new $this->aggregateRoot();
         $this->aggregateRootInstance->initializeState($givens);
 
         return $this;
