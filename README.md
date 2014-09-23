@@ -49,7 +49,6 @@ component for more information.
 - [Repository](src/Broadway/Repository/)
 - [Saga](src/Broadway/Saga/)
 - [Serializer](src/Broadway/Serializer/)
-- [Uuid](src/Broadway/Uuid/)
 
 ## Integrations
 
