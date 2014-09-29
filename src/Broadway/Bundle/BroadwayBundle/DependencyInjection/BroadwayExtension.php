@@ -33,9 +33,8 @@ class BroadwayExtension extends Extension
         $config        = $this->processConfiguration($configuration, $configs);
 
         $loader->load('services.xml');
-        $loader->load('saga.xml');        
+        $loader->load('saga.xml');
         $loader->load('event_store.xml');
-
 
         $this->loadSagaStateRepository($config['saga'], $container, $loader);
         $this->loadReadModelRepository($config['read_model'], $container, $loader);

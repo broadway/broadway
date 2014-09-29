@@ -13,7 +13,6 @@ namespace Broadway\Saga;
 
 use Broadway\Domain\DomainMessageInterface;
 use Broadway\EventDispatcher\EventDispatcherInterface;
-use Broadway\Events;
 use Broadway\Saga\Metadata\MetadataFactoryInterface;
 use Broadway\Saga\State\RepositoryInterface;
 use Broadway\Saga\State\StateManager;

@@ -20,7 +20,7 @@ use RuntimeException;
 class AggregateNotFoundException extends RuntimeException
 {
     /**
-     * @param mixed $id
+     * @param mixed     $id
      * @param Exception $previous
      *
      * @return AggregateNotFoundException

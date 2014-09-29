@@ -26,7 +26,7 @@ interface EventStoreInterface
     public function load($id);
 
     /**
-     * @param mixed $id
+     * @param mixed                      $id
      * @param DomainEventStreamInterface $eventStream
      */
     public function append($id, DomainEventStreamInterface $eventStream);
