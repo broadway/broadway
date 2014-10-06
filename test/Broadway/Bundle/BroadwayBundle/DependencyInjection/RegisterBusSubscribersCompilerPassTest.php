@@ -17,8 +17,25 @@ use Symfony\Component\DependencyInjection\Reference;
 class RegisterBusSubscribersCompilerPassTest extends TestCase
 {
     /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $builder;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $commandBus;
+
+    public function setUp()
+    {
+        $this->builder    = $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder');
+        $this->commandBus = $this->getMock('Symfony\Component\DependencyInjection\Definition');
+    }
+
+    /**
      * @test
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Service "my_fake_command_handler" must implement interface "Broadway\Bundle\BroadwayBundle\DependencyInjection\BusSubscriberInterface"
      */
     public function command_handler_must_have_proper_interface()
     {
@@ -27,26 +44,12 @@ class RegisterBusSubscribersCompilerPassTest extends TestCase
             'my_fake_command_handler' => array(),
         );
 
-        $definition = $this->getMock('Symfony\Component\DependencyInjection\Definition');
-        $definition->expects($this->atLeastOnce())
-            ->method('getClass')
-            ->will($this->returnValue('stdClass'));
-
-        $builder = $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder');
-        $builder->expects($this->any())
-            ->method('hasDefinition')
-            ->will($this->returnValue(true));
-
-        $builder->expects($this->atLeastOnce())
-            ->method('findTaggedServiceIds')
-            ->will($this->returnValue($services));
-
-        $builder->expects($this->atLeastOnce())
-            ->method('getDefinition')
-            ->will($this->returnValue($definition));
+        $this->expects_bus_definition();
+        $this->expects_tagged_services_and_returns($services);
+        $this->expects_class_from_definition_and_returns('stdClass');
 
         $registerListenersPass = new RegisterBusSubscribersCompilerPass('bus_service', 'tag', 'Broadway\Bundle\BroadwayBundle\DependencyInjection\BusSubscriberInterface');
-        $registerListenersPass->process($builder);
+        $registerListenersPass->process($this->builder);
     }
 
     /**
@@ -59,35 +62,62 @@ class RegisterBusSubscribersCompilerPassTest extends TestCase
             $commandHandlerId => array(),
         );
 
+        $this->expects_bus_definition();
+        $this->expects_tagged_services_and_returns($services);
+        $this->expects_class_from_definition_and_returns('Broadway\Bundle\BroadwayBundle\DependencyInjection\BusSubscriber');
+        $this->expects_subscribe_call_on_bus($commandHandlerId);
+
+        $registerListenersPass = new RegisterBusSubscribersCompilerPass('bus_service', 'tag', 'Broadway\Bundle\BroadwayBundle\DependencyInjection\BusSubscriberInterface');
+        $registerListenersPass->process($this->builder);
+    }
+
+    /**
+     * @param $taggedServiceClass
+     */
+    private function expects_class_from_definition_and_returns($taggedServiceClass)
+    {
+        $parameterBag = $this->getMock('Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface');
+        $this->builder->expects($this->atLeastOnce())
+            ->method('getParameterBag')
+            ->will($this->returnValue($parameterBag));
+
         $definition = $this->getMock('Symfony\Component\DependencyInjection\Definition');
         $definition->expects($this->atLeastOnce())
             ->method('getClass')
-            ->will($this->returnValue('Broadway\Bundle\BroadwayBundle\DependencyInjection\BusSubscriber'));
+            ->will($this->returnValue($taggedServiceClass));
 
-        $builder = $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder');
-        $builder->expects($this->any())
-            ->method('hasDefinition')
-            ->will($this->returnValue(true));
-
-        $builder->expects($this->atLeastOnce())
-            ->method('findTaggedServiceIds')
-            ->will($this->returnValue($services));
-
-        $commandBus = $this->getMock('Symfony\Component\DependencyInjection\Definition');
-        $commandBus->expects($this->once())
-            ->method('addMethodCall')
-            ->with('subscribe', array(new Reference($commandHandlerId)));
-
-        $builder->expects($this->atLeastOnce())
+        $this->builder->expects($this->atLeastOnce())
             ->method('getDefinition')
             ->will($this->returnValue($definition));
 
-        $builder->expects($this->atLeastOnce())
-            ->method('findDefinition')
-            ->will($this->returnValue($commandBus));
+        $parameterBag->expects($this->atLeastOnce())
+            ->method('resolveValue')
+            ->will($this->returnValue($taggedServiceClass));
+    }
 
-        $registerListenersPass = new RegisterBusSubscribersCompilerPass('bus_service', 'tag', 'Broadway\Bundle\BroadwayBundle\DependencyInjection\BusSubscriberInterface');
-        $registerListenersPass->process($builder);
+    private function expects_bus_definition()
+    {
+        $this->builder->expects($this->any())
+            ->method('hasDefinition')
+            ->will($this->returnValue(true));
+
+        $this->builder->expects($this->atLeastOnce())
+            ->method('findDefinition')
+            ->will($this->returnValue($this->commandBus));
+    }
+
+    private function expects_tagged_services_and_returns($services)
+    {
+        $this->builder->expects($this->atLeastOnce())
+            ->method('findTaggedServiceIds')
+            ->will($this->returnValue($services));
+    }
+
+    private function expects_subscribe_call_on_bus($commandHandlerId)
+    {
+        $this->commandBus->expects($this->once())
+            ->method('addMethodCall')
+            ->with('subscribe', array(new Reference($commandHandlerId)));
     }
 }
 
