@@ -26,6 +26,29 @@ class CommandHandlerTest extends TestCase
 
         $this->assertTrue($commandHandler->handled);
     }
+
+    /**
+     * @test
+     *
+     * @dataProvider unresolvableCommands
+     */
+    public function handle_should_throw_exception_when_impossible_to_delegate_to_a_valid_method($command)
+    {
+        $commandHandler = new TestCommandHandler();
+        $this->setExpectedException('Broadway\CommandHandling\Exception\CommandNotAnObjectException');
+        $commandHandler->handle($command);
+    }
+
+    public function unresolvableCommands()
+    {
+        return array(
+            array(null),
+            array(false),
+            array('foo'),
+            array(1),
+            array(array('foo', 'bar'))
+        );
+    }
 }
 
 class TestCommandHandler extends CommandHandler

@@ -11,6 +11,8 @@
 
 namespace Broadway\CommandHandling;
 
+use Broadway\CommandHandling\Exception\CommandNotAnObjectException;
+
 /**
  * Convenience base class for command handlers.
  *
@@ -37,6 +39,10 @@ abstract class CommandHandler implements CommandHandlerInterface
 
     private function getHandleMethod($command)
     {
+        if (! is_object($command)) {
+            throw new CommandNotAnObjectException();
+        }
+
         $classParts = explode('\\', get_class($command));
 
         return 'handle' . end($classParts);
