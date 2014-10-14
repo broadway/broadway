@@ -16,13 +16,14 @@ use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventHandling\TraceableEventBus;
 use Broadway\EventSourcing\AggregateFactory\NamedConstructorAggregateFactory;
+use Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
 use Broadway\EventStore\TraceableEventStore;
 
 class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
 {
     protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, array $eventStreamDecorators)
     {
-        return new EventSourcingRepository($eventStore, $eventBus, '\Broadway\EventSourcing\TestEventSourcedAggregate', $eventStreamDecorators);
+        return new EventSourcingRepository($eventStore, $eventBus, '\Broadway\EventSourcing\TestEventSourcedAggregate', new PublicConstructorAggregateFactory(), $eventStreamDecorators);
     }
 
     protected function createAggregate()
@@ -36,7 +37,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
      */
     public function it_throws_an_exception_when_instantiated_with_a_class_that_is_not_an_EventSourcedAggregateRoot()
     {
-        new EventSourcingRepository($this->eventStore, $this->eventBus, 'stdClass');
+        new EventSourcingRepository($this->eventStore, $this->eventBus, 'stdClass', new PublicConstructorAggregateFactory());
     }
 
     /**
@@ -89,8 +90,8 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
             $this->eventStore,
             $this->eventBus,
             '\Broadway\EventSourcing\TestEventSourcedAggregateWithStaticConstructor',
-            array(),
-            $staticFactory
+            $staticFactory,
+            array()
         );
     }
 }
@@ -122,7 +123,7 @@ class TestEventSourcedAggregateWithStaticConstructor extends EventSourcedAggrega
         $this->instantiatedThrough = $instantiatedThrough;
     }
 
-    public function getId()
+    public function getAggregateRootId()
     {
         return 'y0l0';
     }

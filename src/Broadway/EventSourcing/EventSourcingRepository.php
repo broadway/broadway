@@ -17,7 +17,6 @@ use Broadway\Domain\AggregateRoot;
 use Broadway\Domain\DomainEventStream;
 use Broadway\EventHandling\EventBusInterface;
 use Broadway\EventSourcing\AggregateFactory\AggregateFactoryInterface;
-use Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
 use Broadway\EventStore\EventStoreInterface;
 use Broadway\EventStore\EventStreamNotFoundException;
 use Broadway\Repository\AggregateNotFoundException;
@@ -38,26 +37,23 @@ class EventSourcingRepository implements RepositoryInterface
      * @param EventStoreInterface             $eventStore
      * @param EventBusInterface               $eventBus
      * @param string                          $aggregateClass
-     * @param EventStreamDecoratorInterface[] $eventStreamDecorators
      * @param AggregateFactoryInterface       $aggregateFactory
+     * @param EventStreamDecoratorInterface[] $eventStreamDecorators
      */
     public function __construct(
         EventStoreInterface $eventStore,
         EventBusInterface $eventBus,
         $aggregateClass,
-        array $eventStreamDecorators = array(),
-        AggregateFactoryInterface $aggregateFactory = null
+        AggregateFactoryInterface $aggregateFactory,
+        array $eventStreamDecorators = array()
     ) {
         $this->assertExtendsEventSourcedAggregateRoot($aggregateClass);
 
         $this->eventStore            = $eventStore;
         $this->eventBus              = $eventBus;
         $this->aggregateClass        = $aggregateClass;
+        $this->aggregateFactory      = $aggregateFactory;
         $this->eventStreamDecorators = $eventStreamDecorators;
-        if (is_null($aggregateFactory)) {
-            $aggregateFactory = new PublicConstructorAggregateFactory();
-        }
-        $this->aggregateFactory = $aggregateFactory;
     }
 
     /**
