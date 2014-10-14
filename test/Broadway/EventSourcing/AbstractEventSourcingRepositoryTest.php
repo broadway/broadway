@@ -17,12 +17,15 @@ use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventHandling\SimpleEventBus;
 use Broadway\EventHandling\TraceableEventBus;
+use Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
+use Broadway\EventStore\EventStoreInterface;
 use Broadway\EventStore\InMemoryEventStore;
 use Broadway\EventStore\TraceableEventStore;
 use Broadway\TestCase;
 
 abstract class AbstractEventSourcingRepositoryTest extends TestCase
 {
+    /** @var EventStoreInterface */
     protected $eventStore;
 
     public function setUp()

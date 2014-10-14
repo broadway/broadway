@@ -16,6 +16,7 @@ use Assert\InvalidArgumentException;
 use Broadway\Domain\AggregateRoot;
 use Broadway\Domain\DomainEventStream;
 use Broadway\EventHandling\EventBusInterface;
+use Broadway\EventSourcing\AggregateFactory\AggregateFactoryInterface;
 use Broadway\EventStore\EventStoreInterface;
 use Broadway\EventStore\EventStreamNotFoundException;
 use Broadway\Repository\AggregateNotFoundException;
@@ -30,24 +31,28 @@ class EventSourcingRepository implements RepositoryInterface
     private $eventBus;
     private $aggregateClass;
     private $eventStreamDecorators = array();
+    private $aggregateFactory;
 
     /**
      * @param EventStoreInterface             $eventStore
      * @param EventBusInterface               $eventBus
      * @param string                          $aggregateClass
+     * @param AggregateFactoryInterface       $aggregateFactory
      * @param EventStreamDecoratorInterface[] $eventStreamDecorators
      */
     public function __construct(
         EventStoreInterface $eventStore,
         EventBusInterface $eventBus,
         $aggregateClass,
+        AggregateFactoryInterface $aggregateFactory,
         array $eventStreamDecorators = array()
     ) {
         $this->assertExtendsEventSourcedAggregateRoot($aggregateClass);
 
         $this->eventStore            = $eventStore;
         $this->eventBus              = $eventBus;
-        $this->aggregateClass        = $aggregateClass; // todo: aggregate factory
+        $this->aggregateClass        = $aggregateClass;
+        $this->aggregateFactory      = $aggregateFactory;
         $this->eventStreamDecorators = $eventStreamDecorators;
     }
 
@@ -58,11 +63,7 @@ class EventSourcingRepository implements RepositoryInterface
     {
         try {
             $domainEventStream = $this->eventStore->load($id);
-
-            $aggregate = new $this->aggregateClass();
-            $aggregate->initializeState($domainEventStream);
-
-            return $aggregate;
+            return $this->aggregateFactory->create($this->aggregateClass, $domainEventStream);
         } catch (EventStreamNotFoundException $e) {
             throw AggregateNotFoundException::create($id, $e);
         }

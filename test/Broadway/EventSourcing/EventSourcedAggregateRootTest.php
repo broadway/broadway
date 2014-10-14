@@ -58,9 +58,6 @@ class EventSourcedAggregateRootTest extends TestCase
     public function apply_should_call_the_apply_for_specific_event()
     {
         $aggregateRoot = new MyTestAggregateRoot();
-
-        $this->assertFalse($aggregateRoot->isCalled);
-
         $aggregateRoot->initializeState($this->toDomainEventStream(array(new AggregateEvent())));
 
         $this->assertTrue($aggregateRoot->isCalled);
