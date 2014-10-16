@@ -79,7 +79,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
     /**
      * @test
      */
-    public function it_should_load_an_aggregate()
+    public function it_loads_an_aggregate()
     {
         $this->eventStore->append(42, new DomainEventStream(array(
             DomainMessage::recordNow(42, 0, new Metadata(array()), new DidNumberEvent(1337))

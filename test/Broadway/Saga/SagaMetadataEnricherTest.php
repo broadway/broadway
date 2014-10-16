@@ -28,7 +28,7 @@ class SagaMetadataEnricherTest extends TestCase
     /**
      * @test
      */
-    public function it_should_store_the_state()
+    public function it_stores_the_state()
     {
         $type = 'type';
         $id   = 'id';
@@ -43,7 +43,7 @@ class SagaMetadataEnricherTest extends TestCase
     /**
      * @test
      */
-    public function it_should_use_the_last_saga_data_it_received()
+    public function it_uses_the_latest_saga_data_it_received()
     {
         $this->sagaMetadataEnricher->postHandleSaga('type1', 'id1');
         $this->sagaMetadataEnricher->postHandleSaga('type2', 'id2');
@@ -57,7 +57,7 @@ class SagaMetadataEnricherTest extends TestCase
     /**
      * @test
      */
-    public function it_should_enrich_multiple_instances_of_metadata()
+    public function it_enriches_multiple_instances_of_metadata()
     {
         $this->sagaMetadataEnricher->postHandleSaga('type', 'id');
 

@@ -32,7 +32,7 @@ class EventDispatcherTest extends TestCase
     /**
      * @test
      */
-    public function it_should_call_the_subscribed_listeners()
+    public function it_calls_the_subscribed_listeners()
     {
         $this->dispatcher->addListener('event', array($this->listener1, 'handleEvent'));
         $this->dispatcher->addListener('event', array($this->listener2, 'handleEvent'));
@@ -46,7 +46,7 @@ class EventDispatcherTest extends TestCase
     /**
      * @test
      */
-    public function it_should_only_call_the_listener_subscribed_to_a_given_event()
+    public function it_only_calls_the_listener_subscribed_to_a_given_event()
     {
         $this->dispatcher->addListener('event1', array($this->listener1, 'handleEvent'));
         $this->dispatcher->addListener('event2', array($this->listener2, 'handleEvent'));
