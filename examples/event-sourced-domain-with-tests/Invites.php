@@ -2,8 +2,6 @@
 
 require_once __DIR__ . '/../bootstrap.php';
 
-use Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
-
 /**
  * Invitation aggregate root.
  *
@@ -107,7 +105,7 @@ class InvitationRepository extends Broadway\EventSourcing\EventSourcingRepositor
 {
     public function __construct(Broadway\EventStore\EventStoreInterface $eventStore, Broadway\EventHandling\EventBusInterface $eventBus)
     {
-        parent::__construct($eventStore, $eventBus, 'Invitation', new PublicConstructorAggregateFactory());
+        parent::__construct($eventStore, $eventBus, 'Invitation', new Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory());
     }
 }
 
