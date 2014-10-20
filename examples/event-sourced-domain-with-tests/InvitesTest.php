@@ -2,8 +2,6 @@
 
 require_once __DIR__ . '/Invites.php';
 
-use Broadway\UuidGenerator\Rfc4122\Version4Generator;
-
 /**
  * We drive the tests of our aggregate root through the command handler.
  *
@@ -21,7 +19,7 @@ class InvitationCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
     public function setUp()
     {
         parent::setUp();
-        $this->generator = new Version4Generator();
+        $this->generator = new Broadway\UuidGenerator\Rfc4122\Version4Generator();
     }
 
     protected function createCommandHandler(Broadway\EventStore\EventStoreInterface $eventStore, Broadway\EventHandling\EventBusInterface $eventBus)
