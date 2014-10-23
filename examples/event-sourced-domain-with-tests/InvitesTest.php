@@ -14,6 +14,14 @@ require_once __DIR__ . '/Invites.php';
  */
 class InvitationCommandHandlerTest extends Broadway\CommandHandling\Testing\CommandHandlerScenarioTestCase
 {
+    private $generator;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->generator = new Broadway\UuidGenerator\Rfc4122\Version4Generator();
+    }
+
     protected function createCommandHandler(Broadway\EventStore\EventStoreInterface $eventStore, Broadway\EventHandling\EventBusInterface $eventBus)
     {
         $repository = new InvitationRepository($eventStore, $eventBus);
@@ -26,9 +34,10 @@ class InvitationCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
      */
     public function it_can_invite_someone()
     {
-        $id = 1;
+        $id = $this->generator->generate();
 
         $this->scenario
+            ->withAggregateId($id)
             ->given([])
             ->when(new InviteCommand($id, 'asm89'))
             ->then([new InvitedEvent($id, 'asm89')]);
@@ -39,9 +48,10 @@ class InvitationCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
      */
     public function new_invites_can_be_accepted()
     {
-        $id = 1;
+        $id = $this->generator->generate();
 
         $this->scenario
+            ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89')])
             ->when(new AcceptCommand($id))
             ->then([new AcceptedEvent($id)]);
@@ -52,9 +62,10 @@ class InvitationCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
      */
     public function accepting_an_accepted_invite_yields_no_change()
     {
-        $id = 1;
+        $id = $this->generator->generate();
 
         $this->scenario
+            ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89'), new AcceptedEvent($id)])
             ->when(new AcceptCommand($id))
             ->then([]);
@@ -67,9 +78,10 @@ class InvitationCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
      */
     public function an_accepted_invite_cannot_be_declined()
     {
-        $id = 1;
+        $id = $this->generator->generate();
 
         $this->scenario
+            ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89'), new AcceptedEvent($id)])
             ->when(new DeclineCommand($id));
     }
@@ -79,9 +91,10 @@ class InvitationCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
      */
     public function new_invites_can_be_declined()
     {
-        $id = 1;
+        $id = $this->generator->generate();
 
         $this->scenario
+            ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89')])
             ->when(new DeclineCommand($id))
             ->then([new DeclinedEvent($id)]);
@@ -92,9 +105,10 @@ class InvitationCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
      */
     public function declining_a_declined_invite_yields_no_change()
     {
-        $id = 1;
+        $id = $this->generator->generate();
 
         $this->scenario
+            ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89'), new DeclinedEvent($id)])
             ->when(new DeclineCommand($id))
             ->then([]);
@@ -107,9 +121,10 @@ class InvitationCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
      */
     public function a_declined_invite_cannot_be_accepted()
     {
-        $id = 1;
+        $id = $this->generator->generate();
 
         $this->scenario
+            ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89'), new DeclinedEvent($id)])
             ->when(new AcceptCommand($id));
     }
