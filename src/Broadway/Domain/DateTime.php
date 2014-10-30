@@ -116,7 +116,7 @@ class DateTime
      */
     public function toBeginningOfWeek()
     {
-        return new DateTime(new BaseDateTime($this->dateTime->format('o-\WW-1'), new DateTimeZone('UTC')));
+        return new DateTime(new BaseDateTime($this->dateTime->format('o-\WW-1'), new DateTimeZone('+00:00')));
     }
 
     /**
