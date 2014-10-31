@@ -15,6 +15,9 @@ use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainEventStreamInterface;
 use Broadway\Domain\DomainMessage;
+use Broadway\EventStore\DBAL\Criteria\ParameterRegistry;
+use Broadway\EventStore\Management\CriteriaInterface;
+use Broadway\EventStore\Management\EventStoreManagementInterface;
 use Broadway\Serializer\SerializerInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
@@ -26,7 +29,7 @@ use Doctrine\DBAL\Schema\Schema;
  * The implementation uses doctrine DBAL for the communication with the
  * underlying data store.
  */
-class DBALEventStore implements EventStoreInterface
+class DBALEventStore implements EventStoreInterface, EventStoreManagementInterface
 {
     private $connection;
 
@@ -113,6 +116,48 @@ class DBALEventStore implements EventStoreInterface
         );
 
         $connection->insert($this->tableName, $data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function visitEvents(EventVisitorInterface $visitor, CriteriaInterface $criteria = null)
+    {
+        if ($criteria) {
+            $whereClause = '';
+            $parameterRegistry = new ParameterRegistry();
+            $criteria->parse('', $whereClause, $parameterRegistry);
+            $parameters = $parameterRegistry->getParameters();
+        } else {
+            $whereClause = null;
+            $parameters = array();
+        }
+        $this->doVisitEvents($visitor, $whereClause, $parameters);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function newCriteriaBuilder()
+    {
+        return new DBALCriteriaBuilder();
+    }
+
+    private function doVisitEvents(EventVisitorInterface $visitor, $whereClause, array $parameters)
+    {
+        $connection = $this->connection;
+        $tableName = $this->tableName;
+        $query = sprintf(
+            'SELECT uuid, playhead, metadata, payload, recorded_on FROM %s WHERE %s ORDER BY recorded_on ASC, playhead ASC',
+            $tableName,
+            $whereClause ?: '1'
+        );
+
+        $statement = $connection->prepare($query);
+        $statement->execute($parameters);
+        while ($row = $statement->fetch()) {
+            $visitor->doWithEvent($this->deserializeEvent($row));
+        }
     }
 
     /**
