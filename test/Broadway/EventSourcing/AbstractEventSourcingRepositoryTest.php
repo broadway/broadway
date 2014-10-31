@@ -13,6 +13,7 @@ namespace Broadway\EventSourcing;
 
 use Broadway\Domain\AggregateRoot;
 use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\DomainEventStreamInterface;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventHandling\SimpleEventBus;
@@ -185,7 +186,7 @@ class TraceableEventstoreDecorator implements EventStreamDecoratorInterface
     private $tracing = false;
     private $calls;
 
-    public function decorateForWrite($aggregateType, $aggregateIdentifier, DomainEventStream $eventStream)
+    public function decorateForWrite($aggregateType, $aggregateIdentifier, DomainEventStreamInterface $eventStream)
     {
         if ($this->tracing) {
             $this->calls[] = array('aggregateType' => $aggregateType, 'aggregateIdentifier' => $aggregateIdentifier, 'eventStream' => $eventStream);
