@@ -11,7 +11,7 @@
 
 namespace Broadway\EventHandling;
 
-use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\DomainEventStreamInterface;
 
 /**
  * Event bus that is able to record all dispatched events.
@@ -38,7 +38,7 @@ class TraceableEventBus implements EventBusInterface
     /**
      * {@inheritDoc}
      */
-    public function publish(DomainEventStream $domainMessages)
+    public function publish(DomainEventStreamInterface $domainMessages)
     {
         $this->eventBus->publish($domainMessages);
 
