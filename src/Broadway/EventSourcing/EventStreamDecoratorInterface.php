@@ -11,7 +11,7 @@
 
 namespace Broadway\EventSourcing;
 
-use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\DomainEventStreamInterface;
 
 /**
  * Interface implemented by event stream decorators.
@@ -23,11 +23,11 @@ use Broadway\Domain\DomainEventStream;
 interface EventStreamDecoratorInterface
 {
     /**
-     * @param string            $aggregateType
-     * @param string            $aggregateIdentifier
-     * @param DomainEventStream $eventStream
+     * @param string                     $aggregateType
+     * @param string                     $aggregateIdentifier
+     * @param DomainEventStreamInterface $eventStream
      *
-     * @return DomainEventStream
+     * @return DomainEventStreamInterface
      */
-    public function decorateForWrite($aggregateType, $aggregateIdentifier, DomainEventStream $eventStream);
+    public function decorateForWrite($aggregateType, $aggregateIdentifier, DomainEventStreamInterface $eventStream);
 }
