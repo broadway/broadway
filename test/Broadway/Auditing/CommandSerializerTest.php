@@ -45,7 +45,7 @@ class CommandSerializerTest extends TestCase
 
 class MyCommand
 {
-    public    $public    = 'public';
+    public $public    = 'public';
     protected $protected = 'protected';
-    private   $private   = 'private';
+    private $private   = 'private';
 }

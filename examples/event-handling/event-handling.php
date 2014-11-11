@@ -18,7 +18,7 @@ $eventBus->subscribe($eventListener);
 
 // Create a domain event stream to publish
 $metadata          = new Broadway\Domain\Metadata(array('source' => 'example'));
-$domainMessage     = Broadway\Domain\DomainMessage::recordNow(42, 1, $metadata, new stdClass);
+$domainMessage     = Broadway\Domain\DomainMessage::recordNow(42, 1, $metadata, new stdClass());
 $domainEventStream = new Broadway\Domain\DomainEventStream(array($domainMessage));
 
 // Publish the message, and get output from the event handler \o/

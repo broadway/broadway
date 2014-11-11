@@ -4,7 +4,6 @@ namespace Broadway\EventSourcing\AggregateFactory;
 
 use Assert\Assertion as Assert;
 use Broadway\Domain\DomainEventStreamInterface;
-use Broadway\EventSourcing\EventSourcedAggregateRoot;
 
 /**
  * Creates aggregates by passing a DomainEventStream to the given public static method

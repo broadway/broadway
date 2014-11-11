@@ -10,7 +10,7 @@ use Broadway\Domain\DomainEventStreamInterface;
 interface AggregateFactoryInterface
 {
     /**
-     * @param string $aggregateClass the FQCN of the Aggregate to create
+     * @param string                     $aggregateClass    the FQCN of the Aggregate to create
      * @param DomainEventStreamInterface $domainEventStream
      *
      * @return \Broadway\EventSourcing\EventSourcedAggregateRoot

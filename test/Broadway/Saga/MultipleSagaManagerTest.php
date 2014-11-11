@@ -260,9 +260,9 @@ class SagaManagerTestSaga implements StaticallyConfiguredSagaInterface
     public static function configuration()
     {
         return array(
-            'TestEvent1'    => function() { return new Criteria(array('appId' => 42)); },
-            'TestEvent2'    => function() { },
-            'TestEventDone' => function() { return new Criteria(array('appId' => 42)); },
+            'TestEvent1'    => function () { return new Criteria(array('appId' => 42)); },
+            'TestEvent2'    => function () { },
+            'TestEventDone' => function () { return new Criteria(array('appId' => 42)); },
         );
     }
 }

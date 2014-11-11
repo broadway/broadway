@@ -16,7 +16,7 @@ class PublicConstructorAggregateFactory implements AggregateFactoryInterface
      */
     public function create($aggregateClass, DomainEventStreamInterface $domainEventStream)
     {
-        $aggregate = new $aggregateClass;
+        $aggregate = new $aggregateClass();
         $aggregate->initializeState($domainEventStream);
 
         return $aggregate;

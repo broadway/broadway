@@ -28,7 +28,7 @@ class StaticallyConfiguredSagaMetadataFactoryTest extends TestCase
         $saga = $this->getMockBuilder('Broadway\Saga\Metadata\StaticallyConfiguredSagaInterface')->getMock();
         $saga->staticExpects($this->any())
             ->method('configuration')
-            ->will($this->returnValue(array('StaticallyConfiguredSagaMetadataFactoryTestEvent' => function($event) use ($criteria) { return $criteria;})));
+            ->will($this->returnValue(array('StaticallyConfiguredSagaMetadataFactoryTestEvent' => function ($event) use ($criteria) { return $criteria;})));
 
         $metadata = $metadataFactory->create($saga);
 
