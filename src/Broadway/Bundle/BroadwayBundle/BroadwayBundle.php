@@ -12,6 +12,7 @@
 namespace Broadway\Bundle\BroadwayBundle;
 
 use Broadway\Bundle\BroadwayBundle\Command\SchemaEventStoreCreateCommand;
+use Broadway\Bundle\BroadwayBundle\Command\SchemaEventStoreDropCommand;
 use Broadway\Bundle\BroadwayBundle\DependencyInjection\RegisterBusSubscribersCompilerPass;
 use Broadway\Bundle\BroadwayBundle\DependencyInjection\RegisterEventListenerCompilerPass;
 use Broadway\Bundle\BroadwayBundle\DependencyInjection\RegisterMetadataEnricherSubscriberPass;
@@ -65,5 +66,6 @@ class BroadwayBundle extends Bundle
     public function registerCommands(Application $application)
     {
         $application->add(new SchemaEventStoreCreateCommand());
+        $application->add(new SchemaEventStoreDropCommand());
     }
 }
