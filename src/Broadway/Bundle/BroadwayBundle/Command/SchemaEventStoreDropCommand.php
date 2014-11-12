@@ -13,6 +13,7 @@ namespace Broadway\Bundle\BroadwayBundle\Command;
 
 use Broadway\EventStore\DBALEventStore;
 use Doctrine\Bundle\DoctrineBundle\Command\DoctrineCommand;
+use Exception;
 use RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -56,7 +57,7 @@ EOT
             $schemaManager->dropTable($table->getName());
 
             $output->writeln('<info>Dropped schema</info>');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $output->writeln('<error>Could not drop schema</error>');
             $output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
             $error = true;

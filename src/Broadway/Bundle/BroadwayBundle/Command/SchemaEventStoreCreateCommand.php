@@ -13,6 +13,7 @@ namespace Broadway\Bundle\BroadwayBundle\Command;
 
 use Broadway\EventStore\DBALEventStore;
 use Doctrine\Bundle\DoctrineBundle\Command\DoctrineCommand;
+use Exception;
 use RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -57,7 +58,7 @@ EOT
             $schemaManager->createTable($table);
 
             $output->writeln('<info>Created schema</info>');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $output->writeln('<error>Could not create schema</error>');
             $output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
             $error = true;
