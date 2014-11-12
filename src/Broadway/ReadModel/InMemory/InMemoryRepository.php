@@ -29,7 +29,7 @@ class InMemoryRepository implements RepositoryInterface, TransferableInterface
      */
     public function save(ReadModelInterface $model)
     {
-        $this->data[$model->getId()] = $model;
+        $this->data[(string) $model->getId()] = $model;
     }
 
     /**
@@ -37,6 +37,7 @@ class InMemoryRepository implements RepositoryInterface, TransferableInterface
      */
     public function find($id)
     {
+        $id = (string) $id;
         if (isset($this->data[$id])) {
             return $this->data[$id];
         }
@@ -93,6 +94,6 @@ class InMemoryRepository implements RepositoryInterface, TransferableInterface
      */
     public function remove($id)
     {
-        unset($this->data[$id]);
+        unset($this->data[(string) $id]);
     }
 }
