@@ -14,7 +14,7 @@ namespace Broadway\Saga;
 use Broadway\Saga\State\Criteria;
 use Broadway\TestCase;
 
-class SagaStateCriteriaTest extends TestCase
+class CriteriaTest extends TestCase
 {
     /**
      * @test

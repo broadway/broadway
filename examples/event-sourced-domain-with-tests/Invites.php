@@ -166,7 +166,6 @@ class AcceptedEvent extends InvitationEvent { }
 class DeclineCommand extends InvitationCommand { }
 class DeclinedEvent extends InvitationEvent { }
 
-
 /*
  * A command handler will be registered with the command bus and handle the
  * commands that are dispatched. The command handler can be seen as a small

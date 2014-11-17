@@ -25,7 +25,7 @@ class MongoDBRepositoryTest extends AbstractRepositoryTest
     protected function createRepository()
     {
         $config = new Configuration();
-        $config->setLoggerCallable(function($msg) {});
+        $config->setLoggerCallable(function ($msg) {});
         $this->connection = new Connection(null, array(), $config);
         $db   = $this->connection->selectDatabase(self::$dbName);
         $coll = $db->createCollection('test');

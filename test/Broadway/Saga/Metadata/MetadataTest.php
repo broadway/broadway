@@ -11,7 +11,6 @@
 
 namespace Broadway\Saga\Metadata;
 
-use Broadway\Saga\State;
 use Broadway\TestCase;
 
 class StaticallyConfiguredSagaMetadataTest extends TestCase
@@ -21,7 +20,7 @@ class StaticallyConfiguredSagaMetadataTest extends TestCase
     public function setUp()
     {
         $this->metadata = new Metadata(array(
-            'StaticallyConfiguredSagaMetadataTestSagaTestEvent1' => function() { return 'criteria'; },
+            'StaticallyConfiguredSagaMetadataTestSagaTestEvent1' => function () { return 'criteria'; },
         ));
     }
 
