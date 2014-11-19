@@ -11,7 +11,7 @@
 
 namespace Broadway\Saga;
 
-class Saga implements SagaInterface
+abstract class Saga implements SagaInterface
 {
     /**
      * {@inheritDoc}
