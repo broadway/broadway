@@ -13,7 +13,7 @@ namespace Broadway\ReadModel\ElasticSearch;
 
 use Broadway\ReadModel\RepositoryFactoryInterface;
 use Broadway\Serializer\SerializerInterface;
-use ElasticSearch\Client;
+use Elasticsearch\Client;
 
 /**
  * Creates Elasticsearch repositories.
