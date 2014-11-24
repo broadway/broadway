@@ -2,7 +2,7 @@
 
 namespace Broadway\EventSourcing\AggregateFactory;
 
-use Assert\Assertion as Assert;
+use Broadway\Assert\Assertion as Assert;
 use Broadway\Domain\DomainEventStreamInterface;
 
 /**

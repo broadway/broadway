@@ -11,7 +11,7 @@
 
 namespace Broadway\Serializer;
 
-use Assert\Assertion as Assert;
+use Broadway\Assert\Assertion as Assert;
 
 /**
  * Serializer that serializes objects that implement a specific interface.
