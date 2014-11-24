@@ -30,7 +30,7 @@ class NamedConstructorAggregateFactory implements AggregateFactoryInterface
         Assert::true(method_exists($aggregateClass, $this->staticConstructorMethod));
 
         $methodCall = sprintf('%s::%s', $aggregateClass, $this->staticConstructorMethod);
-        $aggregate = call_user_func($methodCall);
+        $aggregate  = call_user_func($methodCall);
 
         Assert::isInstanceOf($aggregate, $aggregateClass);
 

@@ -137,5 +137,4 @@ class Command
 
 class MyException extends \Exception
 {
-
 }

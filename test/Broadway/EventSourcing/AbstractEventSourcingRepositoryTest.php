@@ -206,7 +206,7 @@ class TraceableEventstoreDecorator implements EventStreamDecoratorInterface
 
     public function getLastCall()
     {
-        if ( ! $this->isCalled()) {
+        if (! $this->isCalled()) {
             throw new RuntimeException('was never called');
         }
 

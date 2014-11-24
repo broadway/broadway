@@ -66,5 +66,9 @@ class StaticallyConfiguredSagaMetadataTest extends TestCase
     }
 }
 
-class StaticallyConfiguredSagaMetadataTestSagaTestEvent1 {}
-class StaticallyConfiguredSagaMetadataTestSagaTestEvent2 {}
+class StaticallyConfiguredSagaMetadataTestSagaTestEvent1
+{
+}
+class StaticallyConfiguredSagaMetadataTestSagaTestEvent2
+{
+}

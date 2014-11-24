@@ -161,10 +161,18 @@ class InvitedEvent extends Invitationevent
 }
 
 // The meaning from these commands and events can be found in the name :)
-class AcceptCommand extends InvitationCommand { }
-class AcceptedEvent extends InvitationEvent { }
-class DeclineCommand extends InvitationCommand { }
-class DeclinedEvent extends InvitationEvent { }
+class AcceptCommand extends InvitationCommand
+{
+}
+class AcceptedEvent extends InvitationEvent
+{
+}
+class DeclineCommand extends InvitationCommand
+{
+}
+class DeclinedEvent extends InvitationEvent
+{
+}
 
 /*
  * A command handler will be registered with the command bus and handle the

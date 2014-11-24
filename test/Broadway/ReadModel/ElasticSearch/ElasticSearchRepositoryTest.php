@@ -47,9 +47,9 @@ class ElasticSearchRepositoryTest extends RepositoryTestCase
      */
     public function it_creates_an_index_with_non_analyzed_terms()
     {
-        $type = 'class';
-        $nonAnalyzedTerm = 'name';
-        $index = 'test_non_analyzed_index';
+        $type             = 'class';
+        $nonAnalyzedTerm  = 'name';
+        $index            = 'test_non_analyzed_index';
         $this->repository = new ElasticSearchRepository(
             $this->client,
             new SimpleInterfaceSerializer(),

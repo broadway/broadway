@@ -32,8 +32,12 @@ class BaseCommand
     }
 }
 
-class ExampleCommand extends BaseCommand {}
-class ExampleFailureCommand extends BaseCommand {}
+class ExampleCommand extends BaseCommand
+{
+}
+class ExampleFailureCommand extends BaseCommand
+{
+}
 
 // Setup the system to handle commands
 $commandHandler   = new ExampleCommandHandler();

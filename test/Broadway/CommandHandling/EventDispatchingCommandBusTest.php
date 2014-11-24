@@ -104,5 +104,4 @@ use Exception;
 
 class MyException extends Exception
 {
-
 }
