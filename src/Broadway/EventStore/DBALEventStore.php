@@ -116,7 +116,7 @@ class DBALEventStore implements EventStoreInterface
     }
 
     /**
-     * @return Doctrine\DBAL\Schema\Table|null
+     * @return \Doctrine\DBAL\Schema\Table|null
      */
     public function configureSchema(Schema $schema)
     {
