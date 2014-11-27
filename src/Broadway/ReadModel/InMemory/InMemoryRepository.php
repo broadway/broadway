@@ -25,7 +25,7 @@ class InMemoryRepository implements RepositoryInterface, TransferableInterface
     private $data = array();
 
     /**
-     * {@inhericDoc}
+     * {@inheritDoc}
      */
     public function save(ReadModelInterface $model)
     {
@@ -33,7 +33,7 @@ class InMemoryRepository implements RepositoryInterface, TransferableInterface
     }
 
     /**
-     * {@inhericDoc}
+     * {@inheritDoc}
      */
     public function find($id)
     {
@@ -89,7 +89,7 @@ class InMemoryRepository implements RepositoryInterface, TransferableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function remove($id)
     {

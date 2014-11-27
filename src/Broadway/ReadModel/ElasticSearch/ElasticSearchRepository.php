@@ -48,7 +48,7 @@ class ElasticSearchRepository implements RepositoryInterface
     }
 
     /**
-     * {@inhericDoc}
+     * {@inheritDoc}
      */
     public function save(ReadModelInterface $data)
     {
@@ -66,7 +66,7 @@ class ElasticSearchRepository implements RepositoryInterface
     }
 
     /**
-     * {@inhericDoc}
+     * {@inheritDoc}
      */
     public function find($id)
     {
@@ -86,7 +86,7 @@ class ElasticSearchRepository implements RepositoryInterface
     }
 
     /**
-     * {@inhericDoc}
+     * {@inheritDoc}
      */
     public function findBy(array $fields)
     {
