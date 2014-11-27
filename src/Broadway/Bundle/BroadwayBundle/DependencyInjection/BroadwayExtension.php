@@ -39,6 +39,7 @@ class BroadwayExtension extends Extension
         $this->loadSagaStateRepository($config['saga'], $container, $loader);
         $this->loadReadModelRepository($config['read_model'], $container, $loader);
         $this->loadCommandBus($config['command_handling'], $container);
+        $this->loadEventStore($config['event_store'], $container);
     }
 
     private function loadCommandBus(array $config, ContainerBuilder $container)
@@ -91,6 +92,14 @@ class BroadwayExtension extends Extension
                 $this->configInMemory($container);
                 break;
         }
+    }
+
+    private function loadEventStore(array $config, ContainerBuilder $container)
+    {
+        $container->setParameter(
+            'broadway.event_store.dbal.table',
+            $config['dbal']['table']
+        );
     }
 
     private function configElasticsearch(array $config, ContainerBuilder $container)
