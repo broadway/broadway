@@ -28,7 +28,9 @@ class RegisterBusSubscribersCompilerPassTest extends TestCase
 
     public function setUp()
     {
-        $this->builder    = $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder');
+        $this->builder    = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
+            ->setMethods(array('getParameterBag', 'getDefinition', 'hasDefinition', 'findDefinition', 'findTaggedServiceIds'))
+            ->getMock();
         $this->commandBus = $this->getMock('Symfony\Component\DependencyInjection\Definition');
     }
 
