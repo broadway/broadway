@@ -11,6 +11,8 @@ together to provide a full CQRS\ES experience.
 
 [![Build Status](https://travis-ci.org/qandidate-labs/broadway.svg?branch=master)](https://travis-ci.org/qandidate-labs/broadway)
 
+Feel free to join #qandidate on freenode with questions and remarks!
+
 ## About
 
 Read the blog post about this repository at:
