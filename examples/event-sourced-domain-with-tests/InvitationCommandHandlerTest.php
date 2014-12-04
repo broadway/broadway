@@ -2,16 +2,17 @@
 
 require_once __DIR__ . '/Invites.php';
 
-/**.
+/**
+ * We drive the tests of our aggregate root through the command handler.
  *
- * An aggregate root scenario consists of three steps:
+ * A command handler scenario consists of three steps:
  *
  * - First, the scenario is setup with a history of events that already took place.
- * - Second, an action is taken on the aggregate.
+ * - Second, a command is dispatched (this is handled by the command handler)
  * - Third, the outcome is asserted. This can either be 1) some events are
  *   recorded, or 2) an exception is thrown.
  */
-class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTestCase
+class InvitationCommandHandlerTest extends Broadway\CommandHandling\Testing\CommandHandlerScenarioTestCase
 {
     private $generator;
 
@@ -21,9 +22,11 @@ class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenari
         $this->generator = new Broadway\UuidGenerator\Rfc4122\Version4Generator();
     }
 
-    protected function getAggregateRootClass()
+    protected function createCommandHandler(Broadway\EventStore\EventStoreInterface $eventStore, Broadway\EventHandling\EventBusInterface $eventBus)
     {
-        return Invitation::class;
+        $repository = new InvitationRepository($eventStore, $eventBus);
+
+        return new InvitationCommandHandler($repository);
     }
 
     /**
@@ -34,9 +37,9 @@ class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenari
         $id = $this->generator->generate();
 
         $this->scenario
-            ->when(function() use ($id) {
-                return Invitation::invite($id, 'asm89');
-            })
+            ->withAggregateId($id)
+            ->given([])
+            ->when(new InviteCommand($id, 'asm89'))
             ->then([new InvitedEvent($id, 'asm89')]);
     }
 
@@ -50,9 +53,7 @@ class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenari
         $this->scenario
             ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89')])
-            ->when(function($invite) {
-                $invite->accept();
-            })
+            ->when(new AcceptCommand($id))
             ->then([new AcceptedEvent($id)]);
     }
 
@@ -66,9 +67,7 @@ class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenari
         $this->scenario
             ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89'), new AcceptedEvent($id)])
-            ->when(function($aggregate) {
-                $aggregate->accept();
-            })
+            ->when(new AcceptCommand($id))
             ->then([]);
     }
 
@@ -84,9 +83,7 @@ class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenari
         $this->scenario
             ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89'), new AcceptedEvent($id)])
-            ->when(function ($invite) {
-                $invite->decline();
-            });
+            ->when(new DeclineCommand($id));
     }
 
     /**
@@ -99,9 +96,7 @@ class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenari
         $this->scenario
             ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89')])
-            ->when(function($invite) {
-                $invite->decline();
-            })
+            ->when(new DeclineCommand($id))
             ->then([new DeclinedEvent($id)]);
     }
 
@@ -115,9 +110,7 @@ class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenari
         $this->scenario
             ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89'), new DeclinedEvent($id)])
-            ->when(function($invite) {
-                $invite->decline();
-            })
+            ->when(new DeclineCommand($id))
             ->then([]);
     }
 
@@ -133,8 +126,6 @@ class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenari
         $this->scenario
             ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89'), new DeclinedEvent($id)])
-            ->when(function($invite) {
-                $invite->accept();
-            });
+            ->when(new AcceptCommand($id));
     }
 }
