@@ -97,7 +97,11 @@ class EventSourcingRepository implements RepositoryInterface
 
     private function assertExtendsEventSourcedAggregateRoot($class)
     {
-        Assert::subclassOf($class, 'Broadway\EventSourcing\EventSourcedAggregateRoot');
+        Assert::subclassOf(
+            $class,
+            'Broadway\EventSourcing\EventSourcedAggregateRoot',
+            sprintf("Class '%s' is not an EventSourcedAggregateRoot.", $class)
+        );
     }
 
     private function getType()
