@@ -11,7 +11,7 @@
 
 namespace Broadway\EventSourcing;
 
-use Broadway\Assert\Assertion as Assert;
+use Assert\Assertion as Assert;
 use Broadway\Domain\AggregateRoot;
 use Broadway\Domain\DomainEventStream;
 use Broadway\EventHandling\EventBusInterface;
