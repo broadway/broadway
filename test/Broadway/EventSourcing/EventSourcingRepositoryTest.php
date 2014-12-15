@@ -52,12 +52,12 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
         )));
 
         $repository = $this->repositoryWithStaticAggregateFactory();
-        $aggregate = $repository->load('y0l0');
+        $aggregate  = $repository->load('y0l0');
         $this->assertTrue($aggregate->constructorWasCalled);
         $this->assertEquals($aggregate->instantiatedThrough, 'instantiateForReconstitution');
 
         $repository = $this->repositoryWithStaticAggregateFactory('justAnotherInstantiation');
-        $aggregate = $repository->load('y0l0');
+        $aggregate  = $repository->load('y0l0');
         $this->assertTrue($aggregate->constructorWasCalled);
         $this->assertEquals($aggregate->instantiatedThrough, 'justAnotherInstantiation');
     }
@@ -119,7 +119,7 @@ class TestEventSourcedAggregateWithStaticConstructor extends EventSourcedAggrega
     private function __construct($instantiatedThrough)
     {
         $this->constructorWasCalled = true;
-        $this->instantiatedThrough = $instantiatedThrough;
+        $this->instantiatedThrough  = $instantiatedThrough;
     }
 
     public function getAggregateRootId()

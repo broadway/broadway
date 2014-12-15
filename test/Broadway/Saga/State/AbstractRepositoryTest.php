@@ -11,8 +11,8 @@
 
 namespace Broadway\Saga\State;
 
-use Broadway\TestCase;
 use Broadway\Saga\State;
+use Broadway\TestCase;
 
 abstract class AbstractRepositoryTest extends TestCase
 {
@@ -30,7 +30,9 @@ abstract class AbstractRepositoryTest extends TestCase
      */
     public function it_saves_a_state()
     {
-        $s1 = new State(1); $s1->set('appId', 42); $this->repository->save($s1, 'sagaId');
+        $s1 = new State(1);
+        $s1->set('appId', 42);
+        $this->repository->save($s1, 'sagaId');
 
         $found = $this->repository->findOneBy(new Criteria(array('appId' => 42)), 'sagaId');
 
@@ -42,7 +44,9 @@ abstract class AbstractRepositoryTest extends TestCase
      */
     public function it_removes_a_state_when_state_is_done()
     {
-        $s1 = new State(1); $s1->set('appId', 42); $this->repository->save($s1, 'sagaId');
+        $s1 = new State(1);
+        $s1->set('appId', 42);
+        $this->repository->save($s1, 'sagaId');
         $criteria = new Criteria(array('appId' => 42));
 
         $found = $this->repository->findOneBy($criteria, 'sagaId');
@@ -99,8 +103,12 @@ abstract class AbstractRepositoryTest extends TestCase
      */
     public function it_throws_an_exception_if_multiple_matching_elements_are_found()
     {
-        $s1 = new State(1); $s1->set('appId', 42); $this->repository->save($s1, 'sagaId');
-        $s2 = new State(2); $s2->set('appId', 42); $this->repository->save($s2, 'sagaId');
+        $s1 = new State(1);
+        $s1->set('appId', 42);
+        $this->repository->save($s1, 'sagaId');
+        $s2 = new State(2);
+        $s2->set('appId', 42);
+        $this->repository->save($s2, 'sagaId');
 
         $this->repository->findOneBy(new Criteria(array('appId' => 42)), 'sagaId');
     }
@@ -110,8 +118,12 @@ abstract class AbstractRepositoryTest extends TestCase
      */
     public function saving_a_state_object_with_the_same_id_only_keeps_the_last_one()
     {
-        $s1 = new State(31415); $s1->set('appId', 42); $this->repository->save($s1, 'sagaId');
-        $s2 = new State(31415); $s2->set('appId', 1337); $this->repository->save($s2, 'sagaId');
+        $s1 = new State(31415);
+        $s1->set('appId', 42);
+        $this->repository->save($s1, 'sagaId');
+        $s2 = new State(31415);
+        $s2->set('appId', 1337);
+        $this->repository->save($s2, 'sagaId');
 
         $found = $this->repository->findOneBy(new Criteria(array('appId' => 1337)), 'sagaId');
 

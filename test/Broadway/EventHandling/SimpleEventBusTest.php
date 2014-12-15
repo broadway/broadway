@@ -24,7 +24,6 @@ class SimpleEventBusTest extends TestCase
     public function setUp()
     {
         $this->eventBus = new SimpleEventBus();
-
     }
     /**
      * @test

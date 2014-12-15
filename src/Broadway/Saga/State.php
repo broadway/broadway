@@ -96,8 +96,8 @@ class State implements SerializableInterface
      */
     public static function deserialize(array $data)
     {
-        $state = new State($data['id']);
-        $state->done = $data['done'];
+        $state         = new State($data['id']);
+        $state->done   = $data['done'];
         $state->values = $data['values'];
 
         return $state;

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-if (file_exists($file = __DIR__.'/../vendor/autoload.php')) {
+if (file_exists($file = __DIR__ . '/../vendor/autoload.php')) {
     $loader = require_once $file;
     $loader->add('Broadway', __DIR__);
 } else {

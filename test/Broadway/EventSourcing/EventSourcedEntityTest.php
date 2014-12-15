@@ -32,7 +32,6 @@ class EventSourcedEntityTest extends TestCase
         $child->addChildEntity($mock);
 
         $aggregateRoot->doApply();
-
     }
 
     /**
@@ -47,7 +46,7 @@ class EventSourcedEntityTest extends TestCase
         $child         = new Entity();
         $grandChild    = new Entity();
 
-        $aggregateRoot->addChildEntity($child );
+        $aggregateRoot->addChildEntity($child);
 
         $child->addChildEntity($grandChild);
         $aggregateRoot->doHandleRecursively();  // Initialize tree structure
@@ -119,7 +118,6 @@ class Entity extends EventSourcedEntity
 
     protected function applyEvent($event)
     {
-
     }
 
     public function doApply()

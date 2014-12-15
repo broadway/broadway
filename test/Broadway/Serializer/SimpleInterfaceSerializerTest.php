@@ -62,7 +62,7 @@ class SimpleInterfaceSerializerTest extends TestCase
         $object = new TestSerializable('bar');
 
         $this->assertEquals(array(
-            'class' => 'Broadway\Serializer\TestSerializable',
+            'class'   => 'Broadway\Serializer\TestSerializable',
             'payload' => array('foo' => 'bar')
         ), $this->serializer->serialize($object));
     }
@@ -84,7 +84,7 @@ class SimpleInterfaceSerializerTest extends TestCase
     {
         $object = new TestSerializable('bar');
 
-        $serialized = $this->serializer->serialize($object);
+        $serialized   = $this->serializer->serialize($object);
         $deserialized = $this->serializer->deserialize($serialized);
 
         $this->assertEquals($object, $deserialized);
