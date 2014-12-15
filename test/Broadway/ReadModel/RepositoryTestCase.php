@@ -39,6 +39,19 @@ abstract class RepositoryTestCase extends TestCase
     /**
      * @test
      */
+    public function it_saves_and_finds_read_models_with_a_value_object_id()
+    {
+        $id     = new TestReadModelId('42');
+        $model  = $this->createReadModel($id, 'othillo', 'bar');
+
+        $this->repository->save($model);
+
+        $this->assertEquals($model, $this->repository->find($id));
+    }
+
+    /**
+     * @test
+     */
     public function it_returns_null_if_not_found_on_empty_repo()
     {
         $this->assertEquals(null, $this->repository->find(2));
@@ -155,8 +168,38 @@ abstract class RepositoryTestCase extends TestCase
         $this->assertEquals(array(), $this->repository->findAll());
     }
 
+    /**
+     * @test
+     */
+    public function it_removes_a_read_model_using_a_value_object_as_its_id()
+    {
+        $id = new TestReadModelId('175');
+
+        $model = $this->createReadModel($id, 'Bado', 'Foo', array('foo' => 'bar'));
+        $this->repository->save($model);
+
+        $this->repository->remove($id);
+
+        $this->assertEquals(array(), $this->repository->findAll());
+    }
+
     private function createReadModel($id, $name, $foo, array $array = array())
     {
         return new RepositoryTestReadModel($id, $name, $foo, $array);
+    }
+}
+
+class TestReadModelId
+{
+    private $value;
+
+    public function __construct($value)
+    {
+        $this->value = $value;
+    }
+
+    public function __toString()
+    {
+        return $this->value;
     }
 }

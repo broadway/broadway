@@ -22,7 +22,7 @@ class RepositoryTestReadModel implements ReadModelInterface, SerializableInterfa
 
     public function __construct($id, $name, $foo, array $array)
     {
-        $this->id    = $id;
+        $this->id    = (string) $id;
         $this->name  = $name;
         $this->foo   = $foo;
         $this->array = $array;

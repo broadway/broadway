@@ -24,7 +24,7 @@ class InMemoryRepositoryTest extends RepositoryTestCase
     /**
      * @test
      */
-    public function it_can_be_transfered_to_another_repository()
+    public function it_can_be_transferred_to_another_repository()
     {
         $repository = $this->createRepository();
 
