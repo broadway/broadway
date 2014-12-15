@@ -12,7 +12,6 @@
 namespace Broadway\EventSourcing;
 
 use Assert\Assertion as Assert;
-use Assert\InvalidArgumentException;
 use Broadway\Domain\AggregateRoot;
 use Broadway\Domain\DomainEventStream;
 use Broadway\EventHandling\EventBusInterface;
@@ -96,14 +95,13 @@ class EventSourcingRepository implements RepositoryInterface
         return $eventStream;
     }
 
-    // todo: move to assert lib?
     private function assertExtendsEventSourcedAggregateRoot($class)
     {
-        $parents = class_parents($class);
-
-        if (! in_array('Broadway\EventSourcing\EventSourcedAggregateRoot', $parents)) {
-            throw new InvalidArgumentException(sprintf("Class '%s' is not an EventSourcedAggregateRoot.", $class), -1);
-        }
+        Assert::subclassOf(
+            $class,
+            'Broadway\EventSourcing\EventSourcedAggregateRoot',
+            sprintf("Class '%s' is not an EventSourcedAggregateRoot.", $class)
+        );
     }
 
     private function getType()
