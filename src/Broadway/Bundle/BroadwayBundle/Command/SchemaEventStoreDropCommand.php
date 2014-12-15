@@ -19,9 +19,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Creates the event store schema.
+ * Drops the event store schema.
  */
-class SchemaEventStoreCreateCommand extends DoctrineCommand
+class SchemaEventStoreDropCommand extends DoctrineCommand
 {
     /**
      * {@inheritDoc}
@@ -29,14 +29,14 @@ class SchemaEventStoreCreateCommand extends DoctrineCommand
     protected function configure()
     {
         $this
-            ->setName('broadway:event-store:schema:init')
-            ->setDescription('Creates the event store schema')
+            ->setName('broadway:event-store:schema:drop')
+            ->setDescription('Drops the event store schema')
             ->setHelp(
 <<<EOT
-The <info>broadway:event-store:schema:init</info> command creates the schema in the default
+The <info>broadway:event-store:schema:drop</info> command drops the schema in the default
 connections database:
 
-<info>php app/console broadway:schema:event_store:create</info>
+<info>php app/console broadway:schema:event_store:drop</info>
 EOT
             );
     }
@@ -51,15 +51,14 @@ EOT
         $error = false;
         try {
             $schemaManager = $connection->getSchemaManager();
-            $schema        = $schemaManager->createSchema();
             $eventStore    = $this->getEventStore();
 
-            $table = $eventStore->configureSchema($schema);
-            $schemaManager->createTable($table);
+            $table = $eventStore->configureTable();
+            $schemaManager->dropTable($table->getName());
 
-            $output->writeln('<info>Created schema</info>');
+            $output->writeln('<info>Dropped schema</info>');
         } catch (Exception $e) {
-            $output->writeln('<error>Could not create schema</error>');
+            $output->writeln('<error>Could not drop schema</error>');
             $output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
             $error = true;
         }
