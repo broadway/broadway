@@ -25,7 +25,9 @@ class ElasticSearchRepositoryFactoryTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $repository = new ElasticSearchRepository($client, $serializer, 'test', 'Class');
+        $objectRepository = new ElsaticSearchSerializableObjectRepository($client, $serializer, 'test', 'Class');
+
+        $repository = new ElasticSearchRepository($objectRepository);
         $factory    = new ElasticSearchRepositoryFactory($client, $serializer);
 
         $this->assertEquals($repository, $factory->create('test', 'Class'));
@@ -41,7 +43,9 @@ class ElasticSearchRepositoryFactoryTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $repository = new ElasticSearchRepository($client, $serializer, 'test', 'Class', array('id'));
+        $objectRepository = new ElsaticSearchSerializableObjectRepository($client, $serializer, 'test', 'Class', array('id'));
+
+        $repository = new ElasticSearchRepository($objectRepository);
         $factory    = new ElasticSearchRepositoryFactory($client, $serializer);
 
         $this->assertEquals($repository, $factory->create('test', 'Class', array('id')));
