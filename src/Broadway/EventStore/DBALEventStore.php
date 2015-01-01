@@ -101,6 +101,22 @@ class DBALEventStore implements EventStoreInterface
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getStreamIds()
+    {
+        $statement = $this->connection->prepare('SELECT DISTINCT uuid FROM ' . $this->tableName);
+        $statement->execute();
+
+        return array_map(
+            function($row) {
+                return $row['uuid'];
+            },
+            $statement->fetchAll()
+        );
+    }
+
     private function insertMessage(Connection $connection, DomainMessage $domainMessage)
     {
         $data = array(

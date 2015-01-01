@@ -65,6 +65,14 @@ class TraceableEventStore implements EventStoreInterface
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function getStreamIds()
+    {
+        return $this->eventStore->getStreamIds();
+    }
+
+    /**
      * Start tracing.
      */
     public function trace()

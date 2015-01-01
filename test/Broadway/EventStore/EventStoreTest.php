@@ -20,6 +20,7 @@ use Broadway\TestCase;
 
 abstract class EventStoreTest extends TestCase
 {
+    /** @var EventStoreInterface */
     protected $eventStore;
 
     /**
@@ -71,6 +72,38 @@ abstract class EventStoreTest extends TestCase
             $this->createDomainMessage($id, 5, $dateTime),
         ));
         $this->assertEquals($expected, $this->eventStore->load($id));
+    }
+
+    /**
+     * @test
+     */
+    public function it_gets_the_stream_ids_from_the_event_store()
+    {
+        $dateTime = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
+
+        $ids = array(
+            'aabb1653-e2e5-45d6-8979-087ed2b9f38f',
+            '90cdeb53-af8a-4474-ac5e-ae202c1e962b',
+            '5fdcfec7-063e-4433-91ba-32d120d7e03b',
+        );
+
+        foreach ($ids as $id) {
+            $domainEventStream = new DomainEventStream(array(
+                $this->createDomainMessage($id, 0, $dateTime),
+                $this->createDomainMessage($id, 1, $dateTime),
+                $this->createDomainMessage($id, 2, $dateTime),
+            ));
+
+            $this->eventStore->append($id, $domainEventStream);
+        }
+
+        $streamIds = $this->eventStore->getStreamIds();
+
+        $this->assertCount(count($ids), $streamIds);
+
+        foreach ($ids as $expectedId) {
+            $this->assertContains($expectedId, $streamIds);
+        }
     }
 
     /**
