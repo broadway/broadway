@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.4.x
+
+#### BC breaks
+
+- Updated `beberlei/assert` requirement to 2.0.
+
 ## v0.3.0
 
 #### BC breaks
