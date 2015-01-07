@@ -14,7 +14,7 @@
                  factory-service = "broadway.saga.state.mongodb_connection"
                  factory-method  = "selectDatabase"
                 >
-            <argument>broadway_%kernel.environment%%storage_suffix%</argument>
+            <argument>broadway_%kernel.environment%%broadway.saga.mongodb.storage_suffix%</argument>
         </service>
 
         <service id="broadway.saga.state.mongodb_connection" class="Doctrine\MongoDB\Connection" />

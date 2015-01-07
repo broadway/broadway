@@ -57,6 +57,28 @@ class BroadwayExtensionTest extends ExtensionTestCase
 
     /**
      * @test
+     */
+    public function it_uses_the_configured_storage_suffix_for_mongodb_saga_storage()
+    {
+        $this->load($this->extension, array('saga' => array('mongodb' => array('storage_suffix' => 'foo_suffix'))));
+
+        $this->assertTrue($this->container->hasParameter('broadway.saga.mongodb.storage_suffix'));
+        $this->assertEquals('foo_suffix', $this->container->getParameter('broadway.saga.mongodb.storage_suffix'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_defaults_to_null_when_no_storage_suffix_is_configured_for_saga_storage()
+    {
+        $this->load($this->extension, array());
+
+        $this->assertTrue($this->container->hasParameter('broadway.saga.mongodb.storage_suffix'));
+        $this->assertNull($this->container->getParameter('broadway.saga.mongodb.storage_suffix'));
+    }
+
+    /**
+     * @test
      * @dataProvider readModelConfigurationToRepositoryMapping
      */
     public function read_model_repository_factory_set_to_configured_repository_factory($repoFactory, $class)
