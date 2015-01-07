@@ -13,30 +13,50 @@ namespace Broadway\EventSourcing\Testing;
 
 use PHPUnit_Framework_TestCase;
 
+use Broadway\EventSourcing\AggregateFactory\AggregateFactoryInterface;
+use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\DomainMessage;
+use Broadway\Domain\Metadata;
+
 /**
  * Helper testing scenario to test command event sourced aggregate roots.
  *
  * The scenario will help with testing event sourced aggregate roots. A
  * scenario consists of three steps:
  *
- * 1) given(): Load a history of events in the event store
+ * 1) given(): Initialize the aggregate root using a history of events
  * 2) when():  A callable that calls a method on the event sourced aggregate root
  * 3) then():  Events that should have been applied
  */
 class Scenario
 {
     private $testCase;
-    private $aggregateRoot;
+    private $factory;
+
+    private $aggregateRootClass;
     private $aggregateRootInstance;
+    private $aggregateId;
 
     /**
      * @param PHPUnit_Framework_TestCase $testcase
-     * @param string                     $aggregateRoot
+     * @param string                     $aggregateRootClass
      */
-    public function __construct(PHPUnit_Framework_TestCase $testCase, $aggregateRoot)
+    public function __construct(PHPUnit_Framework_TestCase $testCase, AggregateFactoryInterface $factory, $aggregateRootClass)
     {
-        $this->testCase      = $testCase;
-        $this->aggregateRoot = $aggregateRoot;
+        $this->testCase           = $testCase;
+        $this->factory            = $factory;
+        $this->aggregateRootClass = $aggregateRootClass;
+        $this->aggregateId        = 1;
+    }
+
+    /**
+     * @param string $aggregateId
+     */
+    public function withAggregateId($aggregateId)
+    {
+        $this->aggregateId = $aggregateId;
+
+        return $this;
     }
 
     /**
@@ -50,8 +70,18 @@ class Scenario
             return $this;
         }
 
-        $this->aggregateRootInstance = new $this->aggregateRoot();
-        $this->aggregateRootInstance->initializeState($givens);
+        $messages = array();
+        $playhead = -1;
+        foreach ($givens as $event) {
+            $playhead++;
+            $messages[] = DomainMessage::recordNow(
+                $this->aggregateId, $playhead, new Metadata(array()), $event
+            );
+        }
+
+        $this->aggregateRootInstance = $this->factory->create(
+            $this->aggregateRootClass, new DomainEventStream($messages)
+        );
 
         return $this;
     }
@@ -70,7 +100,7 @@ class Scenario
         if ($this->aggregateRootInstance === null) {
             $this->aggregateRootInstance = $when($this->aggregateRootInstance);
 
-            $this->testCase->assertInstanceOf($this->aggregateRoot, $this->aggregateRootInstance);
+            $this->testCase->assertInstanceOf($this->aggregateRootClass, $this->aggregateRootInstance);
         } else {
             $when($this->aggregateRootInstance);
         }
@@ -85,8 +115,24 @@ class Scenario
      */
     public function then(array $thens)
     {
-        $this->testCase->assertEquals($thens, $this->aggregateRootInstance->getUncommittedEvents());
+        $this->testCase->assertEquals($thens, $this->getEvents());
 
         return $this;
     }
+
+    /**
+     * @return array Payloads of the recorded events
+     */
+    private function getEvents()
+    {
+        $recordedEvents = $this->aggregateRootInstance->getUncommittedEvents();
+        $events = array();
+
+        foreach ($recordedEvents as $message) {
+            $events[] = $message->getPayload();
+        }
+
+        return $events;
+    }
+
 }
