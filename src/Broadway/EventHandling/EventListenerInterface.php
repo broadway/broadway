@@ -11,7 +11,7 @@
 
 namespace Broadway\EventHandling;
 
-use Broadway\Domain\DomainMessageInterface;
+use Broadway\Domain\DomainMessage;
 
 /**
  * Handles dispatched events.
@@ -19,7 +19,7 @@ use Broadway\Domain\DomainMessageInterface;
 interface EventListenerInterface
 {
     /**
-     * @param DomainMessageInterface $domainMessage
+     * @param DomainMessage $domainMessage
      */
-    public function handle(DomainMessageInterface $domainMessage);
+    public function handle(DomainMessage $domainMessage);
 }

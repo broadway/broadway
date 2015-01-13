@@ -11,7 +11,7 @@
 
 namespace Broadway\Processor;
 
-use Broadway\Domain\DomainMessageInterface;
+use Broadway\Domain\DomainMessage;
 use Broadway\EventHandling\EventListenerInterface;
 
 /**
@@ -22,7 +22,7 @@ abstract class Processor implements EventListenerInterface
     /**
      * {@inheritDoc}
      */
-    public function handle(DomainMessageInterface $domainMessage)
+    public function handle(DomainMessage $domainMessage)
     {
         $event  = $domainMessage->getPayload();
         $method = $this->getHandleMethod($event);

@@ -14,7 +14,7 @@ namespace Broadway\Domain;
 /**
  * Represents an important change in the domain.
  */
-class DomainMessage implements DomainMessageInterface
+final class DomainMessage
 {
     /**
      * @var int
