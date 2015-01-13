@@ -46,6 +46,16 @@ class MetadataEnrichingEventStreamDecorator implements EventStreamDecoratorInter
             return $eventStream;
         }
 
+        return new DomainEventStream($this->processEventStream($eventStream));
+    }
+
+    /**
+     * @param DomainEventStreamInterface $eventStream
+     *
+     * @return array
+     */
+    protected function processEventStream(DomainEventStreamInterface $eventStream)
+    {
         $messages = array();
 
         foreach ($eventStream as $message) {
@@ -53,15 +63,23 @@ class MetadataEnrichingEventStreamDecorator implements EventStreamDecoratorInter
                 continue;
             }
 
-            $metadata = new Metadata();
-
-            foreach ($this->metadataEnrichers as $metadataEnricher) {
-                $metadata = $metadataEnricher->enrich($metadata);
-            }
-
-            $messages[] = $message->andMetadata($metadata);
+            $messages[] = $message->andMetadata($this->enrichMetadata());
         }
 
-        return new DomainEventStream($messages);
+        return $messages;
+    }
+
+    /**
+     * @return Metadata
+     */
+    protected function enrichMetadata()
+    {
+        $metadata = new Metadata();
+
+        foreach ($this->metadataEnrichers as $metadataEnricher) {
+            $metadata = $metadataEnricher->enrich($metadata);
+        }
+
+        return $metadata;
     }
 }
