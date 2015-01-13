@@ -13,6 +13,7 @@ namespace Broadway\EventSourcing\MetadataEnrichment;
 
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\EnrichableDomainMessageInterface;
 use Broadway\Domain\Metadata;
 use Broadway\EventSourcing\EventStreamDecoratorInterface;
 
@@ -45,18 +46,40 @@ class MetadataEnrichingEventStreamDecorator implements EventStreamDecoratorInter
             return $eventStream;
         }
 
+        return new DomainEventStream($this->processEventStream($eventStream));
+    }
+
+    /**
+     * @param DomainEventStreamInterface $eventStream
+     *
+     * @return array
+     */
+    protected function processEventStream(DomainEventStreamInterface $eventStream)
+    {
         $messages = array();
 
         foreach ($eventStream as $message) {
-            $metadata = new Metadata();
-
-            foreach ($this->metadataEnrichers as $metadataEnricher) {
-                $metadata = $metadataEnricher->enrich($metadata);
+            if (!$message instanceof EnrichableDomainMessageInterface) {
+                continue;
             }
 
-            $messages[] = $message->andMetadata($metadata);
+            $messages[] = $message->andMetadata($this->enrichMetadata());
         }
 
-        return new DomainEventStream($messages);
+        return $messages;
+    }
+
+    /**
+     * @return Metadata
+     */
+    protected function enrichMetadata()
+    {
+        $metadata = new Metadata();
+
+        foreach ($this->metadataEnrichers as $metadataEnricher) {
+            $metadata = $metadataEnricher->enrich($metadata);
+        }
+
+        return $metadata;
     }
 }

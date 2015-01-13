@@ -75,8 +75,22 @@ class DomainMessageTest extends TestCase
         $expected = new Metadata(array('bar' => 1337, 'foo' => 42));
         $this->assertEquals($expected, $newMessage->getMetadata());
     }
+
+    /**
+     * @test
+     */
+    public function it_uses_parent_class_on_recording()
+    {
+        $domainMessage = NewDomainMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
+
+        $this->assertInstanceOf('Broadway\Domain\NewDomainMessage', $domainMessage);
+    }
 }
 
 class SomeEvent
+{
+}
+
+class NewDomainMessage extends DomainMessage
 {
 }
