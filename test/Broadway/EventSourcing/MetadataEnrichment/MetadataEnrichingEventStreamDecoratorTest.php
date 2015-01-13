@@ -11,6 +11,7 @@
 
 namespace Broadway\EventSourcing\MetadataEnrichment;
 
+use Broadway\Domain\AbstractMessage;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
@@ -87,9 +88,31 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
         $this->assertEquals(2, $newlyRegisteredEnricher->callCount());
     }
 
+    /**
+     * @test
+     */
+    public function it_omits_enrichers_for_non_enrichable_messages()
+    {
+        $newlyRegisteredEnricher = new TracableMetadataEnricher();
+        $decorator               = new MetadataEnrichingEventStreamDecorator(array($newlyRegisteredEnricher));
+
+        $eventStream    = $this->createMixedEventStream();
+        $newEventStream = $decorator->decorateForWrite('id', 'type', $eventStream);
+
+        $this->assertEquals(1, $newlyRegisteredEnricher->callCount());
+    }
+
     private function createDomainEventStream()
     {
         $m1 = DomainMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
+        $m2 = DomainMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
+
+        return new DomainEventStream(array($m1, $m2));
+    }
+
+    private function createMixedEventStream()
+    {
+        $m1 = NotEnrichableMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
         $m2 = DomainMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
 
         return new DomainEventStream(array($m1, $m2));
@@ -112,3 +135,5 @@ class TracableMetadataEnricher implements MetadataEnricherInterface
         return count($this->calls);
     }
 }
+
+class NotEnrichableMessage extends AbstractMessage {}

@@ -13,6 +13,7 @@ namespace Broadway\EventSourcing\MetadataEnrichment;
 
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\EnrichableDomainMessageInterface;
 use Broadway\Domain\Metadata;
 use Broadway\EventSourcing\EventStreamDecoratorInterface;
 
@@ -48,6 +49,10 @@ class MetadataEnrichingEventStreamDecorator implements EventStreamDecoratorInter
         $messages = array();
 
         foreach ($eventStream as $message) {
+            if (!$message instanceof EnrichableDomainMessageInterface) {
+                continue;
+            }
+
             $metadata = new Metadata();
 
             foreach ($this->metadataEnrichers as $metadataEnricher) {
