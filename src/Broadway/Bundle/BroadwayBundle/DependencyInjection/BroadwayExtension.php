@@ -102,6 +102,11 @@ class BroadwayExtension extends Extension
             'broadway.event_store.dbal.table',
             $config['dbal']['table']
         );
+
+        $container->setParameter(
+            'broadway.event_store.dbal.use_binary',
+            $config['dbal']['use_binary']
+        );
     }
 
     private function configElasticsearch(array $config, ContainerBuilder $container)
