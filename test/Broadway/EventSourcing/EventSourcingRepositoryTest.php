@@ -33,7 +33,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
 
     /**
      * @test
-     * @expectedException Assert\InvalidArgumentException
+     * @expectedException \Assert\InvalidArgumentException
      */
     public function it_throws_an_exception_when_instantiated_with_a_class_that_is_not_an_EventSourcedAggregateRoot()
     {
