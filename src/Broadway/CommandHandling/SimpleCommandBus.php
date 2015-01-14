@@ -38,13 +38,18 @@ class SimpleCommandBus implements CommandBusInterface
         if (! $this->isDispatching) {
             $this->isDispatching = true;
 
-            while ($command = array_shift($this->queue)) {
-                foreach ($this->commandHandlers as $handler) {
-                    $handler->handle($command);
+            try {
+                while ($command = array_shift($this->queue)) {
+                    foreach ($this->commandHandlers as $handler) {
+                        $handler->handle($command);
+                    }
                 }
-            }
 
-            $this->isDispatching = false;
+                $this->isDispatching = false;
+            } catch (\Exception $e) {
+                $this->isDispatching = false;
+                throw $e;
+            }
         }
     }
 }

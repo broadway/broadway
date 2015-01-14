@@ -59,6 +59,45 @@ class SimpleCommandBusTest extends TestCase
         $this->commandBus->dispatch($command1);
     }
 
+    /**
+     * @test
+     */
+    public function it_should_still_handle_commands_after_exception()
+    {
+        $command1 = array('foo' => 'bar');
+        $command2 = array('foo' => 'bas');
+
+        $commandHandler = $this->getMockBuilder('Broadway\CommandHandling\CommandHandler')->getMock();
+        $simpleHandler = $this->getMockBuilder('Broadway\CommandHandling\CommandHandler')->getMock();
+
+        $commandHandler
+            ->expects($this->at(0))
+            ->method('handle')
+            ->with($command1)
+            ->will($this->throwException(new \Exception('I failed.')));
+
+        $commandHandler
+            ->expects($this->at(1))
+            ->method('handle')
+            ->with($command2);
+
+        $simpleHandler
+            ->expects($this->once())
+            ->method('handle')
+            ->with($command2);
+
+        $this->commandBus->subscribe($commandHandler);
+        $this->commandBus->subscribe($simpleHandler);
+
+        try {
+            $this->commandBus->dispatch($command1);
+        } catch (\Exception $e) {
+            $this->assertEquals('I failed.', $e->getMessage());
+        }
+
+        $this->commandBus->dispatch($command2);
+    }
+
     private function createCommandHandlerMock($expectedCommand)
     {
         $mock = $this->getMockBuilder('Broadway\CommandHandling\CommandHandler')->getMock();
