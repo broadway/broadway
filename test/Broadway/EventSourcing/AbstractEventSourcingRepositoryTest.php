@@ -18,15 +18,29 @@ use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventHandling\SimpleEventBus;
 use Broadway\EventHandling\TraceableEventBus;
+use Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
+use Broadway\EventSourcing\MetadataEnrichment\MetadataEnricherInterface;
+use Broadway\EventSourcing\MetadataEnrichment\MetadataEnrichingEventStreamDecorator;
 use Broadway\EventStore\EventStoreInterface;
 use Broadway\EventStore\InMemoryEventStore;
 use Broadway\EventStore\TraceableEventStore;
+use Broadway\ReadModel\Projector;
 use Broadway\TestCase;
+use RuntimeException;
 
 abstract class AbstractEventSourcingRepositoryTest extends TestCase
 {
+    /** @var TraceableEventBus */
+    protected $eventBus;
+
+    /** @var TraceableEventStoreDecorator */
+    protected $eventStreamDecorator;
+
     /** @var EventStoreInterface */
     protected $eventStore;
+
+    /** @var EventSourcingRepository */
+    protected $repository;
 
     public function setUp()
     {
@@ -44,7 +58,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
 
     /**
      * @test
-     * @expectedException Assert\InvalidArgumentException
+     * @expectedException \Assert\InvalidArgumentException
      * @dataProvider objectsNotOfConfiguredClass
      */
     public function it_throws_an_exception_when_adding_an_aggregate_that_is_not_of_the_configured_class($aggregate)
@@ -96,7 +110,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
 
     /**
      * @test
-     * @expectedException Broadway\Repository\AggregateNotFoundException
+     * @expectedException \Broadway\Repository\AggregateNotFoundException
      */
     public function it_throws_an_exception_if_aggregate_was_not_found()
     {
@@ -137,6 +151,33 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
         $this->assertCount(1, $events);
 
         $this->assertSame($event, $events[0]->getPayload());
+    }
+
+    /**
+     * @test
+     */
+    public function it_publishes_decorated_events()
+    {
+        $projector = new TestMetadataPublishedProjector();
+        $this->eventBus->subscribe($projector);
+
+        $repository = new EventSourcingRepository(
+            $this->eventStore,
+            $this->eventBus,
+            '\Broadway\EventSourcing\TestEventSourcedAggregate',
+            new PublicConstructorAggregateFactory(),
+            array(new MetadataEnrichingEventStreamDecorator(array(new TestDecorationMetadataEnricher())))
+        );
+
+        $aggregate = $this->createAggregate();
+        $aggregate->apply(new DidNumberEvent(42));
+        $repository->add($aggregate);
+
+        $metadata = $projector->getMetadata();
+        $data     = $metadata->serialize();
+
+        $this->assertArrayHasKey('decoration_test', $data);
+        $this->assertEquals('I am a decorated test', $data['decoration_test']);
     }
 
     /**
@@ -211,5 +252,31 @@ class TraceableEventstoreDecorator implements EventStreamDecoratorInterface
         }
 
         return $this->calls[count($this->calls) - 1];
+    }
+}
+
+class TestDecorationMetadataEnricher implements MetadataEnricherInterface
+{
+    public function enrich(Metadata $metadata)
+    {
+        return new Metadata(array('decoration_test' => 'I am a decorated test'));
+    }
+}
+
+class TestMetadataPublishedProjector extends Projector
+{
+    private $metadata;
+
+    public function applyDidNumberEvent(DidNumberEvent $event, DomainMessage $domainMessage)
+    {
+        $this->metadata = $domainMessage->getMetadata();
+    }
+
+    /**
+     * @return Metadata
+     */
+    public function getMetadata()
+    {
+        return $this->metadata;
     }
 }
