@@ -11,7 +11,7 @@
 
 namespace Broadway\Saga;
 
-use Broadway\Domain\DomainMessageInterface;
+use Broadway\Domain\DomainMessage;
 use Broadway\EventDispatcher\EventDispatcherInterface;
 use Broadway\Saga\Metadata\MetadataFactoryInterface;
 use Broadway\Saga\State\RepositoryInterface;
@@ -43,7 +43,7 @@ class MultipleSagaManager implements SagaManagerInterface
     /**
      * Handles the event by delegating it to Saga('s) related to the event.
      */
-    public function handle(DomainMessageInterface $domainMessage)
+    public function handle(DomainMessage $domainMessage)
     {
         $event = $domainMessage->getPayload();
 

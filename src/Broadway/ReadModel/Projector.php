@@ -11,7 +11,7 @@
 
 namespace Broadway\ReadModel;
 
-use Broadway\Domain\DomainMessageInterface;
+use Broadway\Domain\DomainMessage;
 
 /**
  * Handles events and projects to a read model.
@@ -21,7 +21,7 @@ abstract class Projector implements ProjectorInterface
     /**
      * {@inheritDoc}
      */
-    public function handle(DomainMessageInterface $domainMessage)
+    public function handle(DomainMessage $domainMessage)
     {
         $event  = $domainMessage->getPayload();
         $method = $this->getHandleMethod($event);
