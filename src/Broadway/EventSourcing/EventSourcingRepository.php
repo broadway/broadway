@@ -72,7 +72,7 @@ class EventSourcingRepository implements RepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function add(AggregateRoot $aggregate)
+    public function save(AggregateRoot $aggregate)
     {
         // maybe we can get generics one day.... ;)
         Assert::isInstanceOf($aggregate, $this->aggregateClass);
