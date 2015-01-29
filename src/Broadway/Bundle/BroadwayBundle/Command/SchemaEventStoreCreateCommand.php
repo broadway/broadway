@@ -33,10 +33,10 @@ class SchemaEventStoreCreateCommand extends DoctrineCommand
             ->setDescription('Creates the event store schema')
             ->setHelp(
 <<<EOT
-The <info>broadway:event-store:schema:init</info> command creates the schema in the default
+The <info>%command.name%</info> command creates the schema in the default
 connections database:
 
-<info>php app/console broadway:schema:event_store:create</info>
+<info>php app/console %command.name%</info>
 EOT
             );
     }

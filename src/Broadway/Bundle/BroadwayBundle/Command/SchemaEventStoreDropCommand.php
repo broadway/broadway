@@ -33,10 +33,10 @@ class SchemaEventStoreDropCommand extends DoctrineCommand
             ->setDescription('Drops the event store schema')
             ->setHelp(
 <<<EOT
-The <info>broadway:event-store:schema:drop</info> command drops the schema in the default
+The <info>%command.name%</info> command drops the schema in the default
 connections database:
 
-<info>php app/console broadway:schema:event_store:drop</info>
+<info>php app/console %command.name%</info>
 EOT
             );
     }
