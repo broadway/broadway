@@ -55,9 +55,12 @@ EOT
             $eventStore    = $this->getEventStore();
 
             $table = $eventStore->configureSchema($schema);
-            $schemaManager->createTable($table);
-
-            $output->writeln('<info>Created schema</info>');
+            if (null !== $table) {
+                $schemaManager->createTable($table);
+                $output->writeln('<info>Created schema</info>');
+            } else {
+                $output->writeln('<info>Schema already created</info>');
+            }
         } catch (Exception $e) {
             $output->writeln('<error>Could not create schema</error>');
             $output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
