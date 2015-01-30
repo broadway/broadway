@@ -54,7 +54,10 @@ component for more information.
 
 ## Integrations
 
-The broadway project ships with a [bundle] to use with a Symfony application.
+- The broadway project ships with a [bundle] to use with a Symfony application.
+
+- A [Laravel integration](https://github.com/nWidart/Laravel-broadway) is also available to allow the use of Broadway inside a Laravel application.
+
 Contributions for integrations with other projects are appreciated!
 
 [bundle]: src/Broadway/Bundle/BroadwayBundle/
