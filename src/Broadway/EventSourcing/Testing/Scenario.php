@@ -121,6 +121,14 @@ class Scenario
     }
 
     /**
+     * @return Broadway\EventSourcing\EventSourcedAggregateRoot
+     */
+    public function getAggregateRootInstance()
+    {
+        return $this->aggregateRootInstance;
+    }
+
+    /**
      * @return array Payloads of the recorded events
      */
     private function getEvents()
