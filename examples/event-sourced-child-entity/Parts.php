@@ -177,7 +177,7 @@ class PartCommandHandler extends Broadway\CommandHandling\CommandHandler
     {
         $part = Part::manufacture($command->partId, $command->manufacturerId, $command->manufacturerName);
 
-        $this->repository->add($part);
+        $this->repository->save($part);
     }
 
     /**
@@ -190,6 +190,6 @@ class PartCommandHandler extends Broadway\CommandHandling\CommandHandler
 
         $part->renameManufacturer($command->manufacturerName);
 
-        $this->repository->add($part);
+        $this->repository->save($part);
     }
 }

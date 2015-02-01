@@ -63,7 +63,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
      */
     public function it_throws_an_exception_when_adding_an_aggregate_that_is_not_of_the_configured_class($aggregate)
     {
-        $this->repository->add($aggregate);
+        $this->repository->save($aggregate);
     }
 
     public function objectsNotOfConfiguredClass()
@@ -83,7 +83,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
         $aggregate->apply(new DidNumberEvent(42));
         $aggregate->apply(new DidNumberEvent(1337));
 
-        $this->repository->add($aggregate);
+        $this->repository->save($aggregate);
 
         $expected = array(new DidNumberEvent(42), new DidNumberEvent(1337));
         $this->assertEquals($expected, $this->eventStore->getEvents());
@@ -125,7 +125,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
         $aggregate = $this->createAggregate();
         $aggregate->apply(new DidNumberEvent(42));
 
-        $this->repository->add($aggregate);
+        $this->repository->save($aggregate);
 
         $this->assertTrue($this->eventStreamDecorator->isCalled());
     }
@@ -140,7 +140,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
         $aggregate = $this->createAggregate();
         $aggregate->apply($event);
 
-        $this->repository->add($aggregate);
+        $this->repository->save($aggregate);
 
         $lastCall = $this->eventStreamDecorator->getLastCall();
 
@@ -171,7 +171,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
 
         $aggregate = $this->createAggregate();
         $aggregate->apply(new DidNumberEvent(42));
-        $repository->add($aggregate);
+        $repository->save($aggregate);
 
         $metadata = $projector->getMetadata();
         $data     = $metadata->serialize();

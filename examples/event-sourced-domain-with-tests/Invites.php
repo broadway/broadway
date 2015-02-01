@@ -198,7 +198,7 @@ class InvitationCommandHandler extends Broadway\CommandHandling\CommandHandler
     {
         $invitation = Invitation::invite($command->invitationId, $command->name);
 
-        $this->repository->add($invitation);
+        $this->repository->save($invitation);
     }
 
     /**
@@ -211,7 +211,7 @@ class InvitationCommandHandler extends Broadway\CommandHandling\CommandHandler
 
         $invitation->accept();
 
-        $this->repository->add($invitation);
+        $this->repository->save($invitation);
     }
 
     protected function handleDeclineCommand(DeclineCommand $command)
@@ -220,6 +220,6 @@ class InvitationCommandHandler extends Broadway\CommandHandling\CommandHandler
 
         $invitation->decline();
 
-        $this->repository->add($invitation);
+        $this->repository->save($invitation);
     }
 }

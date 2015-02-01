@@ -23,7 +23,7 @@ interface RepositoryInterface
      *
      * @param AggregateRoot $aggregate
      */
-    public function add(AggregateRoot $aggregate);
+    public function save(AggregateRoot $aggregate);
 
     /**
      * Loads an aggregate from the given id.
