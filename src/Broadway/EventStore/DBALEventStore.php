@@ -15,10 +15,13 @@ use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainEventStreamInterface;
 use Broadway\Domain\DomainMessage;
+use Broadway\EventStore\Exception\InvalidIdentifierException;
 use Broadway\Serializer\SerializerInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Version;
+use Rhumsaa\Uuid\Uuid;
 
 /**
  * Event store using a relational database as storage.
@@ -38,6 +41,8 @@ class DBALEventStore implements EventStoreInterface
 
     private $tableName;
 
+    private $useBinary;
+
     /**
      * @param string $tableName
      */
@@ -45,12 +50,21 @@ class DBALEventStore implements EventStoreInterface
         Connection $connection,
         SerializerInterface $payloadSerializer,
         SerializerInterface $metadataSerializer,
-        $tableName
+        $tableName,
+        $useBinary = false
     ) {
         $this->connection         = $connection;
         $this->payloadSerializer  = $payloadSerializer;
         $this->metadataSerializer = $metadataSerializer;
         $this->tableName          = $tableName;
+        $this->useBinary          = (bool) $useBinary;
+
+
+        if ($this->useBinary && Version::compare('2.5.0') >= 0) {
+            throw new \InvalidArgumentException(
+                'The Binary storage is only available with Doctrine DBAL >= 2.5.0'
+            );
+        }
     }
 
     /**
@@ -59,11 +73,14 @@ class DBALEventStore implements EventStoreInterface
     public function load($id)
     {
         $statement = $this->prepareLoadStatement();
-        $statement->bindValue('uuid', (string) $id, 'guid');
+        $statement->bindValue('uuid', $this->convertIdentifierToStorageValue($id));
         $statement->execute();
 
         $events = array();
         while ($row = $statement->fetch()) {
+            if ($this->useBinary) {
+                $row['uuid'] = $this->convertStorageValueToIdentifier($row['uuid']);
+            }
             $events[] = $this->deserializeEvent($row);
         }
 
@@ -104,7 +121,7 @@ class DBALEventStore implements EventStoreInterface
     private function insertMessage(Connection $connection, DomainMessage $domainMessage)
     {
         $data = array(
-            'uuid'        => $domainMessage->getId(),
+            'uuid'        => $this->convertIdentifierToStorageValue((string) $domainMessage->getId()),
             'playhead'    => $domainMessage->getPlayhead(),
             'metadata'    => json_encode($this->metadataSerializer->serialize($domainMessage->getMetadata())),
             'payload'     => json_encode($this->payloadSerializer->serialize($domainMessage->getPayload())),
@@ -131,10 +148,25 @@ class DBALEventStore implements EventStoreInterface
     {
         $schema = new Schema();
 
+        $uuidColumnDefinition = array(
+            'type'   => 'guid',
+            'params' => array(
+                'length' => 36,
+            ),
+        );
+
+        if ($this->useBinary) {
+            $uuidColumnDefinition['type']   = 'binary';
+            $uuidColumnDefinition['params'] = array(
+                'length' => 16,
+                'fixed'  => true,
+            );
+        }
+
         $table = $schema->createTable($this->tableName);
 
         $table->addColumn('id', 'integer', array('autoincrement' => true));
-        $table->addColumn('uuid', 'guid', array('length' => 36));
+        $table->addColumn('uuid', $uuidColumnDefinition['type'], $uuidColumnDefinition['params']);
         $table->addColumn('playhead', 'integer', array('unsigned' => true));
         $table->addColumn('payload', 'text');
         $table->addColumn('metadata', 'text');
@@ -169,5 +201,35 @@ class DBALEventStore implements EventStoreInterface
             $this->payloadSerializer->deserialize(json_decode($row['payload'], true)),
             DateTime::fromString($row['recorded_on'])
         );
+    }
+
+    private function convertIdentifierToStorageValue($id)
+    {
+        if ($this->useBinary) {
+            try {
+                return Uuid::fromString($id)->getBytes();
+            } catch (\Exception $e) {
+                throw new InvalidIdentifierException(
+                    'Only valid UUIDs are allowed to by used with the binary storage mode.'
+                );
+            }
+        }
+
+        return $id;
+    }
+
+    private function convertStorageValueToIdentifier($id)
+    {
+        if ($this->useBinary) {
+            try {
+                return Uuid::fromBytes($id)->toString();
+            } catch (\Exception $e) {
+                throw new InvalidIdentifierException(
+                    'Could not convert binary storage value to UUID.'
+                );
+            }
+        }
+
+        return $id;
     }
 }
