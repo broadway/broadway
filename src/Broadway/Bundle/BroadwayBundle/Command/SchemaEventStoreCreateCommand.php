@@ -57,12 +57,12 @@ EOT
             $table = $eventStore->configureSchema($schema);
             if (null !== $table) {
                 $schemaManager->createTable($table);
-                $output->writeln('<info>Created schema</info>');
+                $output->writeln('<info>Created Broadway event-store schema</info>');
             } else {
-                $output->writeln('<info>Schema already created</info>');
+                $output->writeln('<info>Broadway event-store schema already exists</info>');
             }
         } catch (Exception $e) {
-            $output->writeln('<error>Could not create schema</error>');
+            $output->writeln('<error>Could not create Broadway event-store schema</error>');
             $output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
             $error = true;
         }

@@ -56,9 +56,9 @@ EOT
             $table = $eventStore->configureTable();
             $schemaManager->dropTable($table->getName());
 
-            $output->writeln('<info>Dropped schema</info>');
+            $output->writeln('<info>Dropped Broadway event-store schema</info>');
         } catch (Exception $e) {
-            $output->writeln('<error>Could not drop schema</error>');
+            $output->writeln('<error>Could not drop Broadway event-store schema</error>');
             $output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
             $error = true;
         }
