@@ -11,12 +11,11 @@
 
 namespace Broadway\EventSourcing\Testing;
 
-use PHPUnit_Framework_TestCase;
-
-use Broadway\EventSourcing\AggregateFactory\AggregateFactoryInterface;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
+use Broadway\EventSourcing\AggregateFactory\AggregateFactoryInterface;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Helper testing scenario to test command event sourced aggregate roots.
@@ -126,7 +125,7 @@ class Scenario
     private function getEvents()
     {
         $recordedEvents = $this->aggregateRootInstance->getUncommittedEvents();
-        $events = array();
+        $events         = array();
 
         foreach ($recordedEvents as $message) {
             $events[] = $message->getPayload();
@@ -134,5 +133,4 @@ class Scenario
 
         return $events;
     }
-
 }

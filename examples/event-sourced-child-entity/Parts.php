@@ -71,8 +71,8 @@ class Manufacturer extends Broadway\EventSourcing\EventSourcedEntity
 
     public function __construct($partId, $manufacturerId, $manufacturerName)
     {
-        $this->partId = $partId;
-        $this->manufacturerId = $manufacturerId;
+        $this->partId           = $partId;
+        $this->manufacturerId   = $manufacturerId;
         $this->manufacturerName = $manufacturerName;
     }
 
@@ -102,8 +102,8 @@ class ManufacturePartCommand
 
     public function __construct($partId, $manufacturerId, $manufacturerName)
     {
-        $this->partId = $partId;
-        $this->manufacturerId = $manufacturerId;
+        $this->partId           = $partId;
+        $this->manufacturerId   = $manufacturerId;
         $this->manufacturerName = $manufacturerName;
     }
 }
@@ -116,8 +116,8 @@ class PartWasManufacturedEvent
 
     public function __construct($partId, $manufacturerId, $manufacturerName)
     {
-        $this->partId = $partId;
-        $this->manufacturerId = $manufacturerId;
+        $this->partId           = $partId;
+        $this->manufacturerId   = $manufacturerId;
         $this->manufacturerName = $manufacturerName;
     }
 }
@@ -129,7 +129,7 @@ class RenameManufacturerForPartCommand
 
     public function __construct($partId, $manufacturerName)
     {
-        $this->partId = $partId;
+        $this->partId           = $partId;
         $this->manufacturerName = $manufacturerName;
     }
 }
@@ -141,7 +141,7 @@ class PartManufacturerWasRenamedEvent
 
     public function __construct($partId, $manufacturerName)
     {
-        $this->partId = $partId;
+        $this->partId           = $partId;
         $this->manufacturerName = $manufacturerName;
     }
 }

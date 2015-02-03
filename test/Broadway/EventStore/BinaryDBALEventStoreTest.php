@@ -58,7 +58,7 @@ class BinaryDBALEventStoreTest extends DBALEventStoreTest
      */
     public function it_throws_an_exception_when_an_id_is_no_uuid_in_binary_mode()
     {
-        $id = 'bleeh';
+        $id                = 'bleeh';
         $domainEventStream = new DomainEventStream(array(
             $this->createDomainMessage($id, 0),
         ));

@@ -59,7 +59,6 @@ class DBALEventStore implements EventStoreInterface
         $this->tableName          = $tableName;
         $this->useBinary          = (bool) $useBinary;
 
-
         if ($this->useBinary && Version::compare('2.5.0') >= 0) {
             throw new \InvalidArgumentException(
                 'The Binary storage is only available with Doctrine DBAL >= 2.5.0'
