@@ -34,7 +34,7 @@ class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenari
         $id = $this->generator->generate();
 
         $this->scenario
-            ->when(function() use ($id) {
+            ->when(function () use ($id) {
                 return Invitation::invite($id, 'asm89');
             })
             ->then([new InvitedEvent($id, 'asm89')]);
@@ -50,7 +50,7 @@ class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenari
         $this->scenario
             ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89')])
-            ->when(function($invite) {
+            ->when(function ($invite) {
                 $invite->accept();
             })
             ->then([new AcceptedEvent($id)]);
@@ -66,7 +66,7 @@ class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenari
         $this->scenario
             ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89'), new AcceptedEvent($id)])
-            ->when(function($aggregate) {
+            ->when(function ($aggregate) {
                 $aggregate->accept();
             })
             ->then([]);
@@ -99,7 +99,7 @@ class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenari
         $this->scenario
             ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89')])
-            ->when(function($invite) {
+            ->when(function ($invite) {
                 $invite->decline();
             })
             ->then([new DeclinedEvent($id)]);
@@ -115,7 +115,7 @@ class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenari
         $this->scenario
             ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89'), new DeclinedEvent($id)])
-            ->when(function($invite) {
+            ->when(function ($invite) {
                 $invite->decline();
             })
             ->then([]);
@@ -133,7 +133,7 @@ class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenari
         $this->scenario
             ->withAggregateId($id)
             ->given([new InvitedEvent($id, 'asm89'), new DeclinedEvent($id)])
-            ->when(function($invite) {
+            ->when(function ($invite) {
                 $invite->accept();
             });
     }

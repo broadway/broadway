@@ -11,8 +11,8 @@
 
 namespace Broadway\EventSourcing\Testing;
 
-use PHPUnit_Framework_TestCase as TestCase;
 use Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
+use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * Base test case that can be used to set up a command handler scenario.
