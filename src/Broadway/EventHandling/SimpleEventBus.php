@@ -12,6 +12,7 @@
 namespace Broadway\EventHandling;
 
 use Broadway\Domain\DomainEventStreamInterface;
+use Exception;
 
 /**
  * Simple synchronous publishing of events.
@@ -42,13 +43,18 @@ class SimpleEventBus implements EventBusInterface
         if (! $this->isPublishing) {
             $this->isPublishing = true;
 
-            while ($domainMessage = array_shift($this->queue)) {
-                foreach ($this->eventListeners as $eventListener) {
-                    $eventListener->handle($domainMessage);
+            try {
+                while ($domainMessage = array_shift($this->queue)) {
+                    foreach ($this->eventListeners as $eventListener) {
+                        $eventListener->handle($domainMessage);
+                    }
                 }
-            }
 
-            $this->isPublishing = false;
+                $this->isPublishing = false;
+            } catch (Exception $e) {
+                $this->isPublishing = false;
+                throw $e;
+            }
         }
     }
 }

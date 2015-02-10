@@ -104,6 +104,41 @@ class SimpleEventBusTest extends TestCase
         $this->eventBus->publish($domainEventStream);
     }
 
+    /**
+     * @test
+     */
+    public function it_should_still_publish_events_after_exception()
+    {
+        $domainMessage1 = $this->createDomainMessage(array('foo' => 'bar'));
+        $domainMessage2 = $this->createDomainMessage(array('foo' => 'bas'));
+
+        $domainEventStream1 = new DomainEventStream(array($domainMessage1));
+        $domainEventStream2 = new DomainEventStream(array($domainMessage2));
+
+        $eventListener = $this->createEventListenerMock();
+        $eventListener
+            ->expects($this->at(0))
+            ->method('handle')
+            ->with($domainMessage1)
+            ->will($this->throwException(new \Exception('I failed.')));
+
+        $eventListener
+            ->expects($this->at(1))
+            ->method('handle')
+            ->with($domainMessage2);
+
+        $this->eventBus->subscribe($eventListener);
+
+        try {
+            $this->eventBus->publish($domainEventStream1);
+        } catch (\Exception $e) {
+            $this->assertEquals('I failed.', $e->getMessage());
+        }
+
+        $this->eventBus->publish($domainEventStream2);
+    }
+
+
     private function createEventListenerMock()
     {
         return $this->getMockBuilder('Broadway\EventHandling\EventListenerInterface')->getMock();
