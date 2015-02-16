@@ -48,10 +48,14 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('table')
                                     ->defaultValue('events')
                                 ->end()
-                                ->booleanNode('use_binary')
-                                    ->defaultFalse()
+                                ->scalarNode('uuid_type')
+                                    ->defaultValue('guid')
                                     ->validate()
-                                    ->ifTrue()
+                                    ->ifNotInArray(array('guid', 'binary', 'string'))
+                                        ->thenInvalid('Invalid uuid type %s')
+                                    ->end()
+                                    ->validate()
+                                    ->ifInArray(array('binary'))
                                         ->then(function ($v) {
                                             if (Version::compare('2.5.0') >= 0) {
                                                 throw new InvalidConfigurationException(

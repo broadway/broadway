@@ -104,8 +104,8 @@ class BroadwayExtension extends Extension
         );
 
         $container->setParameter(
-            'broadway.event_store.dbal.use_binary',
-            $config['dbal']['use_binary']
+            'broadway.event_store.dbal.uuid_type',
+            $config['dbal']['uuid_type']
         );
     }
 
