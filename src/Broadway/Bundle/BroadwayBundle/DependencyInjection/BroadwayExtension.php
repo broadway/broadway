@@ -112,36 +112,29 @@ class BroadwayExtension extends Extension
         );
 
         $this->dbalEventStoreConnection = $config['dbal']['connection'];
-        if (null !== $this->dbalEventStoreConnection) {
-            $container->setParameter(
-                'broadway.event_store.dbal.connection',
-                $config['dbal']['connection']
-            );
-        }
     }
 
     /**
      * This needs to be done in a compiler pass, to access doctrine connections definitions.
      */
-    public function injectDBALEventStoreConnection(ContainerBuilder $container)
+    public function defineDBALEventStoreConnection(ContainerBuilder $container)
     {
         if (null === $this->dbalEventStoreConnection) {
-            return;
+            $connectionServiceName = 'database_connection';
+        } else {
+            $connectionServiceName = sprintf('doctrine.dbal.%s_connection', $this->dbalEventStoreConnection);
+            if (!$container->hasDefinition($connectionServiceName)) {
+                throw new InvalidArgumentException(
+                    sprintf(
+                        'Invalid %s config: DBAL connection "%s" not found',
+                        $this->getAlias(),
+                        $this->dbalEventStoreConnection
+                    )
+                );
+            }
         }
 
-        $connectionServiceName = sprintf('doctrine.dbal.%s_connection', $this->dbalEventStoreConnection);
-        if (!$container->hasDefinition($connectionServiceName)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Invalid %s config: DBAL connection "%s" not found',
-                    $this->getAlias(),
-                    $this->dbalEventStoreConnection
-                )
-            );
-        }
-
-        $dbalEventStore = $container->getDefinition('broadway.event_store.dbal');
-        $dbalEventStore->replaceArgument(0, new Reference($connectionServiceName));
+        $container->setAlias('broadway.event_store.dbal.connection', $connectionServiceName);
     }
 
     private function configElasticsearch(array $config, ContainerBuilder $container)

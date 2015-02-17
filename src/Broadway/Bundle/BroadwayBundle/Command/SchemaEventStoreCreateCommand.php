@@ -46,7 +46,7 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $connection = $this->getConnection();
+        $connection = $this->getContainer()->get('broadway.event_store.dbal.connection');
 
         $error = false;
         try {
@@ -79,17 +79,5 @@ EOT
         }
 
         return $eventStore;
-    }
-
-    private function getConnection()
-    {
-        $container = $this->getContainer();
-        if (!$container->hasParameter('broadway.event_store.dbal.connection')) {
-            return $container->get('database_connection');
-        }
-
-       return $container->get('doctrine')->getConnection(
-            $container->getParameter('broadway.event_store.dbal.connection')
-        );
     }
 }

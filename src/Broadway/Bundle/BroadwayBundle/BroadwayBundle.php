@@ -16,7 +16,7 @@ use Broadway\Bundle\BroadwayBundle\Command\SchemaEventStoreDropCommand;
 use Broadway\Bundle\BroadwayBundle\DependencyInjection\RegisterBusSubscribersCompilerPass;
 use Broadway\Bundle\BroadwayBundle\DependencyInjection\RegisterEventListenerCompilerPass;
 use Broadway\Bundle\BroadwayBundle\DependencyInjection\RegisterMetadataEnricherSubscriberPass;
-use Broadway\Bundle\BroadwayBundle\DependencyInjection\InjectDBALEventStoreConnectionCompilerPass;
+use Broadway\Bundle\BroadwayBundle\DependencyInjection\DefineDBALEventStoreConnectionCompilerPass;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -60,7 +60,7 @@ class BroadwayBundle extends Bundle
             )
         );
         $container->addCompilerPass(
-            new InjectDBALEventStoreConnectionCompilerPass()
+            new DefineDBALEventStoreConnectionCompilerPass()
         );
     }
 

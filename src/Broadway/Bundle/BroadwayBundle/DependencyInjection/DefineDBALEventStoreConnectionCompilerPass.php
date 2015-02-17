@@ -18,9 +18,9 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Compiler pass to register tagged services for an event dispatcher.
+ * Compiler pass to define the dbal event store connection according to the configuration.
  */
-class InjectDBALEventStoreConnectionCompilerPass implements CompilerPassInterface
+class DefineDBALEventStoreConnectionCompilerPass implements CompilerPassInterface
 {
     /**
      * Validates the DBAL event store connection configuration.
@@ -30,6 +30,6 @@ class InjectDBALEventStoreConnectionCompilerPass implements CompilerPassInterfac
      */
     public function process(ContainerBuilder $container)
     {
-        $container->getExtension('broadway')->injectDBALEventStoreConnection($container);
+        $container->getExtension('broadway')->defineDBALEventStoreConnection($container);
     }
 }
