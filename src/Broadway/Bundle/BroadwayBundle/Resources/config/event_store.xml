@@ -6,7 +6,7 @@
 
     <services>
         <service id="broadway.event_store.dbal" class="Broadway\EventStore\DBALEventStore">
-            <argument type="service" id="doctrine.dbal.default_connection" />
+            <argument type="service" id="broadway.event_store.dbal.connection" />
             <argument type="service" id="broadway.serializer.payload" />
             <argument type="service" id="broadway.serializer.metadata" />
             <argument>%broadway.event_store.dbal.table%</argument>

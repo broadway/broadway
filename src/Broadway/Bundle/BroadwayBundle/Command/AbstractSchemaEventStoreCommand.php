@@ -49,7 +49,7 @@ class AbstractSchemaEventStoreCommand extends DoctrineCommand
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $databaseConnectionName = $input->getOption('connection');
+        $databaseConnectionName = $input->getOption('connection') ?: $this->getContainer()->getParameter('broadway.event_store.dbal.connection');
         Assertion::string($databaseConnectionName, 'Input option "connection" must be of type `string`.');
 
         try {

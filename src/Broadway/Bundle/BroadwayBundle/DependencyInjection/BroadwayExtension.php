@@ -11,6 +11,7 @@
 
 namespace Broadway\Bundle\BroadwayBundle\DependencyInjection;
 
+use InvalidArgumentException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -118,6 +119,11 @@ class BroadwayExtension extends Extension
 
     private function loadEventStore(array $config, ContainerBuilder $container)
     {
+        $container->setParameter(
+            'broadway.event_store.dbal.connection',
+            $config['dbal']['connection']
+        );
+
         $container->setParameter(
             'broadway.event_store.dbal.table',
             $config['dbal']['table']
