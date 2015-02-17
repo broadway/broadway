@@ -12,16 +12,16 @@
 namespace Broadway\Bundle\BroadwayBundle\Command;
 
 use Broadway\EventStore\DBALEventStore;
-use Doctrine\Bundle\DoctrineBundle\Command\DoctrineCommand;
 use Exception;
 use RuntimeException;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Creates the event store schema.
  */
-class SchemaEventStoreCreateCommand extends DoctrineCommand
+class SchemaEventStoreCreateCommand extends ContainerAwareCommand
 {
     /**
      * {@inheritDoc}
@@ -46,7 +46,7 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $connection = $this->getDoctrineConnection('default');
+        $connection = $this->getConnection();
 
         $error = false;
         try {
@@ -79,5 +79,17 @@ EOT
         }
 
         return $eventStore;
+    }
+
+    private function getConnection()
+    {
+        $container = $this->getContainer();
+        if (!$container->hasParameter('broadway.event_store.dbal.connection')) {
+            return $container->get('database_connection');
+        }
+
+       return $container->get('doctrine')->getConnection(
+            $container->getParameter('broadway.event_store.dbal.connection')
+        );
     }
 }

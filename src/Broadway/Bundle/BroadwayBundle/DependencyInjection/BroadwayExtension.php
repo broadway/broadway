@@ -11,6 +11,7 @@
 
 namespace Broadway\Bundle\BroadwayBundle\DependencyInjection;
 
+use InvalidArgumentException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -22,6 +23,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class BroadwayExtension extends Extension
 {
+    private $dbalEventStoreConnection = null;
+
     /**
      * {@inheritDoc}
      */
@@ -107,6 +110,38 @@ class BroadwayExtension extends Extension
             'broadway.event_store.dbal.use_binary',
             $config['dbal']['use_binary']
         );
+
+        $this->dbalEventStoreConnection = $config['dbal']['connection'];
+        if (null !== $this->dbalEventStoreConnection) {
+            $container->setParameter(
+                'broadway.event_store.dbal.connection',
+                $config['dbal']['connection']
+            );
+        }
+    }
+
+    /**
+     * This needs to be done in a compiler pass, to access doctrine connections definitions.
+     */
+    public function injectDBALEventStoreConnection(ContainerBuilder $container)
+    {
+        if (null === $this->dbalEventStoreConnection) {
+            return;
+        }
+
+        $connectionServiceName = sprintf('doctrine.dbal.%s_connection', $this->dbalEventStoreConnection);
+        if (!$container->hasDefinition($connectionServiceName)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Invalid %s config: DBAL connection "%s" not found',
+                    $this->getAlias(),
+                    $this->dbalEventStoreConnection
+                )
+            );
+        }
+
+        $dbalEventStore = $container->getDefinition('broadway.event_store.dbal');
+        $dbalEventStore->replaceArgument(0, new Reference($connectionServiceName));
     }
 
     private function configElasticsearch(array $config, ContainerBuilder $container)

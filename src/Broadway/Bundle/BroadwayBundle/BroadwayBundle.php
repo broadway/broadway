@@ -16,6 +16,7 @@ use Broadway\Bundle\BroadwayBundle\Command\SchemaEventStoreDropCommand;
 use Broadway\Bundle\BroadwayBundle\DependencyInjection\RegisterBusSubscribersCompilerPass;
 use Broadway\Bundle\BroadwayBundle\DependencyInjection\RegisterEventListenerCompilerPass;
 use Broadway\Bundle\BroadwayBundle\DependencyInjection\RegisterMetadataEnricherSubscriberPass;
+use Broadway\Bundle\BroadwayBundle\DependencyInjection\InjectDBALEventStoreConnectionCompilerPass;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -57,6 +58,9 @@ class BroadwayBundle extends Bundle
                 'broadway.metadata_enriching_event_stream_decorator',
                 'broadway.metadata_enricher'
             )
+        );
+        $container->addCompilerPass(
+            new InjectDBALEventStoreConnectionCompilerPass()
         );
     }
 
