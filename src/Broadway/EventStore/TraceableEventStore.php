@@ -59,9 +59,9 @@ class TraceableEventStore implements EventStoreInterface
     /**
      * {@inheritDoc}
      */
-    public function load($id)
+    public function load($id, $playhead = 0)
     {
-        return $this->eventStore->load($id);
+        return $this->eventStore->load($id, $playhead);
     }
 
     /**

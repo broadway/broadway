@@ -69,10 +69,11 @@ class DBALEventStore implements EventStoreInterface
     /**
      * {@inheritDoc}
      */
-    public function load($id)
+    public function load($id, $playhead = 0)
     {
         $statement = $this->prepareLoadStatement();
         $statement->bindValue('uuid', $this->convertIdentifierToStorageValue($id));
+        $statement->bindValue('playhead', $playhead);
         $statement->execute();
 
         $events = array();
@@ -184,6 +185,7 @@ class DBALEventStore implements EventStoreInterface
             $query = 'SELECT uuid, playhead, metadata, payload, recorded_on
                 FROM ' . $this->tableName . '
                 WHERE uuid = :uuid
+                AND playhead >= :playhead
                 ORDER BY playhead ASC';
             $this->loadStatement = $this->connection->prepare($query);
         }
