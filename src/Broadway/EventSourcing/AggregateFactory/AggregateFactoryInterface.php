@@ -3,6 +3,7 @@
 namespace Broadway\EventSourcing\AggregateFactory;
 
 use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\DomainMessage;
 
 /**
  * Interface AggregateFactoryInterface
@@ -15,5 +16,5 @@ interface AggregateFactoryInterface
      *
      * @return \Broadway\EventSourcing\EventSourcedAggregateRoot
      */
-    public function create($aggregateClass, DomainEventStreamInterface $domainEventStream);
+    public function create($aggregateClass, DomainEventStreamInterface $domainEventStream, DomainMessage $snapshot);
 }
