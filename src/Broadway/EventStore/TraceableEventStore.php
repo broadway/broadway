@@ -65,6 +65,14 @@ class TraceableEventStore implements EventStoreInterface
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function loadLast($id)
+    {
+        return $this->eventStore->loadLast($id);
+    }
+
+    /**
      * Start tracing.
      */
     public function trace()

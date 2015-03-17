@@ -49,6 +49,20 @@ class InMemoryEventStore implements EventStoreInterface
     /**
      * {@inheritDoc}
      */
+    public function loadLast($id)
+    {
+        $id = (string) $id;
+
+        if (isset($this->events[$id])) {
+            return end($this->events[$id]);
+        }
+
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function append($id, DomainEventStreamInterface $eventStream)
     {
         $id = (string) $id;
