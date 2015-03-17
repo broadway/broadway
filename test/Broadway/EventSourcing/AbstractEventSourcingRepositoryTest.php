@@ -47,13 +47,16 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
         $this->eventStore = new TraceableEventStore(new InMemoryEventStore());
         $this->eventStore->trace();
 
+        $this->snapshotStore = new TraceableEventStore(new InMemoryEventStore());
+        $this->snapshotStore->trace();
+
         $this->eventBus = new TraceableEventBus(new SimpleEventBus());
         $this->eventBus->trace();
 
         $this->eventStreamDecorator = new TraceableEventStoreDecorator();
         $this->eventStreamDecorator->trace();
 
-        $this->repository = $this->createEventSourcingRepository($this->eventStore, $this->eventBus, array($this->eventStreamDecorator));
+        $this->repository = $this->createEventSourcingRepository($this->eventStore, $this->eventBus, array($this->eventStreamDecorator), $this->snapshotStore);
     }
 
     /**
@@ -103,6 +106,30 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
 
         $expectedAggregate = $this->createAggregate();
         $expectedAggregate->apply(new DidNumberEvent(1337));
+        $expectedAggregate->getUncommittedEvents();
+
+        $this->assertEquals($expectedAggregate, $aggregate);
+    }
+
+    /**
+     * @test
+     */
+    public function it_loads_an_aggregate_using_snapshots()
+    {
+        $this->snapshotStore->append(42, new DomainEventStream(array(
+            DomainMessage::recordNow(42, 1, new Metadata(array()), new TestEventSourcedAggregateSnapshot(array(1337, 1337)))
+        )));
+
+        $this->eventStore->append(42, new DomainEventStream(array(
+            DomainMessage::recordNow(42, 2, new Metadata(array()), new DidNumberEvent(2001))
+        )));
+
+        $aggregate = $this->repository->load(42);
+
+        $expectedAggregate = $this->createAggregate();
+        $expectedAggregate->apply(new DidNumberEvent(1337));
+        $expectedAggregate->apply(new DidNumberEvent(1337));
+        $expectedAggregate->apply(new DidNumberEvent(2001));
         $expectedAggregate->getUncommittedEvents();
 
         $this->assertEquals($expectedAggregate, $aggregate);
@@ -183,7 +210,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
     /**
      * @return EventSourcingRepository
      */
-    abstract protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, array $eventStreamDecorators);
+    abstract protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, array $eventStreamDecorators, TraceableEventStore $snapshotStore);
 
     /**
      * @return EventSourcedAggregateRoot
@@ -198,6 +225,16 @@ class DidNumberEvent
     public function __construct($number)
     {
         $this->number = $number;
+    }
+}
+
+class TestEventSourcedAggregateSnapshot
+{
+    public $numbers;
+
+    public function __construct(array $numbers)
+    {
+        $this->numbers = $numbers;
     }
 }
 

@@ -21,9 +21,9 @@ use Broadway\EventStore\TraceableEventStore;
 
 class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
 {
-    protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, array $eventStreamDecorators)
+    protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, array $eventStreamDecorators, TraceableEventStore $snapshotStore)
     {
-        return new EventSourcingRepository($eventStore, $eventBus, '\Broadway\EventSourcing\TestEventSourcedAggregate', new PublicConstructorAggregateFactory(), $eventStreamDecorators);
+        return new EventSourcingRepository($eventStore, $eventBus, '\Broadway\EventSourcing\TestEventSourcedAggregate', new PublicConstructorAggregateFactory(), $eventStreamDecorators, $snapshotStore);
     }
 
     protected function createAggregate()
@@ -108,6 +108,11 @@ class TestEventSourcedAggregate extends EventSourcedAggregateRoot
     protected function applyDidNumberEvent($event)
     {
         $this->numbers[] = $event->number;
+    }
+
+    protected function applyTestEventSourcedAggregateSnapshot($snapshot)
+    {
+        $this->numbers = $snapshot->numbers;
     }
 }
 
