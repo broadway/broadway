@@ -63,7 +63,7 @@ class EventSourcingRepository implements RepositoryInterface
      */
     public function load($id)
     {
-        $playhead = 0;
+        $playhead = -1;
         $snapshot = null;
         try {
             if (null !== $this->snapshotStore) {
@@ -72,7 +72,7 @@ class EventSourcingRepository implements RepositoryInterface
                     $playhead = $snapshot->getPlayhead();
                 }
             }
-            $domainEventStream = $this->eventStore->load($id, $playhead);
+            $domainEventStream = $this->eventStore->load($id, $playhead + 1);
 
             return $this->aggregateFactory->create($this->aggregateClass, $domainEventStream, $snapshot);
         } catch (EventStreamNotFoundException $e) {

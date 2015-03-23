@@ -116,6 +116,10 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
      */
     public function it_loads_an_aggregate_using_snapshots()
     {
+        $this->eventStore->append(42, new DomainEventStream(array(
+            DomainMessage::recordNow(42, 1, new Metadata(array()), new DidNumberEvent(1337))
+        )));
+
         $this->snapshotStore->append(42, new DomainEventStream(array(
             DomainMessage::recordNow(42, 1, new Metadata(array()), new TestEventSourcedAggregateSnapshot(array(1337, 1337)))
         )));
