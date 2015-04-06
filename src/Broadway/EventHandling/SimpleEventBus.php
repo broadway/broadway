@@ -57,4 +57,9 @@ class SimpleEventBus implements EventBusInterface
             }
         }
     }
+
+    public function setSubscribers(array $eventListeners)
+    {
+        $this->eventListeners = $eventListeners;
+    }
 }
