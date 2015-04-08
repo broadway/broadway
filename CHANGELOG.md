@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.6.x
+
+#### BC breaks
+
+- The Scenario for CommandHandling now clears the recorded events after each `then`. So for each then you only need to supply the **newly** recorded events.
+
 ## v0.5.x
 
 #### BC breaks
