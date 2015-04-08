@@ -102,6 +102,8 @@ class Scenario
     {
         $this->testCase->assertEquals($events, $this->eventStore->getEvents());
 
+        $this->eventStore->clearEvents();
+
         return $this;
     }
 }
