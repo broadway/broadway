@@ -24,7 +24,7 @@ class StaticallyConfiguredSagaMetadataFactory implements MetadataFactoryInterfac
 
         if (! is_subclass_of($saga, $requiredInterface)) {
             throw new RuntimeException(
-                sprintf('Provided saga of class %s must implement %s', $saga, $requiredInterface)
+                sprintf('Provided saga of class %s must implement %s', get_class($saga), $requiredInterface)
             );
         }
 
