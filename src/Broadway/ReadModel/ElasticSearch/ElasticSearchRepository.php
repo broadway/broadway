@@ -62,7 +62,8 @@ class ElasticSearchRepository implements RepositoryInterface
             'refresh' => true,
         );
 
-        $this->client->index($params);
+        $result =$this->client->index($params);
+        $this->checkForError($result);
     }
 
     /**
@@ -111,12 +112,13 @@ class ElasticSearchRepository implements RepositoryInterface
     public function remove($id)
     {
         try {
-            $this->client->delete(array(
+            $result = $this->client->delete(array(
                 'id'      => $id,
                 'index'   => $this->index,
                 'type'    => $this->class,
                 'refresh' => true,
             ));
+            $this->checkForError($result);
         } catch (Missing404Exception $e) { // It was already deleted or never existed, fine by us!
         }
     }
@@ -128,6 +130,8 @@ class ElasticSearchRepository implements RepositoryInterface
         } catch (Missing404Exception $e) {
             return array();
         }
+
+        $this->checkForError($result);
 
         if (! array_key_exists('hits', $result)) {
             return array();
@@ -146,7 +150,7 @@ class ElasticSearchRepository implements RepositoryInterface
     protected function search(array $query, array $facets = array(), $size = 500)
     {
         try {
-            return $this->client->search(array(
+            $result = $this->client->search(array(
                 'index' => $this->index,
                 'body'  => array(
                     'query'  => $query,
@@ -154,6 +158,9 @@ class ElasticSearchRepository implements RepositoryInterface
                 ),
                 'size' => $size,
             ));
+            $this->checkForError($result);
+
+            return $result;
         } catch (Missing404Exception $e) {
             return array();
         }
@@ -265,7 +272,8 @@ class ElasticSearchRepository implements RepositoryInterface
             'timeout' => '5s',
         );
 
-        $this->client->indices()->delete($indexParams);
+        $result = $this->client->indices()->delete($indexParams);
+        $this->checkForError($result);
 
         $response = $this->client->cluster()->health(array(
             'index'           => $this->index,
@@ -288,5 +296,12 @@ class ElasticSearchRepository implements RepositoryInterface
         }
 
         return $fields;
+    }
+
+    private function checkForError($result)
+    {
+        if (isset($result['status']) && ($result['status'] > 400)) {
+            throw new \RuntimeException($result['error']);
+        }
     }
 }
