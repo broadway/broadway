@@ -36,7 +36,7 @@ moved correctly.
 Running Tests
 -------------
 
-The PHPUnit tests can be run by changing to the directory of the tests and running:
+The PHPUnit tests can be run by changing to this directory and running:
 
 ```bash
 $ phpunit .
