@@ -8,7 +8,7 @@ file `PartsTest` contains a PHPUnit test suite to test the domain.
 
 The two files contain comments about what is happening.
 
-The PHPUnit tests can be run by changing to the directory of the tests and running:
+The PHPUnit tests can be run by changing to this directory and running:
 
 ```bash
 $ phpunit .
