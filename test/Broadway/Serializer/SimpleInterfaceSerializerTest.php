@@ -25,7 +25,7 @@ class SimpleInterfaceSerializerTest extends TestCase
     /**
      * @test
      * @expectedException Broadway\Serializer\SerializationException
-     * @expectedExceptionMessage Object does not implement Broadway\Serializer\SerializableInterface
+     * @expectedExceptionMessage Object 'stdClass' does not implement Broadway\Serializer\SerializableInterface
      */
     public function it_throws_an_exception_if_an_object_does_not_implement_SerializableInterface()
     {

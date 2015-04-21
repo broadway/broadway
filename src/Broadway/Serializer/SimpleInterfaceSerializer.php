@@ -24,7 +24,10 @@ class SimpleInterfaceSerializer implements SerializerInterface
     public function serialize($object)
     {
         if (! $object instanceof SerializableInterface) {
-            throw new SerializationException('Object does not implement Broadway\Serializer\SerializableInterface');
+            throw new SerializationException(sprintf(
+                'Object \'%s\' does not implement Broadway\Serializer\SerializableInterface',
+                get_class($object)
+            ));
         }
 
         return array(
