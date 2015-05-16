@@ -7,7 +7,7 @@
         "beberlei/assert": "~2.0",
         "broadway/uuid-generator": "~0.1.0",
         "php": ">=5.3.3",
-        "rhumsaa/uuid": "~2.4"
+        "ramsey/uuid": "~2.4"
     },
     "authors": [
       {
