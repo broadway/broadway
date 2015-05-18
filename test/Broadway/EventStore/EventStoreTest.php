@@ -17,11 +17,29 @@ use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\Serializer\SerializableInterface;
 use Broadway\TestCase;
+use Broadway\Upcasting\SequentialUpcasterChain;
+use Broadway\Upcasting\Upcaster;
 use Rhumsaa\Uuid\Uuid;
 
 abstract class EventStoreTest extends TestCase
 {
+    /**
+     * @var EventStoreInterface
+     */
     protected $eventStore;
+
+    protected $upcasterChain;
+
+    /**
+     * @var TestUpcaster
+     */
+    private $upcaster;
+
+    protected function setUp()
+    {
+        $this->upcaster = new TestUpcaster();
+        $this->upcasterChain = new SequentialUpcasterChain(array($this->upcaster));
+    }
 
     /**
      * @test
@@ -120,6 +138,32 @@ abstract class EventStoreTest extends TestCase
         $this->eventStore->append($id, $domainEventStream);
     }
 
+    /**
+     * @test
+     * @dataProvider idDataProvider
+     */
+    public function it_upcasts_loaded_events($id)
+    {
+        $domainEventStream = new DomainEventStream(array(
+            $this->createDomainMessage($id, 0),
+            $this->createDomainMessage($id, 1),
+            $this->createDomainMessage($id, 2),
+            $this->createDomainMessage($id, 3),
+        ));
+
+        $this->eventStore->append($id, $domainEventStream);
+
+        $this->upcaster->setUpcastingCallback(function (array $serializedEvent) {
+            $serializedEvent['payload']['isUpcasted'] = true;
+
+            return $serializedEvent;
+        });
+
+        foreach($this->eventStore->load($id) as $event) {
+            $this->assertTrue($event->getPayload()->isUpcasted());
+        }
+    }
+
     public function idDataProvider()
     {
         $uuid = Uuid::uuid4();
@@ -144,20 +188,34 @@ abstract class EventStoreTest extends TestCase
 
     protected function createDomainMessage($id, $playhead, $recordedOn = null)
     {
-        return new DomainMessage($id, $playhead, new MetaData(array()), new Event(), $recordedOn ? $recordedOn : DateTime::now());
+        return new DomainMessage($id, $playhead, new MetaData(array()), new Event(false), $recordedOn ? $recordedOn : DateTime::now());
     }
 }
 
 class Event implements SerializableInterface
 {
+    private $isUpcasted = false;
+
+    public function __construct($isUpcasted)
+    {
+        $this->isUpcasted = $isUpcasted;
+    }
+
     public static function deserialize(array $data)
     {
-        return new Event();
+        return new Event($data['isUpcasted']);
     }
 
     public function serialize()
     {
-        return array();
+        return array(
+            'isUpcasted' => $this->isUpcasted
+        );
+    }
+
+    public function isUpcasted()
+    {
+        return $this->isUpcasted;
     }
 }
 
@@ -181,5 +239,29 @@ class IdentityThatCannotBeConvertedToAString
     public function __construct($id)
     {
         $this->id = $id;
+    }
+}
+
+final class TestUpcaster implements Upcaster
+{
+    private $callback;
+
+    public function setUpcastingCallback($callback)
+    {
+        $this->callback = $callback;
+    }
+
+    public function supports(array $serializedEvent)
+    {
+        return $serializedEvent['class'] === 'Broadway\EventStore\Event';
+    }
+
+    public function upcast(array $serializedEvent)
+    {
+        if ($this->callback) {
+            $serializedEvent = call_user_func($this->callback, $serializedEvent);
+        }
+
+        return $serializedEvent;
     }
 }

@@ -18,10 +18,18 @@ class DBALEventStoreTest extends EventStoreTest
 {
     public function setUp()
     {
+        parent::setUp();
+
         $connection       = DriverManager::getConnection(array('driver' => 'pdo_sqlite', 'memory' => true));
         $schemaManager    = $connection->getSchemaManager();
         $schema           = $schemaManager->createSchema();
-        $this->eventStore = new DBALEventStore($connection, new SimpleInterfaceSerializer(), new SimpleInterfaceSerializer(), 'events');
+        $this->eventStore = new DBALEventStore(
+            $connection,
+            new SimpleInterfaceSerializer(),
+            new SimpleInterfaceSerializer(),
+            'events',
+            $this->upcasterChain
+        );
 
         $table = $this->eventStore->configureSchema($schema);
         $schemaManager->createTable($table);

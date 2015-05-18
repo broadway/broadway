@@ -17,6 +17,7 @@ use Broadway\Domain\DomainEventStreamInterface;
 use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\Exception\InvalidIdentifierException;
 use Broadway\Serializer\SerializerInterface;
+use Broadway\Upcasting\UpcasterChain;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Schema\Schema;
@@ -42,6 +43,10 @@ class DBALEventStore implements EventStoreInterface
     private $tableName;
 
     private $useBinary;
+    /**
+     * @var UpcasterChain
+     */
+    private $upcasterChain;
 
     /**
      * @param string $tableName
@@ -51,11 +56,13 @@ class DBALEventStore implements EventStoreInterface
         SerializerInterface $payloadSerializer,
         SerializerInterface $metadataSerializer,
         $tableName,
+        UpcasterChain $upcasterChain,
         $useBinary = false
     ) {
         $this->connection         = $connection;
         $this->payloadSerializer  = $payloadSerializer;
         $this->metadataSerializer = $metadataSerializer;
+        $this->upcasterChain      = $upcasterChain;
         $this->tableName          = $tableName;
         $this->useBinary          = (bool) $useBinary;
 
@@ -193,11 +200,14 @@ class DBALEventStore implements EventStoreInterface
 
     private function deserializeEvent($row)
     {
+        $payload = json_decode($row['payload'], true);
+        $payload = $this->upcasterChain->upcast($payload);
+
         return new DomainMessage(
             $row['uuid'],
             $row['playhead'],
             $this->metadataSerializer->deserialize(json_decode($row['metadata'], true)),
-            $this->payloadSerializer->deserialize(json_decode($row['payload'], true)),
+            $this->payloadSerializer->deserialize($payload),
             DateTime::fromString($row['recorded_on'])
         );
     }

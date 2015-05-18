@@ -25,11 +25,17 @@ use Broadway\EventStore\EventStoreInterface;
 use Broadway\EventStore\InMemoryEventStore;
 use Broadway\EventStore\TraceableEventStore;
 use Broadway\ReadModel\Projector;
+use Broadway\Serializer\SerializableInterface;
+use Broadway\Serializer\SimpleInterfaceSerializer;
 use Broadway\TestCase;
+use Broadway\Upcasting\SequentialUpcasterChain;
 use RuntimeException;
 
 abstract class AbstractEventSourcingRepositoryTest extends TestCase
 {
+    /** @var \PHPUnit_Framework_MockObject_MockObject */
+    protected $eventStoreMock;
+
     /** @var TraceableEventBus */
     protected $eventBus;
 
@@ -44,7 +50,10 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
 
     public function setUp()
     {
-        $this->eventStore = new TraceableEventStore(new InMemoryEventStore());
+        $this->eventStore = new TraceableEventStore(new InMemoryEventStore(
+            new SimpleInterfaceSerializer(),
+            new SequentialUpcasterChain(array())
+        ));
         $this->eventStore->trace();
 
         $this->eventBus = new TraceableEventBus(new SimpleEventBus());
@@ -191,13 +200,25 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
     abstract protected function createAggregate();
 }
 
-class DidNumberEvent
+class DidNumberEvent implements SerializableInterface
 {
     public $number;
 
     public function __construct($number)
     {
         $this->number = $number;
+    }
+
+    public static function deserialize(array $data)
+    {
+        return new DidNumberEvent($data['number']);
+    }
+
+    public function serialize()
+    {
+        return array(
+            'number' => $this->number
+        );
     }
 }
 
