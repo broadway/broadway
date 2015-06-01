@@ -11,23 +11,22 @@
 
 namespace Broadway\Bundle\BroadwayBundle\Command;
 
-use Broadway\EventStore\DBALEventStore;
-use Doctrine\Bundle\DoctrineBundle\Command\DoctrineCommand;
 use Exception;
-use RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Drops the event store schema.
  */
-class SchemaEventStoreDropCommand extends DoctrineCommand
+class SchemaEventStoreDropCommand extends AbstractSchemaEventStoreCommand
 {
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
+        parent::configure();
+
         $this
             ->setName('broadway:event-store:schema:drop')
             ->setDescription('Drops the event store schema')
@@ -46,11 +45,16 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $connection = $this->getDoctrineConnection('default');
+        if (!$this->connection) {
+            $output->writeln('<error>Could not drop Broadway event-store schema</error>');
+            $output->writeln(sprintf('<error>%s</error>', $this->exception->getMessage()));
+
+            return 1;
+        }
 
         $error = false;
         try {
-            $schemaManager = $connection->getSchemaManager();
+            $schemaManager = $this->connection->getSchemaManager();
             $eventStore    = $this->getEventStore();
 
             $table = $eventStore->configureTable();
@@ -64,16 +68,5 @@ EOT
         }
 
         return $error ? 1 : 0;
-    }
-
-    private function getEventStore()
-    {
-        $eventStore = $this->getContainer()->get('broadway.event_store');
-
-        if (! $eventStore instanceof DBALEventStore) {
-            throw new RuntimeException("'broadway.event_store' must be configured as an instance of DBALEventStore");
-        }
-
-        return $eventStore;
     }
 }
