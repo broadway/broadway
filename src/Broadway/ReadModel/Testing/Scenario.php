@@ -14,8 +14,8 @@ namespace Broadway\ReadModel\Testing;
 use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
-use Broadway\ReadModel\InMemory\InMemoryRepository;
 use Broadway\ReadModel\ProjectorInterface;
+use Broadway\ReadModel\RepositoryInterface;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -34,16 +34,30 @@ class Scenario
     private $projector;
     private $repository;
     private $playhead;
+    private $aggregateId;
 
     public function __construct(
         PHPUnit_Framework_TestCase $testCase,
-        InMemoryRepository $repository,
+        RepositoryInterface $repository,
         ProjectorInterface $projector
     ) {
-        $this->testCase   = $testCase;
-        $this->repository = $repository;
-        $this->projector  = $projector;
-        $this->playhead   = -1;
+        $this->testCase    = $testCase;
+        $this->repository  = $repository;
+        $this->projector   = $projector;
+        $this->playhead    = -1;
+        $this->aggregateId = 1;
+    }
+
+    /**
+     * @param string $aggregateId
+     *
+     * @return Scenario
+     */
+    public function withAggregateId($aggregateId)
+    {
+        $this->aggregateId = $aggregateId;
+
+        return $this;
     }
 
     /**
@@ -92,6 +106,6 @@ class Scenario
             $occurredOn = DateTime::now();
         }
 
-        return new DomainMessage(1, $this->playhead, new Metadata(array()), $event, $occurredOn);
+        return new DomainMessage($this->aggregateId, $this->playhead, new Metadata(array()), $event, $occurredOn);
     }
 }
