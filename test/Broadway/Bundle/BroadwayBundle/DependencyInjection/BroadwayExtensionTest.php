@@ -69,12 +69,12 @@ class BroadwayExtensionTest extends ExtensionTestCase
     /**
      * @test
      */
-    public function it_defaults_to_null_when_no_storage_suffix_is_configured_for_saga_storage()
+    public function it_defaults_to_empty_string_when_no_storage_suffix_is_configured_for_saga_storage()
     {
         $this->load($this->extension, array());
 
         $this->assertTrue($this->container->hasParameter('broadway.saga.mongodb.storage_suffix'));
-        $this->assertNull($this->container->getParameter('broadway.saga.mongodb.storage_suffix'));
+        $this->assertEquals('', $this->container->getParameter('broadway.saga.mongodb.storage_suffix'));
     }
 
     /**
