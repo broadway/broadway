@@ -79,6 +79,34 @@ class BroadwayExtensionTest extends ExtensionTestCase
 
     /**
      * @test
+     */
+    public function it_uses_configured_connection_details_when_using_mongo_for_saga_repositories()
+    {
+        $dsn = 'mongodb://12.34.45.6:27018/awesome';
+        $options = array(
+            'connectTimeoutMS' => 50
+        );
+
+        $this->load($this->extension, array(
+            'saga' => array(
+                'repository' => 'mongodb',
+                'mongodb' => array(
+                    'connection' => array(
+                        'dsn' => $dsn,
+                        'options' => $options,
+                    ),
+                ),
+            ),
+        ));
+
+        $def = $this->container->getDefinition('broadway.saga.state.mongodb_connection');
+
+        $this->assertEquals($dsn, $def->getArgument(0));
+        $this->assertEquals($options, $def->getArgument(1));
+    }
+
+    /**
+     * @test
      * @dataProvider readModelConfigurationToRepositoryMapping
      */
     public function read_model_repository_factory_set_to_configured_repository_factory($repoFactory, $class)
