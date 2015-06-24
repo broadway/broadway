@@ -80,6 +80,7 @@ class Configuration implements ConfigurationInterface
                                 ->arrayNode('connection')
                                     ->children()
                                         ->scalarNode('dsn')->defaultNull()->end()
+                                        ->scalarNode('database')->defaultNull()->end()
                                         ->arrayNode('options')
                                             ->prototype('scalar')->end()
                                         ->end()
