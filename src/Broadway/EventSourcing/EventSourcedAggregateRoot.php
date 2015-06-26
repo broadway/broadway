@@ -32,7 +32,6 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
      * Applies an event. The event is added to the AggregateRoot's list of uncommitted events.
      *
      * @param $event
-     * @internal
      */
     public function apply($event)
     {
