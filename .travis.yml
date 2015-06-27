@@ -1,10 +1,19 @@
 language: php
 
-php:
-  - 5.3
-  - 5.4
-  - 5.5
-  - 5.6
+env:
+    global:
+        - COMPOSER_LOWEST=""
+
+matrix:
+    include:
+        - php: 5.3
+        - php: 5.4
+        - php: 5.5
+        - php: 5.6
+          env: COMPOSER_LOWEST=""
+        - php: 5.6
+          env: COMPOSER_LOWEST="--prefer-lowest"
+    fast_finish: true
 
 before_install:
     - echo "extension=mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
@@ -13,6 +22,7 @@ before_install:
 install:
     - composer self-update
     - composer install
+    - composer update symfony/framework-bundle $COMPOSER_LOWEST
 
 script:
   - phpunit --exclude-group=none
