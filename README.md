@@ -21,7 +21,7 @@ Read the blog post about this repository at:
 ## Installation
 
 ```
-$ composer require broadway/broadway ~0.5.2
+$ composer require broadway/broadway
 ```
 [packagist]: https://packagist.org/packages/broadway/broadway
 
