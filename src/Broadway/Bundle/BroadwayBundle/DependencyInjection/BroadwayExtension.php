@@ -70,7 +70,27 @@ class BroadwayExtension extends Extension
                     'broadway.saga.state.mongodb_repository'
                 );
 
-                $container->setParameter('broadway.saga.mongodb.storage_suffix', $config['mongodb']['storage_suffix']);
+                $database = 'broadway_%kernel.environment%%broadway.saga.mongodb.storage_suffix%';
+
+                if (isset($config['mongodb']['connection'])) {
+
+                    if (isset($config['mongodb']['connection']['database'])) {
+                        $database = $config['mongodb']['connection']['database'];
+                    }
+
+                    $mongoConnection = $container->getDefinition('broadway.saga.state.mongodb_connection');
+
+                    if (isset($config['mongodb']['connection']['dsn'])) {
+                        $mongoConnection->replaceArgument(0, $config['mongodb']['connection']['dsn']);
+                    }
+
+                    if (isset($config['mongodb']['connection']['options'])) {
+                        $mongoConnection->replaceArgument(1, $config['mongodb']['connection']['options']);
+                    }
+                }
+
+                $container->setParameter('broadway.saga.mongodb.storage_suffix', (string) $config['mongodb']['storage_suffix']);
+                $container->setParameter('broadway.saga.mongodb.database', $database);
                 break;
             case 'in_memory':
                 $loader->load('saga/in_memory.xml');

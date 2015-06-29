@@ -14,10 +14,13 @@
                  factory-service = "broadway.saga.state.mongodb_connection"
                  factory-method  = "selectDatabase"
                 >
-            <argument>broadway_%kernel.environment%%broadway.saga.mongodb.storage_suffix%</argument>
+            <argument>%broadway.saga.mongodb.database%</argument>
         </service>
 
-        <service id="broadway.saga.state.mongodb_connection" class="Doctrine\MongoDB\Connection" />
+        <service id="broadway.saga.state.mongodb_connection" class="Doctrine\MongoDB\Connection">
+            <argument>null</argument>
+            <argument type="collection" />
+        </service>
 
         <service id="broadway.saga.state.mongodb_collection"
                  class           = "Doctrine\MongoDB\Collection"

@@ -69,12 +69,40 @@ class BroadwayExtensionTest extends ExtensionTestCase
     /**
      * @test
      */
-    public function it_defaults_to_null_when_no_storage_suffix_is_configured_for_saga_storage()
+    public function it_defaults_to_empty_string_when_no_storage_suffix_is_configured_for_saga_storage()
     {
         $this->load($this->extension, array());
 
         $this->assertTrue($this->container->hasParameter('broadway.saga.mongodb.storage_suffix'));
-        $this->assertNull($this->container->getParameter('broadway.saga.mongodb.storage_suffix'));
+        $this->assertEquals('', $this->container->getParameter('broadway.saga.mongodb.storage_suffix'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_uses_configured_connection_details_when_using_mongo_for_saga_repositories()
+    {
+        $dsn = 'mongodb://12.34.45.6:27018/awesome';
+        $options = array(
+            'connectTimeoutMS' => 50
+        );
+
+        $this->load($this->extension, array(
+            'saga' => array(
+                'repository' => 'mongodb',
+                'mongodb' => array(
+                    'connection' => array(
+                        'dsn' => $dsn,
+                        'options' => $options,
+                    ),
+                ),
+            ),
+        ));
+
+        $def = $this->container->getDefinition('broadway.saga.state.mongodb_connection');
+
+        $this->assertEquals($dsn, $def->getArgument(0));
+        $this->assertEquals($options, $def->getArgument(1));
     }
 
     /**
