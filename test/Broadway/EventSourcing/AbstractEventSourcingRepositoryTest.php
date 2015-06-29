@@ -164,7 +164,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
         $repository = new EventSourcingRepository(
             $this->eventStore,
             $this->eventBus,
-            '\Broadway\EventSourcing\TestEventSourcedAggregate',
+            get_class($this->createAggregate()),
             new PublicConstructorAggregateFactory(),
             array(new MetadataEnrichingEventStreamDecorator(array(new TestDecorationMetadataEnricher())))
         );
