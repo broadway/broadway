@@ -72,10 +72,11 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
     /**
      * {@inheritDoc}
      */
-    public function load($id)
+    public function load($stream, $identifier)
     {
         $statement = $this->prepareLoadStatement();
-        $statement->bindValue(1, $this->convertIdentifierToStorageValue($id));
+        $statement->bindValue(1, $this->convertIdentifierToStorageValue($identifier));
+        $statement->bindValue(2, $stream);
         $statement->execute();
 
         $events = array();
@@ -84,7 +85,7 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         }
 
         if (empty($events)) {
-            throw new EventStreamNotFoundException(sprintf('EventStream not found for aggregate with id %s for table %s', $id, $this->tableName));
+            throw new EventStreamNotFoundException(sprintf('EventStream not found for aggregate with id %s for table %s', $identifier, $this->tableName));
         }
 
         return new DomainEventStream($events);
@@ -93,20 +94,20 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
     /**
      * {@inheritDoc}
      */
-    public function append($id, DomainEventStreamInterface $eventStream)
+    public function append($stream, $identifier, DomainEventStreamInterface $eventStream)
     {
         // noop to ensure that an error will be thrown early if the ID
         // is not something that can be converted to a string. If we
         // let this move on without doing this DBAL will eventually
         // give us a hard time but the true reason for the problem
         // will be obfuscated.
-        $id = (string) $id;
+        $identifier = (string) $identifier;
 
         $this->connection->beginTransaction();
 
         try {
             foreach ($eventStream as $domainMessage) {
-                $this->insertMessage($this->connection, $domainMessage);
+                $this->insertMessage($this->connection, $stream, $domainMessage);
             }
 
             $this->connection->commit();
@@ -117,10 +118,11 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         }
     }
 
-    private function insertMessage(Connection $connection, DomainMessage $domainMessage)
+    private function insertMessage(Connection $connection, $stream, DomainMessage $domainMessage)
     {
         $data = array(
             'uuid'        => $this->convertIdentifierToStorageValue((string) $domainMessage->getId()),
+            'stream'      => $stream,
             'playhead'    => $domainMessage->getPlayhead(),
             'metadata'    => json_encode($this->metadataSerializer->serialize($domainMessage->getMetadata())),
             'payload'     => json_encode($this->payloadSerializer->serialize($domainMessage->getPayload())),
@@ -166,6 +168,7 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
 
         $table->addColumn('id', 'integer', array('autoincrement' => true));
         $table->addColumn('uuid', $uuidColumnDefinition['type'], $uuidColumnDefinition['params']);
+        $table->addColumn('stream', 'string', array('length' => 255));
         $table->addColumn('playhead', 'integer', array('unsigned' => true));
         $table->addColumn('payload', 'text');
         $table->addColumn('metadata', 'text');
@@ -181,9 +184,9 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
     private function prepareLoadStatement()
     {
         if (null === $this->loadStatement) {
-            $query = 'SELECT uuid, playhead, metadata, payload, recorded_on
+            $query = 'SELECT uuid, stream, playhead, metadata, payload, recorded_on
                 FROM ' . $this->tableName . '
-                WHERE uuid = ?
+                WHERE uuid = ? AND stream = ?
                 ORDER BY playhead ASC';
             $this->loadStatement = $this->connection->prepare($query);
         }

@@ -23,6 +23,8 @@ use Rhumsaa\Uuid\Uuid;
  */
 class BinaryDBALEventStoreTest extends DBALEventStoreTest
 {
+    const STREAM_TYPE = 'MyAggregate';
+
     /** @var \Doctrine\DBAL\Schema\Table  */
     protected $table;
 
@@ -66,7 +68,7 @@ class BinaryDBALEventStoreTest extends DBALEventStoreTest
             $this->createDomainMessage($id, 0),
         ));
 
-        $this->eventStore->append($id, $domainEventStream);
+        $this->eventStore->append(self::STREAM_TYPE, $id, $domainEventStream);
     }
 
     public function idDataProvider()
