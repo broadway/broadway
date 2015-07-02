@@ -21,7 +21,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class AbstractSchemaEventStoreCommand
  */
-class AbstractSchemaEventStoreCommand extends DoctrineCommand
+abstract class AbstractSchemaEventStoreCommand extends DoctrineCommand
 {
     /** @var \Doctrine\DBAL\Connection */
     protected $connection;
