@@ -21,9 +21,11 @@ use Broadway\EventStore\TraceableEventStore;
 
 class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
 {
+    const AGGREGATE_CLASS = '\Broadway\EventSourcing\TestEventSourcedAggregate';
+
     protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, array $eventStreamDecorators)
     {
-        return new EventSourcingRepository($eventStore, $eventBus, '\Broadway\EventSourcing\TestEventSourcedAggregate', new PublicConstructorAggregateFactory(), $eventStreamDecorators);
+        return new EventSourcingRepository($eventStore, $eventBus, self::AGGREGATE_CLASS, new PublicConstructorAggregateFactory(), $eventStreamDecorators);
     }
 
     protected function createAggregate()
@@ -47,7 +49,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
     {
         // make sure events exist in the event store
         $id = 'y0l0';
-        $this->eventStore->append($id, new DomainEventStream(array(
+        $this->eventStore->append(self::AGGREGATE_CLASS, $id, new DomainEventStream(array(
             DomainMessage::recordNow(42, 0, new Metadata(array()), new DidEvent())
         )));
 
@@ -70,7 +72,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
     {
         // make sure events exist in the event store
         $id = 'y0l0';
-        $this->eventStore->append($id, new DomainEventStream(array(
+        $this->eventStore->append('\Broadway\EventSourcing\TestEventSourcedAggregateWithStaticConstructor', $id, new DomainEventStream(array(
             DomainMessage::recordNow(42, 0, new Metadata(array()), new DidEvent())
         )));
 

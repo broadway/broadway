@@ -30,6 +30,8 @@ use RuntimeException;
 
 abstract class AbstractEventSourcingRepositoryTest extends TestCase
 {
+    const AGGREGATE_CLASS = 'MYAggregate';
+
     /** @var TraceableEventBus */
     protected $eventBus;
 
@@ -95,7 +97,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
      */
     public function it_loads_an_aggregate()
     {
-        $this->eventStore->append(42, new DomainEventStream(array(
+        $this->eventStore->append(self::AGGREGATE_CLASS, 42, new DomainEventStream(array(
             DomainMessage::recordNow(42, 0, new Metadata(array()), new DidNumberEvent(1337))
         )));
 

@@ -61,7 +61,7 @@ class EventSourcingRepository implements RepositoryInterface
     public function load($id)
     {
         try {
-            $domainEventStream = $this->eventStore->load($id);
+            $domainEventStream = $this->eventStore->load($this->aggregateClass, $id);
 
             return $this->aggregateFactory->create($this->aggregateClass, $domainEventStream);
         } catch (EventStreamNotFoundException $e) {
@@ -79,7 +79,7 @@ class EventSourcingRepository implements RepositoryInterface
 
         $domainEventStream = $aggregate->getUncommittedEvents();
         $eventStream       = $this->decorateForWrite($aggregate, $domainEventStream);
-        $this->eventStore->append($aggregate->getAggregateRootId(), $eventStream);
+        $this->eventStore->append($this->aggregateClass, $aggregate->getAggregateRootId(), $eventStream);
         $this->eventBus->publish($eventStream);
     }
 
