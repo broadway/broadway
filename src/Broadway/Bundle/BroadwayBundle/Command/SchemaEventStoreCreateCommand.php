@@ -11,10 +11,7 @@
 
 namespace Broadway\Bundle\BroadwayBundle\Command;
 
-use Broadway\EventStore\DBALEventStore;
 use Exception;
-use RuntimeException;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

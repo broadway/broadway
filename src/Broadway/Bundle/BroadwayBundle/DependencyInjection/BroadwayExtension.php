@@ -11,7 +11,6 @@
 
 namespace Broadway\Bundle\BroadwayBundle\DependencyInjection;
 
-use InvalidArgumentException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;

@@ -11,7 +11,7 @@
 
 namespace Broadway\Bundle\BroadwayBundle\DependencyInjection;
 
-use RuntimeException;
+use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -38,7 +38,7 @@ class DefineDBALEventStoreConnectionCompilerPass implements CompilerPassInterfac
      */
     public function process(ContainerBuilder $container)
     {
-        $connectionName = $container->getParameter('broadway.event_store.dbal.connection') ?: 'database_connection';
+        $connectionName = $container->getParameter('broadway.event_store.dbal.connection');
 
         $connectionServiceName = sprintf('doctrine.dbal.%s_connection', $connectionName);
         if (! $container->hasDefinition($connectionServiceName)) {

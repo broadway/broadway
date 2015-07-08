@@ -49,7 +49,7 @@ class Configuration implements ConfigurationInterface
                                     ->defaultValue('events')
                                 ->end()
                                 ->scalarNode('connection')
-                                    ->defaultNull()
+                                    ->defaultValue('default')
                                 ->end()
                                 ->booleanNode('use_binary')
                                     ->defaultFalse()

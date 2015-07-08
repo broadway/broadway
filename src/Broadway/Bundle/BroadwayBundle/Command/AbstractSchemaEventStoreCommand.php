@@ -39,8 +39,7 @@ class AbstractSchemaEventStoreCommand extends DoctrineCommand
                 'connection',
                 'c',
                 InputOption::VALUE_OPTIONAL,
-                'Specifies the database connection to use.',
-                'default'
+                'Specifies the database connection to use.'
             );
     }
 
