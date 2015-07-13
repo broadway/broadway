@@ -28,11 +28,16 @@ abstract class EventStoreManagementTest extends TestCase
      */
     protected $eventStore;
 
+    /**
+     * @var DateTime
+     */
+    protected $now;
+
     public function setUp()
     {
+        $this->now = DateTime::now();
         $this->eventStore = $this->createEventStore();
         $this->createAndInsertEventFixtures();
-
         $this->eventVisitor = new RecordingEventVisitor();
     }
 
@@ -265,7 +270,8 @@ abstract class EventStoreManagementTest extends TestCase
     private function createDomainMessage($id, $playhead, $event)
     {
         $id = $this->getId($id);
-        return new DomainMessage((string) $id, (string) $playhead, new Metadata(array()), $event, DateTime::now());
+
+        return new DomainMessage((string) $id, (string) $playhead, new Metadata(array()), $event, $this->now);
     }
 
     private function getId($id)
