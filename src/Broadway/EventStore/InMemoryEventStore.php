@@ -73,7 +73,7 @@ class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInt
     {
         $allEvents = $this->allEvents;
         if (! is_null($criteria)) {
-            $allEvents = array_filter($allEvents, [$criteria, 'isMatchedBy']);
+            $allEvents = array_filter($allEvents, array($criteria, 'isMatchedBy'));
         }
 
         foreach ($allEvents as $event) {
