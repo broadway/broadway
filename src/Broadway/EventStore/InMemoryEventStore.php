@@ -13,15 +13,18 @@ namespace Broadway\EventStore;
 
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\EventStore\Management\Criteria;
+use Broadway\EventStore\Management\EventStoreManagementInterface;
 
 /**
  * In-memory implementation of an event store.
  *
  * Useful for testing code that uses an event store.
  */
-class InMemoryEventStore implements EventStoreInterface
+class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInterface
 {
     private $events = array();
+    private $allEvents = array();
 
     /**
      * {@inheritDoc}
@@ -53,6 +56,7 @@ class InMemoryEventStore implements EventStoreInterface
             $this->assertPlayhead($this->events[$id], $playhead);
 
             $this->events[$id][$playhead] = $event;
+            $this->allEvents[] = $event;
         }
     }
 
@@ -62,6 +66,18 @@ class InMemoryEventStore implements EventStoreInterface
             throw new InMemoryEventStoreException(
                 sprintf("An event with playhead '%d' is already committed.", $playhead)
             );
+        }
+    }
+
+    public function visitEvents(EventVisitorInterface $eventVisitor, Criteria $criteria = null)
+    {
+        $allEvents = $this->allEvents;
+        if (! is_null($criteria)) {
+            $allEvents = array_filter($allEvents, [$criteria, 'isMatchedBy']);
+        }
+
+        foreach ($allEvents as $event) {
+            $eventVisitor->doWithEvent($event);
         }
     }
 }

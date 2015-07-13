@@ -16,11 +16,15 @@ use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainEventStreamInterface;
 use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\Exception\InvalidIdentifierException;
+use Broadway\EventStore\Management\Criteria;
+use Broadway\EventStore\Management\CriteriaNotSupportedException;
+use Broadway\EventStore\Management\EventStoreManagementInterface;
 use Broadway\Serializer\SerializerInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Version;
+use Elasticsearch\Tests\Endpoint\Indicess\CreateTest;
 use Rhumsaa\Uuid\Uuid;
 
 /**
@@ -29,7 +33,7 @@ use Rhumsaa\Uuid\Uuid;
  * The implementation uses doctrine DBAL for the communication with the
  * underlying data store.
  */
-class DBALEventStore implements EventStoreInterface
+class DBALEventStore implements EventStoreInterface, EventStoreManagementInterface
 {
     private $connection;
 
@@ -230,5 +234,80 @@ class DBALEventStore implements EventStoreInterface
         }
 
         return $id;
+    }
+
+    public function visitEvents(EventVisitorInterface $eventVisitor, Criteria $criteria = null)
+    {
+        $statement = $this->prepareVisitEventsStatement($criteria ?: Criteria::create());
+        $statement->execute();
+
+        while ($row = $statement->fetch()) {
+            if ($this->useBinary) {
+                $row['uuid'] = $this->convertStorageValueToIdentifier($row['uuid']);
+            }
+
+            $domainMessage = $this->deserializeEvent($row);
+
+            $eventVisitor->doWithEvent($domainMessage);
+        }
+    }
+
+    private function prepareVisitEventsStatement(Criteria $criteria)
+    {
+        list ($where, $bindValues, $bindValueTypes) = $this->prepareVisitEventsStatementWhereAndBindValues($criteria);
+        $query = 'SELECT uuid, playhead, metadata, payload, recorded_on
+            FROM ' . $this->tableName . '
+            ' . $where . '
+            ORDER BY id ASC';
+
+        $statement = $this->connection->executeQuery($query, $bindValues, $bindValueTypes);
+
+        return $statement;
+    }
+
+    private function prepareVisitEventsStatementWhereAndBindValues(Criteria $criteria)
+    {
+        if ($criteria->getAggregateRootTypes()) {
+            throw new CriteriaNotSupportedException(
+                'DBAL implementation cannot support criteria based on aggregate root types.'
+            );
+        }
+
+        $bindValues = array();
+        $bindValueTypes = array();
+
+        $criteriaTypes = array();
+
+        if ($criteria->getAggregateRootIds()) {
+            $criteriaTypes[] = array('uuid IN (:uuids)');
+
+            if ($this->useBinary) {
+                $bindValues['uuids'] = array_map(function ($id) {
+                    return $this->convertIdentifierToStorageValue($id);
+                }, $criteria->getAggregateRootIds());
+                $bindValueTypes['uuids'] = Connection::PARAM_STR_ARRAY;
+            } else {
+                $bindValues['uuids'] = $criteria->getAggregateRootIds();
+                $bindValueTypes['uuids'] = Connection::PARAM_STR_ARRAY;
+            }
+        }
+
+        if ($criteria->getEventTypes()) {
+            $criteriaTypes[] = array('type IN (:types)');
+            $bindValues['types'] = $criteria->getEventTypes();
+            $bindValueTypes['types'] = Connection::PARAM_STR_ARRAY;
+        }
+
+        if (! $criteriaTypes) {
+            return array('', array(), array());
+        }
+
+        $where = 'WHERE '.join(' AND ', array_map(function (array $criteriaType) {
+            return implode(' OR ', $criteriaType);
+        }, array_filter($criteriaTypes, function ($input) {
+            return $input;
+        })));
+
+        return array($where, $bindValues, $bindValueTypes);
     }
 }
