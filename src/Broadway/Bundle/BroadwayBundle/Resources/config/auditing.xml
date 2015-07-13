@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="broadway.auditing.command_logger" class="Broadway\Auditing\CommandLogger">
+            <argument type="service" id="broadway.auditing.logger"/>
+            <argument type="service" id="broadway.auditing.serializer"/>
+            <tag name="broadway.event_listener" event="broadway.command_handling.command_success"
+                 method="onCommandHandlingSuccess"/>
+            <tag name="broadway.event_listener" event="broadway.command_handling.command_failure"
+                 method="onCommandHandlingFailure"/>
+        </service>
+
+        <service id="broadway.auditing.serializer" class="Broadway\Auditing\CommandSerializer"/>
+
+    </services>
+</container>

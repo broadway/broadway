@@ -12,6 +12,7 @@
 namespace Broadway\Bundle\BroadwayBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
@@ -38,20 +39,22 @@ class BroadwayExtension extends Extension
 
         $this->loadSagaStateRepository($config['saga'], $container, $loader);
         $this->loadReadModelRepository($config['read_model'], $container, $loader);
-        $this->loadCommandBus($config['command_handling'], $container);
+        $this->loadCommandBus($config['command_handling'], $container, $loader);
         $this->loadEventStore($config['event_store'], $container);
     }
 
-    private function loadCommandBus(array $config, ContainerBuilder $container)
+    private function loadCommandBus(array $config, ContainerBuilder $container, LoaderInterface $loader)
     {
-        if ($logger = $config['logger']) {
+        if ($config['dispatch_events']) {
             $container->setAlias(
                 'broadway.command_handling.command_bus',
                 'broadway.command_handling.event_dispatching_command_bus'
             );
 
-            $container->getDefinition('broadway.auditing.command_logger')
-                ->replaceArgument(0, new Reference($logger));
+            if ($logger = $config['logger']) {
+                $loader->load('auditing.xml');
+                $container->setAlias('broadway.auditing.logger', $logger);
+            }
         } else {
             $container->setAlias(
                 'broadway.command_handling.command_bus',
