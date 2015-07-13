@@ -282,9 +282,10 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
             $criteriaTypes[] = array('uuid IN (:uuids)');
 
             if ($this->useBinary) {
-                $bindValues['uuids'] = array_map(function ($id) {
-                    return $this->convertIdentifierToStorageValue($id);
-                }, $criteria->getAggregateRootIds());
+                $bindValues['uuids'] = array();
+                foreach ($criteria->getAggregateRootIds() as $id) {
+                    $bindValues['uuids'][] = $this->convertIdentifierToStorageValue($id);
+                }
                 $bindValueTypes['uuids'] = Connection::PARAM_STR_ARRAY;
             } else {
                 $bindValues['uuids'] = $criteria->getAggregateRootIds();
