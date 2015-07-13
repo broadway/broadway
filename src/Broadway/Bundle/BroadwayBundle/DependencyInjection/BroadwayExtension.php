@@ -119,6 +119,11 @@ class BroadwayExtension extends Extension
     private function loadEventStore(array $config, ContainerBuilder $container)
     {
         $container->setParameter(
+            'broadway.event_store.dbal.connection',
+            $config['dbal']['connection']
+        );
+
+        $container->setParameter(
             'broadway.event_store.dbal.table',
             $config['dbal']['table']
         );

@@ -39,8 +39,7 @@ abstract class AbstractSchemaEventStoreCommand extends DoctrineCommand
                 'connection',
                 'c',
                 InputOption::VALUE_OPTIONAL,
-                'Specifies the database connection to use.',
-                'default'
+                'Specifies the database connection to use.'
             );
     }
 
@@ -49,7 +48,7 @@ abstract class AbstractSchemaEventStoreCommand extends DoctrineCommand
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $databaseConnectionName = $input->getOption('connection');
+        $databaseConnectionName = $input->getOption('connection') ?: $this->getContainer()->getParameter('broadway.event_store.dbal.connection');
         Assertion::string($databaseConnectionName, 'Input option "connection" must be of type `string`.');
 
         try {
