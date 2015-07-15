@@ -33,7 +33,20 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('command_handling')
                     ->addDefaultsIfNotSet()
+                    ->beforeNormalization()
+                        ->always(function (array $v) {
+                            if (isset($v['logger']) && $v['logger']) {
+                                // auditing requires event dispatching
+                                $v['dispatch_events'] = true;
+                            }
+
+                            return $v;
+                        })
+                    ->end()
                     ->children()
+                        ->booleanNode('dispatch_events')
+                            ->defaultFalse()
+                        ->end()
                         ->scalarNode('logger')
                             ->defaultFalse()
                         ->end()

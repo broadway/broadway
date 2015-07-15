@@ -161,16 +161,30 @@ class BroadwayExtensionTest extends ExtensionTestCase
     /**
      * @test
      */
-    public function it_sets_the_logger_in_the_auditing_command_logger()
+    public function it_creates_an_auditing_logger_alias()
     {
         $configuration = array('command_handling' => array('logger' => 'service'));
 
         $this->load($this->extension, $configuration);
 
-        $loggingCommandBus = $this->container->getDefinition('broadway.auditing.command_logger');
-        $actualReference   = $loggingCommandBus->getArgument(0);
-        $expectedReference = new Reference('service');
-        $this->assertEquals($expectedReference, $actualReference);
+        $auditingLoggerAlias = $this->container->getAlias('broadway.auditing.logger');
+        $this->assertEquals('service', (string) $auditingLoggerAlias);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_enable_the_event_dispatching_command_bus_but_not_the_logger()
+    {
+        $configuration = array('command_handling' => array('dispatch_events' => true, 'logger' => false));
+
+        $this->load($this->extension, $configuration);
+
+        $this->assertSame(
+            'broadway.command_handling.event_dispatching_command_bus',
+            (string) $this->container->getAlias('broadway.command_handling.command_bus')
+        );
+        $this->assertFalse($this->container->hasDefinition('broadway.auditing.command_logger'));
     }
 
     private function assertDICAliasClass($aliasId, $class)
