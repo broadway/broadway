@@ -63,6 +63,32 @@ class EventSourcedAggregateRootTest extends TestCase
         $this->assertTrue($aggregateRoot->isCalled);
     }
 
+    /**
+     * @test
+     */
+    public function it_can_use_a_snapshot_when_initializing()
+    {
+        $aggregateRoot = new MyTestAggregateRoot();
+        $aggregateRoot->initializeState(
+            $this->toDomainEventStream(array(new AggregateEvent())),
+            DomainMessage::recordNow(
+                1,
+                2,
+                new Metadata(array()),
+                new AggregateSnapshot()
+            )
+        );
+
+        $aggregateRoot->apply(new AggregateEvent());
+
+        $eventStream = $aggregateRoot->getUncommittedEvents();
+        foreach ($eventStream as $domainMessage) {
+            $this->assertEquals(4, $domainMessage->getPlayhead());
+        }
+        $this->assertTrue($aggregateRoot->wasReconstitutedFromSnapshot);
+        $this->assertTrue($aggregateRoot->isCalled);
+    }
+
     private function toDomainEventStream(array $events)
     {
         $messages = array();
@@ -79,6 +105,7 @@ class EventSourcedAggregateRootTest extends TestCase
 class MyTestAggregateRoot extends EventSourcedAggregateRoot
 {
     public $isCalled = false;
+    public $wasReconstitutedFromSnapshot = false;
 
     public function getAggregateRootId()
     {
@@ -89,8 +116,17 @@ class MyTestAggregateRoot extends EventSourcedAggregateRoot
     {
         $this->isCalled = true;
     }
+
+    public function applyAggregateSnapshot($snapshot)
+    {
+        $this->wasReconstitutedFromSnapshot = true;
+    }
 }
 
 class AggregateEvent
+{
+}
+
+class AggregateSnapshot
 {
 }

@@ -61,8 +61,13 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     /**
      * Initializes the aggregate using the given "history" of events.
      */
-    public function initializeState(DomainEventStreamInterface $stream)
+    public function initializeState(DomainEventStreamInterface $stream, DomainMessage $snapshot = null)
     {
+        if (null !== $snapshot) {
+            $this->playhead = $snapshot->getPlayhead();
+            $this->handleRecursively($snapshot->getPayload());
+        }
+
         foreach ($stream as $message) {
             $this->playhead++;
             $this->handleRecursively($message->getPayload());

@@ -3,6 +3,7 @@
 namespace Broadway\EventSourcing\AggregateFactory;
 
 use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\DomainMessage;
 
 /**
  * Creates aggregates by instantiating the aggregateClass and then
@@ -14,10 +15,10 @@ class PublicConstructorAggregateFactory implements AggregateFactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create($aggregateClass, DomainEventStreamInterface $domainEventStream)
+    public function create($aggregateClass, DomainEventStreamInterface $domainEventStream, DomainMessage $snapshot = null)
     {
         $aggregate = new $aggregateClass();
-        $aggregate->initializeState($domainEventStream);
+        $aggregate->initializeState($domainEventStream, $snapshot);
 
         return $aggregate;
     }

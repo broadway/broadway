@@ -27,6 +27,7 @@ use Broadway\Repository\RepositoryInterface;
 class EventSourcingRepository implements RepositoryInterface
 {
     private $eventStore;
+    private $snapshotStore;
     private $eventBus;
     private $aggregateClass;
     private $eventStreamDecorators = array();
@@ -44,11 +45,13 @@ class EventSourcingRepository implements RepositoryInterface
         EventBusInterface $eventBus,
         $aggregateClass,
         AggregateFactoryInterface $aggregateFactory,
-        array $eventStreamDecorators = array()
+        array $eventStreamDecorators = array(),
+        EventStoreInterface $snapshotStore = null
     ) {
         $this->assertExtendsEventSourcedAggregateRoot($aggregateClass);
 
         $this->eventStore            = $eventStore;
+        $this->snapshotStore         = $snapshotStore;
         $this->eventBus              = $eventBus;
         $this->aggregateClass        = $aggregateClass;
         $this->aggregateFactory      = $aggregateFactory;
@@ -60,10 +63,18 @@ class EventSourcingRepository implements RepositoryInterface
      */
     public function load($id)
     {
+        $playhead = -1;
+        $snapshot = null;
         try {
-            $domainEventStream = $this->eventStore->load($id);
+            if (null !== $this->snapshotStore) {
+                $snapshot = $this->snapshotStore->loadLast($id);
+                if (null !== $snapshot) {
+                    $playhead = $snapshot->getPlayhead();
+                }
+            }
+            $domainEventStream = $this->eventStore->load($id, $playhead + 1);
 
-            return $this->aggregateFactory->create($this->aggregateClass, $domainEventStream);
+            return $this->aggregateFactory->create($this->aggregateClass, $domainEventStream, $snapshot);
         } catch (EventStreamNotFoundException $e) {
             throw AggregateNotFoundException::create($id, $e);
         }

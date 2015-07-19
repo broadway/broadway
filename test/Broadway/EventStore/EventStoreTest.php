@@ -77,6 +77,51 @@ abstract class EventStoreTest extends TestCase
     /**
      * @test
      * @dataProvider idDataProvider
+     */
+    public function it_loads_events_starting_from_a_given_playhead($id)
+    {
+        $dateTime          = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
+        $domainEventStream = new DomainEventStream(array(
+            $this->createDomainMessage($id, 0, $dateTime),
+            $this->createDomainMessage($id, 1, $dateTime),
+            $this->createDomainMessage($id, 2, $dateTime),
+            $this->createDomainMessage($id, 3, $dateTime),
+        ));
+
+        $this->eventStore->append($id, $domainEventStream);
+
+        $expected = new DomainEventStream(array(
+            $this->createDomainMessage($id, 2, $dateTime),
+            $this->createDomainMessage($id, 3, $dateTime),
+        ));
+
+        $this->assertEquals($expected, $this->eventStore->load($id, 2));
+    }
+
+    /**
+     * @test
+     * @dataProvider idDataProvider
+     */
+    public function it_loads_the_last_event_of_a_given_stream($id)
+    {
+        $dateTime          = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
+        $domainEventStream = new DomainEventStream(array(
+            $this->createDomainMessage($id, 0, $dateTime),
+            $this->createDomainMessage($id, 1, $dateTime),
+            $this->createDomainMessage($id, 2, $dateTime),
+            $this->createDomainMessage($id, 3, $dateTime),
+        ));
+
+        $this->eventStore->append($id, $domainEventStream);
+
+        $expected = $this->createDomainMessage($id, 3, $dateTime);
+
+        $this->assertEquals($expected, $this->eventStore->loadLast($id));
+    }
+
+    /**
+     * @test
+     * @dataProvider idDataProvider
      * @expectedException Broadway\EventStore\EventStreamNotFoundException
      */
     public function it_throws_an_exception_when_requesting_the_stream_of_a_non_existing_aggregate($id)
