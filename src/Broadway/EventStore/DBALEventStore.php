@@ -72,7 +72,7 @@ class DBALEventStore implements EventStoreInterface
     public function load($id)
     {
         $statement = $this->prepareLoadStatement();
-        $statement->bindValue('uuid', $this->convertIdentifierToStorageValue($id));
+        $statement->bindValue(1, $this->convertIdentifierToStorageValue($id));
         $statement->execute();
 
         $events = array();
@@ -183,7 +183,7 @@ class DBALEventStore implements EventStoreInterface
         if (null === $this->loadStatement) {
             $query = 'SELECT uuid, playhead, metadata, payload, recorded_on
                 FROM ' . $this->tableName . '
-                WHERE uuid = :uuid
+                WHERE uuid = ?
                 ORDER BY playhead ASC';
             $this->loadStatement = $this->connection->prepare($query);
         }
