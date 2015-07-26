@@ -32,7 +32,7 @@ Sample code
 
 The code in `ReservationSaga.php` is based on an example from the book 
 [Exploring CQRS and event sourcing (Microsoft patterns & 
-practices)[(https://msdn.microsoft.com/en-us/library/jj554200.aspx).
+practices)](https://msdn.microsoft.com/en-us/library/jj554200.aspx).
 
 Whenever an order is placed, a reservation is made for the requested number 
 of seats. When this reservation was accepted (i.e. the number of requested 
