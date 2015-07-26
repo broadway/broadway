@@ -18,5 +18,15 @@
             <tag name="broadway.metadata_enricher" />
         </service>
 
+        <service id="broadway.saga.multiple_saga_manager" class="Broadway\Saga\MultipleSagaManager">
+            <argument type="service" id="broadway.saga.state.repository" />
+            <!-- will be populated by RegisterSagaCompilerPass: -->
+            <argument type="collection"/>
+            <argument type="service" id="broadway.saga.state.state_manager" />
+            <argument type="service" id="broadway.saga.metadata.factory" />
+            <argument type="service" id="broadway.event_dispatcher" />
+            <tag name="broadway.domain.event_listener" />
+        </service>
+
     </services>
 </container>

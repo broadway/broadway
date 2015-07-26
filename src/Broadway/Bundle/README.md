@@ -61,6 +61,18 @@ user, an ip address or some request token.
 <tag name="broadway.metadata_enricher" />
 ```
 
+### Sagas
+
+Register sagas using the `broadway.saga` service tag:
+ 
+```xml
+<service class="ReservationSaga">
+    <argument type="service" id="broadway.command_handling.command_bus" />
+    <argument type="service" id="broadway.uuid.generator" />
+    <tag name="broadway.saga" type="reservation" />
+</service>
+```
+
 ## Configuration
 
 There are some basic configuration options available at this point. The
