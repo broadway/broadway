@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.7.x
+
+#### Symfony Bundle
+
+- You can now configure which Doctrine DBAL connection should be used for the event store
+- The auditing command logger service now only gets registered when it's explicitly enabled
+- You can now register Sagas with the tag `broadway.saga`
+- The `broadway:event-store:schema:drop` command no longer errors when there is no schema
+
+##### Other changes
+
+- There are now [Saga examples](https://github.com/qandidate-labs/broadway/tree/df7445befdb68c9f8b1795d1c454e0dff06ff7a6/examples/saga)
+- The DBALEventStore now also works with mysqli
+
 ## v0.6.x
 
 #### BC breaks
@@ -13,7 +27,7 @@
 - DomainMessageInterface has been removed, and DomainMessage has been made final.
 - Renamed `add` method to `save` for [aggregate root repositories](https://github.com/mbadolato/broadway/commit/9b07dfc4998d70b4c6d25dcacf114a60ea7f1450).
 
-##### Bundle
+##### Symfony Bundle
 
 - The global `storage_suffix` parameter has been removed and has been replaced with a configuration value: `saga.mongodb.storage_suffix`.
 
