@@ -18,6 +18,7 @@ use Broadway\EventHandling\TraceableEventBus;
 use Broadway\EventSourcing\AggregateFactory\NamedConstructorAggregateFactory;
 use Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
 use Broadway\EventStore\TraceableEventStore;
+use Broadway\Serializer\SerializableInterface;
 
 class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
 {
@@ -138,6 +139,21 @@ class TestEventSourcedAggregateWithStaticConstructor extends EventSourcedAggrega
     }
 }
 
-class DidEvent
+class DidEvent implements SerializableInterface
 {
+    /**
+     * @return mixed The object instance
+     */
+    public static function deserialize(array $data)
+    {
+        return new DidEvent();
+    }
+
+    /**
+     * @return array
+     */
+    public function serialize()
+    {
+        return array();
+    }
 }

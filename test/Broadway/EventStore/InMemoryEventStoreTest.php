@@ -11,10 +11,14 @@
 
 namespace Broadway\EventStore;
 
+use Broadway\Serializer\SimpleInterfaceSerializer;
+
 class InMemoryEventStoreTest extends EventStoreTest
 {
     public function setUp()
     {
-        $this->eventStore = new InMemoryEventStore();
+        parent::setUp();
+
+        $this->eventStore = new InMemoryEventStore(new SimpleInterfaceSerializer(), $this->upcasterChain);
     }
 }

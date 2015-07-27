@@ -13,6 +13,9 @@ namespace Broadway\EventStore;
 
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\DomainMessage;
+use Broadway\Serializer\SerializerInterface;
+use Broadway\Upcasting\UpcasterChain;
 
 /**
  * In-memory implementation of an event store.
@@ -24,6 +27,22 @@ class InMemoryEventStore implements EventStoreInterface
     private $events = array();
 
     /**
+     * @var UpcasterChain
+     */
+    private $upcasterChain;
+
+    /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+
+    public function __construct(SerializerInterface $serializer, UpcasterChain $upcasterChain)
+    {
+        $this->upcasterChain = $upcasterChain;
+        $this->serializer = $serializer;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function load($id)
@@ -31,7 +50,21 @@ class InMemoryEventStore implements EventStoreInterface
         $id = (string) $id;
 
         if (isset($this->events[$id])) {
-            return new DomainEventStream($this->events[$id]);
+            $events = array();
+
+            foreach ($this->events[$id] as $playhead => $event) {
+                $payload = $this->upcasterChain->upcast($event['payload']);
+
+                $events[] = new DomainMessage(
+                    $id,
+                    $playhead,
+                    $event['metadata'],
+                    $this->serializer->deserialize($payload),
+                    $event['recorded_on']
+                );
+            }
+
+            return new DomainEventStream($events);
         }
 
         throw new EventStreamNotFoundException(sprintf('EventStream not found for aggregate with id %s', $id));
@@ -48,11 +81,15 @@ class InMemoryEventStore implements EventStoreInterface
             $this->events[$id] = array();
         }
 
-        foreach ($eventStream as $event) {
-            $playhead = $event->getPlayhead();
+        foreach ($eventStream as $domainMessage) {
+            $playhead = $domainMessage->getPlayhead();
             $this->assertPlayhead($this->events[$id], $playhead);
 
-            $this->events[$id][$playhead] = $event;
+            $this->events[$id][$playhead] = array(
+                'metadata'    => $domainMessage->getMetadata(),
+                'payload'     => $this->serializer->serialize($domainMessage->getPayload()),
+                'recorded_on' => $domainMessage->getRecordedOn(),
+            );
         }
     }
 
