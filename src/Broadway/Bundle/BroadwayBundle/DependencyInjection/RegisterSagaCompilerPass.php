@@ -48,8 +48,11 @@ class RegisterSagaCompilerPass implements CompilerPassInterface
             }
         }
 
-        $container
-            ->findDefinition($this->multipleSagaManagerService)
-            ->replaceArgument(1, $sagas);
+        if (count($sagas) > 0) {
+            $container
+                ->findDefinition($this->multipleSagaManagerService)
+                ->replaceArgument(1, $sagas)
+                ->addTag('broadway.domain.event_listener');
+        }
     }
 }

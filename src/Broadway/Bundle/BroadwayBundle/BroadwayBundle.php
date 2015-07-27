@@ -35,6 +35,12 @@ class BroadwayBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(
+            new RegisterSagaCompilerPass(
+                'broadway.saga.multiple_saga_manager',
+                'broadway.saga'
+            )
+        );
+        $container->addCompilerPass(
             new RegisterBusSubscribersCompilerPass(
                 'broadway.command_handling.command_bus',
                 'command_handler',
@@ -62,12 +68,6 @@ class BroadwayBundle extends Bundle
         );
         $container->addCompilerPass(
             new DefineDBALEventStoreConnectionCompilerPass($this->getContainerExtension()->getAlias())
-        );
-        $container->addCompilerPass(
-            new RegisterSagaCompilerPass(
-                'broadway.saga.multiple_saga_manager',
-                'broadway.saga'
-            )
         );
     }
 
