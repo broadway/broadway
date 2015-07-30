@@ -195,17 +195,17 @@ abstract class EventStoreManagementTest extends TestCase
      */
     private function groupEventsByAggregateTypeAndId(array $events)
     {
-        $eventsByAggregateTypeAndId = [];
+        $eventsByAggregateTypeAndId = array();
         foreach ($events as $event) {
             $type = $event->getType();
             $id = $event->getId();
 
             if (! array_key_exists($type, $eventsByAggregateTypeAndId)) {
-                $eventsByAggregateTypeAndId[$type] = [];
+                $eventsByAggregateTypeAndId[$type] = array();
             }
 
             if (! array_key_exists($id, $eventsByAggregateTypeAndId[$type])) {
-                $eventsByAggregateTypeAndId[$type][$id] = [];
+                $eventsByAggregateTypeAndId[$type][$id] = array();
             }
 
             $eventsByAggregateTypeAndId[$type][$id][] = $event;
