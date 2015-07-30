@@ -11,7 +11,6 @@
 
 namespace Broadway\EventStore;
 
-
 use Broadway\Domain\DomainMessage;
 
 class CallableEventVisitor implements EventVisitorInterface

@@ -24,7 +24,6 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Version;
-use Elasticsearch\Tests\Endpoint\Indicess\CreateTest;
 use Rhumsaa\Uuid\Uuid;
 
 /**
@@ -81,9 +80,6 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
 
         $events = array();
         while ($row = $statement->fetch()) {
-            if ($this->useBinary) {
-                $row['uuid'] = $this->convertStorageValueToIdentifier($row['uuid']);
-            }
             $events[] = $this->deserializeEvent($row);
         }
 
@@ -198,7 +194,7 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
     private function deserializeEvent($row)
     {
         return new DomainMessage(
-            $row['uuid'],
+            $this->convertStorageValueToIdentifier($row['uuid']),
             $row['playhead'],
             $this->metadataSerializer->deserialize(json_decode($row['metadata'], true)),
             $this->payloadSerializer->deserialize(json_decode($row['payload'], true)),
@@ -236,16 +232,12 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         return $id;
     }
 
-    public function visitEvents(EventVisitorInterface $eventVisitor, Criteria $criteria = null)
+    public function visitEvents(Criteria $criteria, EventVisitorInterface $eventVisitor)
     {
-        $statement = $this->prepareVisitEventsStatement($criteria ?: Criteria::create());
+        $statement = $this->prepareVisitEventsStatement($criteria);
         $statement->execute();
 
         while ($row = $statement->fetch()) {
-            if ($this->useBinary) {
-                $row['uuid'] = $this->convertStorageValueToIdentifier($row['uuid']);
-            }
-
             $domainMessage = $this->deserializeEvent($row);
 
             $eventVisitor->doWithEvent($domainMessage);
@@ -279,7 +271,7 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         $criteriaTypes = array();
 
         if ($criteria->getAggregateRootIds()) {
-            $criteriaTypes[] = array('uuid IN (:uuids)');
+            $criteriaTypes[] = 'uuid IN (:uuids)';
 
             if ($this->useBinary) {
                 $bindValues['uuids'] = array();
@@ -294,7 +286,7 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         }
 
         if ($criteria->getEventTypes()) {
-            $criteriaTypes[] = array('type IN (:types)');
+            $criteriaTypes[] = 'type IN (:types)';
             $bindValues['types'] = $criteria->getEventTypes();
             $bindValueTypes['types'] = Connection::PARAM_STR_ARRAY;
         }
@@ -303,11 +295,7 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
             return array('', array(), array());
         }
 
-        $where = 'WHERE '.join(' AND ', array_map(function (array $criteriaType) {
-            return implode(' OR ', $criteriaType);
-        }, array_filter($criteriaTypes, function ($input) {
-            return $input;
-        })));
+        $where = 'WHERE '.join(' AND ', $criteriaTypes);
 
         return array($where, $bindValues, $bindValueTypes);
     }

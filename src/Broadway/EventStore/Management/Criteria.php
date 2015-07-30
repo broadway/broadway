@@ -19,6 +19,12 @@ class Criteria
     private $aggregateRootIds = array();
     private $eventTypes = array();
 
+    /**
+     * Create a new criteria with the specified aggregate root types
+     *
+     * @param array $aggregateRootTypes
+     * @return static
+     */
     public function withAggregateRootTypes(array $aggregateRootTypes)
     {
         $instance = clone($this);
@@ -27,22 +33,12 @@ class Criteria
         return $instance;
     }
 
-    public function withAggregateRootType($aggregateRootType)
-    {
-        $instance = clone($this);
-        $instance->aggregateRootTypes = array($aggregateRootType);
-
-        return $instance;
-    }
-
-    public function withAdditionalAggregateRootType($aggregateRootType)
-    {
-        $instance = clone($this);
-        $instance->aggregateRootTypes[] = $aggregateRootType;
-
-        return $instance;
-    }
-
+    /**
+     * Create a new criteria with the specified aggregate root IDs
+     *
+     * @param array $aggregateRootIds
+     * @return Criteria
+     */
     public function withAggregateRootIds(array $aggregateRootIds)
     {
         $instance = clone($this);
@@ -51,22 +47,12 @@ class Criteria
         return $instance;
     }
 
-    public function withAggregateRootId($aggregateRootId)
-    {
-        $instance = clone($this);
-        $instance->aggregateRootIds = array($aggregateRootId);
-
-        return $instance;
-    }
-
-    public function withAdditionalAggregateRootId($aggregateRootId)
-    {
-        $instance = clone($this);
-        $instance->aggregateRootIds[] = $aggregateRootId;
-
-        return $instance;
-    }
-
+    /**
+     * Create a new criteria with the specified event types
+     *
+     * @param array $eventTypes
+     * @return Criteria
+     */
     public function withEventTypes(array $eventTypes)
     {
         $instance = clone($this);
@@ -75,42 +61,52 @@ class Criteria
         return $instance;
     }
 
-    public function withEventType($eventType)
-    {
-        $instance = clone($this);
-        $instance->eventTypes = array($eventType);
-
-        return $instance;
-    }
-
-    public function withAdditionalEventType($eventType)
-    {
-        $instance = clone($this);
-        $instance->eventTypes[] = $eventType;
-
-        return $instance;
-    }
-
+    /**
+     * Get the aggregate root types for the criteria
+     *
+     * @return string[]
+     */
     public function getAggregateRootTypes()
     {
         return $this->aggregateRootTypes;
     }
 
+    /**
+     * Get the aggregate root IDs for the criteria
+     *
+     * @return array
+     */
     public function getAggregateRootIds()
     {
         return $this->aggregateRootIds;
     }
 
+    /**
+     * Get the event types for the criteria
+     *
+     * @return array
+     */
     public function getEventTypes()
     {
         return $this->eventTypes;
     }
 
+    /**
+     * Create a new criteria
+     *
+     * @return static
+     */
     public static function create()
     {
         return new static();
     }
 
+    /**
+     * Determine if a domain message is matched by this criteria
+     *
+     * @param DomainMessage $domainMessage
+     * @return bool
+     */
     public function isMatchedBy(DomainMessage $domainMessage)
     {
         if ($this->aggregateRootTypes) {

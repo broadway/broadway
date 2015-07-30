@@ -24,7 +24,6 @@ use Broadway\EventStore\Management\EventStoreManagementInterface;
 class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInterface
 {
     private $events = array();
-    private $allEvents = array();
 
     /**
      * {@inheritDoc}
@@ -56,7 +55,6 @@ class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInt
             $this->assertPlayhead($this->events[$id], $playhead);
 
             $this->events[$id][$playhead] = $event;
-            $this->allEvents[] = $event;
         }
     }
 
@@ -69,15 +67,16 @@ class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInt
         }
     }
 
-    public function visitEvents(EventVisitorInterface $eventVisitor, Criteria $criteria = null)
+    public function visitEvents(Criteria $criteria, EventVisitorInterface $eventVisitor)
     {
-        $allEvents = $this->allEvents;
-        if (! is_null($criteria)) {
-            $allEvents = array_filter($allEvents, array($criteria, 'isMatchedBy'));
-        }
+        foreach ($this->events as $id => $events) {
+            foreach ($events as $event) {
+                if (! $criteria->isMatchedBy($event)) {
+                    continue;
+                }
 
-        foreach ($allEvents as $event) {
-            $eventVisitor->doWithEvent($event);
+                $eventVisitor->doWithEvent($event);
+            }
         }
     }
 }

@@ -45,7 +45,7 @@ abstract class EventStoreManagementTest extends TestCase
     {
         $eventVisitor = new RecordingEventVisitor();
 
-        $this->eventStore->visitEvents($eventVisitor, $criteria);
+        $this->eventStore->visitEvents($criteria, $eventVisitor);
 
         return $eventVisitor->getVisitedEvents();
     }
@@ -55,26 +55,9 @@ abstract class EventStoreManagementTest extends TestCase
     /** @test */
     public function it_visits_all_events()
     {
-        $visitedEvents = $this->visitEvents();
+        $visitedEvents = $this->visitEvents(Criteria::create());
 
-        $this->assertEquals($this->getEventFixtures(), $visitedEvents);
-    }
-
-    /** @test */
-    public function it_visits_aggregate_root_id()
-    {
-        $visitedEvents = $this->visitEvents(Criteria::create()->withAggregateRootId(
-            $this->getId(1)
-        ));
-
-        $this->assertEquals(array(
-            $this->createDomainMessage(1, 0, new Start()),
-            $this->createDomainMessage(1, 1, new Middle('a')),
-            $this->createDomainMessage(1, 2, new Middle('b')),
-            $this->createDomainMessage(1, 3, new Middle('c')),
-            $this->createDomainMessage(1, 4, new Middle('d')),
-            $this->createDomainMessage(1, 5, new End()),
-        ), $visitedEvents);
+        $this->assertVisitedEventsArEquals($this->getEventFixtures(), $visitedEvents);
     }
 
     /** @test */
@@ -85,7 +68,7 @@ abstract class EventStoreManagementTest extends TestCase
             $this->getId(3),
         )));
 
-        $this->assertEquals(array(
+        $this->assertVisitedEventsArEquals(array(
             $this->createDomainMessage(1, 0, new Start()),
             $this->createDomainMessage(1, 1, new Middle('a')),
             $this->createDomainMessage(1, 2, new Middle('b')),
@@ -98,45 +81,6 @@ abstract class EventStoreManagementTest extends TestCase
             $this->createDomainMessage(3, 4, new Middle('d')),
             $this->createDomainMessage(1, 5, new End()),
             $this->createDomainMessage(3, 5, new End()),
-        ), $visitedEvents);
-    }
-
-    /** @test */
-    public function it_visits_additional_aggregate_root_ids()
-    {
-        $visitedEvents = $this->visitEvents(Criteria::create()
-            ->withAggregateRootId($this->getId(1))
-            ->withAdditionalAggregateRootId($this->getId(3))
-        );
-
-        $this->assertEquals(array(
-            $this->createDomainMessage(1, 0, new Start()),
-            $this->createDomainMessage(1, 1, new Middle('a')),
-            $this->createDomainMessage(1, 2, new Middle('b')),
-            $this->createDomainMessage(1, 3, new Middle('c')),
-            $this->createDomainMessage(3, 0, new Start()),
-            $this->createDomainMessage(3, 1, new Middle('a')),
-            $this->createDomainMessage(3, 2, new Middle('b')),
-            $this->createDomainMessage(3, 3, new Middle('c')),
-            $this->createDomainMessage(1, 4, new Middle('d')),
-            $this->createDomainMessage(3, 4, new Middle('d')),
-            $this->createDomainMessage(1, 5, new End()),
-            $this->createDomainMessage(3, 5, new End()),
-        ), $visitedEvents);
-    }
-
-    /** @test */
-    public function it_visits_event_type()
-    {
-        $visitedEvents = $this->visitEvents(Criteria::create()
-            ->withEventType('Broadway.EventStore.Management.Start')
-        );
-
-        $this->assertEquals(array(
-            $this->createDomainMessage(1, 0, new Start()),
-            $this->createDomainMessage(2, 0, new Start()),
-            $this->createDomainMessage(3, 0, new Start()),
-            $this->createDomainMessage(4, 0, new Start()),
         ), $visitedEvents);
     }
 
@@ -150,7 +94,7 @@ abstract class EventStoreManagementTest extends TestCase
             ))
         );
 
-        $this->assertEquals(array(
+        $this->assertVisitedEventsArEquals(array(
             $this->createDomainMessage(1, 0, new Start()),
             $this->createDomainMessage(2, 0, new Start()),
             $this->createDomainMessage(2, 5, new End()),
@@ -160,37 +104,6 @@ abstract class EventStoreManagementTest extends TestCase
             $this->createDomainMessage(1, 5, new End()),
             $this->createDomainMessage(3, 5, new End()),
         ), $visitedEvents);
-    }
-
-    /** @test */
-    public function it_visits_additional_event_types()
-    {
-        $visitedEvents = $this->visitEvents(Criteria::create()
-            ->withEventType('Broadway.EventStore.Management.Start')
-            ->withAdditionalEventType('Broadway.EventStore.Management.End')
-        );
-
-        $this->assertEquals(array(
-            $this->createDomainMessage(1, 0, new Start()),
-            $this->createDomainMessage(2, 0, new Start()),
-            $this->createDomainMessage(2, 5, new End()),
-            $this->createDomainMessage(3, 0, new Start()),
-            $this->createDomainMessage(4, 0, new Start()),
-            $this->createDomainMessage(4, 5, new End()),
-            $this->createDomainMessage(1, 5, new End()),
-            $this->createDomainMessage(3, 5, new End()),
-        ), $visitedEvents);
-    }
-
-    /**
-     * @test
-     * @expectedException \Broadway\EventStore\Management\CriteriaNotSupportedException
-     */
-    public function it_visits_aggregate_root_type()
-    {
-        $visitedEvents = $this->visitEvents(Criteria::create()
-            ->withAggregateRootType('Broadway.EventStore.Management.AggregateTypeOne')
-        );
     }
 
     /**
@@ -204,18 +117,6 @@ abstract class EventStoreManagementTest extends TestCase
                 'Broadway.EventStore.Management.AggregateTypeOne',
                 'Broadway.EventStore.Management.AggregateTypeTwo',
             ))
-        );
-    }
-
-    /**
-     * @test
-     * @expectedException \Broadway\EventStore\Management\CriteriaNotSupportedException
-     */
-    public function it_visits_additional_aggregate_root_types()
-    {
-        $visitedEvents = $this->visitEvents(Criteria::create()
-            ->withAggregateRootType('Broadway.EventStore.Management.AggregateTypeOne')
-            ->withAdditionalAggregateRootType('Broadway.EventStore.Management.AggregateTypeTwo')
         );
     }
 
@@ -279,6 +180,38 @@ abstract class EventStoreManagementTest extends TestCase
         $uuid = sprintf('%08d-%04d-4%03d-%04d-%012d', $id, $id, $id, $id, $id);
 
         return $uuid;
+    }
+
+    private function assertVisitedEventsArEquals(array $expectedEvents, array $actualEvents)
+    {
+        $this->assertEquals(
+            $this->groupEventsByAggregateTypeAndId($expectedEvents),
+            $this->groupEventsByAggregateTypeAndId($actualEvents)
+        );
+    }
+
+    /**
+     * @param DomainMessage[] $events
+     */
+    private function groupEventsByAggregateTypeAndId(array $events)
+    {
+        $eventsByAggregateTypeAndId = [];
+        foreach ($events as $event) {
+            $type = $event->getType();
+            $id = $event->getId();
+
+            if (! array_key_exists($type, $eventsByAggregateTypeAndId)) {
+                $eventsByAggregateTypeAndId[$type] = [];
+            }
+
+            if (! array_key_exists($id, $eventsByAggregateTypeAndId[$type])) {
+                $eventsByAggregateTypeAndId[$type][$id] = [];
+            }
+
+            $eventsByAggregateTypeAndId[$type][$id][] = $event;
+        }
+
+        return $eventsByAggregateTypeAndId;
     }
 }
 
