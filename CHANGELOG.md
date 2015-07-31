@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.8.x
+
+- Support for [querying the event store](https://github.com/qandidate-labs/broadway/commit/e81d4ea167ce97383a9a4b7d85542e8b5e11900a) using criteria
+
 ## v0.7.x
 
 #### Symfony Bundle
