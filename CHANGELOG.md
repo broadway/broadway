@@ -3,6 +3,7 @@
 ## v0.8.x
 
 - Support for [querying the event store](https://github.com/qandidate-labs/broadway/commit/e81d4ea167ce97383a9a4b7d85542e8b5e11900a) using criteria
+- The `COMAND_FAILURE` event now receives [an associative array](https://github.com/qandidate-labs/broadway/blob/140d23f90259bace9601b17ebf749317cd859180/src/Broadway/CommandHandling/EventDispatchingCommandBus.php#L48) when it gets dispatched.
 
 ## v0.7.x
 
