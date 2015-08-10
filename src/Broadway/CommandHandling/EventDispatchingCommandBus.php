@@ -43,7 +43,10 @@ class EventDispatchingCommandBus implements CommandBusInterface
             $this->commandBus->dispatch($command);
             $this->dispatcher->dispatch(self::EVENT_COMMAND_SUCCESS, array('command' => $command));
         } catch (Exception $e) {
-            $this->dispatcher->dispatch(self::EVENT_COMMAND_FAILURE, array($command, $e));
+            $this->dispatcher->dispatch(
+                self::EVENT_COMMAND_FAILURE,
+                array('command' => $command, 'exception' => $e)
+            );
 
             throw $e;
         }

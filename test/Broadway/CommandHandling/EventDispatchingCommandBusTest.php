@@ -61,7 +61,10 @@ class EventDispatchingCommandBusTest extends TestCase
         $exception = new MyException();
         $this->eventDispatcher->expects($this->once())
             ->method('dispatch')
-            ->with(EventDispatchingCommandBus::EVENT_COMMAND_FAILURE, array($this->command, $exception));
+            ->with(
+                EventDispatchingCommandBus::EVENT_COMMAND_FAILURE,
+                array('command' => $this->command, 'exception' => $exception)
+            );
 
         $this->baseCommandBus->expects($this->once())
             ->method('dispatch')
