@@ -21,7 +21,7 @@ use Illuminate\Contracts\Container\Container;
 class IlluminateEventStore implements EventStoreInterface {
 
     /**
-     * @var \Illuminate\Database\DatabaseManager
+     * @var DatabaseManager
      */
     protected $databaseManager;
 
@@ -38,15 +38,17 @@ class IlluminateEventStore implements EventStoreInterface {
     /**
      * Construct the dependancies
      *
-     * @param \Illuminate\Contracts\Container\Container $container
+     * @param \Illuminate\Database\DatabaseManager $databaseManager
+     * @param \Illuminate\Config\Repository $configRepository
      * @param SerializerInterface $serializer
      */
     public function __construct(
-        Container $container,
+        DatabaseManager $databaseManager,
+        Repository $configRepository,
         SerializerInterface $serializer
     ) {
-        $this->databaseManager = $container->make('db');
-        $this->config = $container->make('config');
+        $this->databaseManager = $databaseManager;
+        $this->config = $configRepository;
         $this->table = $this->config->get('broadway.table','event');
         $this->serializer = $serializer;
     }
