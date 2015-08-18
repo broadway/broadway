@@ -122,7 +122,7 @@ class BroadwayExtension extends Extension
 
     private function loadFactory(ContainerBuilder $container, $service, $factoryService, $factoryMethod)
     {
-        $definition = $container->get($service);
+        $definition = $container->getDefinition($service);
 
         if (method_exists($definition, 'setFactory')) {
             $definition->setFactory(array(new Reference($factoryService), $factoryMethod));
