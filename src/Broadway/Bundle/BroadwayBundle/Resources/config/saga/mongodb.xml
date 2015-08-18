@@ -18,6 +18,8 @@
         </service>
 
         <service id="broadway.saga.state.mongodb_connection" class="Doctrine\MongoDB\Connection">
+            <argument>null</argument>
+            <argument type="collection" />
         </service>
 
         <service id="broadway.saga.state.mongodb_collection" class="Doctrine\MongoDB\Collection">
