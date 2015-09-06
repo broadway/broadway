@@ -23,6 +23,8 @@ matrix:
     fast_finish: true
 
 before_install:
+    # Disable XDebug speed up test execution. (Ignore failures if platform does not had the extension installed)
+    - phpenv config-rm xdebug.ini || return 0
     - echo "extension=mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
