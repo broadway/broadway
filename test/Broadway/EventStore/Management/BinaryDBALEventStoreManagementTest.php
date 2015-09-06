@@ -16,6 +16,9 @@ use Broadway\Serializer\SimpleInterfaceSerializer;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Version;
 
+/**
+ * @requires extension pdo_sqlite
+ */
 class BinaryDBALEventStoreManagementTest extends DBALEventStoreManagementTest
 {
     /** @var \Doctrine\DBAL\Schema\Table  */

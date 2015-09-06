@@ -14,6 +14,9 @@ namespace Broadway\EventStore;
 use Broadway\Serializer\SimpleInterfaceSerializer;
 use Doctrine\DBAL\DriverManager;
 
+/**
+ * @requires extension pdo_sqlite
+ */
 class DBALEventStoreTest extends EventStoreTest
 {
     public function setUp()

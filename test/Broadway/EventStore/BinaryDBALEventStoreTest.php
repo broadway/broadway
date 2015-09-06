@@ -18,6 +18,9 @@ use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Version;
 use Rhumsaa\Uuid\Uuid;
 
+/**
+ * @requires extension pdo_sqlite
+ */
 class BinaryDBALEventStoreTest extends DBALEventStoreTest
 {
     /** @var \Doctrine\DBAL\Schema\Table  */
