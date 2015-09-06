@@ -2,6 +2,11 @@ language: php
 
 sudo: false
 
+cache:
+    directories:
+        - $HOME/.composer/cache
+        - vendor
+
 env:
     global:
         - COMPOSER_LOWEST=""
@@ -25,6 +30,7 @@ install:
     - composer self-update
     - composer install
     - composer update symfony/framework-bundle $COMPOSER_LOWEST
+    - composer info -i
 
 script:
   - phpunit --exclude-group=none
