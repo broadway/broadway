@@ -35,8 +35,8 @@ before_install:
 
 install:
     - composer self-update
-    - composer install
-    - composer update symfony/framework-bundle $COMPOSER_LOWEST
+    - composer install --ignore-platform-reqs
+    - composer update symfony/framework-bundle $COMPOSER_LOWEST --ignore-platform-reqs
     - composer info -i
 
 script:
