@@ -21,9 +21,11 @@ matrix:
         - php: 5.6
           env: COMPOSER_LOWEST="--prefer-lowest"
         - php: 7
+        - php: hhvm
     fast_finish: true
     allow_failures:
         - php: 7
+        - php: hhvm
 
 before_install:
     # Disable XDebug speed up test execution. (Ignore failures if platform does not had the extension installed)
