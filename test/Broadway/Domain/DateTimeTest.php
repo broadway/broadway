@@ -32,7 +32,7 @@ class DateTimeTest extends TestCase
      */
     public function it_creates_now($locale)
     {
-        setlocale(LC_ALL, $locale);
+        $this->setLocale(LC_ALL, $locale);
 
         $this->assertInstanceOf('Broadway\Domain\DateTime', DateTime::now());
     }
