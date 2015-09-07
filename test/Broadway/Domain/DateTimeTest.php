@@ -40,8 +40,8 @@ class DateTimeTest extends TestCase
     public function providesLocales()
     {
         return array(
-            array('en_GB'),
-            array('fr_FR'),
+            array('en_GB.UTF-8'),
+            array('fr_FR.UTF-8'),
         );
     }
 

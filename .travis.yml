@@ -17,6 +17,12 @@ matrix:
           env: COMPOSER_LOWEST="--prefer-lowest"
     fast_finish: true
 
+addons:
+    apt:
+        packages:
+            - language-pack-fr
+            - language-pack-en
+
 before_install:
     - echo "extension=mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
