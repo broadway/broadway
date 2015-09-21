@@ -126,7 +126,7 @@ class DateTimeTest extends TestCase
     {
         $beginningOfWeek = DateTime::fromString($dateTime)->toBeginningOfWeek();
 
-        $this->assertEquals(DateTime::fromString($expectedBeginningOfWeek), $beginningOfWeek);
+        $this->assertEquals($expectedBeginningOfWeek, $beginningOfWeek->toString());
     }
 
     public function provideBeginningOfWeek()
