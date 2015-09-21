@@ -12,7 +12,7 @@
 namespace Broadway\Domain;
 
 use DateInterval;
-use DateTime as BaseDateTime;
+use DateTimeImmutable;
 use DateTimeZone;
 
 /**
@@ -24,7 +24,7 @@ class DateTime
 
     private $dateTime;
 
-    private function __construct(BaseDateTime $dateTime)
+    private function __construct(DateTimeImmutable $dateTime)
     {
         $this->dateTime = $dateTime;
     }
@@ -35,7 +35,7 @@ class DateTime
     public static function now()
     {
         return new DateTime(
-            BaseDateTime::createFromFormat(
+            DateTimeImmutable::createFromFormat(
                 'U.u',
                 sprintf('%.6F', microtime(true)),
                 new DateTimeZone('UTC')
@@ -58,7 +58,7 @@ class DateTime
      */
     public static function fromString($dateTimeString)
     {
-        return new DateTime(new BaseDateTime($dateTimeString));
+        return new DateTime(new DateTimeImmutable($dateTimeString));
     }
 
     /**
@@ -70,7 +70,8 @@ class DateTime
     }
 
     /**
-     * @return boolean
+     * @param DateTime $dateTime
+     * @return bool
      */
     public function comesAfter(DateTime $dateTime)
     {
@@ -84,8 +85,7 @@ class DateTime
      */
     public function add($intervalSpec)
     {
-        $dateTime = clone $this->dateTime;
-        $dateTime->add(new DateInterval($intervalSpec));
+        $dateTime = $this->dateTime->add(new DateInterval($intervalSpec));
 
         return new self($dateTime);
     }
@@ -97,13 +97,13 @@ class DateTime
      */
     public function sub($intervalSpec)
     {
-        $dateTime = clone $this->dateTime;
-        $dateTime->sub(new DateInterval($intervalSpec));
+        $dateTime = $this->dateTime->sub(new DateInterval($intervalSpec));
 
         return new self($dateTime);
     }
 
     /**
+     * @param DateTime $dateTime
      * @return DateInterval
      */
     public function diff(DateTime $dateTime)
@@ -116,7 +116,7 @@ class DateTime
      */
     public function toBeginningOfWeek()
     {
-        return new DateTime(new BaseDateTime($this->dateTime->format('o-\WW-1'), new DateTimeZone('UTC')));
+        return new DateTime(new DateTimeImmutable($this->dateTime->format('o-\WW-1'), new DateTimeZone('UTC')));
     }
 
     /**
