@@ -111,7 +111,7 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
 
             $this->connection->commit();
         } catch (DBALException $exception) {
-            $this->connection->rollback();
+            $this->connection->rollBack();
 
             throw DBALEventStoreException::create($exception);
         }
