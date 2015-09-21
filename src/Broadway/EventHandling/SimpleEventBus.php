@@ -19,8 +19,8 @@ use Exception;
  */
 class SimpleEventBus implements EventBusInterface
 {
-    private $eventListeners = array();
-    private $queue          = array();
+    private $eventListeners = [];
+    private $queue          = [];
     private $isPublishing   = false;
 
     /**

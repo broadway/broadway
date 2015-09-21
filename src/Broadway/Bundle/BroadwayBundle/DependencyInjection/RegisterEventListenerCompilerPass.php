@@ -70,13 +70,13 @@ class RegisterEventListenerCompilerPass implements CompilerPassInterface
 
             $dispatcher->addMethodCall(
                 'addListener',
-                array(
+                [
                     $tag['event'],
-                    array(
+                    [
                         new Reference($listenerId),
                         $tag['method']
-                    )
-                )
+                    ]
+                ]
             );
         }
     }

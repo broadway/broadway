@@ -45,7 +45,7 @@ class StateManagerTest extends TestCase
         $state = new State(1337);
         $state->set('appId', 1337);
         $this->repository->save($state, 'sagaId');
-        $criteria = new Criteria(array('appId' => 1337));
+        $criteria = new Criteria(['appId' => 1337]);
 
         $resolvedState = $this->manager->findOneBy($criteria, 'sagaId');
 
@@ -57,7 +57,7 @@ class StateManagerTest extends TestCase
      */
     public function it_returns_null_when_repository_does_not_find_for_given_criteria()
     {
-        $criteria = new Criteria(array('appId' => 1337));
+        $criteria = new Criteria(['appId' => 1337]);
 
         $resolvedState = $this->manager->findOneBy($criteria, 'sagaId');
 

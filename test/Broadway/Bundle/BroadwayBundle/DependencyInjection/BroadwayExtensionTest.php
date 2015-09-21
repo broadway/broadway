@@ -12,7 +12,6 @@
 namespace Broadway\Bundle\BroadwayBundle\DependencyInjection;
 
 use IC\Bundle\Base\TestBundle\Test\DependencyInjection\ExtensionTestCase;
-use Symfony\Component\DependencyInjection\Reference;
 
 class BroadwayExtensionTest extends ExtensionTestCase
 {
@@ -30,7 +29,7 @@ class BroadwayExtensionTest extends ExtensionTestCase
      */
     public function saga_state_repository_set_to_configured_repository($repoType, $class)
     {
-        $configuration = array('saga' => array('repository' => $repoType));
+        $configuration = ['saga' => ['repository' => $repoType]];
 
         $this->load($this->extension, $configuration);
 
@@ -39,10 +38,10 @@ class BroadwayExtensionTest extends ExtensionTestCase
 
     public function stateConfigurationToRepositoryMapping()
     {
-        return array(
-            array('in_memory', 'Broadway\Saga\State\InMemoryRepository'),
-            array('mongodb'  , 'Broadway\Saga\State\MongoDBRepository'),
-        );
+        return [
+            ['in_memory', 'Broadway\Saga\State\InMemoryRepository'],
+            ['mongodb'  , 'Broadway\Saga\State\MongoDBRepository'],
+        ];
     }
 
     /**
@@ -50,7 +49,7 @@ class BroadwayExtensionTest extends ExtensionTestCase
      */
     public function default_saga_state_repository_is_mongodb()
     {
-        $this->load($this->extension, array());
+        $this->load($this->extension, []);
 
         $this->assertDICAliasClass('broadway.saga.state.repository', 'Broadway\Saga\State\MongoDBRepository');
     }
@@ -60,7 +59,7 @@ class BroadwayExtensionTest extends ExtensionTestCase
      */
     public function it_uses_the_configured_storage_suffix_for_mongodb_saga_storage()
     {
-        $this->load($this->extension, array('saga' => array('mongodb' => array('storage_suffix' => 'foo_suffix'))));
+        $this->load($this->extension, ['saga' => ['mongodb' => ['storage_suffix' => 'foo_suffix']]]);
 
         $this->assertTrue($this->container->hasParameter('broadway.saga.mongodb.storage_suffix'));
         $this->assertEquals('foo_suffix', $this->container->getParameter('broadway.saga.mongodb.storage_suffix'));
@@ -71,7 +70,7 @@ class BroadwayExtensionTest extends ExtensionTestCase
      */
     public function it_defaults_to_empty_string_when_no_storage_suffix_is_configured_for_saga_storage()
     {
-        $this->load($this->extension, array());
+        $this->load($this->extension, []);
 
         $this->assertTrue($this->container->hasParameter('broadway.saga.mongodb.storage_suffix'));
         $this->assertEquals('', $this->container->getParameter('broadway.saga.mongodb.storage_suffix'));
@@ -82,22 +81,22 @@ class BroadwayExtensionTest extends ExtensionTestCase
      */
     public function it_uses_configured_connection_details_when_using_mongo_for_saga_repositories()
     {
-        $dsn = 'mongodb://12.34.45.6:27018/awesome';
-        $options = array(
+        $dsn     = 'mongodb://12.34.45.6:27018/awesome';
+        $options = [
             'connectTimeoutMS' => 50
-        );
+        ];
 
-        $this->load($this->extension, array(
-            'saga' => array(
+        $this->load($this->extension, [
+            'saga' => [
                 'repository' => 'mongodb',
-                'mongodb' => array(
-                    'connection' => array(
-                        'dsn' => $dsn,
+                'mongodb'    => [
+                    'connection' => [
+                        'dsn'     => $dsn,
                         'options' => $options,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
         $def = $this->container->getDefinition('broadway.saga.state.mongodb_connection');
 
@@ -111,7 +110,7 @@ class BroadwayExtensionTest extends ExtensionTestCase
      */
     public function read_model_repository_factory_set_to_configured_repository_factory($repoFactory, $class)
     {
-        $configuration = array('read_model' => array('repository' => $repoFactory));
+        $configuration = ['read_model' => ['repository' => $repoFactory]];
 
         $this->load($this->extension, $configuration);
 
@@ -120,10 +119,10 @@ class BroadwayExtensionTest extends ExtensionTestCase
 
     public function readModelConfigurationToRepositoryMapping()
     {
-        return array(
-            array('in_memory',     'Broadway\ReadModel\InMemory\InMemoryRepositoryFactory'),
-            array('elasticsearch', 'Broadway\ReadModel\ElasticSearch\ElasticSearchRepositoryFactory'),
-        );
+        return [
+            ['in_memory',     'Broadway\ReadModel\InMemory\InMemoryRepositoryFactory'],
+            ['elasticsearch', 'Broadway\ReadModel\ElasticSearch\ElasticSearchRepositoryFactory'],
+        ];
     }
 
     /**
@@ -131,7 +130,7 @@ class BroadwayExtensionTest extends ExtensionTestCase
      */
     public function default_read_model_repository_factory_is_elasticsearch()
     {
-        $this->load($this->extension, array());
+        $this->load($this->extension, []);
 
         $this->assertDICAliasClass('broadway.read_model.repository_factory', 'Broadway\ReadModel\ElasticSearch\ElasticSearchRepositoryFactory');
     }
@@ -141,7 +140,7 @@ class BroadwayExtensionTest extends ExtensionTestCase
      */
     public function it_enables_the_simple_command_bus()
     {
-        $configuration = array('command_handling' => array('logger' => false));
+        $configuration = ['command_handling' => ['logger' => false]];
 
         $this->load($this->extension, $configuration);
         $this->assertDICAliasClass('broadway.command_handling.command_bus', 'Broadway\CommandHandling\SimpleCommandBus');
@@ -152,7 +151,7 @@ class BroadwayExtensionTest extends ExtensionTestCase
      */
     public function it_enables_the_logging_command_bus()
     {
-        $configuration = array('command_handling' => array('logger' => 'service'));
+        $configuration = ['command_handling' => ['logger' => 'service']];
 
         $this->load($this->extension, $configuration);
         $this->assertDICAliasClass('broadway.command_handling.command_bus', 'Broadway\CommandHandling\EventDispatchingCommandBus');
@@ -163,7 +162,7 @@ class BroadwayExtensionTest extends ExtensionTestCase
      */
     public function it_creates_an_auditing_logger_alias()
     {
-        $configuration = array('command_handling' => array('logger' => 'service'));
+        $configuration = ['command_handling' => ['logger' => 'service']];
 
         $this->load($this->extension, $configuration);
 
@@ -176,7 +175,7 @@ class BroadwayExtensionTest extends ExtensionTestCase
      */
     public function it_can_enable_the_event_dispatching_command_bus_but_not_the_logger()
     {
-        $configuration = array('command_handling' => array('dispatch_events' => true, 'logger' => false));
+        $configuration = ['command_handling' => ['dispatch_events' => true, 'logger' => false]];
 
         $this->load($this->extension, $configuration);
 

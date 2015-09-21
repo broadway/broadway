@@ -19,7 +19,7 @@ use Broadway\Domain\DomainEventStreamInterface;
 class TraceableEventStore implements EventStoreInterface
 {
     private $eventStore;
-    private $recorded = array();
+    private $recorded = [];
     private $tracing  = false;
 
     public function __construct(EventStoreInterface $eventStore)
@@ -77,6 +77,6 @@ class TraceableEventStore implements EventStoreInterface
      */
     public function clearEvents()
     {
-        $this->recorded = array();
+        $this->recorded = [];
     }
 }

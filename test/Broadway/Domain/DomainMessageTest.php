@@ -23,7 +23,7 @@ class DomainMessageTest extends TestCase
         $id       = 'Hi thur';
         $payload  = new SomeEvent();
         $playhead = 15;
-        $metadata = new Metadata(array('meta'));
+        $metadata = new Metadata(['meta']);
         $type     = 'Broadway.Domain.SomeEvent';
 
         $domainMessage = DomainMessage::recordNow($id, $playhead, $metadata, $payload);
@@ -72,7 +72,7 @@ class DomainMessageTest extends TestCase
 
         $newMessage = $domainMessage->andMetadata(Metadata::kv('foo', 42));
 
-        $expected = new Metadata(array('bar' => 1337, 'foo' => 42));
+        $expected = new Metadata(['bar' => 1337, 'foo' => 42]);
         $this->assertEquals($expected, $newMessage->getMetadata());
     }
 }

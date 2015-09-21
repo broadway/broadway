@@ -23,7 +23,7 @@ use Broadway\EventStore\Management\EventStoreManagementInterface;
  */
 class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInterface
 {
-    private $events = array();
+    private $events = [];
 
     /**
      * {@inheritDoc}
@@ -47,7 +47,7 @@ class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInt
         $id = (string) $id;
 
         if (! isset($this->events[$id])) {
-            $this->events[$id] = array();
+            $this->events[$id] = [];
         }
 
         foreach ($eventStream as $event) {

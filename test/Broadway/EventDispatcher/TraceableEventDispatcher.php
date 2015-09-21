@@ -13,11 +13,11 @@ namespace Broadway\EventDispatcher;
 
 class TraceableEventDispatcher implements EventDispatcherInterface
 {
-    private $dispatchedEvents = array();
+    private $dispatchedEvents = [];
 
     public function dispatch($eventName, array $arguments)
     {
-        $this->dispatchedEvents[] = array('event' => $eventName, 'arguments' => $arguments);
+        $this->dispatchedEvents[] = ['event' => $eventName, 'arguments' => $arguments];
     }
 
     public function addListener($eventName, /* callable */ $callable)

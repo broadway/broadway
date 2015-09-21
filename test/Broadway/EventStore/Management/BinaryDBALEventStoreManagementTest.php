@@ -30,10 +30,10 @@ class BinaryDBALEventStoreManagementTest extends DBALEventStoreManagementTest
             $this->markTestSkipped('Binary type is only available for Doctrine >= v2.5');
         }
 
-        $connection       = DriverManager::getConnection(array('driver' => 'pdo_sqlite', 'memory' => true));
+        $connection       = DriverManager::getConnection(['driver' => 'pdo_sqlite', 'memory' => true]);
         $schemaManager    = $connection->getSchemaManager();
         $schema           = $schemaManager->createSchema();
-        $eventStore = new DBALEventStore($connection, new SimpleInterfaceSerializer(), new SimpleInterfaceSerializer(), 'events', true);
+        $eventStore       = new DBALEventStore($connection, new SimpleInterfaceSerializer(), new SimpleInterfaceSerializer(), 'events', true);
 
         $this->table = $eventStore->configureSchema($schema);
 
@@ -41,5 +41,4 @@ class BinaryDBALEventStoreManagementTest extends DBALEventStoreManagementTest
 
         return $eventStore;
     }
-
 }

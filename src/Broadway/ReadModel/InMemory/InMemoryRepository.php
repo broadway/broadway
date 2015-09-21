@@ -22,7 +22,7 @@ use Broadway\ReadModel\TransferableInterface;
  */
 class InMemoryRepository implements RepositoryInterface, TransferableInterface
 {
-    private $data = array();
+    private $data = [];
 
     /**
      * {@inheritDoc}
@@ -51,7 +51,7 @@ class InMemoryRepository implements RepositoryInterface, TransferableInterface
     public function findBy(array $fields)
     {
         if (! $fields) {
-            return array();
+            return [];
         }
 
         return array_values(array_filter($this->data, function ($model) use ($fields) {

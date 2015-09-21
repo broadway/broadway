@@ -16,11 +16,11 @@ use Broadway\EventSourcing\MetadataEnrichment\MetadataEnricherInterface;
 
 class SagaMetadataEnricher implements MetadataEnricherInterface
 {
-    private $sagaData = array();
+    private $sagaData = [];
 
     public function postHandleSaga($type, $id)
     {
-        $this->sagaData = array('type' => $type, 'state_id' => $id);
+        $this->sagaData = ['type' => $type, 'state_id' => $id];
     }
 
     public function enrich(Metadata $metadata)
@@ -29,7 +29,7 @@ class SagaMetadataEnricher implements MetadataEnricherInterface
             return $metadata;
         }
 
-        $newMetadata = new Metadata(array('saga' => $this->sagaData));
+        $newMetadata = new Metadata(['saga' => $this->sagaData]);
         $metadata    = $metadata->merge($newMetadata);
 
         return $metadata;

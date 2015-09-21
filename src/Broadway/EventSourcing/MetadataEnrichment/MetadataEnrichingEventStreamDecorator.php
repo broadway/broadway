@@ -26,7 +26,7 @@ class MetadataEnrichingEventStreamDecorator implements EventStreamDecoratorInter
     /**
      * @param array $metadataEnrichers
      */
-    public function __construct(array $metadataEnrichers = array())
+    public function __construct(array $metadataEnrichers = [])
     {
         $this->metadataEnrichers = $metadataEnrichers;
     }
@@ -45,7 +45,7 @@ class MetadataEnrichingEventStreamDecorator implements EventStreamDecoratorInter
             return $eventStream;
         }
 
-        $messages = array();
+        $messages = [];
 
         foreach ($eventStream as $message) {
             $metadata = new Metadata();

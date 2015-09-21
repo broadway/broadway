@@ -23,12 +23,12 @@ class StaticallyConfiguredSagaMetadataFactoryTest extends TestCase
     {
         $this->markTestSkipped('Yay phpunit');
         $metadataFactory = new StaticallyConfiguredSagaMetadataFactory();
-        $criteria        = new Criteria(array('id' => 'YoLo'));
+        $criteria        = new Criteria(['id' => 'YoLo']);
 
         $saga = $this->getMockBuilder('Broadway\Saga\Metadata\StaticallyConfiguredSagaInterface')->getMock();
         $saga->staticExpects($this->any())
             ->method('configuration')
-            ->will($this->returnValue(array('StaticallyConfiguredSagaMetadataFactoryTestEvent' => function ($event) use ($criteria) { return $criteria;})));
+            ->will($this->returnValue(['StaticallyConfiguredSagaMetadataFactoryTestEvent' => function ($event) use ($criteria) { return $criteria;}]));
 
         $metadata = $metadataFactory->create($saga);
 

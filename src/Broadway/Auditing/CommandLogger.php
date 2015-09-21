@@ -35,10 +35,10 @@ class CommandLogger
      */
     public function onCommandHandlingSuccess($command)
     {
-        $messageData = array(
+        $messageData = [
             'status'  => 'success',
             'command' => $this->getCommandData($command)
-        );
+        ];
 
         $this->logger->info(json_encode($messageData));
     }
@@ -49,26 +49,26 @@ class CommandLogger
      */
     public function onCommandHandlingFailure($command, Exception $exception)
     {
-        $messageData = array(
+        $messageData = [
             'status'    => 'failure',
             'command'   => $this->getCommandData($command),
-            'exception' => array(
+            'exception' => [
                 'message' => $exception->getMessage(),
                 'file'    => $exception->getFile(),
                 'class'   => get_class($exception),
                 'line'    => $exception->getLine(),
                 'code'    => $exception->getCode()
-            )
-        );
+            ]
+        ];
 
         $this->logger->info(json_encode($messageData));
     }
 
     private function getCommandData($command)
     {
-        return array(
+        return [
             'class' => get_class($command),
             'data'  => $this->commandSerializer->serialize($command),
-        );
+        ];
     }
 }

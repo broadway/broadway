@@ -18,9 +18,9 @@ class SerializeMe implements Broadway\Serializer\SerializableInterface
 
     public function serialize()
     {
-        return array(
+        return [
             'message' => $this->message
-        );
+        ];
     }
 }
 

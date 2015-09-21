@@ -11,4 +11,4 @@ $eventDispatcher->addListener('my_event', function ($arg1, $arg2) {
 });
 
 // Dispatch with an array of arguments
-$eventDispatcher->dispatch('my_event', array('one', 'two'));
+$eventDispatcher->dispatch('my_event', ['one', 'two']);

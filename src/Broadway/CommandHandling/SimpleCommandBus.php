@@ -16,8 +16,8 @@ namespace Broadway\CommandHandling;
  */
 class SimpleCommandBus implements CommandBusInterface
 {
-    private $commandHandlers = array();
-    private $queue           = array();
+    private $commandHandlers = [];
+    private $queue           = [];
     private $isDispatching   = false;
 
     /**
