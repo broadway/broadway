@@ -12,6 +12,7 @@
 namespace Broadway\ReadModel\Testing;
 
 use Broadway\ReadModel\ReadModelInterface;
+use Broadway\Serializer\SerializableInterface;
 use Broadway\Serializer\SimpleInterfaceSerializer;
 use PHPUnit_Framework_TestCase as TestCase;
 
@@ -25,7 +26,7 @@ abstract class ReadModelTestCase extends TestCase
      */
     public function its_serializable()
     {
-        $this->assertInstanceOf('Broadway\Serializer\SerializableInterface', $this->createReadModel());
+        $this->assertInstanceOf(SerializableInterface::class, $this->createReadModel());
     }
 
     /**
