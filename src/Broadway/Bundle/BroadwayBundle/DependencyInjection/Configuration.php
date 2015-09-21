@@ -90,7 +90,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->enumNode('repository')
-                            ->values(array('in_memory', 'mongodb'))
+                            ->values(['in_memory', 'mongodb'])
                             ->defaultValue('mongodb')
                         ->end()
                         ->arrayNode('mongodb')
@@ -122,7 +122,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->enumNode('repository')
-                            ->values(array('in_memory', 'elasticsearch'))
+                            ->values(['in_memory', 'elasticsearch'])
                             ->defaultValue('elasticsearch')
                         ->end()
                         ->arrayNode('elasticsearch')
@@ -134,10 +134,10 @@ class Configuration implements ConfigurationInterface
                                         return is_string($v);
                                     })
                                     ->then(function ($v) {
-                                        return array($v);
+                                        return [$v];
                                     })
                                 ->end()
-                                ->defaultValue(array('localhost:9200'))
+                                ->defaultValue(['localhost:9200'])
                                 ->prototype('scalar')->end()
                             ->end()
                             ->arrayNode('connectionParams')

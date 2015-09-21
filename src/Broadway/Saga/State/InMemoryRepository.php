@@ -15,7 +15,7 @@ use Broadway\Saga\State;
 
 class InMemoryRepository implements RepositoryInterface
 {
-    private $states = array();
+    private $states = [];
 
     /**
      * {@inheritDoc}

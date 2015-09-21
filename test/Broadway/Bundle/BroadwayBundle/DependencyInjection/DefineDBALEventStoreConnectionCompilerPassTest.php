@@ -16,14 +16,14 @@ use PHPUnit_Framework_TestCase;
 class DefineDBALEventStoreConnectionCompilerPassTest extends PHPUnit_Framework_TestCase
 {
     const ALIAS = 'awesome';
-    
+
     public function setUp()
     {
         $this->compilerPass = new DefineDBALEventStoreConnectionCompilerPass(self::ALIAS);
 
         $this->container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
             ->disableOriginalConstructor()
-            ->setMethods(array('hasDefinition', 'setAlias', 'hasParameter', 'getParameter'))
+            ->setMethods(['hasDefinition', 'setAlias', 'hasParameter', 'getParameter'])
             ->getMock();
     }
 

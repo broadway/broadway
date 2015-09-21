@@ -69,12 +69,12 @@ class Scenario
             return $this;
         }
 
-        $messages = array();
+        $messages = [];
         $playhead = -1;
         foreach ($givens as $event) {
             $playhead++;
             $messages[] = DomainMessage::recordNow(
-                $this->aggregateId, $playhead, new Metadata(array()), $event
+                $this->aggregateId, $playhead, new Metadata([]), $event
             );
         }
 
@@ -125,7 +125,7 @@ class Scenario
     private function getEvents()
     {
         $recordedEvents = $this->aggregateRootInstance->getUncommittedEvents();
-        $events         = array();
+        $events         = [];
 
         foreach ($recordedEvents as $message) {
             $events[] = $message->getPayload();

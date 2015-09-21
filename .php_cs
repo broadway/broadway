@@ -17,5 +17,6 @@ return Symfony\CS\Config\Config::create()
         'return',
         'unused_use',
         'whitespacy_lines',
+        'short_array_syntax'
     ))
     ->finder($finder);

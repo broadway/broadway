@@ -18,29 +18,29 @@ class ReservationSaga extends Saga implements StaticallyConfiguredSagaInterface
         CommandBusInterface $commandBus,
         UuidGeneratorInterface $uuidGenerator
     ) {
-        $this->commandBus = $commandBus;
+        $this->commandBus    = $commandBus;
         $this->uuidGenerator = $uuidGenerator;
     }
 
     public static function configuration()
     {
-        return array(
+        return [
             'OrderPlaced' => function (OrderPlaced $event) {
                 return null; // no criteria, start of a new saga
             },
             'ReservationAccepted' => function (ReservationAccepted $event) {
                 // return a Criteria object to fetch the State of this saga
-                return new Criteria(array(
+                return new Criteria([
                     'reservationId' => $event->reservationId()
-                ));
+                ]);
             },
             'ReservationRejected' => function (ReservationRejected $event) {
                 // return a Criteria object to fetch the State of this saga
-                return new Criteria(array(
+                return new Criteria([
                     'reservationId' => $event->reservationId()
-                ));
+                ]);
             }
-        );
+        ];
     }
 
     public function handleOrderPlaced(OrderPlaced $event, State $state)
@@ -94,7 +94,7 @@ class OrderPlaced
 
     public function __construct($orderId, $numberOfSeats)
     {
-        $this->orderId = $orderId;
+        $this->orderId       = $orderId;
         $this->numberOfSeats = $numberOfSeats;
     }
 

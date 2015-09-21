@@ -16,7 +16,7 @@ namespace Broadway\EventDispatcher;
  */
 class EventDispatcher implements EventDispatcherInterface
 {
-    private $listeners = array();
+    private $listeners = [];
 
     /**
      * {@inheritDoc}
@@ -38,7 +38,7 @@ class EventDispatcher implements EventDispatcherInterface
     public function addListener($eventName, /* callable */ $callable)
     {
         if (! isset($this->listeners[$eventName])) {
-            $this->listeners[$eventName] = array();
+            $this->listeners[$eventName] = [];
         }
 
         $this->listeners[$eventName][] = $callable;

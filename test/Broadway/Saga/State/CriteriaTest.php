@@ -21,7 +21,7 @@ class CriteriaTest extends TestCase
      */
     public function it_exposes_the_comparisons()
     {
-        $data = array('appId' => 42, 'companyId' => 21);
+        $data = ['appId' => 42, 'companyId' => 21];
 
         $criteria = new Criteria($data);
 

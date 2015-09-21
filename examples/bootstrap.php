@@ -11,7 +11,7 @@ if (file_exists($file = __DIR__ . '/../vendor/autoload.php')) {
  */
 class StdoutLogger extends Psr\Log\AbstractLogger
 {
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = [])
     {
         echo sprintf("[%s] %s\n", $level, $message);
     }

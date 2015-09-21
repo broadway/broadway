@@ -34,10 +34,10 @@ class EventDispatcherTest extends TestCase
      */
     public function it_calls_the_subscribed_listeners()
     {
-        $this->dispatcher->addListener('event', array($this->listener1, 'handleEvent'));
-        $this->dispatcher->addListener('event', array($this->listener2, 'handleEvent'));
+        $this->dispatcher->addListener('event', [$this->listener1, 'handleEvent']);
+        $this->dispatcher->addListener('event', [$this->listener2, 'handleEvent']);
 
-        $this->dispatcher->dispatch('event', array('value1', 'value2'));
+        $this->dispatcher->dispatch('event', ['value1', 'value2']);
 
         $this->assertTrue($this->listener1->isCalled());
         $this->assertTrue($this->listener2->isCalled());
@@ -48,10 +48,10 @@ class EventDispatcherTest extends TestCase
      */
     public function it_only_calls_the_listener_subscribed_to_a_given_event()
     {
-        $this->dispatcher->addListener('event1', array($this->listener1, 'handleEvent'));
-        $this->dispatcher->addListener('event2', array($this->listener2, 'handleEvent'));
+        $this->dispatcher->addListener('event1', [$this->listener1, 'handleEvent']);
+        $this->dispatcher->addListener('event2', [$this->listener2, 'handleEvent']);
 
-        $this->dispatcher->dispatch('event1', array('value1', 'value2'));
+        $this->dispatcher->dispatch('event1', ['value1', 'value2']);
 
         $this->assertTrue($this->listener1->isCalled());
         $this->assertFalse($this->listener2->isCalled());

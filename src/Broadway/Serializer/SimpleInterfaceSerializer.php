@@ -30,10 +30,10 @@ class SimpleInterfaceSerializer implements SerializerInterface
             ));
         }
 
-        return array(
+        return [
             'class'   => get_class($object),
             'payload' => $object->serialize()
-        );
+        ];
     }
 
     /**

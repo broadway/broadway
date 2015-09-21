@@ -42,7 +42,7 @@ class CommandLoggerTest extends TestCase
         $this->commandSerializer->expects($this->once())
             ->method('serialize')
             ->with($this->command)
-            ->will($this->returnValue(array('all' => 'the data')));
+            ->will($this->returnValue(['all' => 'the data']));
 
         $this->commandAuditLogger->onCommandHandlingSuccess($this->command);
 
@@ -58,7 +58,7 @@ class CommandLoggerTest extends TestCase
         $this->commandSerializer->expects($this->once())
             ->method('serialize')
             ->with($this->command)
-            ->will($this->returnValue(array('all' => 'the data')));
+            ->will($this->returnValue(['all' => 'the data']));
 
         $this->commandAuditLogger->onCommandHandlingFailure($this->command, $this->exception);
 
@@ -71,7 +71,7 @@ class CommandLoggerTest extends TestCase
         $this->assertArrayHasKey('class', $loggedData['command']);
         $this->assertEquals('Broadway\Auditing\Command', $loggedData['command']['class']);
         $this->assertArrayHasKey('data', $loggedData['command']);
-        $this->assertEquals(array('all' => 'the data'), $loggedData['command']['data']);
+        $this->assertEquals(['all' => 'the data'], $loggedData['command']['data']);
 
         $this->assertArrayHasKey('exception', $loggedData);
         $this->assertArrayHasKey('message', $loggedData['exception']);
@@ -90,42 +90,42 @@ use Psr\Log\LoggerInterface;
 
 class TraceableLogger implements LoggerInterface
 {
-    public $info = array();
+    public $info = [];
 
-    public function emergency($message, array $context = array())
+    public function emergency($message, array $context = [])
     {
     }
 
-    public function alert($message, array $context = array())
+    public function alert($message, array $context = [])
     {
     }
 
-    public function critical($message, array $context = array())
+    public function critical($message, array $context = [])
     {
     }
 
-    public function error($message, array $context = array())
+    public function error($message, array $context = [])
     {
     }
 
-    public function warning($message, array $context = array())
+    public function warning($message, array $context = [])
     {
     }
 
-    public function notice($message, array $context = array())
+    public function notice($message, array $context = [])
     {
     }
 
-    public function info($message, array $context = array())
+    public function info($message, array $context = [])
     {
         $this->info[] = $message;
     }
 
-    public function debug($message, array $context = array())
+    public function debug($message, array $context = [])
     {
     }
 
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = [])
     {
     }
 }

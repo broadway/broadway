@@ -39,7 +39,7 @@ class ElasticSearchRepository implements RepositoryInterface
         SerializerInterface $serializer,
         $index,
         $class,
-        array $notAnalyzedFields = array()
+        array $notAnalyzedFields = []
     ) {
         $this->client            = $client;
         $this->serializer        = $serializer;
@@ -57,13 +57,13 @@ class ElasticSearchRepository implements RepositoryInterface
 
         $serializedReadModel = $this->serializer->serialize($data);
 
-        $params = array(
+        $params = [
             'index'   => $this->index,
             'type'    => $serializedReadModel['class'],
             'id'      => $data->getId(),
             'body'    => $serializedReadModel['payload'],
             'refresh' => true,
-        );
+        ];
 
         $this->client->index($params);
     }
@@ -73,11 +73,11 @@ class ElasticSearchRepository implements RepositoryInterface
      */
     public function find($id)
     {
-        $params = array(
+        $params = [
             'index' => $this->index,
             'type'  => $this->class,
             'id'    => $id,
-        );
+        ];
 
         try {
             $result = $this->client->get($params);
@@ -94,7 +94,7 @@ class ElasticSearchRepository implements RepositoryInterface
     public function findBy(array $fields)
     {
         if (empty($fields)) {
-            return array();
+            return [];
         }
 
         return $this->query($this->buildFindByQuery($fields));
@@ -114,12 +114,12 @@ class ElasticSearchRepository implements RepositoryInterface
     public function remove($id)
     {
         try {
-            $this->client->delete(array(
+            $this->client->delete([
                 'id'      => $id,
                 'index'   => $this->index,
                 'type'    => $this->class,
                 'refresh' => true,
-            ));
+            ]);
         } catch (Missing404Exception $e) { // It was already deleted or never existed, fine by us!
         }
     }
@@ -129,11 +129,11 @@ class ElasticSearchRepository implements RepositoryInterface
         try {
             $result = $this->client->search($query);
         } catch (Missing404Exception $e) {
-            return array();
+            return [];
         }
 
         if (! array_key_exists('hits', $result)) {
-            return array();
+            return [];
         }
 
         return $this->deserializeHits($result['hits']['hits']);
@@ -146,78 +146,78 @@ class ElasticSearchRepository implements RepositoryInterface
      *
      * @return array
      */
-    protected function search(array $query, array $facets = array(), $size = 500)
+    protected function search(array $query, array $facets = [], $size = 500)
     {
         try {
-            return $this->client->search(array(
+            return $this->client->search([
                 'index' => $this->index,
-                'body'  => array(
+                'body'  => [
                     'query'  => $query,
                     'facets' => $facets,
-                ),
+                ],
                 'size' => $size,
-            ));
+            ]);
         } catch (Missing404Exception $e) {
-            return array();
+            return [];
         }
     }
 
     protected function query(array $query)
     {
         return $this->searchAndDeserializeHits(
-            array(
+            [
                 'index' => $this->index,
-                'body'  => array(
+                'body'  => [
                     'query' => $query,
-                ),
+                ],
                 'size'  => 500,
-            )
+            ]
         );
     }
 
     private function buildFindByQuery(array $fields)
     {
-        return array(
-            'filtered' => array(
-                'query' => array(
-                    'match_all' => array(),
-                ),
+        return [
+            'filtered' => [
+                'query' => [
+                    'match_all' => [],
+                ],
                 'filter' => $this->buildFilter($fields)
-            )
-        );
+            ]
+        ];
     }
 
     private function buildFindAllQuery()
     {
-        return array(
-            'match_all' => array(),
-        );
+        return [
+            'match_all' => [],
+        ];
     }
 
     private function deserializeHit(array $hit)
     {
         return $this->serializer->deserialize(
-            array(
+            [
                 'class'   => $hit['_type'],
                 'payload' => $hit['_source'],
-            )
+            ]
         );
     }
 
     private function deserializeHits(array $hits)
     {
-        return array_map(array($this, 'deserializeHit'), $hits);
+        return array_map([$this, 'deserializeHit'], $hits);
     }
 
     private function buildFilter(array $filter)
     {
-        $retval = array();
+        $retval = [];
 
         foreach ($filter as $field => $value) {
-            $retval[] = array('term' => array($field => $value));
+            $retval[] = ['term' => [$field => $value]];
         }
 
-        return array('and' => $retval);
+        return ['and' => $retval];
     }
 
     /**
@@ -229,29 +229,29 @@ class ElasticSearchRepository implements RepositoryInterface
     {
         $class = $this->class;
 
-        $indexParams = array(
+        $indexParams = [
             'index' => $this->index,
-        );
+        ];
 
         if (count($this->notAnalyzedFields)) {
-            $indexParams['body'] = array(
-                'mappings' => array(
-                    $class => array(
-                        '_source'    => array(
+            $indexParams['body'] = [
+                'mappings' => [
+                    $class => [
+                        '_source'    => [
                             'enabled' => true
-                        ),
+                        ],
                         'properties' => $this->createNotAnalyzedFieldsMapping($this->notAnalyzedFields),
-                    )
-                )
-            );
+                    ]
+                ]
+            ];
         }
 
         $this->client->indices()->create($indexParams);
-        $response = $this->client->cluster()->health(array(
+        $response = $this->client->cluster()->health([
             'index'           => $this->index,
             'wait_for_status' => 'yellow',
             'timeout'         => '5s',
-        ));
+        ]);
 
         return isset($response['status']) && $response['status'] !== 'red';
     }
@@ -263,31 +263,31 @@ class ElasticSearchRepository implements RepositoryInterface
      */
     public function deleteIndex()
     {
-        $indexParams = array(
+        $indexParams = [
             'index'   => $this->index,
             'timeout' => '5s',
-        );
+        ];
 
         $this->client->indices()->delete($indexParams);
 
-        $response = $this->client->cluster()->health(array(
+        $response = $this->client->cluster()->health([
             'index'           => $this->index,
             'wait_for_status' => 'yellow',
             'timeout'         => '5s',
-        ));
+        ]);
 
         return isset($response['status']) && $response['status'] !== 'red';
     }
 
     private function createNotAnalyzedFieldsMapping(array $notAnalyzedFields)
     {
-        $fields = array();
+        $fields = [];
 
         foreach ($notAnalyzedFields as $field) {
-            $fields[$field] = array(
+            $fields[$field] = [
                 'type'  => 'string',
                 'index' => 'not_analyzed'
-            );
+            ];
         }
 
         return $fields;

@@ -11,8 +11,6 @@
 
 namespace Broadway\EventStore\Exception;
 
-use InvalidArgumentException;
-
 /**
  * Class InvalidIdentifierException
  */

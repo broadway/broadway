@@ -24,7 +24,7 @@ class CommandSerializer implements CommandSerializerInterface
      */
     public function serialize($command)
     {
-        $serializedCommand = array();
+        $serializedCommand = [];
         foreach ((array) $command as $key => $value) {
             $serializedCommand[str_replace("\0", '-', $key)] = $value;
         }

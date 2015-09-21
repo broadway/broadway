@@ -19,7 +19,7 @@ use Broadway\Domain\DomainEventStreamInterface;
 class TraceableEventBus implements EventBusInterface
 {
     private $eventBus;
-    private $recorded = array();
+    private $recorded = [];
     private $tracing  = false;
 
     public function __construct(EventBusInterface $eventBus)

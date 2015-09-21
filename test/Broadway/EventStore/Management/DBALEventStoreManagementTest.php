@@ -22,10 +22,10 @@ class DBALEventStoreManagementTest extends EventStoreManagementTest
 {
     public function createEventStore()
     {
-        $connection       = DriverManager::getConnection(array('driver' => 'pdo_sqlite', 'memory' => true));
+        $connection       = DriverManager::getConnection(['driver' => 'pdo_sqlite', 'memory' => true]);
         $schemaManager    = $connection->getSchemaManager();
         $schema           = $schemaManager->createSchema();
-        $eventStore = new DBALEventStore($connection, new SimpleInterfaceSerializer(), new SimpleInterfaceSerializer(), 'events');
+        $eventStore       = new DBALEventStore($connection, new SimpleInterfaceSerializer(), new SimpleInterfaceSerializer(), 'events');
 
         $table = $eventStore->configureSchema($schema);
         $schemaManager->createTable($table);

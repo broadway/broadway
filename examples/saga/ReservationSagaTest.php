@@ -11,9 +11,9 @@ class ReservationSagaTest extends SagaScenarioTestCase
     protected function createSaga(CommandBusInterface $commandBus)
     {
         return new ReservationSaga($commandBus, new MockUuidSequenceGenerator(
-            array(
+            [
                 'bf142ea0-29f7-11e5-9d3f-0002a5d5c51b'
-            )
+            ]
         ));
     }
 
@@ -24,9 +24,9 @@ class ReservationSagaTest extends SagaScenarioTestCase
     {
         $this->scenario
             ->when(new OrderPlaced('9d66f760-29f7-11e5-a239-0002a5d5c51b', 5))
-            ->then(array(
+            ->then([
                 new MakeSeatReservation('bf142ea0-29f7-11e5-9d3f-0002a5d5c51b', 5)
-            ));
+            ]);
     }
 
     /**
@@ -35,13 +35,13 @@ class ReservationSagaTest extends SagaScenarioTestCase
     public function it_marks_the_order_as_booked_when_the_seat_reservation_was_accepted()
     {
         $this->scenario
-            ->given(array(
+            ->given([
                 new OrderPlaced('9d66f760-29f7-11e5-a239-0002a5d5c51b', 5)
-            ))
+            ])
             ->when(new ReservationAccepted('bf142ea0-29f7-11e5-9d3f-0002a5d5c51b'))
-            ->then(array(
+            ->then([
                 new MarkOrderAsBooked('9d66f760-29f7-11e5-a239-0002a5d5c51b')
-            ));
+            ]);
     }
 
     /**
@@ -50,12 +50,12 @@ class ReservationSagaTest extends SagaScenarioTestCase
     public function it_rejects_the_order_when_the_seat_reservation_was_rejected()
     {
         $this->scenario
-            ->given(array(
+            ->given([
                 new OrderPlaced('9d66f760-29f7-11e5-a239-0002a5d5c51b', 5)
-            ))
+            ])
             ->when(new ReservationRejected('bf142ea0-29f7-11e5-9d3f-0002a5d5c51b'))
-            ->then(array(
+            ->then([
                 new RejectOrder('9d66f760-29f7-11e5-a239-0002a5d5c51b')
-            ));
+            ]);
     }
 }

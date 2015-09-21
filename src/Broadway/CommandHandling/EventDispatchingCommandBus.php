@@ -41,11 +41,11 @@ class EventDispatchingCommandBus implements CommandBusInterface
     {
         try {
             $this->commandBus->dispatch($command);
-            $this->dispatcher->dispatch(self::EVENT_COMMAND_SUCCESS, array('command' => $command));
+            $this->dispatcher->dispatch(self::EVENT_COMMAND_SUCCESS, ['command' => $command]);
         } catch (Exception $e) {
             $this->dispatcher->dispatch(
                 self::EVENT_COMMAND_FAILURE,
-                array('command' => $command, 'exception' => $e)
+                ['command' => $command, 'exception' => $e]
             );
 
             throw $e;

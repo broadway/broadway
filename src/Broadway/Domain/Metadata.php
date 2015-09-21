@@ -18,12 +18,12 @@ use Broadway\Serializer\SerializableInterface;
  */
 class Metadata implements SerializableInterface
 {
-    private $values = array();
+    private $values = [];
 
     /**
      * @param array $values
      */
-    public function __construct(array $values = array())
+    public function __construct(array $values = [])
     {
         $this->values = $values;
     }
@@ -60,7 +60,7 @@ class Metadata implements SerializableInterface
      */
     public static function kv($key, $value)
     {
-        return new Metadata(array($key => $value));
+        return new Metadata([$key => $value]);
     }
 
     /**
