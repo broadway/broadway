@@ -99,7 +99,7 @@ class EventSourcingRepository implements RepositoryInterface
     {
         Assert::subclassOf(
             $class,
-            'Broadway\EventSourcing\EventSourcedAggregateRoot',
+            EventSourcedAggregateRoot::class,
             sprintf("Class '%s' is not an EventSourcedAggregateRoot.", $class)
         );
     }
