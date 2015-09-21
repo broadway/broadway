@@ -12,6 +12,7 @@
 namespace Broadway\EventStore;
 
 use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\DomainMessage;
 
 /**
  * Event store that is able to record all appended events.
@@ -49,7 +50,7 @@ class TraceableEventStore implements EventStoreInterface
     public function getEvents()
     {
         return array_map(
-            function ($message) {
+            function (DomainMessage $message) {
                 return $message->getPayload();
             },
             $this->recorded
