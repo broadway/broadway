@@ -37,8 +37,10 @@ class Scenario
     private $aggregateId;
 
     /**
-     * @param PHPUnit_Framework_TestCase $testcase
+     * @param PHPUnit_Framework_TestCase $testCase
+     * @param AggregateFactoryInterface  $factory
      * @param string                     $aggregateRootClass
+     * @internal param PHPUnit_Framework_TestCase $testcase
      */
     public function __construct(PHPUnit_Framework_TestCase $testCase, AggregateFactoryInterface $factory, $aggregateRootClass)
     {
@@ -49,7 +51,8 @@ class Scenario
     }
 
     /**
-     * @param string $aggregateId
+     * @param  string $aggregateId
+     * @return Scenario
      */
     public function withAggregateId($aggregateId)
     {

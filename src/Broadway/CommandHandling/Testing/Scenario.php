@@ -47,7 +47,8 @@ class Scenario
     }
 
     /**
-     * @param string $aggregateId
+     * @param  string $aggregateId
+     * @return Scenario
      */
     public function withAggregateId($aggregateId)
     {
