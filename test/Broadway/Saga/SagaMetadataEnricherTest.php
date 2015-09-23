@@ -16,13 +16,24 @@ use Broadway\TestCase;
 
 class SagaMetadataEnricherTest extends TestCase
 {
+    /**
+     * @var SagaMetadataEnricher
+     */
     private $sagaMetadataEnricher;
+    /**
+     * @var Metadata
+     */
     private $metadata;
+    /**
+     * @var array
+     */
+    private $sagaData;
 
     public function setUp()
     {
         $this->sagaMetadataEnricher = new SagaMetadataEnricher();
         $this->metadata             = new Metadata(array('yolo' => 'tralelo'));
+        $this->sagaData             = array();
     }
 
     /**

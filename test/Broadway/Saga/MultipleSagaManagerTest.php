@@ -26,11 +26,29 @@ use Broadway\UuidGenerator\Rfc4122\Version4Generator;
 
 class MultipleSagaManagerTest extends TestCase
 {
+    /**
+     * @var SagaManagerInterface
+     */
     private $manager;
+    /**
+     * @var TraceableSagaStateRepository
+     */
     private $repository;
+    /**
+     * @var array
+     */
     private $sagas;
+    /**
+     * @var StateManager
+     */
     private $stateManager;
+    /**
+     * @var StaticallyConfiguredSagaMetadataFactory
+     */
     private $metadataFactory;
+    /**
+     * @var TraceableEventDispatcher
+     */
     private $eventDispatcher;
 
     public function setUp()

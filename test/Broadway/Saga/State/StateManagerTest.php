@@ -17,7 +17,17 @@ use Broadway\UuidGenerator\Testing\MockUuidGenerator;
 
 class StateManagerTest extends TestCase
 {
+    /**
+     * @var InMemoryRepository
+     */
     private $repository;
+    /**
+     * @var MockUuidGenerator
+     */
+    private $generator;
+    /**
+     * @var StateManager
+     */
     private $manager;
 
     public function setUp()

@@ -21,6 +21,9 @@ use Doctrine\MongoDB\Connection;
 class MongoDBRepositoryTest extends AbstractRepositoryTest
 {
     protected static $dbName = 'doctrine_mongodb';
+    /**
+     * @var Connection
+     */
     protected $connection;
 
     protected function createRepository()

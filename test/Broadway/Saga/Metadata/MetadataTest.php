@@ -17,6 +17,9 @@ use Broadway\TestCase;
 
 class StaticallyConfiguredSagaMetadataTest extends TestCase
 {
+    /**
+     * @var Metadata
+     */
     private $metadata;
 
     public function setUp()
@@ -66,7 +69,7 @@ class StaticallyConfiguredSagaMetadataTest extends TestCase
 
     /**
      * @test
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      */
     public function it_throws_an_exception_if_there_is_no_criteria_for_a_given_event()
     {
