@@ -50,7 +50,7 @@ class Metadata implements MetadataInterface
             throw new RuntimeException(sprintf("No criteria for event '%s'.", $eventName));
         }
 
-        return $this->criteria[$eventName]($event);
+        return $this->criteria[$eventName]($event, $domainMessage);
     }
 
     private function getClassName($event)

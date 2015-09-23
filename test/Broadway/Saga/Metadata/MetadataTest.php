@@ -22,7 +22,12 @@ class StaticallyConfiguredSagaMetadataTest extends TestCase
     public function setUp()
     {
         $this->metadata = new Metadata(array(
-            'StaticallyConfiguredSagaMetadataTestSagaTestEvent1' => function () { return 'criteria'; },
+            'StaticallyConfiguredSagaMetadataTestSagaTestEvent1' => function ($event, $domainMessage) {
+                self::assertNotNull($event);
+                self::assertInstanceOf('Broadway\Domain\DomainMessage', $domainMessage);
+
+                return 'criteria';
+            },
         ));
     }
 
