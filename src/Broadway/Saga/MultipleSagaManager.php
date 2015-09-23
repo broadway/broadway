@@ -23,7 +23,9 @@ use Broadway\Saga\State\StateManager;
 class MultipleSagaManager implements SagaManagerInterface
 {
     private $repository;
+    private $sagas;
     private $stateManager;
+    private $metadataFactory;
     private $eventDispatcher;
 
     public function __construct(
