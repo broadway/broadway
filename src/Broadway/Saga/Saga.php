@@ -34,7 +34,7 @@ abstract class Saga implements SagaInterface
             );
         }
 
-        return $this->$method($event, $state);
+        return $this->$method($event, $state, $domainMessage);
     }
 
     private function getHandleMethod($event)
