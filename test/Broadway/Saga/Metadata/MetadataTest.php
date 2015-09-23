@@ -11,6 +11,8 @@
 
 namespace Broadway\Saga\Metadata;
 
+use Broadway\Domain\DomainMessage;
+use Broadway\Domain\Metadata as DomainMetadata;
 use Broadway\TestCase;
 
 class StaticallyConfiguredSagaMetadataTest extends TestCase
@@ -31,7 +33,8 @@ class StaticallyConfiguredSagaMetadataTest extends TestCase
     {
         $event = new StaticallyConfiguredSagaMetadataTestSagaTestEvent1();
 
-        $this->assertTrue($this->metadata->handles($event));
+        $domainMessage = $this->createDomainMessageForEvent($event);
+        $this->assertTrue($this->metadata->handles($domainMessage));
     }
 
     /**
@@ -41,7 +44,8 @@ class StaticallyConfiguredSagaMetadataTest extends TestCase
     {
         $event = new StaticallyConfiguredSagaMetadataTestSagaTestEvent2();
 
-        $this->assertFalse($this->metadata->handles($event));
+        $domainMessage = $this->createDomainMessageForEvent($event);
+        $this->assertFalse($this->metadata->handles($domainMessage));
     }
 
     /**
@@ -51,7 +55,8 @@ class StaticallyConfiguredSagaMetadataTest extends TestCase
     {
         $event = new StaticallyConfiguredSagaMetadataTestSagaTestEvent1();
 
-        $this->assertEquals('criteria', $this->metadata->criteria($event));
+        $domainMessage = $this->createDomainMessageForEvent($event);
+        $this->assertEquals('criteria', $this->metadata->criteria($domainMessage));
     }
 
     /**
@@ -62,7 +67,13 @@ class StaticallyConfiguredSagaMetadataTest extends TestCase
     {
         $event = new StaticallyConfiguredSagaMetadataTestSagaTestEvent2();
 
-        $this->metadata->criteria($event);
+        $domainMessage = $this->createDomainMessageForEvent($event);
+        $this->metadata->criteria($domainMessage);
+    }
+
+    private function createDomainMessageForEvent($event)
+    {
+        return DomainMessage::recordNow(1, 0, new DomainMetadata(array()), $event);
     }
 }
 

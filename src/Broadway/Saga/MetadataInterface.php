@@ -11,19 +11,22 @@
 
 namespace Broadway\Saga;
 
+use Broadway\Domain\DomainMessage;
 use Broadway\Saga\State\Criteria;
 
 interface MetadataInterface
 {
     /**
-     * @param mixed $event
+     * @param DomainMessage $domainMessage
      *
-     * @return boolean True, if the saga can handle the event
+     * @return bool True, if the saga can handle the event
      */
-    public function handles($event);
+    public function handles(DomainMessage $domainMessage);
 
     /**
+     * @param DomainMessage $domainMessage
+     *
      * @return Criteria Criteria for the given event
      */
-    public function criteria($event);
+    public function criteria(DomainMessage $domainMessage);
 }

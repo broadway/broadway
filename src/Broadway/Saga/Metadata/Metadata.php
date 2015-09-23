@@ -11,6 +11,7 @@
 
 namespace Broadway\Saga\Metadata;
 
+use Broadway\Domain\DomainMessage;
 use Broadway\Saga\MetadataInterface;
 use RuntimeException;
 
@@ -29,8 +30,9 @@ class Metadata implements MetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function handles($event)
+    public function handles(DomainMessage $domainMessage)
     {
+        $event = $domainMessage->getPayload();
         $eventName = $this->getClassName($event);
 
         return isset($this->criteria[$eventName]);
@@ -39,8 +41,9 @@ class Metadata implements MetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function criteria($event)
+    public function criteria(DomainMessage $domainMessage)
     {
+        $event = $domainMessage->getPayload();
         $eventName = $this->getClassName($event);
 
         if (! isset($this->criteria[$eventName])) {
