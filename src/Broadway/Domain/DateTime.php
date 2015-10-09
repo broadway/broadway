@@ -37,7 +37,7 @@ class DateTime
         return new DateTime(
             BaseDateTime::createFromFormat(
                 'U.u',
-                sprintf('%.6f', microtime(true)),
+                sprintf('%.6F', microtime(true)),
                 new DateTimeZone('UTC')
             )
         );
