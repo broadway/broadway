@@ -72,11 +72,11 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
     /**
      * {@inheritDoc}
      */
-    public function load($stream, $identifier)
+    public function load($streamType, $identifier)
     {
         $statement = $this->prepareLoadStatement();
         $statement->bindValue(1, $this->convertIdentifierToStorageValue($identifier));
-        $statement->bindValue(2, $stream);
+        $statement->bindValue(2, $streamType);
         $statement->execute();
 
         $events = array();
@@ -94,7 +94,7 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
     /**
      * {@inheritDoc}
      */
-    public function append($stream, $identifier, DomainEventStreamInterface $eventStream)
+    public function append($streamType, $identifier, DomainEventStreamInterface $eventStream)
     {
         // noop to ensure that an error will be thrown early if the ID
         // is not something that can be converted to a string. If we
@@ -107,7 +107,7 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
 
         try {
             foreach ($eventStream as $domainMessage) {
-                $this->insertMessage($this->connection, $stream, $domainMessage);
+                $this->insertMessage($this->connection, $streamType, $domainMessage);
             }
 
             $this->connection->commit();
@@ -118,11 +118,11 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         }
     }
 
-    private function insertMessage(Connection $connection, $stream, DomainMessage $domainMessage)
+    private function insertMessage(Connection $connection, $streamType, DomainMessage $domainMessage)
     {
         $data = array(
             'uuid'        => $this->convertIdentifierToStorageValue((string) $domainMessage->getId()),
-            'stream'      => $stream,
+            'stream'      => $streamType,
             'playhead'    => $domainMessage->getPlayhead(),
             'metadata'    => json_encode($this->metadataSerializer->serialize($domainMessage->getMetadata())),
             'payload'     => json_encode($this->payloadSerializer->serialize($domainMessage->getPayload())),

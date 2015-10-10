@@ -32,11 +32,13 @@ class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInt
     {
         $identifier = (string) $identifier;
 
-        if (isset($this->events[$identifier])) {
-            return new DomainEventStream($this->events[$identifier]);
+        if (isset($this->events[$streamType][$identifier])) {
+            return new DomainEventStream($this->events[$streamType][$identifier]);
         }
 
-        throw new EventStreamNotFoundException(sprintf('EventStream not found for aggregate with id %s', $identifier));
+        throw new EventStreamNotFoundException(
+            sprintf('EventStream not found for aggregate with id %s and type %s', $identifier, $streamType)
+        );
     }
 
     /**
@@ -46,15 +48,15 @@ class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInt
     {
         $identifier = (string) $identifier;
 
-        if (! isset($this->events[$identifier])) {
-            $this->events[$identifier] = array();
+        if (! isset($this->events[$streamType][$identifier])) {
+            $this->events[$streamType][$identifier] = array();
         }
 
         foreach ($eventStream as $event) {
             $playhead = $event->getPlayhead();
-            $this->assertPlayhead($this->events[$identifier], $playhead);
+            $this->assertPlayhead($this->events[$streamType][$identifier], $playhead);
 
-            $this->events[$identifier][$playhead] = $event;
+            $this->events[$streamType][$identifier][$playhead] = $event;
         }
     }
 

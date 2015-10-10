@@ -23,9 +23,9 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
 {
     const AGGREGATE_CLASS = '\Broadway\EventSourcing\TestEventSourcedAggregate';
 
-    protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, array $eventStreamDecorators)
+    protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, $aggregateClass, array $eventStreamDecorators)
     {
-        return new EventSourcingRepository($eventStore, $eventBus, self::AGGREGATE_CLASS, new PublicConstructorAggregateFactory(), $eventStreamDecorators);
+        return new EventSourcingRepository($eventStore, $eventBus, $aggregateClass, new PublicConstructorAggregateFactory(), $eventStreamDecorators);
     }
 
     protected function createAggregate()
@@ -49,7 +49,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
     {
         // make sure events exist in the event store
         $id = 'y0l0';
-        $this->eventStore->append(self::AGGREGATE_CLASS, $id, new DomainEventStream(array(
+        $this->eventStore->append('\Broadway\EventSourcing\TestEventSourcedAggregateWithStaticConstructor', $id, new DomainEventStream(array(
             DomainMessage::recordNow(42, 0, new Metadata(array()), new DidEvent())
         )));
 

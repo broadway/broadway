@@ -30,7 +30,7 @@ use RuntimeException;
 
 abstract class AbstractEventSourcingRepositoryTest extends TestCase
 {
-    const AGGREGATE_CLASS = 'MYAggregate';
+    const AGGREGATE_CLASS = '\Broadway\EventSourcing\TestEventSourcedAggregate';
 
     /** @var TraceableEventBus */
     protected $eventBus;
@@ -55,7 +55,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
         $this->eventStreamDecorator = new TraceableEventStoreDecorator();
         $this->eventStreamDecorator->trace();
 
-        $this->repository = $this->createEventSourcingRepository($this->eventStore, $this->eventBus, array($this->eventStreamDecorator));
+        $this->repository = $this->createEventSourcingRepository($this->eventStore, $this->eventBus, self::AGGREGATE_CLASS, array($this->eventStreamDecorator));
     }
 
     /**
@@ -185,7 +185,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
     /**
      * @return EventSourcingRepository
      */
-    abstract protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, array $eventStreamDecorators);
+    abstract protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, $aggregateClass, array $eventStreamDecorators);
 
     /**
      * @return EventSourcedAggregateRoot
