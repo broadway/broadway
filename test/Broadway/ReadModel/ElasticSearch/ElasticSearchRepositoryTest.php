@@ -18,6 +18,7 @@ use Elasticsearch\Client;
 
 /**
  * @group functional
+ * @requires extension curl
  */
 class ElasticSearchRepositoryTest extends RepositoryTestCase
 {

@@ -15,6 +15,9 @@ use Broadway\EventStore\DBALEventStore;
 use Broadway\Serializer\SimpleInterfaceSerializer;
 use Doctrine\DBAL\DriverManager;
 
+/**
+ * @requires extension pdo_sqlite
+ */
 class DBALEventStoreManagementTest extends EventStoreManagementTest
 {
     public function createEventStore()

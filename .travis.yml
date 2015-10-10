@@ -2,6 +2,11 @@ language: php
 
 sudo: false
 
+cache:
+    directories:
+        - $HOME/.composer/cache
+        - vendor
+
 env:
     global:
         - COMPOSER_LOWEST=""
@@ -13,7 +18,12 @@ matrix:
           env: COMPOSER_LOWEST=""
         - php: 5.6
           env: COMPOSER_LOWEST="--prefer-lowest"
+    #    - php: 7 # PHP7 display healthy status even if tests are not executed.
+        - php: hhvm
     fast_finish: true
+    allow_failures:
+    #    - php: 7
+        - php: hhvm
 
 addons:
     apt:
@@ -22,13 +32,16 @@ addons:
             - language-pack-en
 
 before_install:
-    - echo "extension=mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-    - echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+    # Disable XDebug speed up test execution. (Ignore failures if platform does not had the extension installed)
+    - phpenv config-rm xdebug.ini || return 0
+    - echo "extension=mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini || return 0
+    - echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini || return 0
 
 install:
-    - composer self-update
-    - composer install
-    - composer update symfony/framework-bundle $COMPOSER_LOWEST
+    - travis_retry composer self-update
+    - travis_retry composer install --ignore-platform-reqs
+    - travis_retry composer update symfony/framework-bundle $COMPOSER_LOWEST --ignore-platform-reqs
+    - composer info -i
 
 script:
   - phpunit --exclude-group=none
