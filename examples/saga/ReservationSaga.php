@@ -66,7 +66,7 @@ class ReservationSaga extends Saga implements StaticallyConfiguredSagaInterface
         $this->commandBus->dispatch($command);
 
         // the saga ends here
-        $state->isDone();
+        $state->setDone();
 
         return $state;
     }
@@ -78,7 +78,7 @@ class ReservationSaga extends Saga implements StaticallyConfiguredSagaInterface
         $this->commandBus->dispatch($command);
 
         // the saga ends here
-        $state->isDone();
+        $state->setDone();
 
         return $state;
     }
