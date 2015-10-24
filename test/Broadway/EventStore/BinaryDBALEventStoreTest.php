@@ -16,7 +16,7 @@ use Broadway\Serializer\SimpleInterfaceSerializer;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Version;
-use Rhumsaa\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @requires extension pdo_sqlite

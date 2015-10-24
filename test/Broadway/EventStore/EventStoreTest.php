@@ -17,7 +17,7 @@ use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\Serializer\SerializableInterface;
 use Broadway\TestCase;
-use Rhumsaa\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
 
 abstract class EventStoreTest extends TestCase
 {

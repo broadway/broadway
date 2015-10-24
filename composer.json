@@ -6,8 +6,7 @@
     "require": {
         "beberlei/assert": "~2.0",
         "broadway/uuid-generator": "~0.1.0",
-        "php": ">=5.5.9",
-        "ramsey/uuid": "~2.4"
+        "php": ">=5.5.9"
     },
     "authors": [
       {
@@ -41,6 +40,7 @@
         "elasticsearch/elasticsearch": "~1.0",
         "instaclick/base-test-bundle": "~0.5",
         "monolog/monolog": "~1.8",
+        "ramsey/uuid": "~3.0",
         "symfony/console": "~2.4",
         "symfony/proxy-manager-bridge": "~2.4"
     },

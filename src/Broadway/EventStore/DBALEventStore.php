@@ -24,7 +24,6 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Version;
-use Rhumsaa\Uuid\Uuid;
 
 /**
  * Event store using a relational database as storage.
@@ -206,7 +205,13 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
     {
         if ($this->useBinary) {
             try {
-                return Uuid::fromString($id)->getBytes();
+                if (class_exists('Ramsey\Uuid\Uuid')) {
+                    return \Ramsey\Uuid\Uuid::fromString($id)->getBytes();
+                } elseif (class_exists('Rhumsaa\Uuid\Uuid')) {
+                    return \Rhumsaa\Uuid\Uuid::fromString($id)->getBytes();
+                } else {
+                    throw new \LogicException('Using binary format in DBALEventStore requires library ramsey/uuid.');
+                }
             } catch (\Exception $e) {
                 throw new InvalidIdentifierException(
                     'Only valid UUIDs are allowed to by used with the binary storage mode.'
@@ -221,7 +226,13 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
     {
         if ($this->useBinary) {
             try {
-                return Uuid::fromBytes($id)->toString();
+                if (class_exists('Ramsey\Uuid\Uuid')) {
+                    return \Ramsey\Uuid\Uuid::fromBytes($id)->toString();
+                } elseif (class_exists('Rhumsaa\Uuid\Uuid')) {
+                    return \Rhumsaa\Uuid\Uuid::fromBytes($id)->toString();
+                } else {
+                    throw new \LogicException('Using binary format in DBALEventStore requires library ramsey/uuid.');
+                }
             } catch (\Exception $e) {
                 throw new InvalidIdentifierException(
                     'Could not convert binary storage value to UUID.'
