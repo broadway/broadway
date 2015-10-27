@@ -17,7 +17,6 @@ use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventStore\EventStoreInterface;
 use Broadway\EventStore\EventVisitorInterface;
-use Broadway\EventStore\Management\EventStoreManagementInterface;
 use Broadway\Serializer\SerializableInterface;
 use Broadway\TestCase;
 
@@ -35,7 +34,7 @@ abstract class EventStoreManagementTest extends TestCase
 
     public function setUp()
     {
-        $this->now = DateTime::now();
+        $this->now        = DateTime::now();
         $this->eventStore = $this->createEventStore();
         $this->createAndInsertEventFixtures();
         $this->eventVisitor = new RecordingEventVisitor();
@@ -63,12 +62,12 @@ abstract class EventStoreManagementTest extends TestCase
     /** @test */
     public function it_visits_aggregate_root_ids()
     {
-        $visitedEvents = $this->visitEvents(Criteria::create()->withAggregateRootIds(array(
+        $visitedEvents = $this->visitEvents(Criteria::create()->withAggregateRootIds([
             $this->getId(1),
             $this->getId(3),
-        )));
+        ]));
 
-        $this->assertVisitedEventsArEquals(array(
+        $this->assertVisitedEventsArEquals([
             $this->createDomainMessage(1, 0, new Start()),
             $this->createDomainMessage(1, 1, new Middle('a')),
             $this->createDomainMessage(1, 2, new Middle('b')),
@@ -81,20 +80,20 @@ abstract class EventStoreManagementTest extends TestCase
             $this->createDomainMessage(3, 4, new Middle('d')),
             $this->createDomainMessage(1, 5, new End()),
             $this->createDomainMessage(3, 5, new End()),
-        ), $visitedEvents);
+        ], $visitedEvents);
     }
 
     /** @test */
     public function it_visits_event_types()
     {
         $visitedEvents = $this->visitEvents(Criteria::create()
-            ->withEventTypes(array(
+            ->withEventTypes([
                 'Broadway.EventStore.Management.Start',
                 'Broadway.EventStore.Management.End',
-            ))
+            ])
         );
 
-        $this->assertVisitedEventsArEquals(array(
+        $this->assertVisitedEventsArEquals([
             $this->createDomainMessage(1, 0, new Start()),
             $this->createDomainMessage(2, 0, new Start()),
             $this->createDomainMessage(2, 5, new End()),
@@ -103,7 +102,7 @@ abstract class EventStoreManagementTest extends TestCase
             $this->createDomainMessage(4, 5, new End()),
             $this->createDomainMessage(1, 5, new End()),
             $this->createDomainMessage(3, 5, new End()),
-        ), $visitedEvents);
+        ], $visitedEvents);
     }
 
     /**
@@ -113,17 +112,17 @@ abstract class EventStoreManagementTest extends TestCase
     public function it_visits_aggregate_root_types()
     {
         $visitedEvents = $this->visitEvents(Criteria::create()
-            ->withAggregateRootTypes(array(
+            ->withAggregateRootTypes([
                 'Broadway.EventStore.Management.AggregateTypeOne',
                 'Broadway.EventStore.Management.AggregateTypeTwo',
-            ))
+            ])
         );
     }
 
     private function createAndInsertEventFixtures()
     {
         foreach ($this->getEventFixtures() as $domainMessage) {
-            $this->eventStore->append($domainMessage->getId(), new DomainEventStream(array($domainMessage)));
+            $this->eventStore->append($domainMessage->getId(), new DomainEventStream([$domainMessage]));
         }
     }
 
@@ -132,7 +131,7 @@ abstract class EventStoreManagementTest extends TestCase
      */
     protected function getEventFixtures()
     {
-        return array(
+        return [
             $this->createDomainMessage(1, 0, new Start()),
             $this->createDomainMessage(1, 1, new Middle('a')),
             $this->createDomainMessage(1, 2, new Middle('b')),
@@ -165,14 +164,14 @@ abstract class EventStoreManagementTest extends TestCase
             $this->createDomainMessage(1, 5, new End()),
 
             $this->createDomainMessage(3, 5, new End()),
-        );
+        ];
     }
 
     private function createDomainMessage($id, $playhead, $event)
     {
         $id = $this->getId($id);
 
-        return new DomainMessage((string) $id, (string) $playhead, new Metadata(array()), $event, $this->now);
+        return new DomainMessage((string) $id, (string) $playhead, new Metadata([]), $event, $this->now);
     }
 
     private function getId($id)
@@ -195,17 +194,17 @@ abstract class EventStoreManagementTest extends TestCase
      */
     private function groupEventsByAggregateTypeAndId(array $events)
     {
-        $eventsByAggregateTypeAndId = array();
+        $eventsByAggregateTypeAndId = [];
         foreach ($events as $event) {
             $type = $event->getType();
-            $id = $event->getId();
+            $id   = $event->getId();
 
             if (! array_key_exists($type, $eventsByAggregateTypeAndId)) {
-                $eventsByAggregateTypeAndId[$type] = array();
+                $eventsByAggregateTypeAndId[$type] = [];
             }
 
             if (! array_key_exists($id, $eventsByAggregateTypeAndId[$type])) {
-                $eventsByAggregateTypeAndId[$type][$id] = array();
+                $eventsByAggregateTypeAndId[$type][$id] = [];
             }
 
             $eventsByAggregateTypeAndId[$type][$id][] = $event;
@@ -234,7 +233,7 @@ class RecordingEventVisitor implements EventVisitorInterface
 
     public function clearVisitedEvents()
     {
-        $this->visitedEvents = array();
+        $this->visitedEvents = [];
     }
 }
 
@@ -247,7 +246,7 @@ class Event implements SerializableInterface
 
     public function serialize()
     {
-        return array();
+        return [];
     }
 }
 
@@ -270,9 +269,9 @@ class Middle extends Event
 
     public function serialize()
     {
-        return array(
+        return [
             'position' => $this->position,
-        );
+        ];
     }
 }
 

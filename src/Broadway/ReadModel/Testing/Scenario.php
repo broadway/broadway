@@ -65,7 +65,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function given(array $events = array())
+    public function given(array $events = [])
     {
         foreach ($events as $given) {
             $this->projector->handle($this->createDomainMessageForEvent($given));
@@ -106,6 +106,6 @@ class Scenario
             $occurredOn = DateTime::now();
         }
 
-        return new DomainMessage($this->aggregateId, $this->playhead, new Metadata(array()), $event, $occurredOn);
+        return new DomainMessage($this->aggregateId, $this->playhead, new Metadata([]), $event, $occurredOn);
     }
 }

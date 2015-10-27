@@ -12,6 +12,7 @@
 namespace Broadway\EventHandling;
 
 use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\DomainMessage;
 
 /**
  * Event bus that is able to record all dispatched events.
@@ -19,7 +20,7 @@ use Broadway\Domain\DomainEventStreamInterface;
 class TraceableEventBus implements EventBusInterface
 {
     private $eventBus;
-    private $recorded = array();
+    private $recorded = [];
     private $tracing  = false;
 
     public function __construct(EventBusInterface $eventBus)
@@ -57,7 +58,7 @@ class TraceableEventBus implements EventBusInterface
     public function getEvents()
     {
         return array_map(
-            function ($message) {
+            function (DomainMessage $message) {
                 return $message->getPayload();
             },
             $this->recorded

@@ -105,7 +105,6 @@ class JobSeekersCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
             ->when(new DescribeJobForJobSeekerCommand($id, 'job-002', 'Title Two', 'Description for two.'))
             ->then([])
 
-
             //
             // Describing one of the jobs with a different title or description should trigger a job was described
             // event. We have already tested for that and we know it works. What we want to test for now is that the
@@ -117,7 +116,6 @@ class JobSeekersCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
             ->when(new DescribeJobForJobSeekerCommand($id, 'job-001', 'Title Double-Oh-ONE!', 'Description for the one.'))
             ->then([new JobWasDescribedForJobSeekerEvent($id, 'job-001', 'Title Double-Oh-ONE!', 'Description for the one.')])
 
-
             // Next we describe our other two jobs with the previously specified title and description. If our
             // apply logic is correct, the title and description should still be the same and we should not get
             // a new event.
@@ -127,7 +125,6 @@ class JobSeekersCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
 
             ->when(new DescribeJobForJobSeekerCommand($id, 'job-002', 'Title Two', 'Description for two.'))
             ->then([])
-
 
             // Lastly, we make one final check to see what happens when we describe job-001 again with the original
             // title and description from what it was first added. Since these values are different, we should see

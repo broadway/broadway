@@ -19,8 +19,8 @@ use Broadway\CommandHandling\CommandHandlerInterface;
  */
 class TraceableCommandBus implements CommandBusInterface
 {
-    private $commandHandlers = array();
-    private $commands        = array();
+    private $commandHandlers = [];
+    private $commands        = [];
     private $record          = false;
 
     /**

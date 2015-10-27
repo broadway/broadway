@@ -38,7 +38,7 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
     public function it_calls_the_enricher_for_every_event()
     {
         $enricher  = new TracableMetadataEnricher();
-        $decorator = new MetadataEnrichingEventStreamDecorator(array($enricher));
+        $decorator = new MetadataEnrichingEventStreamDecorator([$enricher]);
 
         $eventStream = $this->createDomainEventStream();
 
@@ -53,7 +53,7 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
     public function it_returns_a_domain_eventstream_with_messages_with_extra_metadata()
     {
         $enricher  = new TracableMetadataEnricher();
-        $decorator = new MetadataEnrichingEventStreamDecorator(array($enricher));
+        $decorator = new MetadataEnrichingEventStreamDecorator([$enricher]);
 
         $eventStream = $this->createDomainEventStream();
 
@@ -63,7 +63,7 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
 
         $this->assertCount(2, $messages);
 
-        $expectedMetadata = new Metadata(array('bar' => 1337, 'traced' => true));
+        $expectedMetadata = new Metadata(['bar' => 1337, 'traced' => true]);
 
         foreach ($messages as $message) {
             $this->assertEquals($expectedMetadata, $message->getMetadata());
@@ -77,7 +77,7 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
     {
         $constructorEnricher     = new TracableMetadataEnricher();
         $newlyRegisteredEnricher = new TracableMetadataEnricher();
-        $decorator               = new MetadataEnrichingEventStreamDecorator(array($constructorEnricher));
+        $decorator               = new MetadataEnrichingEventStreamDecorator([$constructorEnricher]);
         $decorator->registerEnricher($newlyRegisteredEnricher);
 
         $eventStream    = $this->createDomainEventStream();
@@ -92,7 +92,7 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
         $m1 = DomainMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
         $m2 = DomainMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
 
-        return new DomainEventStream(array($m1, $m2));
+        return new DomainEventStream([$m1, $m2]);
     }
 }
 

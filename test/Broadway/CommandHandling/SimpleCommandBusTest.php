@@ -27,7 +27,7 @@ class SimpleCommandBusTest extends TestCase
      */
     public function it_dispatches_commands_to_subscribed_handlers()
     {
-        $command = array('Hi' => 'There');
+        $command = ['Hi' => 'There'];
 
         $this->commandBus->subscribe($this->createCommandHandlerMock($command));
         $this->commandBus->subscribe($this->createCommandHandlerMock($command));
@@ -39,8 +39,8 @@ class SimpleCommandBusTest extends TestCase
      */
     public function it_does_not_handle_new_commands_before_all_commandhandlers_have_run()
     {
-        $command1 = array('foo' => 'bar');
-        $command2 = array('foo' => 'bas');
+        $command1 = ['foo' => 'bar'];
+        $command2 = ['foo' => 'bas'];
 
         $commandHandler = $this->getMockBuilder('Broadway\CommandHandling\CommandHandler')->getMock();
 
@@ -64,8 +64,8 @@ class SimpleCommandBusTest extends TestCase
      */
     public function it_should_still_handle_commands_after_exception()
     {
-        $command1 = array('foo' => 'bar');
-        $command2 = array('foo' => 'bas');
+        $command1 = ['foo' => 'bar'];
+        $command2 = ['foo' => 'bas'];
 
         $commandHandler = $this->getMockBuilder('Broadway\CommandHandling\CommandHandler')->getMock();
         $simpleHandler  = $this->getMockBuilder('Broadway\CommandHandling\CommandHandler')->getMock();

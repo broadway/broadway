@@ -40,7 +40,7 @@ class SimpleInterfaceSerializerTest extends TestCase
      */
     public function it_throws_an_exception_if_class_not_set_in_data()
     {
-        $this->serializer->deserialize(array());
+        $this->serializer->deserialize([]);
     }
 
     /**
@@ -51,7 +51,7 @@ class SimpleInterfaceSerializerTest extends TestCase
      */
     public function it_throws_an_exception_if_payload_not_set_in_data()
     {
-        $this->serializer->deserialize(array('class' => 'SomeClass'));
+        $this->serializer->deserialize(['class' => 'SomeClass']);
     }
 
     /**
@@ -61,10 +61,10 @@ class SimpleInterfaceSerializerTest extends TestCase
     {
         $object = new TestSerializable('bar');
 
-        $this->assertEquals(array(
+        $this->assertEquals([
             'class'   => 'Broadway\Serializer\TestSerializable',
-            'payload' => array('foo' => 'bar')
-        ), $this->serializer->serialize($object));
+            'payload' => ['foo' => 'bar']
+        ], $this->serializer->serialize($object));
     }
 
     /**
@@ -72,7 +72,7 @@ class SimpleInterfaceSerializerTest extends TestCase
      */
     public function it_deserializes_classes_implementing_SerializableInterface()
     {
-        $data = array('class' => 'Broadway\Serializer\TestSerializable', 'payload' => array('foo' => 'bar'));
+        $data = ['class' => 'Broadway\Serializer\TestSerializable', 'payload' => ['foo' => 'bar']];
 
         $this->assertEquals(new TestSerializable('bar'), $this->serializer->deserialize($data));
     }
@@ -113,6 +113,6 @@ class TestSerializable implements SerializableInterface
      */
     public function serialize()
     {
-        return array('foo' => $this->foo);
+        return ['foo' => $this->foo];
     }
 }

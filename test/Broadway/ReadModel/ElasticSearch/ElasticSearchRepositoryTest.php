@@ -26,9 +26,9 @@ class ElasticSearchRepositoryTest extends RepositoryTestCase
 
     protected function createRepository()
     {
-        $this->client = new Client(array('hosts' => array('localhost:9200')));
-        $this->client->indices()->create(array('index' => 'test_index'));
-        $this->client->cluster()->health(array('index' => 'test_index', 'wait_for_status' => 'yellow', 'timeout' => '10s'));
+        $this->client = new Client(['hosts' => ['localhost:9200']]);
+        $this->client->indices()->create(['index' => 'test_index']);
+        $this->client->cluster()->health(['index' => 'test_index', 'wait_for_status' => 'yellow', 'timeout' => '10s']);
 
         return $this->createElasticSearchRepository(
             $this->client,
@@ -56,30 +56,30 @@ class ElasticSearchRepositoryTest extends RepositoryTestCase
             new SimpleInterfaceSerializer(),
             $index,
             $type,
-            array($nonAnalyzedTerm)
+            [$nonAnalyzedTerm]
         );
 
         $this->repository->createIndex();
-        $this->client->cluster()->health(array('index' => $index, 'wait_for_status' => 'yellow', 'timeout' => '10s'));
-        $mapping = $this->client->indices()->getMapping(array('index' => $index));
+        $this->client->cluster()->health(['index' => $index, 'wait_for_status' => 'yellow', 'timeout' => '10s']);
+        $mapping = $this->client->indices()->getMapping(['index' => $index]);
 
         $this->assertArrayHasKey($index, $mapping);
         $this->assertArrayHasKey($type, $mapping[$index]['mappings']);
-        $nonAnalyzedTerms = array();
+        $nonAnalyzedTerms = [];
 
         foreach ($mapping[$index]['mappings'][$type]['properties'] as $key => $value) {
             $nonAnalyzedTerms[] = $key;
         }
 
-        $this->assertEquals(array($nonAnalyzedTerm), $nonAnalyzedTerms);
+        $this->assertEquals([$nonAnalyzedTerm], $nonAnalyzedTerms);
     }
 
     public function tearDown()
     {
-        $this->client->indices()->delete(array('index' => 'test_index'));
+        $this->client->indices()->delete(['index' => 'test_index']);
 
-        if ($this->client->indices()->exists(array('index' => 'test_non_analyzed_index'))) {
-            $this->client->indices()->delete(array('index' => 'test_non_analyzed_index'));
+        if ($this->client->indices()->exists(['index' => 'test_non_analyzed_index'])) {
+            $this->client->indices()->delete(['index' => 'test_non_analyzed_index']);
         }
     }
 }

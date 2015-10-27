@@ -34,7 +34,7 @@ abstract class AbstractRepositoryTest extends TestCase
         $s1->set('appId', 42);
         $this->repository->save($s1, 'sagaId');
 
-        $found = $this->repository->findOneBy(new Criteria(array('appId' => 42)), 'sagaId');
+        $found = $this->repository->findOneBy(new Criteria(['appId' => 42]), 'sagaId');
 
         $this->assertEquals($s1, $found);
     }
@@ -47,7 +47,7 @@ abstract class AbstractRepositoryTest extends TestCase
         $s1 = new State(1);
         $s1->set('appId', 42);
         $this->repository->save($s1, 'sagaId');
-        $criteria = new Criteria(array('appId' => 42));
+        $criteria = new Criteria(['appId' => 42]);
 
         $found = $this->repository->findOneBy($criteria, 'sagaId');
         $this->assertEquals($s1, $found);
@@ -67,7 +67,7 @@ abstract class AbstractRepositoryTest extends TestCase
         $state->set('Bye', 'bye');
         $state->set('You', 'me');
         $this->repository->save($state, 'sagaId');
-        $fetchedState = $this->repository->findOneBy(new Criteria(array('Hi' => 'There', 'Bye' => 'bye')), 'sagaId');
+        $fetchedState = $this->repository->findOneBy(new Criteria(['Hi' => 'There', 'Bye' => 'bye']), 'sagaId');
         $this->assertEquals($state, $fetchedState);
     }
 
@@ -77,11 +77,11 @@ abstract class AbstractRepositoryTest extends TestCase
     public function it_finds_documents_matching_in_criteria()
     {
         $state = new State('yolo');
-        $state->set('Hi', array('There', 'You'));
+        $state->set('Hi', ['There', 'You']);
         $state->set('Bye', 'bye');
         $state->set('You', 'me');
         $this->repository->save($state, 'sagaId');
-        $fetchedState = $this->repository->findOneBy(new Criteria(array('Hi' => 'There', 'Bye' => 'bye')), 'sagaId');
+        $fetchedState = $this->repository->findOneBy(new Criteria(['Hi' => 'There', 'Bye' => 'bye']), 'sagaId');
         $this->assertEquals($state, $fetchedState);
     }
 
@@ -93,7 +93,7 @@ abstract class AbstractRepositoryTest extends TestCase
         $state = new State('yolo');
         $state->set('Hi', 'There');
         $this->repository->save($state, 'sagaId');
-        $this->assertNull($this->repository->findOneBy(new Criteria(array('Bye' => 'There')), 'sagaId'));
+        $this->assertNull($this->repository->findOneBy(new Criteria(['Bye' => 'There']), 'sagaId'));
     }
 
     /**
@@ -110,7 +110,7 @@ abstract class AbstractRepositoryTest extends TestCase
         $s2->set('appId', 42);
         $this->repository->save($s2, 'sagaId');
 
-        $this->repository->findOneBy(new Criteria(array('appId' => 42)), 'sagaId');
+        $this->repository->findOneBy(new Criteria(['appId' => 42]), 'sagaId');
     }
 
     /**
@@ -125,7 +125,7 @@ abstract class AbstractRepositoryTest extends TestCase
         $s2->set('appId', 1337);
         $this->repository->save($s2, 'sagaId');
 
-        $found = $this->repository->findOneBy(new Criteria(array('appId' => 1337)), 'sagaId');
+        $found = $this->repository->findOneBy(new Criteria(['appId' => 1337]), 'sagaId');
 
         $this->assertEquals(31415, $found->getId());
     }

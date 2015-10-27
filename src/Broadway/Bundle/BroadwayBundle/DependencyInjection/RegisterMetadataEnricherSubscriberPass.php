@@ -52,7 +52,7 @@ class RegisterMetadataEnricherSubscriberPass implements CompilerPassInterface
         $definition = $container->findDefinition($this->enrichingStreamDecoratorServiceId);
 
         foreach ($container->findTaggedServiceIds($this->enricherTag) as $id => $attributes) {
-            $definition->addMethodCall('registerEnricher', array(new Reference($id)));
+            $definition->addMethodCall('registerEnricher', [new Reference($id)]);
         }
     }
 }

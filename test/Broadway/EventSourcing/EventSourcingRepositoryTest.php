@@ -47,9 +47,9 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
     {
         // make sure events exist in the event store
         $id = 'y0l0';
-        $this->eventStore->append($id, new DomainEventStream(array(
-            DomainMessage::recordNow(42, 0, new Metadata(array()), new DidEvent())
-        )));
+        $this->eventStore->append($id, new DomainEventStream([
+            DomainMessage::recordNow(42, 0, new Metadata([]), new DidEvent())
+        ]));
 
         $repository = $this->repositoryWithStaticAggregateFactory();
         $aggregate  = $repository->load('y0l0');
@@ -70,9 +70,9 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
     {
         // make sure events exist in the event store
         $id = 'y0l0';
-        $this->eventStore->append($id, new DomainEventStream(array(
-            DomainMessage::recordNow(42, 0, new Metadata(array()), new DidEvent())
-        )));
+        $this->eventStore->append($id, new DomainEventStream([
+            DomainMessage::recordNow(42, 0, new Metadata([]), new DidEvent())
+        ]));
 
         $repository = $this->repositoryWithStaticAggregateFactory('someUnknownStaticmethod');
         $repository->load('y0l0');
@@ -91,7 +91,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
             $this->eventBus,
             '\Broadway\EventSourcing\TestEventSourcedAggregateWithStaticConstructor',
             $staticFactory,
-            array()
+            []
         );
     }
 }

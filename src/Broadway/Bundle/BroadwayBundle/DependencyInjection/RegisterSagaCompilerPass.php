@@ -18,7 +18,7 @@ class RegisterSagaCompilerPass implements CompilerPassInterface
     public function __construct($multipleSagaManagerService, $tagName)
     {
         $this->multipleSagaManagerService = $multipleSagaManagerService;
-        $this->tagName = $tagName;
+        $this->tagName                    = $tagName;
     }
 
     public function process(ContainerBuilder $container)
@@ -29,7 +29,7 @@ class RegisterSagaCompilerPass implements CompilerPassInterface
             );
         }
 
-        $sagas = array();
+        $sagas = [];
 
         foreach ($container->findTaggedServiceIds($this->tagName) as $serviceId => $tags) {
             foreach ($tags as $attributes) {
@@ -43,7 +43,7 @@ class RegisterSagaCompilerPass implements CompilerPassInterface
                     );
                 }
 
-                $type = $attributes['type'];
+                $type         = $attributes['type'];
                 $sagas[$type] = new Reference($serviceId);
             }
         }

@@ -44,7 +44,7 @@ class CommandMetadataEnricherTest extends TestCase
 
         $this->event    = new ConsoleCommandEvent($this->command, $this->input, $output);
         $this->enricher = new CommandMetadataEnricher();
-        $this->metadata = new Metadata(array('yolo' => 'bam'));
+        $this->metadata = new Metadata(['yolo' => 'bam']);
     }
 
     /**
@@ -54,12 +54,12 @@ class CommandMetadataEnricherTest extends TestCase
     {
         $this->enricher->handleConsoleCommandEvent($this->event);
 
-        $expected = $this->metadata->merge(new Metadata(array(
-            'console' => array(
+        $expected = $this->metadata->merge(new Metadata([
+            'console' => [
                 'command'   => 'Broadway\Bundle\BroadwayBundle\Command\Command',
                 'arguments' => $this->arguments
-            )
-        )));
+            ]
+        ]));
 
         $actual = $this->enricher->enrich($this->metadata);
         $this->assertEquals($expected, $actual);

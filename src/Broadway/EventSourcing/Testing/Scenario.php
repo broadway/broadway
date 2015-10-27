@@ -37,8 +37,10 @@ class Scenario
     private $aggregateId;
 
     /**
-     * @param PHPUnit_Framework_TestCase $testcase
+     * @param PHPUnit_Framework_TestCase $testCase
+     * @param AggregateFactoryInterface  $factory
      * @param string                     $aggregateRootClass
+     * @internal param PHPUnit_Framework_TestCase $testcase
      */
     public function __construct(PHPUnit_Framework_TestCase $testCase, AggregateFactoryInterface $factory, $aggregateRootClass)
     {
@@ -49,7 +51,8 @@ class Scenario
     }
 
     /**
-     * @param string $aggregateId
+     * @param  string $aggregateId
+     * @return Scenario
      */
     public function withAggregateId($aggregateId)
     {
@@ -69,12 +72,12 @@ class Scenario
             return $this;
         }
 
-        $messages = array();
+        $messages = [];
         $playhead = -1;
         foreach ($givens as $event) {
             $playhead++;
             $messages[] = DomainMessage::recordNow(
-                $this->aggregateId, $playhead, new Metadata(array()), $event
+                $this->aggregateId, $playhead, new Metadata([]), $event
             );
         }
 
@@ -125,7 +128,7 @@ class Scenario
     private function getEvents()
     {
         $recordedEvents = $this->aggregateRootInstance->getUncommittedEvents();
-        $events         = array();
+        $events         = [];
 
         foreach ($recordedEvents as $message) {
             $events[] = $message->getPayload();

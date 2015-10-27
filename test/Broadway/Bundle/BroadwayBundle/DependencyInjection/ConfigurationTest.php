@@ -22,7 +22,7 @@ class ConfigurationTest extends ConfigurationTestCase
      */
     public function only_in_memory_and_mongodb_are_valid_state_repositories()
     {
-        $configuration = $this->processConfiguration(new Configuration(), array('broadway' => array('saga' => array('repository' => 'false_name'))));
+        $configuration = $this->processConfiguration(new Configuration(), ['broadway' => ['saga' => ['repository' => 'false_name']]]);
     }
 
     /**
@@ -30,7 +30,7 @@ class ConfigurationTest extends ConfigurationTestCase
      */
     public function it_sets_mongodb_as_default_state_repository()
     {
-        $configuration = $this->processConfiguration(new Configuration(), array());
+        $configuration = $this->processConfiguration(new Configuration(), []);
         $this->assertEquals($configuration['saga']['repository'], 'mongodb');
     }
 
@@ -41,7 +41,7 @@ class ConfigurationTest extends ConfigurationTestCase
      */
     public function only_elasticsearch_and_in_memory_are_valid_readmodel_repositories()
     {
-        $configuration = $this->processConfiguration(new Configuration(), array('broadway' => array('read_model' => array('repository' => 'false_name'))));
+        $configuration = $this->processConfiguration(new Configuration(), ['broadway' => ['read_model' => ['repository' => 'false_name']]]);
     }
 
     /**
@@ -49,7 +49,7 @@ class ConfigurationTest extends ConfigurationTestCase
      */
     public function it_sets_elasticsearch_as_default_repository()
     {
-        $configuration = $this->processConfiguration(new Configuration(), array());
+        $configuration = $this->processConfiguration(new Configuration(), []);
         $this->assertEquals($configuration['read_model']['repository'], 'elasticsearch');
     }
 
@@ -58,8 +58,8 @@ class ConfigurationTest extends ConfigurationTestCase
      */
     public function it_sets_elasticsearch_default_host_to_localhost()
     {
-        $configuration = $this->processConfiguration(new Configuration(), array('broadway' => array('read_model' => array('repository' => 'elasticsearch'))));
-        $this->assertEquals($configuration['read_model']['elasticsearch'], array('hosts' => array('localhost:9200')));
+        $configuration = $this->processConfiguration(new Configuration(), ['broadway' => ['read_model' => ['repository' => 'elasticsearch']]]);
+        $this->assertEquals($configuration['read_model']['elasticsearch'], ['hosts' => ['localhost:9200']]);
     }
 
     /**
@@ -67,7 +67,7 @@ class ConfigurationTest extends ConfigurationTestCase
      */
     public function it_sets_the_logger()
     {
-        $configuration = $this->processConfiguration(new Configuration(), array('broadway' => array('command_handling' => array('logger' => 'my_service'))));
+        $configuration = $this->processConfiguration(new Configuration(), ['broadway' => ['command_handling' => ['logger' => 'my_service']]]);
         $this->assertEquals('my_service', $configuration['command_handling']['logger']);
     }
 
@@ -76,7 +76,7 @@ class ConfigurationTest extends ConfigurationTestCase
      */
     public function it_defaults_logging_to_false()
     {
-        $configuration = $this->processConfiguration(new Configuration(), array('broadway' => array()));
+        $configuration = $this->processConfiguration(new Configuration(), ['broadway' => []]);
         $this->assertFalse($configuration['command_handling']['logger']);
     }
 }
