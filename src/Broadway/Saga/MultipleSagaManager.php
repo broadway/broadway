@@ -15,7 +15,7 @@ use Broadway\Domain\DomainMessage;
 use Broadway\EventDispatcher\EventDispatcherInterface;
 use Broadway\Saga\Metadata\MetadataFactoryInterface;
 use Broadway\Saga\State\RepositoryInterface;
-use Broadway\Saga\State\StateManager;
+use Broadway\Saga\State\StateManagerInterface;
 
 /**
  * SagaManager that manages multiple sagas.
@@ -29,7 +29,7 @@ class MultipleSagaManager implements SagaManagerInterface
     public function __construct(
         RepositoryInterface $repository,
         array $sagas,
-        StateManager $stateManager,
+        StateManagerInterface $stateManager,
         MetadataFactoryInterface $metadataFactory,
         EventDispatcherInterface $eventDispatcher
     ) {
