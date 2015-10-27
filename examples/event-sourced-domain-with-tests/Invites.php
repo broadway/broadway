@@ -149,7 +149,7 @@ class InviteCommand extends InvitationCommand
     }
 }
 
-class InvitedEvent extends Invitationevent
+class InvitedEvent extends InvitationEvent
 {
     public $name;
     public function __construct($invitationId, $name)
