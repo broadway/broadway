@@ -26,7 +26,6 @@ class DateTime
 
     private function __construct(BaseDateTime $dateTime)
     {
-        $dateTime->setTimezone(new DateTimeZone('UTC'));
         $this->dateTime = $dateTime;
     }
 
@@ -75,7 +74,13 @@ class DateTime
      */
     public function comesAfter(DateTime $dateTime)
     {
-        return strcmp($this->toString(), $dateTime->toString()) > 0;
+        $self = clone $this;
+        $other = clone $dateTime;
+
+        $self->dateTime->setTimeZone(new DateTimeZone('UTC'));
+        $other->dateTime->setTimeZone(new DateTimeZone('UTC'));
+
+        return strcmp($self->toString(), $other->toString()) > 0;
     }
 
     /**
