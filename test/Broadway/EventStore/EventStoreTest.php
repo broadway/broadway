@@ -89,6 +89,24 @@ abstract class EventStoreTest extends TestCase
     /**
      * @test
      * @dataProvider idDataProvider
+     * @expectedException Broadway\EventStore\EventStreamNotFoundException
+     */
+    public function it_throws_when_loading_a_stream_for_a_different_stream_type($id)
+    {
+        $dateTime          = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
+        $domainEventStream = new DomainEventStream(array(
+            $this->createDomainMessage($id, 0, $dateTime),
+            $this->createDomainMessage($id, 1, $dateTime),
+            $this->createDomainMessage($id, 2, $dateTime),
+        ));
+        $this->eventStore->append(self::STREAM_TYPE, $id, $domainEventStream);
+
+        $this->eventStore->load('SomeOtherStream', $id);
+    }
+
+    /**
+     * @test
+     * @dataProvider idDataProvider
      * @expectedException Broadway\EventStore\EventStoreException
      */
     public function it_throws_an_exception_when_appending_a_duplicate_playhead($id)
