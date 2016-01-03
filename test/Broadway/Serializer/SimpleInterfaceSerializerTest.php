@@ -70,6 +70,26 @@ class SimpleInterfaceSerializerTest extends TestCase
     /**
      * @test
      */
+    public function it_serializes_objects_implementing_SerializableInterface_on_two_levels()
+    {
+        $object = new TestSerializable(new TestSerializable('bar'));
+
+        $this->assertEquals(array(
+            'class'   => 'Broadway\Serializer\TestSerializable',
+            'payload' => array(
+                'foo' => array(
+                    'class'   => 'Broadway\Serializer\TestSerializable',
+                    'payload' => array(
+                        'foo' => 'bar'
+                    )
+                )
+            )
+        ), $this->serializer->serialize($object));
+    }
+
+    /**
+     * @test
+     */
     public function it_deserializes_classes_implementing_SerializableInterface()
     {
         $data = array('class' => 'Broadway\Serializer\TestSerializable', 'payload' => array('foo' => 'bar'));
@@ -80,9 +100,42 @@ class SimpleInterfaceSerializerTest extends TestCase
     /**
      * @test
      */
+    public function it_deserializes_classes_implementing_SerializableInterface_on_two_levels()
+    {
+        $data = array(
+            'class'   => 'Broadway\Serializer\TestSerializable',
+            'payload' => array(
+                'foo' => array(
+                    'class'   => 'Broadway\Serializer\TestSerializable',
+                    'payload' => array(
+                        'foo' => 'bar'
+                    )
+                )
+            )
+        );
+
+        $this->assertEquals(new TestSerializable(new TestSerializable('bar')), $this->serializer->deserialize($data));
+    }
+
+    /**
+     * @test
+     */
     public function it_can_deserialize_classes_it_has_serialized()
     {
         $object = new TestSerializable('bar');
+
+        $serialized   = $this->serializer->serialize($object);
+        $deserialized = $this->serializer->deserialize($serialized);
+
+        $this->assertEquals($object, $deserialized);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_deserialize_classes_it_has_serialized_on_two_levels()
+    {
+        $object = new TestSerializable(new TestSerializable('bar'));
 
         $serialized   = $this->serializer->serialize($object);
         $deserialized = $this->serializer->deserialize($serialized);
