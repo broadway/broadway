@@ -5,17 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="broadway.event_store.dbal" class="Broadway\EventStore\DBALEventStore">
-            <argument type="service" id="broadway.event_store.dbal.connection" />
-            <argument type="service" id="broadway.serializer.payload" />
-            <argument type="service" id="broadway.serializer.metadata" />
-            <argument>%broadway.event_store.dbal.table%</argument>
-            <argument>%broadway.event_store.dbal.use_binary%</argument>
-        </service>
-
         <service id="broadway.event_store.in_memory" class="Broadway\EventStore\InMemoryEventStore" />
-
-        <service id="broadway.event_store" alias="broadway.event_store.dbal" />
 
         <service id="broadway.serializer.payload" class="Broadway\Serializer\SimpleInterfaceSerializer" />
 
