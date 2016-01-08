@@ -9,11 +9,11 @@
             <argument type="service" id="broadway.saga.state.mongodb_collection" />
         </service>
 
-        <service id="broadway.saga.state.mongodb_database"
-                 class           = "Doctrine\MongoDB\Database"
-                 factory-service = "broadway.saga.state.mongodb_connection"
-                 factory-method  = "selectDatabase"
-                >
+        <service id="broadway.saga.state.mongodb_database" class="Doctrine\MongoDB\Database">
+            <!--
+            Set in BroadwayExtension until minimum support bumped to 2.6
+            <factory service="broadway.saga.state.mongodb_connection" method="selectDatabase" />
+            -->
             <argument>%broadway.saga.mongodb.database%</argument>
         </service>
 
@@ -22,11 +22,11 @@
             <argument type="collection" />
         </service>
 
-        <service id="broadway.saga.state.mongodb_collection"
-                 class           = "Doctrine\MongoDB\Collection"
-                 factory-service = "broadway.saga.state.mongodb_database"
-                 factory-method  = "createCollection"
-                >
+        <service id="broadway.saga.state.mongodb_collection" class="Doctrine\MongoDB\Collection">
+            <!--
+            Set in BroadwayExtension until minimum support bumped to 2.6
+            <factory service="broadway.saga.state.mongodb_database" method="createCollection" />
+            -->
             <argument>saga-state</argument>
         </service>
 

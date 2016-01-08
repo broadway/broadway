@@ -93,6 +93,21 @@ class BroadwayExtension extends Extension
 
                 $container->setParameter('broadway.saga.mongodb.storage_suffix', (string) $config['mongodb']['storage_suffix']);
                 $container->setParameter('broadway.saga.mongodb.database', $database);
+
+                // Required until minimum support bumped to 2.6, then to be inlined in sage/mongodb.xml
+                $this->loadFactory(
+                    $container,
+                    'broadway.saga.state.mongodb_database',
+                    'broadway.saga.state.mongodb_connection',
+                    'selectDatabase'
+                );
+                $this->loadFactory(
+                    $container,
+                    'broadway.saga.state.mongodb_collection',
+                    'broadway.saga.state.mongodb_database',
+                    'createCollection'
+                );
+
                 break;
             case 'in_memory':
                 $loader->load('saga/in_memory.xml');
@@ -101,6 +116,18 @@ class BroadwayExtension extends Extension
                     'broadway.saga.state.in_memory_repository'
                 );
                 break;
+        }
+    }
+
+    private function loadFactory(ContainerBuilder $container, $service, $factoryService, $factoryMethod)
+    {
+        $definition = $container->getDefinition($service);
+
+        if (method_exists($definition, 'setFactory')) {
+            $definition->setFactory(array(new Reference($factoryService), $factoryMethod));
+        } else {
+            $definition->setFactoryService($factoryService);
+            $definition->setFactoryMethod($factoryMethod);
         }
     }
 
