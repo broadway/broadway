@@ -35,12 +35,11 @@ class BroadwayExtension extends Extension
 
         $loader->load('services.xml');
         $loader->load('saga.xml');
-        $loader->load('event_store.xml');
 
         $this->loadSagaStateRepository($config['saga'], $container, $loader);
         $this->loadReadModelRepository($config['read_model'], $container, $loader);
         $this->loadCommandBus($config['command_handling'], $container, $loader);
-        $this->loadEventStore($config['event_store'], $container);
+        $this->loadEventStore($config['event_store'], $container, $loader);
     }
 
     private function loadCommandBus(array $config, ContainerBuilder $container, LoaderInterface $loader)
@@ -119,8 +118,9 @@ class BroadwayExtension extends Extension
         }
     }
 
-    private function loadEventStore(array $config, ContainerBuilder $container)
+    private function loadEventStore(array $config, ContainerBuilder $container, XmlFileLoader $loader)
     {
+        $loader->load('event_store.xml');
         $container->setParameter(
             'broadway.event_store.dbal.connection',
             $config['dbal']['connection']
