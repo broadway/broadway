@@ -187,6 +187,23 @@ class BroadwayExtensionTest extends ExtensionTestCase
         $this->assertFalse($this->container->hasDefinition('broadway.auditing.command_logger'));
     }
 
+    /**
+     * @test
+     */
+    public function it_has_dbal_as_default_event_store()
+    {
+        $this->load($this->extension, array());
+
+        $this->assertTrue(
+            $this->container->hasDefinition('broadway.event_store.dbal')
+        );
+        $this->assertTrue($this->container->hasAlias('broadway.event_store'));
+        $this->assertEquals(
+            'broadway.event_store.dbal',
+            $this->container->getAlias('broadway.event_store')
+        );
+    }
+
     private function assertDICAliasClass($aliasId, $class)
     {
         $definitionId = (string) $this->container->getAlias($aliasId);
