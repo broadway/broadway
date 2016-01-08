@@ -38,6 +38,10 @@ class DefineDBALEventStoreConnectionCompilerPass implements CompilerPassInterfac
      */
     public function process(ContainerBuilder $container)
     {
+        if (!$container->hasParameter('broadway.event_store.dbal.connection')) {
+            return;
+        }
+
         $connectionName = $container->getParameter('broadway.event_store.dbal.connection');
 
         $connectionServiceName = sprintf('doctrine.dbal.%s_connection', $connectionName);
