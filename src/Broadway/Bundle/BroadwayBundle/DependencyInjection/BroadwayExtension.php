@@ -122,6 +122,13 @@ class BroadwayExtension extends Extension
     {
         $loader->load('event_store.xml');
 
+        if ($config['dbal']['enabled']) {
+            $this->loadDBALEventStore($config, $container, $loader);
+        }
+    }
+
+    private function loadDBALEventStore(array $config, ContainerBuilder $container, XmlFileLoader $loader)
+    {
         $loader->load('event_store_dbal.xml');
         $container->setAlias(
             'broadway.event_store',

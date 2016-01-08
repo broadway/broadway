@@ -204,6 +204,22 @@ class BroadwayExtensionTest extends ExtensionTestCase
         );
     }
 
+    /**
+     * @test
+     */
+    public function disabling_dbal_event_store_does_not_load_its_definitions()
+    {
+        $this->load(
+            $this->extension,
+            array('event_store' => array('dbal' => array('enabled' => false)))
+        );
+
+        $this->assertFalse(
+            $this->container->hasDefinition('broadway.event_store.dbal')
+        );
+        $this->assertFalse($this->container->hasAlias('broadway.event_store'));
+    }
+
     private function assertDICAliasClass($aliasId, $class)
     {
         $definitionId = (string) $this->container->getAlias($aliasId);
