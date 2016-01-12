@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.9.x
+
+#### BC breaks
+
+- We raised the minimum required version of symfony/dependency-injection from 2.3 to 2.6.
+
 ## v0.8.x
 
 #### BC breaks
