@@ -20,6 +20,8 @@ abstract class AbstractRepositoryTest extends TestCase
 
     public function setUp()
     {
+        parent::setUp();
+
         $this->repository = $this->createRepository();
     }
 
