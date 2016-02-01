@@ -12,7 +12,7 @@
 namespace Broadway\Saga\State;
 
 use Broadway\Saga\State;
-use Doctrine\MongoDB\Collection;
+use MongoDB\Collection;
 
 class MongoDBRepository implements RepositoryInterface
 {
@@ -28,12 +28,12 @@ class MongoDBRepository implements RepositoryInterface
      */
     public function findOneBy(Criteria $criteria, $sagaId)
     {
-        $query   = $this->createQuery($criteria, $sagaId);
-        $results = $query->execute();
-        $count   = count($results);
+        $filter = $this->getCollectionFilter($criteria, $sagaId);
+        $cursor = $this->collection->find($filter, ['typeMap' => ['root' => 'array', 'document' => 'array']]);
+        $count  = $this->collection->count($filter);
 
         if ($count === 1) {
-            return State::deserialize(current($results->toArray()));
+            return State::deserialize(current($cursor->toArray()));
         }
 
         if ($count > 1) {
@@ -53,22 +53,21 @@ class MongoDBRepository implements RepositoryInterface
         $serializedState['sagaId']  = $sagaId;
         $serializedState['removed'] = $state->isDone();
 
-        $this->collection->save($serializedState);
+        $this->collection->replaceOne(['_id' => $serializedState['_id']], $serializedState, ['upsert' => true]);
     }
 
-    private function createQuery(Criteria $criteria, $sagaId)
+    private function getCollectionFilter(Criteria $criteria, $sagaId)
     {
         $comparisons = $criteria->getComparisons();
-        $wheres      = array();
+        $filter      = [
+          'removed' => false,
+          'sagaId'  => $sagaId,
+        ];
 
         foreach ($comparisons as $key => $value) {
-            $wheres['values.' . $key] = $value;
+            $filter['values.' . $key] = $value;
         }
 
-        $queryBuilder = $this->collection->createQueryBuilder()
-            ->addAnd($wheres)
-            ->addAnd(array('removed' => false, 'sagaId' => $sagaId));
-
-        return $queryBuilder->getQuery();
+        return $filter;
     }
 }

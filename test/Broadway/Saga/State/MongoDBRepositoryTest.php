@@ -11,8 +11,7 @@
 
 namespace Broadway\Saga\State;
 
-use Doctrine\MongoDB\Configuration;
-use Doctrine\MongoDB\Connection;
+use MongoDB\Client;
 
 /**
  * @group mongo
@@ -21,27 +20,16 @@ use Doctrine\MongoDB\Connection;
 class MongoDBRepositoryTest extends AbstractRepositoryTest
 {
     protected static $dbName = 'doctrine_mongodb';
-    protected $connection;
+    protected $db;
 
     protected function createRepository()
     {
-        $config = new Configuration();
-        $config->setLoggerCallable(function ($msg) {});
-        $this->connection = new Connection(null, array(), $config);
-        $db               = $this->connection->selectDatabase(self::$dbName);
-        $coll             = $db->createCollection('test');
+        $client = new Client(getenv('MONGODB_DSN') ?: 'mongodb://localhost:27017');
 
-        return new MongoDBRepository($coll);
-    }
+        $this->db = $client->selectDatabase(self::$dbName);
+        $this->db->dropCollection('test');
+        $this->db->createCollection('test');
 
-    public function tearDown()
-    {
-        $collections = $this->connection->selectDatabase(self::$dbName)->listCollections();
-        foreach ($collections as $collection) {
-            $collection->drop();
-        }
-
-        $this->connection->close();
-        unset($this->connection);
+        return new MongoDBRepository($this->db->selectCollection('test'));
     }
 }
