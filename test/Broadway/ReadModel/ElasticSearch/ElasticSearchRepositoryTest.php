@@ -26,7 +26,7 @@ class ElasticSearchRepositoryTest extends RepositoryTestCase
 
     protected function createRepository()
     {
-        $this->client = new Client(array('hosts' => array('localhost:9200')));
+        $this->client = $this->createClient();
         $this->client->indices()->create(array('index' => 'test_index'));
         $this->client->cluster()->health(array('index' => 'test_index', 'wait_for_status' => 'yellow', 'timeout' => '10s'));
 
@@ -81,5 +81,12 @@ class ElasticSearchRepositoryTest extends RepositoryTestCase
         if ($this->client->indices()->exists(array('index' => 'test_non_analyzed_index'))) {
             $this->client->indices()->delete(array('index' => 'test_non_analyzed_index'));
         }
+    }
+
+    private function createClient()
+    {
+        $clientFactory = new ElasticSearchClientFactory();
+
+        return $clientFactory->create(['hosts' => ['localhost:9200']]);
     }
 }
