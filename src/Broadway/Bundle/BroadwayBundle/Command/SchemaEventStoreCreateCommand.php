@@ -46,7 +46,7 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (!$this->connection) {
-            $output->writeln('<error>Could not drop Broadway event-store schema</error>');
+            $output->writeln('<error>Could not create Broadway event-store schema</error>');
             $output->writeln(sprintf('<error>%s</error>', $this->exception->getMessage()));
 
             return 1;
