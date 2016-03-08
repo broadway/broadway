@@ -10,7 +10,7 @@
             <argument>%elasticsearch%</argument>
         </service>
 
-        <service id="broadway.elasticsearch.client_factory" class="Broadway\ReadModel\ElasticSearch" public="false" />
+        <service id="broadway.elasticsearch.client_factory" class="Broadway\ReadModel\ElasticSearch\ElasticSearchClientFactory" public="false" />
 
         <service id="broadway.serializer.readmodel" class="Broadway\Serializer\SimpleInterfaceSerializer" />
 
