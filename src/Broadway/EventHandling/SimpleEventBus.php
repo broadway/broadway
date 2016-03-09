@@ -51,8 +51,7 @@ class SimpleEventBus implements EventBusInterface
                 }
             } catch (Exception $e) {
                 throw $e;
-            }
-            finally {
+            } finally {
                 $this->isPublishing = false;
             }
         }
