@@ -49,11 +49,11 @@ class SimpleEventBus implements EventBusInterface
                         $eventListener->handle($domainMessage);
                     }
                 }
-
-                $this->isPublishing = false;
             } catch (Exception $e) {
-                $this->isPublishing = false;
                 throw $e;
+            }
+            finally {
+                $this->isPublishing = false;
             }
         }
     }
