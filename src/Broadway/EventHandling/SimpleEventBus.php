@@ -49,8 +49,6 @@ class SimpleEventBus implements EventBusInterface
                         $eventListener->handle($domainMessage);
                     }
                 }
-            } catch (Exception $e) {
-                throw $e;
             } finally {
                 $this->isPublishing = false;
             }
