@@ -5,7 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="broadway.event_store.in_memory" class="Broadway\EventStore\InMemoryEventStore" />
+        <service id="broadway.simple_interface_serializer" class="Broadway\Serializer\SimpleInterfaceSerializer" />
 
     </services>
 </container>

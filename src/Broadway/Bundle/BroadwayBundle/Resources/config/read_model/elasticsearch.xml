@@ -12,8 +12,6 @@
 
         <service id="broadway.elasticsearch.client_factory" class="Broadway\ReadModel\ElasticSearch\ElasticSearchClientFactory" public="false" />
 
-        <service id="broadway.serializer.readmodel" class="Broadway\Serializer\SimpleInterfaceSerializer" />
-
         <service id="broadway.read_model.elasticsearch.repository_factory" class="Broadway\ReadModel\ElasticSearch\ElasticSearchRepositoryFactory">
             <argument type="service" id="broadway.elasticsearch.client" />
             <argument type="service" id="broadway.serializer.readmodel" />
