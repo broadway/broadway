@@ -40,6 +40,7 @@ class BroadwayExtension extends Extension
         $this->loadReadModelRepository($config['read_model'], $container, $loader);
         $this->loadCommandBus($config['command_handling'], $container, $loader);
         $this->loadEventStore($config['event_store'], $container, $loader);
+        $this->loadSerializers($config['serializer'], $container, $loader);
     }
 
     private function loadCommandBus(array $config, ContainerBuilder $container, LoaderInterface $loader)
@@ -149,6 +150,15 @@ class BroadwayExtension extends Extension
             'broadway.event_store.dbal.use_binary',
             $config['dbal']['use_binary']
         );
+    }
+
+    private function loadSerializers(array $config, ContainerBuilder $container, XmlFileLoader $loader)
+    {
+        $loader->load('serializers.xml');
+
+        foreach ($config as $serializer => $serviceId) {
+            $container->setParameter(sprintf('broadway.serializer.%s.service_id', $serializer), $serviceId);
+        }
     }
 
     private function configElasticsearch(array $config, ContainerBuilder $container)
