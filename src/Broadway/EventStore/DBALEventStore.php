@@ -262,12 +262,6 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
 
     private function prepareVisitEventsStatementWhereAndBindValues(Criteria $criteria)
     {
-        if ($criteria->getAggregateRootTypes()) {
-            throw new CriteriaNotSupportedException(
-                'DBAL implementation cannot support criteria based on aggregate root types.'
-            );
-        }
-
         $bindValues = array();
         $bindValueTypes = array();
 
@@ -286,6 +280,12 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
                 $bindValues['uuids'] = $criteria->getAggregateRootIds();
                 $bindValueTypes['uuids'] = Connection::PARAM_STR_ARRAY;
             }
+        }
+
+        if ($criteria->getAggregateRootTypes()) {
+            $criteriaTypes[] = 'stream IN (:streamTypes)';
+            $bindValues['streamTypes'] = $criteria->getAggregateRootTypes();
+            $bindValueTypes['streamTypes'] = Connection::PARAM_STR_ARRAY;
         }
 
         if ($criteria->getEventTypes()) {

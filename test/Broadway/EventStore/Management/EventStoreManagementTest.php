@@ -23,6 +23,9 @@ use Broadway\TestCase;
 
 abstract class EventStoreManagementTest extends TestCase
 {
+    const STREAM_TYPE = 'Management';
+    const OTHER_STREAM_TYPE = 'Managementv2';
+
     /**
      * @var EventStoreInterface|EventStoreManagementInterface
      */
@@ -57,7 +60,12 @@ abstract class EventStoreManagementTest extends TestCase
     {
         $visitedEvents = $this->visitEvents(Criteria::create());
 
-        $this->assertVisitedEventsArEquals($this->getEventFixtures(), $visitedEvents);
+        $expectedEvents = $this->getEventFixtures();
+        $expectedEvents = array_map(function($blob) {
+            return $blob['domainMessage'];
+        }, $expectedEvents);
+
+        $this->assertVisitedEventsArEquals($expectedEvents, $visitedEvents);
     }
 
     /** @test */
@@ -106,24 +114,42 @@ abstract class EventStoreManagementTest extends TestCase
         ), $visitedEvents);
     }
 
-    /**
-     * @test
-     * @expectedException \Broadway\EventStore\Management\CriteriaNotSupportedException
-     */
-    public function it_visits_aggregate_root_types()
+    /** @test */
+    public function it_visits_stream_types()
     {
         $visitedEvents = $this->visitEvents(Criteria::create()
-            ->withAggregateRootTypes(array(
-                'Broadway.EventStore.Management.AggregateTypeOne',
-                'Broadway.EventStore.Management.AggregateTypeTwo',
-            ))
+            ->withAggregateRootTypes([
+                'Management',
+            ])
         );
+
+        $this->assertVisitedEventsArEquals(array(
+            $this->createDomainMessage(1, 0, new Start()),
+            $this->createDomainMessage(1, 1, new Middle('a')),
+            $this->createDomainMessage(1, 2, new Middle('b')),
+            $this->createDomainMessage(1, 3, new Middle('c')),
+            $this->createDomainMessage(3, 0, new Start()),
+            $this->createDomainMessage(3, 1, new Middle('a')),
+            $this->createDomainMessage(3, 2, new Middle('b')),
+            $this->createDomainMessage(3, 3, new Middle('c')),
+            $this->createDomainMessage(1, 4, new Middle('d')),
+            $this->createDomainMessage(4, 0, new Start()),
+            $this->createDomainMessage(4, 1, new Middle('a')),
+            $this->createDomainMessage(4, 2, new Middle('b')),
+            $this->createDomainMessage(4, 3, new Middle('c')),
+            $this->createDomainMessage(4, 4, new Middle('d')),
+            $this->createDomainMessage(4, 5, new End()),
+            $this->createDomainMessage(3, 4, new Middle('d')),
+            $this->createDomainMessage(1, 5, new End()),
+            $this->createDomainMessage(3, 5, new End()),
+        ), $visitedEvents);
     }
 
     private function createAndInsertEventFixtures()
     {
-        foreach ($this->getEventFixtures() as $domainMessage) {
-            $this->eventStore->append($domainMessage->getId(), new DomainEventStream(array($domainMessage)));
+        foreach ($this->getEventFixtures() as $domainMessageBlob) {
+            $domainMessage = $domainMessageBlob['domainMessage'];
+            $this->eventStore->append($domainMessageBlob['streamType'], $domainMessage->getId(), new DomainEventStream(array($domainMessage)));
         }
     }
 
@@ -133,38 +159,38 @@ abstract class EventStoreManagementTest extends TestCase
     protected function getEventFixtures()
     {
         return array(
-            $this->createDomainMessage(1, 0, new Start()),
-            $this->createDomainMessage(1, 1, new Middle('a')),
-            $this->createDomainMessage(1, 2, new Middle('b')),
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(1, 0, new Start())],
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(1, 1, new Middle('a'))],
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(1, 2, new Middle('b'))],
 
-            $this->createDomainMessage(2, 0, new Start()),
-            $this->createDomainMessage(2, 1, new Middle('a')),
-            $this->createDomainMessage(2, 2, new Middle('b')),
-            $this->createDomainMessage(2, 3, new Middle('c')),
-            $this->createDomainMessage(2, 4, new Middle('d')),
-            $this->createDomainMessage(2, 5, new End()),
+            ['streamType' => self::OTHER_STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(2, 0, new Start())],
+            ['streamType' => self::OTHER_STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(2, 1, new Middle('a'))],
+            ['streamType' => self::OTHER_STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(2, 2, new Middle('b'))],
+            ['streamType' => self::OTHER_STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(2, 3, new Middle('c'))],
+            ['streamType' => self::OTHER_STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(2, 4, new Middle('d'))],
+            ['streamType' => self::OTHER_STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(2, 5, new End())],
 
-            $this->createDomainMessage(1, 3, new Middle('c')),
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(1, 3, new Middle('c'))],
 
-            $this->createDomainMessage(3, 0, new Start()),
-            $this->createDomainMessage(3, 1, new Middle('a')),
-            $this->createDomainMessage(3, 2, new Middle('b')),
-            $this->createDomainMessage(3, 3, new Middle('c')),
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(3, 0, new Start())],
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(3, 1, new Middle('a'))],
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(3, 2, new Middle('b'))],
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(3, 3, new Middle('c'))],
 
-            $this->createDomainMessage(1, 4, new Middle('d')),
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(1, 4, new Middle('d'))],
 
-            $this->createDomainMessage(4, 0, new Start()),
-            $this->createDomainMessage(4, 1, new Middle('a')),
-            $this->createDomainMessage(4, 2, new Middle('b')),
-            $this->createDomainMessage(4, 3, new Middle('c')),
-            $this->createDomainMessage(4, 4, new Middle('d')),
-            $this->createDomainMessage(4, 5, new End()),
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(4, 0, new Start())],
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(4, 1, new Middle('a'))],
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(4, 2, new Middle('b'))],
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(4, 3, new Middle('c'))],
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(4, 4, new Middle('d'))],
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(4, 5, new End())],
 
-            $this->createDomainMessage(3, 4, new Middle('d')),
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(3, 4, new Middle('d'))],
 
-            $this->createDomainMessage(1, 5, new End()),
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(1, 5, new End())],
 
-            $this->createDomainMessage(3, 5, new End()),
+            ['streamType' => self::STREAM_TYPE, 'domainMessage' => $this->createDomainMessage(3, 5, new End())],
         );
     }
 

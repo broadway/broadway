@@ -107,12 +107,10 @@ class Criteria
      * @param DomainMessage $domainMessage
      * @return bool
      */
-    public function isMatchedBy(DomainMessage $domainMessage)
+    public function isMatchedBy(DomainMessage $domainMessage, $streamType)
     {
-        if ($this->aggregateRootTypes) {
-            throw new CriteriaNotSupportedException(
-                'Cannot match criteria based on aggregate root types.'
-            );
+        if ($this->aggregateRootTypes  && ! in_array($streamType, $this->aggregateRootTypes)) {
+            return false;
         }
 
         if ($this->aggregateRootIds && ! in_array($domainMessage->getId(), $this->aggregateRootIds)) {

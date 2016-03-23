@@ -71,13 +71,15 @@ class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInt
 
     public function visitEvents(Criteria $criteria, EventVisitorInterface $eventVisitor)
     {
-        foreach ($this->events as $id => $events) {
-            foreach ($events as $event) {
-                if (! $criteria->isMatchedBy($event)) {
-                    continue;
-                }
+        foreach ($this->events as $streamType => $eventsPerId) {
+            foreach ($eventsPerId as $id => $events) {
+                foreach ($events as $event) {
+                    if (! $criteria->isMatchedBy($event, $streamType)) {
+                        continue;
+                    }
 
-                $eventVisitor->doWithEvent($event);
+                    $eventVisitor->doWithEvent($event);
+                }
             }
         }
     }
