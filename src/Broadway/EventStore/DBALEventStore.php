@@ -282,9 +282,9 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
             }
         }
 
-        if ($criteria->getAggregateRootTypes()) {
+        if ($criteria->getStreamTypes()) {
             $criteriaTypes[] = 'stream IN (:streamTypes)';
-            $bindValues['streamTypes'] = $criteria->getAggregateRootTypes();
+            $bindValues['streamTypes'] = $criteria->getStreamTypes();
             $bindValueTypes['streamTypes'] = Connection::PARAM_STR_ARRAY;
         }
 

@@ -118,7 +118,7 @@ abstract class EventStoreManagementTest extends TestCase
     public function it_visits_stream_types()
     {
         $visitedEvents = $this->visitEvents(Criteria::create()
-            ->withAggregateRootTypes([
+            ->withStreamTypes([
                 'Management',
             ])
         );
