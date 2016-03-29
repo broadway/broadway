@@ -84,7 +84,7 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         }
 
         if (empty($events)) {
-            throw new EventStreamNotFoundException(sprintf('EventStream not found for aggregate with id %s', $id));
+            throw new EventStreamNotFoundException(sprintf('EventStream not found for aggregate with id %s for table %s', $id, $this->tableName));
         }
 
         return new DomainEventStream($events);
