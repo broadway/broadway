@@ -6,6 +6,13 @@
 
 - We raised the minimum required version of symfony/dependency-injection from 2.3 to 2.6.
 
+#### Other changes
+
+- The Symfony Bundle is now Symfony 3 compatible
+- The DBALEventStore can now be disabled in configuration
+- elasticsearch/elasticsearch-php 2.0 is now also supported
+- Serializers are now configurable in the Symfony Bundle
+
 ## v0.8.x
 
 #### BC breaks
