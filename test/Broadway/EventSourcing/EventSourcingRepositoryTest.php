@@ -21,11 +21,12 @@ use Broadway\EventStore\TraceableEventStore;
 
 class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
 {
+    const STREAM_TYPE     = '\Broadway\EventSourcing\TestEventSourcedAggregate';
     const AGGREGATE_CLASS = '\Broadway\EventSourcing\TestEventSourcedAggregate';
 
-    protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, $aggregateClass, array $eventStreamDecorators)
+    protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, $streamType, $aggregateClass, array $eventStreamDecorators)
     {
-        return new EventSourcingRepository($eventStore, $eventBus, $aggregateClass, new PublicConstructorAggregateFactory(), $eventStreamDecorators);
+        return new EventSourcingRepository($eventStore, $eventBus, $streamType, $aggregateClass, new PublicConstructorAggregateFactory(), $eventStreamDecorators);
     }
 
     protected function createAggregate()
@@ -39,7 +40,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
      */
     public function it_throws_an_exception_when_instantiated_with_a_class_that_is_not_an_EventSourcedAggregateRoot()
     {
-        new EventSourcingRepository($this->eventStore, $this->eventBus, 'stdClass', new PublicConstructorAggregateFactory());
+        new EventSourcingRepository($this->eventStore, $this->eventBus, self::STREAM_TYPE, 'stdClass', new PublicConstructorAggregateFactory());
     }
 
     /**
@@ -49,7 +50,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
     {
         // make sure events exist in the event store
         $id = 'y0l0';
-        $this->eventStore->append('\Broadway\EventSourcing\TestEventSourcedAggregateWithStaticConstructor', $id, new DomainEventStream(array(
+        $this->eventStore->append(self::STREAM_TYPE, $id, new DomainEventStream(array(
             DomainMessage::recordNow(42, 0, new Metadata(array()), new DidEvent())
         )));
 
@@ -72,7 +73,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
     {
         // make sure events exist in the event store
         $id = 'y0l0';
-        $this->eventStore->append('\Broadway\EventSourcing\TestEventSourcedAggregateWithStaticConstructor', $id, new DomainEventStream(array(
+        $this->eventStore->append(self::STREAM_TYPE, $id, new DomainEventStream(array(
             DomainMessage::recordNow(42, 0, new Metadata(array()), new DidEvent())
         )));
 
@@ -91,6 +92,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
         return new EventSourcingRepository(
             $this->eventStore,
             $this->eventBus,
+            self::STREAM_TYPE,
             '\Broadway\EventSourcing\TestEventSourcedAggregateWithStaticConstructor',
             $staticFactory,
             array()

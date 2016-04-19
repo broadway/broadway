@@ -30,6 +30,7 @@ use RuntimeException;
 
 abstract class AbstractEventSourcingRepositoryTest extends TestCase
 {
+    const STREAM_TYPE     = '\Broadway\EventSourcing\TestEventSourcedAggregate';
     const AGGREGATE_CLASS = '\Broadway\EventSourcing\TestEventSourcedAggregate';
 
     /** @var TraceableEventBus */
@@ -55,7 +56,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
         $this->eventStreamDecorator = new TraceableEventStoreDecorator();
         $this->eventStreamDecorator->trace();
 
-        $this->repository = $this->createEventSourcingRepository($this->eventStore, $this->eventBus, self::AGGREGATE_CLASS, array($this->eventStreamDecorator));
+        $this->repository = $this->createEventSourcingRepository($this->eventStore, $this->eventBus, self::STREAM_TYPE, self::AGGREGATE_CLASS, array($this->eventStreamDecorator));
     }
 
     /**
@@ -166,6 +167,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
         $repository = new EventSourcingRepository(
             $this->eventStore,
             $this->eventBus,
+            self::STREAM_TYPE,
             get_class($this->createAggregate()),
             new PublicConstructorAggregateFactory(),
             array(new MetadataEnrichingEventStreamDecorator(array(new TestDecorationMetadataEnricher())))
@@ -185,7 +187,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
     /**
      * @return EventSourcingRepository
      */
-    abstract protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, $aggregateClass, array $eventStreamDecorators);
+    abstract protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, $streamType, $aggregateClass, array $eventStreamDecorators);
 
     /**
      * @return EventSourcedAggregateRoot
