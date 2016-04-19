@@ -42,7 +42,7 @@ class EventSourcedAggregateRootTest extends TestCase
     public function it_sets_internal_playhead_when_initializing()
     {
         $aggregateRoot = new MyTestAggregateRoot();
-        $aggregateRoot->initializeState($this->toDomainEventStream(array(new AggregateEvent())));
+        $aggregateRoot->initializeState($this->toDomainEventStream($aggregateRoot->getStreamType(), array(new AggregateEvent())));
 
         $aggregateRoot->apply(new AggregateEvent());
 
@@ -58,18 +58,18 @@ class EventSourcedAggregateRootTest extends TestCase
     public function it_calls_apply_for_specific_events()
     {
         $aggregateRoot = new MyTestAggregateRoot();
-        $aggregateRoot->initializeState($this->toDomainEventStream(array(new AggregateEvent())));
+        $aggregateRoot->initializeState($this->toDomainEventStream($aggregateRoot->getStreamType(), array(new AggregateEvent())));
 
         $this->assertTrue($aggregateRoot->isCalled);
     }
 
-    private function toDomainEventStream(array $events)
+    private function toDomainEventStream($streamType, array $events)
     {
         $messages = array();
         $playhead = -1;
         foreach ($events as $event) {
             $playhead++;
-            $messages[] = DomainMessage::recordNow(1, $playhead, new Metadata(array()), $event);
+            $messages[] = DomainMessage::recordNow($streamType, 1, $playhead, new Metadata(array()), $event);
         }
 
         return new DomainEventStream($messages);
@@ -79,6 +79,11 @@ class EventSourcedAggregateRootTest extends TestCase
 class MyTestAggregateRoot extends EventSourcedAggregateRoot
 {
     public $isCalled = false;
+
+    public function getStreamType()
+    {
+        return parent::getStreamType();
+    }
 
     public function getAggregateRootId()
     {

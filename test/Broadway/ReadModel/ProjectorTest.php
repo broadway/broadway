@@ -34,7 +34,7 @@ class ProjectorTest extends TestCase
 
     private function createDomainMessage($event)
     {
-        return DomainMessage::recordNow(1, 1, new Metadata(array()), $event);
+        return DomainMessage::recordNow('streamType', 1, 1, new Metadata(array()), $event);
     }
 }
 

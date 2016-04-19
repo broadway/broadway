@@ -26,9 +26,8 @@ interface EventStoreInterface
     public function load($streamType, $identifier);
 
     /**
-     * @param mixed                      $streamType
      * @param mixed                      $identifier
      * @param DomainEventStreamInterface $eventStream
      */
-    public function append($streamType, $identifier, DomainEventStreamInterface $eventStream);
+    public function append($identifier, DomainEventStreamInterface $eventStream);
 }

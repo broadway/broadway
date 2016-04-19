@@ -247,7 +247,7 @@ class MultipleSagaManagerTest extends TestCase
 
     private function handleEvent($manager, $event)
     {
-        $manager->handle(DomainMessage::recordNow(1, 0, new Metadata(array()), $event));
+        $manager->handle(DomainMessage::recordNow('StreamType', 1, 0, new Metadata(array()), $event));
     }
 }
 

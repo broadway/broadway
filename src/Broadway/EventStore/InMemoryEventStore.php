@@ -44,19 +44,21 @@ class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInt
     /**
      * {@inheritDoc}
      */
-    public function append($streamType, $identifier, DomainEventStreamInterface $eventStream)
+    public function append($identifier, DomainEventStreamInterface $eventStream)
     {
         $identifier = (string) $identifier;
 
-        if (! isset($this->events[$streamType][$identifier])) {
-            $this->events[$streamType][$identifier] = array();
-        }
+        foreach ($eventStream as $domainMessage) {
+            $streamType = $domainMessage->getStreamType();
+            $playhead   = $domainMessage->getPlayhead();
 
-        foreach ($eventStream as $event) {
-            $playhead = $event->getPlayhead();
+            if (! isset($this->events[$streamType][$identifier])) {
+                $this->events[$streamType][$identifier] = array();
+            }
+
             $this->assertPlayhead($this->events[$streamType][$identifier], $playhead);
 
-            $this->events[$streamType][$identifier][$playhead] = $event;
+            $this->events[$streamType][$identifier][$playhead] = $domainMessage;
         }
     }
 
