@@ -30,9 +30,9 @@ class TraceableEventStore implements EventStoreInterface
     /**
      * {@inheritDoc}
      */
-    public function append($identifier, DomainEventStreamInterface $eventStream)
+    public function append($streamType, $identifier, DomainEventStreamInterface $eventStream)
     {
-        $this->eventStore->append($identifier, $eventStream);
+        $this->eventStore->append($streamType, $identifier, $eventStream);
 
         if (! $this->tracing) {
             return;

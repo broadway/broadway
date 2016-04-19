@@ -20,22 +20,20 @@ class DomainMessageTest extends TestCase
      */
     public function it_has_getters()
     {
-        $streamType = 'StreamType';
-        $id         = 'Hi thur';
-        $payload    = new SomeEvent();
-        $playhead   = 15;
-        $metadata   = new Metadata(array('meta'));
-        $type       = 'Broadway.Domain.SomeEvent';
+        $id       = 'Hi thur';
+        $payload  = new SomeEvent();
+        $playhead = 15;
+        $metadata = new Metadata(array('meta'));
+        $type     = 'Broadway.Domain.SomeEvent';
 
-        $domainMessage = DomainMessage::recordNow($streamType, $id, $playhead, $metadata, $payload);
+        $domainMessage = DomainMessage::recordNow($id, $playhead, $metadata, $payload);
 
-        $this->assertEquals($streamType, $domainMessage->getStreamType());
-        $this->assertEquals($id,         $domainMessage->getId());
-        $this->assertEquals($payload,    $domainMessage->getPayload());
-        $this->assertEquals($playhead,   $domainMessage->getPlayhead());
-        $this->assertEquals($metadata,   $domainMessage->getMetadata());
-        $this->assertEquals($metadata,   $domainMessage->getMetadata());
-        $this->assertEquals($type,       $domainMessage->getType());
+        $this->assertEquals($id,       $domainMessage->getId());
+        $this->assertEquals($payload,  $domainMessage->getPayload());
+        $this->assertEquals($playhead, $domainMessage->getPlayhead());
+        $this->assertEquals($metadata, $domainMessage->getMetadata());
+        $this->assertEquals($metadata, $domainMessage->getMetadata());
+        $this->assertEquals($type,     $domainMessage->getType());
     }
 
     /**
@@ -43,7 +41,7 @@ class DomainMessageTest extends TestCase
      */
     public function it_returns_a_new_instance_with_more_metadata_on_andMetadata()
     {
-        $domainMessage = DomainMessage::recordNow('StreamType', 'id', 42, new Metadata(), 'payload');
+        $domainMessage = DomainMessage::recordNow('id', 42, new Metadata(), 'payload');
 
         $this->assertNotSame($domainMessage, $domainMessage->andMetadata(Metadata::kv('foo', 42)));
     }
@@ -53,7 +51,7 @@ class DomainMessageTest extends TestCase
      */
     public function it_keeps_all_data_the_same_expect_metadata_on_andMetadata()
     {
-        $domainMessage = DomainMessage::recordNow('StreamType', 'id', 42, new Metadata(), 'payload');
+        $domainMessage = DomainMessage::recordNow('id', 42, new Metadata(), 'payload');
 
         $newMessage = $domainMessage->andMetadata(Metadata::kv('foo', 42));
 
@@ -70,7 +68,7 @@ class DomainMessageTest extends TestCase
      */
     public function it_merges_the_metadata_instances_on_andMetadata()
     {
-        $domainMessage = DomainMessage::recordNow('StreamType', 'id', 42, Metadata::kv('bar', 1337), 'payload');
+        $domainMessage = DomainMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
 
         $newMessage = $domainMessage->andMetadata(Metadata::kv('foo', 42));
 

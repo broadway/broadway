@@ -39,7 +39,6 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
 
         $this->playhead++;
         $this->uncommittedEvents[] = DomainMessage::recordNow(
-            $this->getStreamType(),
             $this->getAggregateRootId(),
             $this->playhead,
             new Metadata(array()),
@@ -68,13 +67,6 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
             $this->playhead++;
             $this->handleRecursively($message->getPayload());
         }
-    }
-
-    protected function getStreamType()
-    {
-        $classParts = explode('\\', get_class($this));
-
-        return end($classParts);
     }
 
     /**

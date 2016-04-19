@@ -89,8 +89,8 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
 
     private function createDomainEventStream()
     {
-        $m1 = DomainMessage::recordNow('streamType', 'id', 42, Metadata::kv('bar', 1337), 'payload');
-        $m2 = DomainMessage::recordNow('streamType', 'id', 42, Metadata::kv('bar', 1337), 'payload');
+        $m1 = DomainMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
+        $m2 = DomainMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
 
         return new DomainEventStream(array($m1, $m2));
     }

@@ -32,13 +32,13 @@ abstract class EventStoreTest extends TestCase
     public function it_creates_a_new_entry_when_id_is_new($id)
     {
         $domainEventStream = new DomainEventStream(array(
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 0),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 1),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 2),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 3),
+            $this->createDomainMessage($id, 0),
+            $this->createDomainMessage($id, 1),
+            $this->createDomainMessage($id, 2),
+            $this->createDomainMessage($id, 3),
         ));
 
-        $this->eventStore->append($id, $domainEventStream);
+        $this->eventStore->append(self::STREAM_TYPE, $id, $domainEventStream);
 
         $this->assertEquals($domainEventStream, $this->eventStore->load(self::STREAM_TYPE, $id));
     }
@@ -51,27 +51,27 @@ abstract class EventStoreTest extends TestCase
     {
         $dateTime          = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
         $domainEventStream = new DomainEventStream(array(
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 0, $dateTime),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 1, $dateTime),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 2, $dateTime),
+            $this->createDomainMessage($id, 0, $dateTime),
+            $this->createDomainMessage($id, 1, $dateTime),
+            $this->createDomainMessage($id, 2, $dateTime),
         ));
-        $this->eventStore->append($id, $domainEventStream);
+        $this->eventStore->append(self::STREAM_TYPE, $id, $domainEventStream);
         $appendedEventStream = new DomainEventStream(array(
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 3, $dateTime),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 4, $dateTime),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 5, $dateTime),
+            $this->createDomainMessage($id, 3, $dateTime),
+            $this->createDomainMessage($id, 4, $dateTime),
+            $this->createDomainMessage($id, 5, $dateTime),
 
         ));
 
-        $this->eventStore->append($id, $appendedEventStream);
+        $this->eventStore->append(self::STREAM_TYPE, $id, $appendedEventStream);
 
         $expected = new DomainEventStream(array(
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 0, $dateTime),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 1, $dateTime),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 2, $dateTime),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 3, $dateTime),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 4, $dateTime),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 5, $dateTime),
+            $this->createDomainMessage($id, 0, $dateTime),
+            $this->createDomainMessage($id, 1, $dateTime),
+            $this->createDomainMessage($id, 2, $dateTime),
+            $this->createDomainMessage($id, 3, $dateTime),
+            $this->createDomainMessage($id, 4, $dateTime),
+            $this->createDomainMessage($id, 5, $dateTime),
         ));
         $this->assertEquals($expected, $this->eventStore->load(self::STREAM_TYPE, $id));
     }
@@ -95,11 +95,11 @@ abstract class EventStoreTest extends TestCase
     {
         $dateTime          = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
         $domainEventStream = new DomainEventStream(array(
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 0, $dateTime),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 1, $dateTime),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 2, $dateTime),
+            $this->createDomainMessage($id, 0, $dateTime),
+            $this->createDomainMessage($id, 1, $dateTime),
+            $this->createDomainMessage($id, 2, $dateTime),
         ));
-        $this->eventStore->append($id, $domainEventStream);
+        $this->eventStore->append(self::STREAM_TYPE, $id, $domainEventStream);
 
         $this->eventStore->load('SomeOtherStream', $id);
     }
@@ -111,12 +111,12 @@ abstract class EventStoreTest extends TestCase
      */
     public function it_throws_an_exception_when_appending_a_duplicate_playhead($id)
     {
-        $domainMessage     = $this->createDomainMessage(self::STREAM_TYPE, $id, 0);
+        $domainMessage     = $this->createDomainMessage($id, 0);
         $baseStream        = new DomainEventStream(array($domainMessage));
-        $this->eventStore->append($id, $baseStream);
+        $this->eventStore->append(self::STREAM_TYPE, $id, $baseStream);
         $appendedEventStream = new DomainEventStream(array($domainMessage));
 
-        $this->eventStore->append($id, $appendedEventStream);
+        $this->eventStore->append(self::STREAM_TYPE, $id, $appendedEventStream);
     }
 
     /**
@@ -131,13 +131,13 @@ abstract class EventStoreTest extends TestCase
         );
 
         $domainEventStream = new DomainEventStream(array(
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 0),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 1),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 2),
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 3),
+            $this->createDomainMessage($id, 0),
+            $this->createDomainMessage($id, 1),
+            $this->createDomainMessage($id, 2),
+            $this->createDomainMessage($id, 3),
         ));
 
-        $this->eventStore->append($id, $domainEventStream);
+        $this->eventStore->append(self::STREAM_TYPE, $id, $domainEventStream);
     }
 
     public function idDataProvider()
@@ -162,9 +162,9 @@ abstract class EventStoreTest extends TestCase
         );
     }
 
-    protected function createDomainMessage($streamType, $id, $playhead, $recordedOn = null)
+    protected function createDomainMessage($id, $playhead, $recordedOn = null)
     {
-        return new DomainMessage($streamType, $id, $playhead, new MetaData(array()), new Event(), $recordedOn ? $recordedOn : DateTime::now());
+        return new DomainMessage($id, $playhead, new MetaData(array()), new Event(), $recordedOn ? $recordedOn : DateTime::now());
     }
 }
 

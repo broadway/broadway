@@ -17,11 +17,6 @@ namespace Broadway\Domain;
 final class DomainMessage
 {
     /**
-     * @var string
-     */
-    private $streamType;
-
-    /**
      * @var int
      */
     private $playhead;
@@ -47,16 +42,14 @@ final class DomainMessage
     private $recordedOn;
 
     /**
-     * @param string   $streamType
      * @param string   $id
      * @param int      $playhead
      * @param Metadata $metadata
      * @param mixed    $payload
      * @param DateTime $recordedOn
      */
-    public function __construct($streamType, $id, $playhead, Metadata $metadata, $payload, DateTime $recordedOn)
+    public function __construct($id, $playhead, Metadata $metadata, $payload, DateTime $recordedOn)
     {
-        $this->streamType = $streamType;
         $this->id         = $id;
         $this->playhead   = $playhead;
         $this->metadata   = $metadata;
@@ -65,15 +58,7 @@ final class DomainMessage
     }
 
     /**
-     * @return string
-     */
-    public function getStreamType()
-    {
-        return $this->streamType;
-    }
-
-    /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getId()
     {
@@ -81,7 +66,7 @@ final class DomainMessage
     }
 
     /**
-     * @return int
+     * {@inheritDoc}
      */
     public function getPlayhead()
     {
@@ -89,7 +74,7 @@ final class DomainMessage
     }
 
     /**
-     * @return Metadata
+     * {@inheritDoc}
      */
     public function getMetadata()
     {
@@ -97,7 +82,7 @@ final class DomainMessage
     }
 
     /**
-     * @return mixed
+     * {@inheritDoc}
      */
     public function getPayload()
     {
@@ -105,7 +90,7 @@ final class DomainMessage
     }
 
     /**
-     * @return DateTime
+     * {@inheritDoc}
      */
     public function getRecordedOn()
     {
@@ -113,7 +98,7 @@ final class DomainMessage
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getType()
     {
@@ -121,7 +106,6 @@ final class DomainMessage
     }
 
     /**
-     * @param string   $streamType
      * @param string   $id
      * @param int      $playhead
      * @param Metadata $metadata
@@ -129,9 +113,9 @@ final class DomainMessage
      *
      * @return DomainMessage
      */
-    public static function recordNow($streamType, $id, $playhead, Metadata $metadata, $payload)
+    public static function recordNow($id, $playhead, Metadata $metadata, $payload)
     {
-        return new DomainMessage($streamType, $id, $playhead, $metadata, $payload, DateTime::now());
+        return new DomainMessage($id, $playhead, $metadata, $payload, DateTime::now());
     }
 
     /**
@@ -145,6 +129,6 @@ final class DomainMessage
     {
         $newMetadata = $this->metadata->merge($metadata);
 
-        return new DomainMessage($this->streamType, $this->id, $this->playhead, $newMetadata, $this->payload, $this->recordedOn);
+        return new DomainMessage($this->id, $this->playhead, $newMetadata, $this->payload, $this->recordedOn);
     }
 }

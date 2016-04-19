@@ -65,10 +65,10 @@ class BinaryDBALEventStoreTest extends DBALEventStoreTest
     {
         $id                = 'bleeh';
         $domainEventStream = new DomainEventStream(array(
-            $this->createDomainMessage(self::STREAM_TYPE, $id, 0),
+            $this->createDomainMessage($id, 0),
         ));
 
-        $this->eventStore->append($id, $domainEventStream);
+        $this->eventStore->append(self::STREAM_TYPE, $id, $domainEventStream);
     }
 
     public function idDataProvider()

@@ -28,7 +28,6 @@ class EventSourcingRepository implements RepositoryInterface
 {
     private $eventStore;
     private $eventBus;
-    private $streamType;
     private $aggregateClass;
     private $eventStreamDecorators = array();
     private $aggregateFactory;
@@ -36,7 +35,6 @@ class EventSourcingRepository implements RepositoryInterface
     /**
      * @param EventStoreInterface             $eventStore
      * @param EventBusInterface               $eventBus
-     * @param string                          $streamType
      * @param string                          $aggregateClass
      * @param AggregateFactoryInterface       $aggregateFactory
      * @param EventStreamDecoratorInterface[] $eventStreamDecorators
@@ -44,7 +42,6 @@ class EventSourcingRepository implements RepositoryInterface
     public function __construct(
         EventStoreInterface $eventStore,
         EventBusInterface $eventBus,
-        $streamType,
         $aggregateClass,
         AggregateFactoryInterface $aggregateFactory,
         array $eventStreamDecorators = array()
@@ -56,7 +53,6 @@ class EventSourcingRepository implements RepositoryInterface
         $this->aggregateClass        = $aggregateClass;
         $this->aggregateFactory      = $aggregateFactory;
         $this->eventStreamDecorators = $eventStreamDecorators;
-        $this->streamType            = $streamType;
     }
 
     /**
@@ -65,7 +61,7 @@ class EventSourcingRepository implements RepositoryInterface
     public function load($id)
     {
         try {
-            $domainEventStream = $this->eventStore->load($this->streamType, $id);
+            $domainEventStream = $this->eventStore->load($this->aggregateClass, $id);
 
             return $this->aggregateFactory->create($this->aggregateClass, $domainEventStream);
         } catch (EventStreamNotFoundException $e) {
@@ -83,7 +79,7 @@ class EventSourcingRepository implements RepositoryInterface
 
         $domainEventStream = $aggregate->getUncommittedEvents();
         $eventStream       = $this->decorateForWrite($aggregate, $domainEventStream);
-        $this->eventStore->append($aggregate->getAggregateRootId(), $eventStream);
+        $this->eventStore->append($this->aggregateClass, $aggregate->getAggregateRootId(), $eventStream);
         $this->eventBus->publish($eventStream);
     }
 

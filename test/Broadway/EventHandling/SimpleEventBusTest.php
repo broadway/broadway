@@ -146,7 +146,7 @@ class SimpleEventBusTest extends TestCase
 
     private function createDomainMessage($payload)
     {
-        return DomainMessage::recordNow('StreampType', 1, 1, new Metadata(array()), new SimpleEventBusTestEvent($payload));
+        return DomainMessage::recordNow(1, 1, new Metadata(array()), new SimpleEventBusTestEvent($payload));
     }
 }
 
