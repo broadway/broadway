@@ -33,16 +33,22 @@ class Scenario
     private $eventStore;
     private $commandHandler;
     private $testCase;
+    private $streamType;
     private $aggregateId;
 
+    /**
+     * @param string $streamType
+     */
     public function __construct(
         PHPUnit_Framework_TestCase $testCase,
         TraceableEventStore $eventStore,
-        CommandHandlerInterface $commandHandler
+        CommandHandlerInterface $commandHandler,
+        $streamType
     ) {
         $this->testCase       = $testCase;
         $this->eventStore     = $eventStore;
         $this->commandHandler = $commandHandler;
+        $this->streamType     = $streamType;
         $this->aggregateId    = 1;
     }
 
@@ -74,7 +80,7 @@ class Scenario
             $messages[] = DomainMessage::recordNow($this->aggregateId, $playhead, new Metadata(array()), $event);
         }
 
-        $this->eventStore->append($this->aggregateId, new DomainEventStream($messages));
+        $this->eventStore->append($this->streamType, $this->aggregateId, new DomainEventStream($messages));
 
         return $this;
     }
