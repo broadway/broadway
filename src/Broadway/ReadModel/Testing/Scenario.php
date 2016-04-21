@@ -35,17 +35,21 @@ class Scenario
     private $repository;
     private $playhead;
     private $aggregateId;
+    private $dateTimeGenerator;
 
     public function __construct(
         PHPUnit_Framework_TestCase $testCase,
         RepositoryInterface $repository,
         ProjectorInterface $projector
     ) {
-        $this->testCase    = $testCase;
-        $this->repository  = $repository;
-        $this->projector   = $projector;
-        $this->playhead    = -1;
-        $this->aggregateId = 1;
+        $this->testCase          = $testCase;
+        $this->repository        = $repository;
+        $this->projector         = $projector;
+        $this->playhead          = -1;
+        $this->aggregateId       = 1;
+        $this->dateTimeGenerator = function($event) {
+            return DateTime::now();
+        };
     }
 
     /**
@@ -56,6 +60,16 @@ class Scenario
     public function withAggregateId($aggregateId)
     {
         $this->aggregateId = $aggregateId;
+
+        return $this;
+    }
+
+    /**
+     * @return Scenario
+     */
+    public function withDateTimeGenerator(callable $dateTimeGenerator)
+    {
+        $this->dateTimeGenerator = $dateTimeGenerator;
 
         return $this;
     }
@@ -103,7 +117,8 @@ class Scenario
         $this->playhead++;
 
         if (null === $occurredOn) {
-            $occurredOn = DateTime::now();
+            $dateTimeGenerator = $this->dateTimeGenerator;
+            $occurredOn        = $dateTimeGenerator($event);
         }
 
         return new DomainMessage($this->aggregateId, $this->playhead, new Metadata(array()), $event, $occurredOn);
