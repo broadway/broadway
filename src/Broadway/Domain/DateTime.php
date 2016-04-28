@@ -37,8 +37,7 @@ class DateTime
         return new DateTime(
             BaseDateTime::createFromFormat(
                 'U.u',
-                sprintf('%.6F', microtime(true)),
-                new DateTimeZone('UTC')
+                sprintf('%.6F', microtime(true))
             )
         );
     }
@@ -116,7 +115,7 @@ class DateTime
      */
     public function toBeginningOfWeek()
     {
-        return new DateTime(new BaseDateTime($this->dateTime->format('o-\WW-1'), new DateTimeZone('UTC')));
+        return new DateTime(new BaseDateTime($this->dateTime->format('o-\WW-1')));
     }
 
     /**
