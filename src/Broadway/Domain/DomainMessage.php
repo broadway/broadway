@@ -110,12 +110,13 @@ final class DomainMessage
      * @param int      $playhead
      * @param Metadata $metadata
      * @param mixed    $payload
+     * @param \DateTimeZone|null $timeZone
      *
      * @return DomainMessage
      */
-    public static function recordNow($id, $playhead, Metadata $metadata, $payload)
+    public static function recordNow($id, $playhead, Metadata $metadata, $payload, \DateTimeZone $timeZone = null)
     {
-        return new DomainMessage($id, $playhead, $metadata, $payload, DateTime::now());
+        return new DomainMessage($id, $playhead, $metadata, $payload, DateTime::now($timeZone));
     }
 
     /**

@@ -30,15 +30,16 @@ class DateTime
     }
 
     /**
+     * @param DateTimeZone|null $timeZone
      * @return DateTime
      */
-    public static function now()
+    public static function now(DateTimeZone $timeZone = null)
     {
         return new DateTime(
             BaseDateTime::createFromFormat(
                 'U.u',
                 sprintf('%.6F', microtime(true)),
-                new DateTimeZone('UTC')
+                ($timeZone ? : new DateTimeZone('UTC'))
             )
         );
     }
@@ -112,11 +113,15 @@ class DateTime
     }
 
     /**
+     * @param DateTimeZone|null $timezone
      * @return DateTime
      */
-    public function toBeginningOfWeek()
+    public function toBeginningOfWeek(DateTimeZone $timeZone = null)
     {
-        return new DateTime(new BaseDateTime($this->dateTime->format('o-\WW-1'), new DateTimeZone('UTC')));
+        return new DateTime(new BaseDateTime(
+            $this->dateTime->format('o-\WW-1'),
+            ($timeZone ? : new DateTimeZone('UTC'))
+        ));
     }
 
     /**
