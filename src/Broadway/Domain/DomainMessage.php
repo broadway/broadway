@@ -42,6 +42,11 @@ final class DomainMessage
     private $recordedOn;
 
     /**
+     * @var string
+     */
+    private $type;
+
+    /**
      * @param string   $id
      * @param int      $playhead
      * @param Metadata $metadata
@@ -102,7 +107,11 @@ final class DomainMessage
      */
     public function getType()
     {
-        return strtr(get_class($this->payload), '\\', '.');
+        if (!$this->type) {
+            return strtr(get_class($this->payload), '\\', '.');
+        }
+
+        return $this->type;
     }
 
     /**
@@ -130,5 +139,16 @@ final class DomainMessage
         $newMetadata = $this->metadata->merge($metadata);
 
         return new DomainMessage($this->id, $this->playhead, $newMetadata, $this->payload, $this->recordedOn);
+    }
+
+    /**
+     * @param string $type
+     * @return $this
+     */
+    public function andType($type)
+    {
+        $this->type = $type;
+
+        return $this;
     }
 }

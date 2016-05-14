@@ -75,6 +75,17 @@ class DomainMessageTest extends TestCase
         $expected = new Metadata(array('bar' => 1337, 'foo' => 42));
         $this->assertEquals($expected, $newMessage->getMetadata());
     }
+
+    /**
+     * @test
+     */
+    public function it_updates_message_type_on_andType()
+    {
+        $domainMessage = DomainMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
+        $domainMessage->andType('some.new.type');
+
+        $this->assertSame('some.new.type', $domainMessage->getType());
+    }
 }
 
 class SomeEvent
