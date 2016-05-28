@@ -4,6 +4,7 @@ namespace Broadway\EventSourcing\DomainMessageTypeEnrichment;
 
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\DomainMessage;
 use Broadway\EventSourcing\EventStreamDecoratorInterface;
 
 class DomainMessageTypeEventStreamDecorator implements EventStreamDecoratorInterface
@@ -15,6 +16,7 @@ class DomainMessageTypeEventStreamDecorator implements EventStreamDecoratorInter
     {
         $messages = array();
 
+        /** @var DomainMessage $message */
         foreach ($eventStream as $message) {
             $payload = $message->getPayload();
             if (method_exists($payload, 'getType')) {

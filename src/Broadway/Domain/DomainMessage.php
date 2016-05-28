@@ -87,7 +87,7 @@ final class DomainMessage
     }
 
     /**
-     * {@inheritDoc}
+     * @return mixed | EventInterface
      */
     public function getPayload()
     {
@@ -147,8 +147,9 @@ final class DomainMessage
      */
     public function andType($type)
     {
-        $this->type = $type;
+        $message = clone $this;
+        $message->type = $type;
 
-        return $this;
+        return $message;
     }
 }
