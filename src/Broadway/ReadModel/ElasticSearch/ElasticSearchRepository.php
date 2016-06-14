@@ -148,6 +148,7 @@ class ElasticSearchRepository implements RepositoryInterface
         try {
             return $this->client->search(array(
                 'index' => $this->index,
+                'type'  => $this->class,
                 'body'  => array(
                     'query'  => $query,
                     'facets' => $facets,
@@ -164,6 +165,7 @@ class ElasticSearchRepository implements RepositoryInterface
         return $this->searchAndDeserializeHits(
             array(
                 'index' => $this->index,
+                'type'  => $this->class,
                 'body'  => array(
                     'query' => $query,
                 ),
