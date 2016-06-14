@@ -29,6 +29,20 @@ Once enabled the bundle will expose several services, such as:
 - `broadway.event_store` alias to the active event store
 - `broadway.uuid.generator` active uuid generator
 
+## Event Store
+
+To generate the mysql schema for the event store use the following command
+
+```bash
+bin/console broadway:event-store:schema:init
+```
+
+The schema can be dropped using
+
+```bash
+bin/console broadway:event-store:schema:drop
+```
+
 ## Tags
 
 The bundle provides several tags to use in your service configuration.
