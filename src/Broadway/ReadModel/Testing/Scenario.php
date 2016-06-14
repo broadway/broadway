@@ -75,14 +75,32 @@ class Scenario
     }
 
     /**
-     * @param array $events
+     * Add events in the form of
+     *
+     * - no events: given([])
+     * - one event: given(new CustomerWasCreatedEvent(...)) or given([new CustomerWasCreatedEvent(...)])
+     * - event with metadata: given(['event' => new CustomerWasCreatedEvent(...), 'metadata' => ['foo' => 'bar']])
      *
      * @return Scenario
      */
-    public function given(array $events = array())
+    public function given()
     {
-        foreach ($events as $given) {
-            $this->projector->handle($this->createDomainMessageForEvent($given));
+        $events = func_get_args();
+
+        if (count($events) === 1 && count($events[0]) === 0) {
+            return $this;
+        }
+
+        foreach ($events as $event) {
+            if (isset($event['event'])) {
+                $given = $event['event'];
+            } else {
+                $given = $event[0];
+            }
+
+            $occurredOn = isset($event['occurredOn']) ? $event['occurredOn'] : null;
+            $metadata = isset($event['metadata']) ? $event['metadata'] : array();
+            $this->projector->handle($this->createDomainMessageForEvent($given, $occurredOn, $metadata));
         }
 
         return $this;
@@ -93,9 +111,9 @@ class Scenario
      *
      * @return Scenario
      */
-    public function when($event, DateTime $occurredOn = null)
+    public function when($event, DateTime $occurredOn = null, array $metadata = array())
     {
-        $this->projector->handle($this->createDomainMessageForEvent($event, $occurredOn));
+        $this->projector->handle($this->createDomainMessageForEvent($event, $occurredOn, $metadata));
 
         return $this;
     }
@@ -112,7 +130,7 @@ class Scenario
         return $this;
     }
 
-    private function createDomainMessageForEvent($event, DateTime $occurredOn = null)
+    private function createDomainMessageForEvent($event, DateTime $occurredOn = null, array $metadata = array())
     {
         $this->playhead++;
 
@@ -121,6 +139,6 @@ class Scenario
             $occurredOn        = $dateTimeGenerator($event);
         }
 
-        return new DomainMessage($this->aggregateId, $this->playhead, new Metadata(array()), $event, $occurredOn);
+        return new DomainMessage($this->aggregateId, $this->playhead, new Metadata($metadata), $event, $occurredOn);
     }
 }
