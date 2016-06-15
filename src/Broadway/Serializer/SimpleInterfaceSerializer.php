@@ -32,8 +32,26 @@ class SimpleInterfaceSerializer implements SerializerInterface
 
         return array(
             'class'   => get_class($object),
-            'payload' => $object->serialize()
+            'payload' => $this->serializePayload($object->serialize())
         );
+    }
+
+    /**
+     * Recursively serialize the object
+     *
+     * @param  array $serialized
+     * @return array
+     */
+    private function serializePayload(array $serialized)
+    {
+        $payload = array();
+
+        foreach ($serialized as $name => $serializedItem) {
+            $payload[$name] = ($serializedItem instanceof SerializableInterface) ?
+                $this->serialize($serializedItem) : $serializedItem;
+        }
+
+        return $payload;
     }
 
     /**
@@ -53,6 +71,35 @@ class SimpleInterfaceSerializer implements SerializerInterface
             );
         }
 
-        return $serializedObject['class']::deserialize($serializedObject['payload']);
+        return $serializedObject['class']::deserialize($this->deserializePayload($serializedObject['payload']));
+    }
+
+    /**
+     * Recursively deserialize the payload
+     *
+     * @param  array $payload
+     * @return array
+     */
+    private function deserializePayload(array $payload)
+    {
+        $processedPayload = array();
+
+        foreach ($payload as $name => $attribute) {
+            $processedPayload[$name] = (self::canDeserialize($attribute)) ?
+                $this->deserialize($attribute) : $attribute;
+        }
+
+        return $processedPayload;
+    }
+
+    /**
+     * Checks if the attribute is a deserializable object
+     *
+     * @param  $attribute
+     * @return bool
+     */
+    private static function canDeserialize($attribute)
+    {
+        return is_array($attribute) && isset($attribute['class']) && isset($attribute['payload']);
     }
 }
