@@ -50,16 +50,19 @@ class ElasticSearchRepositoryTest extends RepositoryTestCase
     {
         $type             = 'class';
         $nonAnalyzedTerm  = 'name';
-        $index            = 'test_non_analyzed_index';
+        $alias            = 'test_non_analyzed_index';
         $this->repository = new ElasticSearchRepository(
             $this->client,
             new SimpleInterfaceSerializer(),
-            $index,
+            $alias,
             $type,
             array($nonAnalyzedTerm)
         );
 
-        $this->repository->createIndex();
+        $suffix = uniqid();
+        $index  = $alias . $suffix;
+
+        $this->repository->createIndex($suffix);
         $this->client->cluster()->health(array('index' => $index, 'wait_for_status' => 'yellow', 'timeout' => '10s'));
         $mapping = $this->client->indices()->getMapping(array('index' => $index));
 
@@ -72,6 +75,39 @@ class ElasticSearchRepositoryTest extends RepositoryTestCase
         }
 
         $this->assertEquals(array($nonAnalyzedTerm), $nonAnalyzedTerms);
+    }
+
+    /**
+     * @test
+     */
+    public function it_creates_an_index_with_an_alias()
+    {
+        $type             = 'class';
+        $nonAnalyzedTerm  = 'name';
+        $alias            = 'test_non_analyzed_index';
+        $this->repository = new ElasticSearchRepository(
+            $this->client,
+            new SimpleInterfaceSerializer(),
+            $alias,
+            $type,
+            array($nonAnalyzedTerm)
+        );
+
+        $suffix = uniqid();
+        $index  = $alias . $suffix;
+
+        $this->repository->createIndex($suffix);
+        $this->client->cluster()->health(array('index' => $index, 'wait_for_status' => 'yellow', 'timeout' => '10s'));
+
+        $expectedAlias = [
+            $index => [
+                'aliases' => [
+                    $alias => []
+                ]
+            ]
+        ];
+
+        $this->assertEquals($expectedAlias, $this->client->indices()->getAlias(['name' => $alias]));
     }
 
     public function tearDown()

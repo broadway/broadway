@@ -222,23 +222,30 @@ class ElasticSearchRepository implements RepositoryInterface
      *
      * @return boolean True, if the index was successfully created
      */
-    public function createIndex()
+    public function createIndex($suffix = null)
     {
+        if (null === $suffix) {
+            $suffix = date('YmdHis');
+        }
+
         $class = $this->class;
 
         $indexParams = array(
-            'index' => $this->index,
+            'index' => $this->index . $suffix,
+            'body'  => [
+                'aliases' => [
+                    $this->index => new \stdClass(),
+                ],
+            ],
         );
 
         if (count($this->notAnalyzedFields)) {
-            $indexParams['body'] = array(
-                'mappings' => array(
-                    $class => array(
-                        '_source'    => array(
-                            'enabled' => true
-                        ),
-                        'properties' => $this->createNotAnalyzedFieldsMapping($this->notAnalyzedFields),
-                    )
+            $indexParams['body']['mappings'] = array(
+                $class => array(
+                    '_source'    => array(
+                        'enabled' => true
+                    ),
+                    'properties' => $this->createNotAnalyzedFieldsMapping($this->notAnalyzedFields),
                 )
             );
         }
