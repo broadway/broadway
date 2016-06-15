@@ -11,6 +11,9 @@
 
 namespace Broadway\Saga\Metadata;
 
+use Broadway\Domain\DomainMessage;
+use Broadway\Domain\Metadata as DomainMetadata;
+use Broadway\Saga\State;
 use Broadway\Saga\State\Criteria;
 use Broadway\TestCase;
 
@@ -21,25 +24,51 @@ class StaticallyConfiguredSagaMetadataFactoryTest extends TestCase
      */
     public function it_creates_metadata_using_the_saga_configuration()
     {
-        $this->markTestSkipped('Yay phpunit');
         $metadataFactory = new StaticallyConfiguredSagaMetadataFactory();
         $criteria        = new Criteria(array('id' => 'YoLo'));
 
-        $saga = $this->getMockBuilder('Broadway\Saga\Metadata\StaticallyConfiguredSagaInterface')->getMock();
-        $saga->staticExpects($this->any())
-            ->method('configuration')
-            ->will($this->returnValue(array('StaticallyConfiguredSagaMetadataFactoryTestEvent' => function ($event) use ($criteria) { return $criteria;})));
+        StaticallyConfiguredSagaMock::setConfiguration(array(
+            'StaticallyConfiguredSagaMetadataFactoryTestEvent' => function ($event) use ($criteria) {
+                return $criteria;
+            }
+        ));
+        $saga = new StaticallyConfiguredSagaMock();
 
         $metadata = $metadataFactory->create($saga);
 
         $this->assertInstanceOf('Broadway\Saga\MetadataInterface', $metadata);
 
         $event = new StaticallyConfiguredSagaMetadataFactoryTestEvent();
-        $this->assertTrue($metadata->handles($event));
-        $this->assertEquals($criteria, $metadata->criteria($event));
+        $domainMessage = DomainMessage::recordNow(1, 0, new DomainMetadata(array()), $event);
+
+        $this->assertTrue($metadata->handles($domainMessage));
+        $this->assertEquals($criteria, $metadata->criteria($domainMessage));
     }
 }
 
 class StaticallyConfiguredSagaMetadataFactoryTestEvent
 {
+}
+
+class StaticallyConfiguredSagaMock implements StaticallyConfiguredSagaInterface
+{
+    private static $configuration;
+
+    public static function setConfiguration($configuration)
+    {
+        self::$configuration = $configuration;
+    }
+
+    public static function configuration()
+    {
+        return self::$configuration;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function handle(DomainMessage $domainMessage, State $state)
+    {
+        throw new \RuntimeException('I found not handle anything');
+    }
 }

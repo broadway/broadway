@@ -11,16 +11,26 @@
 
 namespace Broadway\Saga\Metadata;
 
+use Broadway\Domain\DomainMessage;
+use Broadway\Domain\Metadata as DomainMetadata;
 use Broadway\TestCase;
 
 class StaticallyConfiguredSagaMetadataTest extends TestCase
 {
+    /**
+     * @var Metadata
+     */
     private $metadata;
 
     public function setUp()
     {
         $this->metadata = new Metadata(array(
-            'StaticallyConfiguredSagaMetadataTestSagaTestEvent1' => function () { return 'criteria'; },
+            'StaticallyConfiguredSagaMetadataTestSagaTestEvent1' => function ($event, $domainMessage) {
+                self::assertNotNull($event);
+                self::assertInstanceOf('Broadway\Domain\DomainMessage', $domainMessage);
+
+                return 'criteria';
+            },
         ));
     }
 
@@ -31,7 +41,8 @@ class StaticallyConfiguredSagaMetadataTest extends TestCase
     {
         $event = new StaticallyConfiguredSagaMetadataTestSagaTestEvent1();
 
-        $this->assertTrue($this->metadata->handles($event));
+        $domainMessage = $this->createDomainMessageForEvent($event);
+        $this->assertTrue($this->metadata->handles($domainMessage));
     }
 
     /**
@@ -41,7 +52,8 @@ class StaticallyConfiguredSagaMetadataTest extends TestCase
     {
         $event = new StaticallyConfiguredSagaMetadataTestSagaTestEvent2();
 
-        $this->assertFalse($this->metadata->handles($event));
+        $domainMessage = $this->createDomainMessageForEvent($event);
+        $this->assertFalse($this->metadata->handles($domainMessage));
     }
 
     /**
@@ -51,18 +63,25 @@ class StaticallyConfiguredSagaMetadataTest extends TestCase
     {
         $event = new StaticallyConfiguredSagaMetadataTestSagaTestEvent1();
 
-        $this->assertEquals('criteria', $this->metadata->criteria($event));
+        $domainMessage = $this->createDomainMessageForEvent($event);
+        $this->assertEquals('criteria', $this->metadata->criteria($domainMessage));
     }
 
     /**
      * @test
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      */
     public function it_throws_an_exception_if_there_is_no_criteria_for_a_given_event()
     {
         $event = new StaticallyConfiguredSagaMetadataTestSagaTestEvent2();
 
-        $this->metadata->criteria($event);
+        $domainMessage = $this->createDomainMessageForEvent($event);
+        $this->metadata->criteria($domainMessage);
+    }
+
+    private function createDomainMessageForEvent($event)
+    {
+        return DomainMessage::recordNow(1, 0, new DomainMetadata(array()), $event);
     }
 }
 
