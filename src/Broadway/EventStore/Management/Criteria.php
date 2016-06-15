@@ -15,20 +15,20 @@ use Broadway\Domain\DomainMessage;
 
 class Criteria
 {
-    private $aggregateRootTypes = array();
+    private $streamTypes = array();
     private $aggregateRootIds = array();
     private $eventTypes = array();
 
     /**
      * Create a new criteria with the specified aggregate root types
      *
-     * @param array $aggregateRootTypes
+     * @param array $streamTypes
      * @return static
      */
-    public function withAggregateRootTypes(array $aggregateRootTypes)
+    public function withStreamTypes(array $streamTypes)
     {
         $instance = clone($this);
-        $instance->aggregateRootTypes = $aggregateRootTypes;
+        $instance->streamTypes = $streamTypes;
 
         return $instance;
     }
@@ -66,9 +66,9 @@ class Criteria
      *
      * @return string[]
      */
-    public function getAggregateRootTypes()
+    public function getStreamTypes()
     {
-        return $this->aggregateRootTypes;
+        return $this->streamTypes;
     }
 
     /**
@@ -107,12 +107,10 @@ class Criteria
      * @param DomainMessage $domainMessage
      * @return bool
      */
-    public function isMatchedBy(DomainMessage $domainMessage)
+    public function isMatchedBy(DomainMessage $domainMessage, $streamType)
     {
-        if ($this->aggregateRootTypes) {
-            throw new CriteriaNotSupportedException(
-                'Cannot match criteria based on aggregate root types.'
-            );
+        if ($this->streamTypes  && ! in_array($streamType, $this->streamTypes)) {
+            return false;
         }
 
         if ($this->aggregateRootIds && ! in_array($domainMessage->getId(), $this->aggregateRootIds)) {

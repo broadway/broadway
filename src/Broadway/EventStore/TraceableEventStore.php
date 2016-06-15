@@ -30,9 +30,9 @@ class TraceableEventStore implements EventStoreInterface
     /**
      * {@inheritDoc}
      */
-    public function append($id, DomainEventStreamInterface $eventStream)
+    public function append($streamType, $identifier, DomainEventStreamInterface $eventStream)
     {
-        $this->eventStore->append($id, $eventStream);
+        $this->eventStore->append($streamType, $identifier, $eventStream);
 
         if (! $this->tracing) {
             return;
@@ -59,9 +59,9 @@ class TraceableEventStore implements EventStoreInterface
     /**
      * {@inheritDoc}
      */
-    public function load($id)
+    public function load($streamType, $identifier)
     {
-        return $this->eventStore->load($id);
+        return $this->eventStore->load($streamType, $identifier);
     }
 
     /**

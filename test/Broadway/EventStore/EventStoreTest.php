@@ -21,6 +21,8 @@ use Rhumsaa\Uuid\Uuid;
 
 abstract class EventStoreTest extends TestCase
 {
+    const STREAM_TYPE = 'MyAggregate';
+
     protected $eventStore;
 
     /**
@@ -36,9 +38,9 @@ abstract class EventStoreTest extends TestCase
             $this->createDomainMessage($id, 3),
         ));
 
-        $this->eventStore->append($id, $domainEventStream);
+        $this->eventStore->append(self::STREAM_TYPE, $id, $domainEventStream);
 
-        $this->assertEquals($domainEventStream, $this->eventStore->load($id));
+        $this->assertEquals($domainEventStream, $this->eventStore->load(self::STREAM_TYPE, $id));
     }
 
     /**
@@ -53,7 +55,7 @@ abstract class EventStoreTest extends TestCase
             $this->createDomainMessage($id, 1, $dateTime),
             $this->createDomainMessage($id, 2, $dateTime),
         ));
-        $this->eventStore->append($id, $domainEventStream);
+        $this->eventStore->append(self::STREAM_TYPE, $id, $domainEventStream);
         $appendedEventStream = new DomainEventStream(array(
             $this->createDomainMessage($id, 3, $dateTime),
             $this->createDomainMessage($id, 4, $dateTime),
@@ -61,7 +63,7 @@ abstract class EventStoreTest extends TestCase
 
         ));
 
-        $this->eventStore->append($id, $appendedEventStream);
+        $this->eventStore->append(self::STREAM_TYPE, $id, $appendedEventStream);
 
         $expected = new DomainEventStream(array(
             $this->createDomainMessage($id, 0, $dateTime),
@@ -71,7 +73,7 @@ abstract class EventStoreTest extends TestCase
             $this->createDomainMessage($id, 4, $dateTime),
             $this->createDomainMessage($id, 5, $dateTime),
         ));
-        $this->assertEquals($expected, $this->eventStore->load($id));
+        $this->assertEquals($expected, $this->eventStore->load(self::STREAM_TYPE, $id));
     }
 
     /**
@@ -81,7 +83,25 @@ abstract class EventStoreTest extends TestCase
      */
     public function it_throws_an_exception_when_requesting_the_stream_of_a_non_existing_aggregate($id)
     {
-        $this->eventStore->load($id);
+        $this->eventStore->load(self::STREAM_TYPE, $id);
+    }
+
+    /**
+     * @test
+     * @dataProvider idDataProvider
+     * @expectedException Broadway\EventStore\EventStreamNotFoundException
+     */
+    public function it_throws_when_loading_a_stream_for_a_different_stream_type($id)
+    {
+        $dateTime          = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
+        $domainEventStream = new DomainEventStream(array(
+            $this->createDomainMessage($id, 0, $dateTime),
+            $this->createDomainMessage($id, 1, $dateTime),
+            $this->createDomainMessage($id, 2, $dateTime),
+        ));
+        $this->eventStore->append(self::STREAM_TYPE, $id, $domainEventStream);
+
+        $this->eventStore->load('SomeOtherStream', $id);
     }
 
     /**
@@ -93,10 +113,10 @@ abstract class EventStoreTest extends TestCase
     {
         $domainMessage     = $this->createDomainMessage($id, 0);
         $baseStream        = new DomainEventStream(array($domainMessage));
-        $this->eventStore->append($id, $baseStream);
+        $this->eventStore->append(self::STREAM_TYPE, $id, $baseStream);
         $appendedEventStream = new DomainEventStream(array($domainMessage));
 
-        $this->eventStore->append($id, $appendedEventStream);
+        $this->eventStore->append(self::STREAM_TYPE, $id, $appendedEventStream);
     }
 
     /**
@@ -117,7 +137,7 @@ abstract class EventStoreTest extends TestCase
             $this->createDomainMessage($id, 3),
         ));
 
-        $this->eventStore->append($id, $domainEventStream);
+        $this->eventStore->append(self::STREAM_TYPE, $id, $domainEventStream);
     }
 
     public function idDataProvider()

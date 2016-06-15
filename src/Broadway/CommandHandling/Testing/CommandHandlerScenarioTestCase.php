@@ -43,8 +43,13 @@ abstract class CommandHandlerScenarioTestCase extends TestCase
         $eventBus       = new SimpleEventBus();
         $commandHandler = $this->createCommandHandler($eventStore, $eventBus);
 
-        return new Scenario($this, $eventStore, $commandHandler);
+        return new Scenario($this, $eventStore, $commandHandler, $this->getStreamType());
     }
+
+    /**
+     * @return string
+     */
+    abstract protected function getStreamType();
 
     /**
      * Create a command handler for the given scenario test case.

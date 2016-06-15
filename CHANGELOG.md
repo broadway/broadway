@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.10.x
+
+- The event store now has a value to identify the stream. Sofar we only had the uuid to identify each instance of a stream.
+
 ## v0.9.x
 
 #### BC breaks

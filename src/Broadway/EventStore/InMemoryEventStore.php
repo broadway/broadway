@@ -28,33 +28,35 @@ class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInt
     /**
      * {@inheritDoc}
      */
-    public function load($id)
+    public function load($streamType, $identifier)
     {
-        $id = (string) $id;
+        $identifier = (string) $identifier;
 
-        if (isset($this->events[$id])) {
-            return new DomainEventStream($this->events[$id]);
+        if (isset($this->events[$streamType][$identifier])) {
+            return new DomainEventStream($this->events[$streamType][$identifier]);
         }
 
-        throw new EventStreamNotFoundException(sprintf('EventStream not found for aggregate with id %s', $id));
+        throw new EventStreamNotFoundException(
+            sprintf('EventStream not found for aggregate with id %s and type %s', $identifier, $streamType)
+        );
     }
 
     /**
      * {@inheritDoc}
      */
-    public function append($id, DomainEventStreamInterface $eventStream)
+    public function append($streamType, $identifier, DomainEventStreamInterface $eventStream)
     {
-        $id = (string) $id;
+        $identifier = (string) $identifier;
 
-        if (! isset($this->events[$id])) {
-            $this->events[$id] = array();
+        if (! isset($this->events[$streamType][$identifier])) {
+            $this->events[$streamType][$identifier] = array();
         }
 
         foreach ($eventStream as $event) {
             $playhead = $event->getPlayhead();
-            $this->assertPlayhead($this->events[$id], $playhead);
+            $this->assertPlayhead($this->events[$streamType][$identifier], $playhead);
 
-            $this->events[$id][$playhead] = $event;
+            $this->events[$streamType][$identifier][$playhead] = $event;
         }
     }
 
@@ -69,13 +71,15 @@ class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInt
 
     public function visitEvents(Criteria $criteria, EventVisitorInterface $eventVisitor)
     {
-        foreach ($this->events as $id => $events) {
-            foreach ($events as $event) {
-                if (! $criteria->isMatchedBy($event)) {
-                    continue;
-                }
+        foreach ($this->events as $streamType => $eventsPerId) {
+            foreach ($eventsPerId as $id => $events) {
+                foreach ($events as $event) {
+                    if (! $criteria->isMatchedBy($event, $streamType)) {
+                        continue;
+                    }
 
-                $eventVisitor->doWithEvent($event);
+                    $eventVisitor->doWithEvent($event);
+                }
             }
         }
     }
