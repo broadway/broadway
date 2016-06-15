@@ -22,7 +22,7 @@ use Broadway\ReadModel\TransferableInterface;
  */
 class InMemoryRepository implements RepositoryInterface, TransferableInterface
 {
-    private $data = array();
+    protected $data = array();
 
     /**
      * {@inheritDoc}
