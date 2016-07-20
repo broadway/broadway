@@ -31,12 +31,12 @@ class CommandMetadataEnricher implements MetadataEnricherInterface
             return $metadata;
         }
 
-        $data = array(
-            'console' => array(
+        $data = [
+            'console' => [
                 'command'   => get_class($this->event->getCommand()),
                 'arguments' => $this->event->getInput()->__toString()
-            )
-        );
+            ]
+        ];
         $newMetadata = new Metadata($data);
 
         return $metadata->merge($newMetadata);

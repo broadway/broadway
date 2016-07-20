@@ -41,13 +41,13 @@ class CommandHandlerTest extends TestCase
 
     public function unresolvableCommands()
     {
-        return array(
-            array(null),
-            array(false),
-            array('foo'),
-            array(1),
-            array(array('foo', 'bar'))
-        );
+        return [
+            [null],
+            [false],
+            ['foo'],
+            [1],
+            [['foo', 'bar']]
+        ];
     }
 }
 

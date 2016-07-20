@@ -29,12 +29,12 @@ abstract class EventStoreTest extends TestCase
      */
     public function it_creates_a_new_entry_when_id_is_new($id)
     {
-        $domainEventStream = new DomainEventStream(array(
+        $domainEventStream = new DomainEventStream([
             $this->createDomainMessage($id, 0),
             $this->createDomainMessage($id, 1),
             $this->createDomainMessage($id, 2),
             $this->createDomainMessage($id, 3),
-        ));
+        ]);
 
         $this->eventStore->append($id, $domainEventStream);
 
@@ -48,29 +48,29 @@ abstract class EventStoreTest extends TestCase
     public function it_appends_to_an_already_existing_stream($id)
     {
         $dateTime          = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
-        $domainEventStream = new DomainEventStream(array(
+        $domainEventStream = new DomainEventStream([
             $this->createDomainMessage($id, 0, $dateTime),
             $this->createDomainMessage($id, 1, $dateTime),
             $this->createDomainMessage($id, 2, $dateTime),
-        ));
+        ]);
         $this->eventStore->append($id, $domainEventStream);
-        $appendedEventStream = new DomainEventStream(array(
+        $appendedEventStream = new DomainEventStream([
             $this->createDomainMessage($id, 3, $dateTime),
             $this->createDomainMessage($id, 4, $dateTime),
             $this->createDomainMessage($id, 5, $dateTime),
 
-        ));
+        ]);
 
         $this->eventStore->append($id, $appendedEventStream);
 
-        $expected = new DomainEventStream(array(
+        $expected = new DomainEventStream([
             $this->createDomainMessage($id, 0, $dateTime),
             $this->createDomainMessage($id, 1, $dateTime),
             $this->createDomainMessage($id, 2, $dateTime),
             $this->createDomainMessage($id, 3, $dateTime),
             $this->createDomainMessage($id, 4, $dateTime),
             $this->createDomainMessage($id, 5, $dateTime),
-        ));
+        ]);
         $this->assertEquals($expected, $this->eventStore->load($id));
     }
 
@@ -92,9 +92,9 @@ abstract class EventStoreTest extends TestCase
     public function it_throws_an_exception_when_appending_a_duplicate_playhead($id)
     {
         $domainMessage     = $this->createDomainMessage($id, 0);
-        $baseStream        = new DomainEventStream(array($domainMessage));
+        $baseStream        = new DomainEventStream([$domainMessage]);
         $this->eventStore->append($id, $baseStream);
-        $appendedEventStream = new DomainEventStream(array($domainMessage));
+        $appendedEventStream = new DomainEventStream([$domainMessage]);
 
         $this->eventStore->append($id, $appendedEventStream);
     }
@@ -110,12 +110,12 @@ abstract class EventStoreTest extends TestCase
             'Yolntbyaac' //You only live nine times because you are a cat
         );
 
-        $domainEventStream = new DomainEventStream(array(
+        $domainEventStream = new DomainEventStream([
             $this->createDomainMessage($id, 0),
             $this->createDomainMessage($id, 1),
             $this->createDomainMessage($id, 2),
             $this->createDomainMessage($id, 3),
-        ));
+        ]);
 
         $this->eventStore->append($id, $domainEventStream);
     }
@@ -124,27 +124,27 @@ abstract class EventStoreTest extends TestCase
     {
         $uuid = Uuid::uuid4();
 
-        return array(
-            'Simple String' => array(
+        return [
+            'Simple String' => [
                 'Yolntbyaac', //You only live nine times because you are a cat
-            ),
-            'Identitiy' => array(
+            ],
+            'Identitiy' => [
                 new StringIdentity(
                     'Yolntbyaac' //You only live nine times because you are a cat
                 ),
-            ),
-            'Integer' => array(
+            ],
+            'Integer' => [
                 42, // test an int
-            ),
-            'UUID String' => array(
+            ],
+            'UUID String' => [
                 $uuid->toString(), // test UUID
-            ),
-        );
+            ],
+        ];
     }
 
     protected function createDomainMessage($id, $playhead, $recordedOn = null)
     {
-        return new DomainMessage($id, $playhead, new MetaData(array()), new Event(), $recordedOn ? $recordedOn : DateTime::now());
+        return new DomainMessage($id, $playhead, new MetaData([]), new Event(), $recordedOn ? $recordedOn : DateTime::now());
     }
 }
 
@@ -157,7 +157,7 @@ class Event implements SerializableInterface
 
     public function serialize()
     {
-        return array();
+        return [];
     }
 }
 

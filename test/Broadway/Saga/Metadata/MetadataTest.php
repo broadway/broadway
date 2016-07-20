@@ -19,9 +19,9 @@ class StaticallyConfiguredSagaMetadataTest extends TestCase
 
     public function setUp()
     {
-        $this->metadata = new Metadata(array(
+        $this->metadata = new Metadata([
             'StaticallyConfiguredSagaMetadataTestSagaTestEvent1' => function () { return 'criteria'; },
-        ));
+        ]);
     }
 
     /**

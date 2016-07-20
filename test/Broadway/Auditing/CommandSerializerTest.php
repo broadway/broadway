@@ -33,11 +33,11 @@ class CommandSerializerTest extends TestCase
 
         $this->assertTrue(is_array($serializedCommand));
 
-        $expected = array(
+        $expected = [
             'public'                                 => 'public',
             '-*-protected'                           => 'protected',
             '-Broadway\\Auditing\\MyCommand-private' => 'private'
-        );
+        ];
 
         $this->assertEquals($expected, $serializedCommand);
     }

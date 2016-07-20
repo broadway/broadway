@@ -15,7 +15,6 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -76,7 +75,6 @@ class BroadwayExtension extends Extension
                 $database = 'broadway_%kernel.environment%%broadway.saga.mongodb.storage_suffix%';
 
                 if (isset($config['mongodb']['connection'])) {
-
                     if (isset($config['mongodb']['connection']['database'])) {
                         $database = $config['mongodb']['connection']['database'];
                     }
@@ -165,9 +163,9 @@ class BroadwayExtension extends Extension
     {
         $definition = $container->findDefinition('broadway.elasticsearch.client');
 
-        $definition->setArguments(array(
+        $definition->setArguments([
              $config
-        ));
+        ]);
 
         $container->setAlias(
             'broadway.read_model.repository_factory',

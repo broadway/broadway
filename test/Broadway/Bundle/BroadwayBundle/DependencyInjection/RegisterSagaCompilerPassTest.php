@@ -2,11 +2,9 @@
 
 namespace Broadway\Bundle\BroadwayBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
-use PHPUnit_Framework_TestCase;
 
 class RegisterSagaCompilerPassTest extends PHPUnit_Framework_TestCase
 {
@@ -19,7 +17,7 @@ class RegisterSagaCompilerPassTest extends PHPUnit_Framework_TestCase
 
         $this->container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
             ->disableOriginalConstructor()
-            ->setMethods(array('has', 'get', 'findTaggedServiceIds', 'findDefinition'))
+            ->setMethods(['has', 'get', 'findTaggedServiceIds', 'findDefinition'])
             ->getMock();
     }
 
@@ -47,13 +45,13 @@ class RegisterSagaCompilerPassTest extends PHPUnit_Framework_TestCase
         $this->container->expects($this->once())
             ->method('findtaggedserviceids')
             ->with('acme.saga')
-            ->will($this->returnvalue(array(
-                'acme.sample_saga' => array('acme.saga' => array('type' => 'my_saga'))
-            )));
+            ->will($this->returnvalue([
+                'acme.sample_saga' => ['acme.saga' => ['type' => 'my_saga']]
+            ]));
 
         $this->definition->expects($this->once())
             ->method('replaceArgument')
-            ->with(1, array('my_saga' => new Reference('acme.sample_saga')))
+            ->with(1, ['my_saga' => new Reference('acme.sample_saga')])
             ->will($this->returnSelf());
 
         $this->compilerPass->process($this->container);
@@ -69,7 +67,7 @@ class RegisterSagaCompilerPassTest extends PHPUnit_Framework_TestCase
         $this->container->expects($this->once())
             ->method('findtaggedserviceids')
             ->with('acme.saga')
-            ->will($this->returnvalue(array()));
+            ->will($this->returnvalue([]));
 
         $this->definition->expects($this->never())
             ->method('replaceArgument');
@@ -90,9 +88,9 @@ class RegisterSagaCompilerPassTest extends PHPUnit_Framework_TestCase
         $this->container->expects($this->once())
             ->method('findtaggedserviceids')
             ->with('acme.saga')
-            ->will($this->returnvalue(array(
-                'acme.sample_saga' => array('acme.saga' => array('type' => 'my_saga'))
-            )));
+            ->will($this->returnvalue([
+                'acme.sample_saga' => ['acme.saga' => ['type' => 'my_saga']]
+            ]));
 
         $this->definition->expects($this->once())
             ->method('replaceArgument')

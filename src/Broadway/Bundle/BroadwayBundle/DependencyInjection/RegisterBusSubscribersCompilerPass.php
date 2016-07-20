@@ -63,7 +63,7 @@ class RegisterBusSubscribersCompilerPass implements CompilerPassInterface
                 );
             }
 
-            $definition->addMethodCall('subscribe', array(new Reference($id)));
+            $definition->addMethodCall('subscribe', [new Reference($id)]);
         }
     }
 }

@@ -20,10 +20,10 @@ class MetadataTest extends TestCase
      */
     public function it_contains_values_from_both_instances_after_merge()
     {
-        $m1 = new Metadata(array('foo' => 42));
-        $m2 = new Metadata(array('bar' => 1337));
+        $m1 = new Metadata(['foo' => 42]);
+        $m2 = new Metadata(['bar' => 1337]);
 
-        $expected = new Metadata(array('foo' => 42, 'bar' => 1337));
+        $expected = new Metadata(['foo' => 42, 'bar' => 1337]);
         $this->assertEquals($expected, $m1->merge($m2));
     }
 
@@ -32,10 +32,10 @@ class MetadataTest extends TestCase
      */
     public function it_overrides_values_with_data_from_other_instance_on_merge()
     {
-        $m1 = new Metadata(array('foo' => 42));
-        $m2 = new Metadata(array('foo' => 1337));
+        $m1 = new Metadata(['foo' => 42]);
+        $m2 = new Metadata(['foo' => 1337]);
 
-        $expected = new Metadata(array('foo' => 1337));
+        $expected = new Metadata(['foo' => 1337]);
         $this->assertEquals($expected, $m1->merge($m2));
     }
 
@@ -46,7 +46,7 @@ class MetadataTest extends TestCase
     {
         $m1 = Metadata::kv('foo', 42);
 
-        $expected = new Metadata(array('foo' => 42));
+        $expected = new Metadata(['foo' => 42]);
         $this->assertEquals($expected, $m1);
     }
 }

@@ -120,7 +120,7 @@ class Job extends Broadway\EventSourcing\EventSourcedEntity
             return;
         }
 
-        $this->title = $event->title;
+        $this->title       = $event->title;
         $this->description = $event->description;
     }
 }

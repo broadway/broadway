@@ -15,19 +15,19 @@ use Broadway\Domain\DomainMessage;
 
 class Criteria
 {
-    private $aggregateRootTypes = array();
-    private $aggregateRootIds = array();
-    private $eventTypes = array();
+    private $aggregateRootTypes = [];
+    private $aggregateRootIds   = [];
+    private $eventTypes         = [];
 
     /**
      * Create a new criteria with the specified aggregate root types
      *
-     * @param array $aggregateRootTypes
+     * @param  array  $aggregateRootTypes
      * @return static
      */
     public function withAggregateRootTypes(array $aggregateRootTypes)
     {
-        $instance = clone($this);
+        $instance                     = clone($this);
         $instance->aggregateRootTypes = $aggregateRootTypes;
 
         return $instance;
@@ -36,12 +36,12 @@ class Criteria
     /**
      * Create a new criteria with the specified aggregate root IDs
      *
-     * @param array $aggregateRootIds
+     * @param  array    $aggregateRootIds
      * @return Criteria
      */
     public function withAggregateRootIds(array $aggregateRootIds)
     {
-        $instance = clone($this);
+        $instance                   = clone($this);
         $instance->aggregateRootIds = $aggregateRootIds;
 
         return $instance;
@@ -50,12 +50,12 @@ class Criteria
     /**
      * Create a new criteria with the specified event types
      *
-     * @param array $eventTypes
+     * @param  array    $eventTypes
      * @return Criteria
      */
     public function withEventTypes(array $eventTypes)
     {
-        $instance = clone($this);
+        $instance             = clone($this);
         $instance->eventTypes = $eventTypes;
 
         return $instance;
@@ -104,7 +104,7 @@ class Criteria
     /**
      * Determine if a domain message is matched by this criteria
      *
-     * @param DomainMessage $domainMessage
+     * @param  DomainMessage $domainMessage
      * @return bool
      */
     public function isMatchedBy(DomainMessage $domainMessage)

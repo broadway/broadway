@@ -20,10 +20,10 @@ class DomainEventStreamTest extends TestCase
      */
     public function it_returns_all_events_when_traversing()
     {
-        $expectedEvents    = array('event1', 'event2', 'event42');
+        $expectedEvents    = ['event1', 'event2', 'event42'];
         $domainEventStream = new DomainEventStream($expectedEvents);
 
-        $events = array();
+        $events = [];
         foreach ($domainEventStream as $event) {
             $events[] = $event;
         }

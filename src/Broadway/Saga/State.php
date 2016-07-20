@@ -26,7 +26,7 @@ class State implements SerializableInterface
 {
     private $done = false;
     private $id;
-    private $values = array();
+    private $values = [];
 
     /**
      * @param string $id Unique identifier for the state object
@@ -88,7 +88,7 @@ class State implements SerializableInterface
      */
     public function serialize()
     {
-        return array('id' => $this->getId(), 'values' => $this->values, 'done' => $this->isDone());
+        return ['id' => $this->getId(), 'values' => $this->values, 'done' => $this->isDone()];
     }
 
     /**

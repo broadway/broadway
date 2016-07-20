@@ -32,7 +32,7 @@ abstract class SagaScenarioTestCase extends TestCase
     /**
      * Create the saga you want to test in this test case
      *
-     * @param CommandBusInterface $commandBus
+     * @param  CommandBusInterface $commandBus
      * @return SagaInterface
      */
     abstract protected function createSaga(CommandBusInterface $commandBus);
@@ -51,7 +51,7 @@ abstract class SagaScenarioTestCase extends TestCase
         $sagaStateRepository = new InMemoryRepository();
         $sagaManager         = new MultipleSagaManager(
             $sagaStateRepository,
-            array($saga),
+            [$saga],
             new StateManager($sagaStateRepository, new Version4Generator()),
             new StaticallyConfiguredSagaMetadataFactory(),
             new EventDispatcher()

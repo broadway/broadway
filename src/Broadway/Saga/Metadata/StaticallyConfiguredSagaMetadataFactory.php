@@ -20,7 +20,7 @@ class StaticallyConfiguredSagaMetadataFactory implements MetadataFactoryInterfac
      */
     public function create($saga)
     {
-        $requiredInterface = 'Broadway\Saga\Metadata\StaticallyConfiguredSagaInterface';
+        $requiredInterface = StaticallyConfiguredSagaInterface::class;
 
         if (! is_subclass_of($saga, $requiredInterface)) {
             throw new RuntimeException(

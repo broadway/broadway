@@ -29,7 +29,7 @@ class SimpleEventBusTest extends TestCase
      */
     public function it_subscribes_an_event_listener()
     {
-        $domainMessage = $this->createDomainMessage(array('foo' => 'bar'));
+        $domainMessage = $this->createDomainMessage(['foo' => 'bar']);
 
         $eventListener = $this->createEventListenerMock();
         $eventListener
@@ -39,7 +39,7 @@ class SimpleEventBusTest extends TestCase
 
         $this->eventBus->subscribe($eventListener);
 
-        $this->eventBus->publish(new DomainEventStream(array($domainMessage)));
+        $this->eventBus->publish(new DomainEventStream([$domainMessage]));
     }
 
     /**
@@ -47,10 +47,10 @@ class SimpleEventBusTest extends TestCase
      */
     public function it_publishes_events_to_subscribed_event_listeners()
     {
-        $domainMessage1 = $this->createDomainMessage(array());
-        $domainMessage2 = $this->createDomainMessage(array());
+        $domainMessage1 = $this->createDomainMessage([]);
+        $domainMessage2 = $this->createDomainMessage([]);
 
-        $domainEventStream = new DomainEventStream(array($domainMessage1, $domainMessage2));
+        $domainEventStream = new DomainEventStream([$domainMessage1, $domainMessage2]);
 
         $eventListener1 = $this->createEventListenerMock();
         $eventListener1
@@ -82,12 +82,12 @@ class SimpleEventBusTest extends TestCase
      */
     public function it_does_not_dispatch_new_events_before_all_listeners_have_run()
     {
-        $domainMessage1 = $this->createDomainMessage(array('foo' => 'bar'));
-        $domainMessage2 = $this->createDomainMessage(array('foo' => 'bas'));
+        $domainMessage1 = $this->createDomainMessage(['foo' => 'bar']);
+        $domainMessage2 = $this->createDomainMessage(['foo' => 'bas']);
 
-        $domainEventStream = new DomainEventStream(array($domainMessage1));
+        $domainEventStream = new DomainEventStream([$domainMessage1]);
 
-        $eventListener1 = new SimpleEventBusTestListener($this->eventBus, new DomainEventStream(array($domainMessage2)));
+        $eventListener1 = new SimpleEventBusTestListener($this->eventBus, new DomainEventStream([$domainMessage2]));
 
         $eventListener2 = $this->createEventListenerMock();
         $eventListener2
@@ -109,11 +109,11 @@ class SimpleEventBusTest extends TestCase
      */
     public function it_should_still_publish_events_after_exception()
     {
-        $domainMessage1 = $this->createDomainMessage(array('foo' => 'bar'));
-        $domainMessage2 = $this->createDomainMessage(array('foo' => 'bas'));
+        $domainMessage1 = $this->createDomainMessage(['foo' => 'bar']);
+        $domainMessage2 = $this->createDomainMessage(['foo' => 'bas']);
 
-        $domainEventStream1 = new DomainEventStream(array($domainMessage1));
-        $domainEventStream2 = new DomainEventStream(array($domainMessage2));
+        $domainEventStream1 = new DomainEventStream([$domainMessage1]);
+        $domainEventStream2 = new DomainEventStream([$domainMessage2]);
 
         $eventListener = $this->createEventListenerMock();
         $eventListener
@@ -138,7 +138,6 @@ class SimpleEventBusTest extends TestCase
         $this->eventBus->publish($domainEventStream2);
     }
 
-
     private function createEventListenerMock()
     {
         return $this->getMockBuilder('Broadway\EventHandling\EventListenerInterface')->getMock();
@@ -146,7 +145,7 @@ class SimpleEventBusTest extends TestCase
 
     private function createDomainMessage($payload)
     {
-        return DomainMessage::recordNow(1, 1, new Metadata(array()), new SimpleEventBusTestEvent($payload));
+        return DomainMessage::recordNow(1, 1, new Metadata([]), new SimpleEventBusTestEvent($payload));
     }
 }
 

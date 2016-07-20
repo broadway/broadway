@@ -29,7 +29,7 @@ class EventSourcingRepository implements RepositoryInterface
     private $eventStore;
     private $eventBus;
     private $aggregateClass;
-    private $eventStreamDecorators = array();
+    private $eventStreamDecorators = [];
     private $aggregateFactory;
 
     /**
@@ -44,7 +44,7 @@ class EventSourcingRepository implements RepositoryInterface
         EventBusInterface $eventBus,
         $aggregateClass,
         AggregateFactoryInterface $aggregateFactory,
-        array $eventStreamDecorators = array()
+        array $eventStreamDecorators = []
     ) {
         $this->assertExtendsEventSourcedAggregateRoot($aggregateClass);
 
@@ -99,7 +99,7 @@ class EventSourcingRepository implements RepositoryInterface
     {
         Assert::subclassOf(
             $class,
-            'Broadway\EventSourcing\EventSourcedAggregateRoot',
+            EventSourcedAggregateRoot::class,
             sprintf("Class '%s' is not an EventSourcedAggregateRoot.", $class)
         );
     }

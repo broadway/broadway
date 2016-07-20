@@ -22,7 +22,7 @@ class SagaMetadataEnricherTest extends TestCase
     public function setUp()
     {
         $this->sagaMetadataEnricher = new SagaMetadataEnricher();
-        $this->metadata             = new Metadata(array('yolo' => 'tralelo'));
+        $this->metadata             = new Metadata(['yolo' => 'tralelo']);
     }
 
     /**
@@ -36,7 +36,7 @@ class SagaMetadataEnricherTest extends TestCase
 
         $actual = $this->sagaMetadataEnricher->enrich($this->metadata);
 
-        $expected = $this->metadata->merge(Metadata::kv('saga', array('type' => $type, 'state_id' => $id)));
+        $expected = $this->metadata->merge(Metadata::kv('saga', ['type' => $type, 'state_id' => $id]));
         $this->assertEquals($expected, $actual);
     }
 
@@ -50,7 +50,7 @@ class SagaMetadataEnricherTest extends TestCase
 
         $actual = $this->sagaMetadataEnricher->enrich($this->metadata);
 
-        $expected = $this->metadata->merge(Metadata::kv('saga', array('type' => 'type2', 'state_id' => 'id2')));
+        $expected = $this->metadata->merge(Metadata::kv('saga', ['type' => 'type2', 'state_id' => 'id2']));
         $this->assertEquals($expected, $actual);
     }
 
@@ -64,7 +64,7 @@ class SagaMetadataEnricherTest extends TestCase
         $this->sagaMetadataEnricher->enrich($this->metadata);
         $actual = $this->sagaMetadataEnricher->enrich($this->metadata);
 
-        $expected = $this->metadata->merge(Metadata::kv('saga', array('type' => 'type', 'state_id' => 'id')));
+        $expected = $this->metadata->merge(Metadata::kv('saga', ['type' => 'type', 'state_id' => 'id']));
         $this->assertEquals($expected, $actual);
     }
 
@@ -74,7 +74,7 @@ class SagaMetadataEnricherTest extends TestCase
             return $metadata;
         }
 
-        $newMetadata = new Metadata(array(array('saga' => $this->sagaData)));
+        $newMetadata = new Metadata([['saga' => $this->sagaData]]);
         $metadata    = $metadata->merge($newMetadata);
 
         return $metadata;

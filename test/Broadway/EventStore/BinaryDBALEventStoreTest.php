@@ -32,7 +32,7 @@ class BinaryDBALEventStoreTest extends DBALEventStoreTest
             $this->markTestSkipped('Binary type is only available for Doctrine >= v2.5');
         }
 
-        $connection       = DriverManager::getConnection(array('driver' => 'pdo_sqlite', 'memory' => true));
+        $connection       = DriverManager::getConnection(['driver' => 'pdo_sqlite', 'memory' => true]);
         $schemaManager    = $connection->getSchemaManager();
         $schema           = $schemaManager->createSchema();
         $this->eventStore = new DBALEventStore($connection, new SimpleInterfaceSerializer(), new SimpleInterfaceSerializer(), 'events', true);
@@ -62,9 +62,9 @@ class BinaryDBALEventStoreTest extends DBALEventStoreTest
     public function it_throws_an_exception_when_an_id_is_no_uuid_in_binary_mode()
     {
         $id                = 'bleeh';
-        $domainEventStream = new DomainEventStream(array(
+        $domainEventStream = new DomainEventStream([
             $this->createDomainMessage($id, 0),
-        ));
+        ]);
 
         $this->eventStore->append($id, $domainEventStream);
     }
@@ -73,10 +73,10 @@ class BinaryDBALEventStoreTest extends DBALEventStoreTest
     {
         $uuid = Uuid::uuid4();
 
-        return array(
-            'UUID String' => array(
+        return [
+            'UUID String' => [
                 $uuid->toString(), // test UUID
-            ),
-        );
+            ],
+        ];
     }
 }

@@ -80,8 +80,8 @@ abstract class RepositoryTestCase extends TestCase
         $this->repository->save($model1);
         $this->repository->save($model2);
 
-        $this->assertEquals(array($model1), $this->repository->findBy(array('name' => 'othillo')));
-        $this->assertEquals(array($model2), $this->repository->findBy(array('name' => 'asm89')));
+        $this->assertEquals([$model1], $this->repository->findBy(['name' => 'othillo']));
+        $this->assertEquals([$model2], $this->repository->findBy(['name' => 'asm89']));
     }
 
     /**
@@ -89,14 +89,14 @@ abstract class RepositoryTestCase extends TestCase
      */
     public function it_finds_by_one_element_in_array()
     {
-        $model1 = $this->createReadModel('1', 'othillo', 'bar', array('elem1', 'elem2'));
-        $model2 = $this->createReadModel('2', 'asm89', 'baz', array('elem3', 'elem4'));
+        $model1 = $this->createReadModel('1', 'othillo', 'bar', ['elem1', 'elem2']);
+        $model2 = $this->createReadModel('2', 'asm89', 'baz', ['elem3', 'elem4']);
 
         $this->repository->save($model1);
         $this->repository->save($model2);
 
-        $this->assertEquals(array($model1), $this->repository->findBy(array('array' => 'elem1')));
-        $this->assertEquals(array($model2), $this->repository->findBy(array('array' => 'elem4')));
+        $this->assertEquals([$model1], $this->repository->findBy(['array' => 'elem1']));
+        $this->assertEquals([$model2], $this->repository->findBy(['array' => 'elem4']));
     }
 
     /**
@@ -110,8 +110,8 @@ abstract class RepositoryTestCase extends TestCase
         $this->repository->save($model1);
         $this->repository->save($model2);
 
-        $this->assertEquals(array($model1), $this->repository->findBy(array('name' => 'othillo', 'foo'=>'bar')));
-        $this->assertEquals(array($model2), $this->repository->findBy(array('name' => 'asm89', 'foo'=>'baz')));
+        $this->assertEquals([$model1], $this->repository->findBy(['name' => 'othillo', 'foo'=>'bar']));
+        $this->assertEquals([$model2], $this->repository->findBy(['name' => 'asm89', 'foo'=>'baz']));
     }
 
     /**
@@ -125,8 +125,8 @@ abstract class RepositoryTestCase extends TestCase
         $this->repository->save($model1);
         $this->repository->save($model2);
 
-        $this->assertEquals(array(), $this->repository->findBy(array('name' => 'othillo', 'foo'=>'baz')));
-        $this->assertEquals(array(), $this->repository->findBy(array('name' => 'asm89', 'foo'=>'bar')));
+        $this->assertEquals([], $this->repository->findBy(['name' => 'othillo', 'foo'=>'baz']));
+        $this->assertEquals([], $this->repository->findBy(['name' => 'asm89', 'foo'=>'bar']));
     }
 
     /**
@@ -140,7 +140,7 @@ abstract class RepositoryTestCase extends TestCase
         $this->repository->save($model1);
         $this->repository->save($model2);
 
-        $this->assertEquals(array(), $this->repository->findBy(array('name' => 'Jan')));
+        $this->assertEquals([], $this->repository->findBy(['name' => 'Jan']));
     }
 
     /**
@@ -152,7 +152,7 @@ abstract class RepositoryTestCase extends TestCase
 
         $this->repository->save($model);
 
-        $this->assertEquals(array(), $this->repository->findBy(array()));
+        $this->assertEquals([], $this->repository->findBy([]));
     }
 
     /**
@@ -160,12 +160,12 @@ abstract class RepositoryTestCase extends TestCase
      */
     public function it_removes_a_readmodel()
     {
-        $model = $this->createReadModel('1', 'John', 'Foo', array('foo' => 'bar'));
+        $model = $this->createReadModel('1', 'John', 'Foo', ['foo' => 'bar']);
         $this->repository->save($model);
 
         $this->repository->remove('1');
 
-        $this->assertEquals(array(), $this->repository->findAll());
+        $this->assertEquals([], $this->repository->findAll());
     }
 
     /**
@@ -175,15 +175,15 @@ abstract class RepositoryTestCase extends TestCase
     {
         $id = new TestReadModelId('175');
 
-        $model = $this->createReadModel($id, 'Bado', 'Foo', array('foo' => 'bar'));
+        $model = $this->createReadModel($id, 'Bado', 'Foo', ['foo' => 'bar']);
         $this->repository->save($model);
 
         $this->repository->remove($id);
 
-        $this->assertEquals(array(), $this->repository->findAll());
+        $this->assertEquals([], $this->repository->findAll());
     }
 
-    private function createReadModel($id, $name, $foo, array $array = array())
+    private function createReadModel($id, $name, $foo, array $array = [])
     {
         return new RepositoryTestReadModel($id, $name, $foo, $array);
     }

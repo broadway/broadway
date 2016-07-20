@@ -16,6 +16,9 @@ namespace Broadway\EventSourcing;
  */
 abstract class EventSourcedEntity implements EventSourcedEntityInterface
 {
+    /**
+     * @var EventSourcedAggregateRoot|null
+     */
     private $aggregateRoot;
 
     /**
@@ -67,11 +70,11 @@ abstract class EventSourcedEntity implements EventSourcedEntityInterface
     /**
      * Returns all child entities
      *
-     * @return array
+     * @return EventSourcedEntityInterface[]
      */
     protected function getChildEntities()
     {
-        return array();
+        return [];
     }
 
     private function getApplyMethod($event)

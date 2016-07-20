@@ -29,7 +29,7 @@ class RegisterBusSubscribersCompilerPassTest extends TestCase
     public function setUp()
     {
         $this->builder    = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
-            ->setMethods(array('getParameterBag', 'getDefinition', 'hasDefinition', 'findDefinition', 'findTaggedServiceIds'))
+            ->setMethods(['getParameterBag', 'getDefinition', 'hasDefinition', 'findDefinition', 'findTaggedServiceIds'])
             ->getMock();
         $this->commandBus = $this->getMock('Symfony\Component\DependencyInjection\Definition');
     }
@@ -42,9 +42,9 @@ class RegisterBusSubscribersCompilerPassTest extends TestCase
     public function command_handler_must_have_proper_interface()
     {
         // one service, not implementing any interface
-        $services = array(
-            'my_fake_command_handler' => array(),
-        );
+        $services = [
+            'my_fake_command_handler' => [],
+        ];
 
         $this->expects_bus_definition();
         $this->expects_tagged_services_and_returns($services);
@@ -60,9 +60,9 @@ class RegisterBusSubscribersCompilerPassTest extends TestCase
     public function it_subscribes_command_handler()
     {
         $commandHandlerId = 'my_command_handler';
-        $services         = array(
-            $commandHandlerId => array(),
-        );
+        $services         = [
+            $commandHandlerId => [],
+        ];
 
         $this->expects_bus_definition();
         $this->expects_tagged_services_and_returns($services);
@@ -119,7 +119,7 @@ class RegisterBusSubscribersCompilerPassTest extends TestCase
     {
         $this->commandBus->expects($this->once())
             ->method('addMethodCall')
-            ->with('subscribe', array(new Reference($commandHandlerId)));
+            ->with('subscribe', [new Reference($commandHandlerId)]);
     }
 }
 

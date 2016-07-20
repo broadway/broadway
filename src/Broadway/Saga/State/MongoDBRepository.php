@@ -59,7 +59,7 @@ class MongoDBRepository implements RepositoryInterface
     private function createQuery(Criteria $criteria, $sagaId)
     {
         $comparisons = $criteria->getComparisons();
-        $wheres      = array();
+        $wheres      = [];
 
         foreach ($comparisons as $key => $value) {
             $wheres['values.' . $key] = $value;
@@ -67,7 +67,7 @@ class MongoDBRepository implements RepositoryInterface
 
         $queryBuilder = $this->collection->createQueryBuilder()
             ->addAnd($wheres)
-            ->addAnd(array('removed' => false, 'sagaId' => $sagaId));
+            ->addAnd(['removed' => false, 'sagaId' => $sagaId]);
 
         return $queryBuilder->getQuery();
     }
