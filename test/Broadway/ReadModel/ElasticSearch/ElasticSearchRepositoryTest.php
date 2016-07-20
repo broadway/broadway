@@ -74,6 +74,17 @@ class ElasticSearchRepositoryTest extends RepositoryTestCase
         $this->assertEquals(array($nonAnalyzedTerm), $nonAnalyzedTerms);
     }
 
+    /**
+     * @test
+     * @expectedException \Assert\InvalidArgumentException
+     */
+    public function it_throws_when_saving_a_readmodel_of_other_type_than_configured()
+    {
+        $readModel = $this->prophesize('\Broadway\ReadModel\ReadModelInterface');
+
+        $this->repository->save($readModel->reveal());
+    }
+
     public function tearDown()
     {
         $this->client->indices()->delete(array('index' => 'test_index'));

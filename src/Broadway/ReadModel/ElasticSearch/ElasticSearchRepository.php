@@ -11,6 +11,7 @@
 
 namespace Broadway\ReadModel\ElasticSearch;
 
+use Assert\Assertion;
 use Broadway\ReadModel\ReadModelInterface;
 use Broadway\ReadModel\RepositoryInterface;
 use Broadway\Serializer\SerializerInterface;
@@ -52,6 +53,8 @@ class ElasticSearchRepository implements RepositoryInterface
      */
     public function save(ReadModelInterface $data)
     {
+        Assertion::isInstanceOf($data, $this->class);
+
         $serializedReadModel = $this->serializer->serialize($data);
 
         $params = array(
