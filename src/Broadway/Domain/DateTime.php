@@ -74,7 +74,13 @@ class DateTime
      */
     public function comesAfter(DateTime $dateTime)
     {
-        return $this->dateTime > $dateTime->dateTime;
+        $self = clone $this;
+        $other = clone $dateTime;
+
+        $self->dateTime->setTimeZone(new DateTimeZone('UTC'));
+        $other->dateTime->setTimeZone(new DateTimeZone('UTC'));
+
+        return strcmp($self->toString(), $other->toString()) > 0;
     }
 
     /**
