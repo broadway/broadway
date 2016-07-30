@@ -112,6 +112,7 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         $this->connection->beginTransaction();
 
         try {
+            /** @var DomainMessage $domainMessage */
             foreach ($eventStream as $domainMessage) {
                 $this->insertMessage($this->connection, $domainMessage);
             }
@@ -120,7 +121,7 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         } catch (UniqueConstraintViolationException $exception) {
             $this->connection->rollBack();
 
-            throw DuplicatePlayheadException::create($exception);
+            throw new DuplicatePlayheadException($eventStream, $exception);
         } catch (DBALException $exception) {
             $this->connection->rollBack();
 
