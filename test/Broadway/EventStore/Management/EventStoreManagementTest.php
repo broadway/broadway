@@ -17,7 +17,6 @@ use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventStore\EventStoreInterface;
 use Broadway\EventStore\EventVisitorInterface;
-use Broadway\EventStore\Management\EventStoreManagementInterface;
 use Broadway\Serializer\SerializableInterface;
 use Broadway\TestCase;
 
@@ -112,7 +111,7 @@ abstract class EventStoreManagementTest extends TestCase
      */
     public function it_visits_aggregate_root_types()
     {
-        $visitedEvents = $this->visitEvents(Criteria::create()
+        $this->visitEvents(Criteria::create()
             ->withAggregateRootTypes(array(
                 'Broadway.EventStore.Management.AggregateTypeOne',
                 'Broadway.EventStore.Management.AggregateTypeTwo',
