@@ -111,7 +111,7 @@ abstract class EventStoreManagementTest extends TestCase
      */
     public function it_visits_aggregate_root_types()
     {
-        $visitedEvents = $this->visitEvents(Criteria::create()
+        $this->visitEvents(Criteria::create()
             ->withAggregateRootTypes([
                 'Broadway.EventStore.Management.AggregateTypeOne',
                 'Broadway.EventStore.Management.AggregateTypeTwo',
