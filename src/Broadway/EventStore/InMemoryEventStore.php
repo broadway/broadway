@@ -13,6 +13,7 @@ namespace Broadway\EventStore;
 
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\Management\Criteria;
 use Broadway\EventStore\Management\EventStoreManagementInterface;
 
@@ -50,6 +51,7 @@ class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInt
             $this->events[$id] = [];
         }
 
+        /** @var DomainMessage $event */
         foreach ($eventStream as $event) {
             $playhead = $event->getPlayhead();
             $this->assertPlayhead($this->events[$id], $playhead);
@@ -58,7 +60,11 @@ class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInt
         }
     }
 
-    private function assertPlayhead($events, $playhead)
+    /**
+     * @param array $events
+     * @param int $playhead
+     */
+    private function assertPlayhead(array $events, $playhead)
     {
         if (isset($events[$playhead])) {
             throw new InMemoryEventStoreException(
@@ -67,6 +73,10 @@ class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInt
         }
     }
 
+    /**
+     * @param Criteria $criteria
+     * @param EventVisitorInterface $eventVisitor
+     */
     public function visitEvents(Criteria $criteria, EventVisitorInterface $eventVisitor)
     {
         foreach ($this->events as $id => $events) {

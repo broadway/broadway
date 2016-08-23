@@ -15,5 +15,9 @@ use Broadway\EventStore\EventVisitorInterface;
 
 interface EventStoreManagementInterface
 {
+    /**
+     * @param Criteria $criteria
+     * @param EventVisitorInterface $eventVisitor
+     */
     public function visitEvents(Criteria $criteria, EventVisitorInterface $eventVisitor);
 }

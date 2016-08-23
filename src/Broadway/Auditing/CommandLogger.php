@@ -24,6 +24,10 @@ class CommandLogger
     private $logger;
     private $commandSerializer;
 
+    /**
+     * @param LoggerInterface $logger
+     * @param CommandSerializerInterface $commandSerializer
+     */
     public function __construct(LoggerInterface $logger, CommandSerializerInterface $commandSerializer)
     {
         $this->logger            = $logger;
@@ -44,8 +48,8 @@ class CommandLogger
     }
 
     /**
-     * @param mixed     $command   Command that errored
-     * @param Exception $exception Exception that occured during the execution of the command
+     * @param mixed     $command   Command that failed
+     * @param Exception $exception Exception that occurred during the execution of the command
      */
     public function onCommandHandlingFailure($command, Exception $exception)
     {
@@ -64,6 +68,10 @@ class CommandLogger
         $this->logger->info(json_encode($messageData));
     }
 
+    /**
+     * @param mixed $command
+     * @return array
+     */
     private function getCommandData($command)
     {
         return [

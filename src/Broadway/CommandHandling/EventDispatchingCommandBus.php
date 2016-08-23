@@ -28,6 +28,10 @@ class EventDispatchingCommandBus implements CommandBusInterface
     private $commandBus;
     private $dispatcher;
 
+    /**
+     * @param CommandBusInterface $commandBus
+     * @param EventDispatcherInterface $dispatcher
+     */
     public function __construct(CommandBusInterface $commandBus, EventDispatcherInterface $dispatcher)
     {
         $this->commandBus = $commandBus;

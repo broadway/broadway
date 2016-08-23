@@ -22,8 +22,14 @@ class DateTime
 {
     const FORMAT_STRING = 'Y-m-d\TH:i:s.uP';
 
+    /**
+     * @var DateTimeImmutable
+     */
     private $dateTime;
 
+    /**
+     * @param DateTimeImmutable $dateTime
+     */
     private function __construct(DateTimeImmutable $dateTime)
     {
         $this->dateTime = $dateTime;
@@ -62,7 +68,8 @@ class DateTime
     }
 
     /**
-     * @return boolean
+     * @param DateTime $dateTime
+     * @return bool
      */
     public function equals(DateTime $dateTime)
     {

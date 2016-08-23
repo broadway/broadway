@@ -20,9 +20,19 @@ use Elasticsearch\Client;
  */
 class ElasticSearchRepositoryFactory implements RepositoryFactoryInterface
 {
+    /**
+     * @var Client
+     */
     private $client;
+    /**
+     * @var SerializerInterface
+     */
     private $serializer;
 
+    /**
+     * @param Client $client
+     * @param SerializerInterface $serializer
+     */
     public function __construct(Client $client, SerializerInterface $serializer)
     {
         $this->client     = $client;

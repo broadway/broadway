@@ -8,7 +8,7 @@ commands were successful or failed due to an exception.
 
 Register the `CommandLogger` event listener with the
 `EventDispatchingCommandHandler`. The logger will use the injected logger to
-log whether a command was executed successfully or errored.
+log whether a command was executed successfully or failed.
 
 ## Example
 

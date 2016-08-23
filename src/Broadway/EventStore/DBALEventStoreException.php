@@ -18,6 +18,10 @@ use Doctrine\DBAL\DBALException;
  */
 class DBALEventStoreException extends EventStoreException
 {
+    /**
+     * @param DBALException $exception
+     * @return DBALEventStoreException
+     */
     public static function create(DBALException $exception)
     {
         return new DBALEventStoreException(null, 0, $exception);

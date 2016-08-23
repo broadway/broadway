@@ -30,11 +30,28 @@ use PHPUnit_Framework_TestCase;
  */
 class Scenario
 {
+    /**
+     * @var TraceableEventStore
+     */
     private $eventStore;
+    /**
+     * @var CommandHandlerInterface
+     */
     private $commandHandler;
+    /**
+     * @var PHPUnit_Framework_TestCase
+     */
     private $testCase;
+    /**
+     * @var string
+     */
     private $aggregateId;
 
+    /**
+     * @param PHPUnit_Framework_TestCase $testCase
+     * @param TraceableEventStore $eventStore
+     * @param CommandHandlerInterface $commandHandler
+     */
     public function __construct(
         PHPUnit_Framework_TestCase $testCase,
         TraceableEventStore $eventStore,
@@ -43,7 +60,7 @@ class Scenario
         $this->testCase       = $testCase;
         $this->eventStore     = $eventStore;
         $this->commandHandler = $commandHandler;
-        $this->aggregateId    = 1;
+        $this->aggregateId    = '1';
     }
 
     /**

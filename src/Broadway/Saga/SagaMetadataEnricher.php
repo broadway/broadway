@@ -18,11 +18,19 @@ class SagaMetadataEnricher implements MetadataEnricherInterface
 {
     private $sagaData = [];
 
+    /**
+     * @param string $type
+     * @param mixed $id
+     */
     public function postHandleSaga($type, $id)
     {
         $this->sagaData = ['type' => $type, 'state_id' => $id];
     }
 
+    /**
+     * @param Metadata $metadata
+     * @return Metadata
+     */
     public function enrich(Metadata $metadata)
     {
         if (count($this->sagaData) === 0) {

@@ -16,10 +16,13 @@ use Broadway\EventSourcing\MetadataEnrichment\MetadataEnricherInterface;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
 
 /**
- * Enricher that adds information about the excecuted console command.
+ * Enricher that adds information about the executed console command.
  */
 class CommandMetadataEnricher implements MetadataEnricherInterface
 {
+    /**
+     * @var ConsoleCommandEvent
+     */
     private $event;
 
     /**
@@ -42,6 +45,9 @@ class CommandMetadataEnricher implements MetadataEnricherInterface
         return $metadata->merge($newMetadata);
     }
 
+    /**
+     * @param ConsoleCommandEvent $event
+     */
     public function handleConsoleCommandEvent(ConsoleCommandEvent $event)
     {
         $this->event = $event;

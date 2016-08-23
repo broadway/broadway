@@ -16,13 +16,13 @@ use Broadway\Saga\State\Criteria;
 interface MetadataInterface
 {
     /**
-     * @param mixed $event
-     *
+     * @param object $event
      * @return boolean True, if the saga can handle the event
      */
     public function handles($event);
 
     /**
+     * @param object $event
      * @return Criteria Criteria for the given event
      */
     public function criteria($event);

@@ -16,6 +16,9 @@ namespace Broadway\ReadModel;
  */
 interface RepositoryInterface
 {
+    /**
+     * @param ReadModelInterface $data
+     */
     public function save(ReadModelInterface $data);
 
     /**

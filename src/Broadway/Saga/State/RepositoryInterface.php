@@ -16,14 +16,18 @@ use Broadway\Saga\State;
 interface RepositoryInterface
 {
     /**
+     * @param Criteria $criteria
      * @param string $sagaId
-     *
      * @return State
-     *
      * @throws RepositoryException if 0 or > 1 found
+     *
      * @todo specific exception
      */
     public function findOneBy(Criteria $criteria, $sagaId);
 
+    /**
+     * @param State $state
+     * @param string $sagaId
+     */
     public function save(State $state, $sagaId);
 }
