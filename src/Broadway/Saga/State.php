@@ -76,7 +76,7 @@ class State implements SerializableInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDone()
     {

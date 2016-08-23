@@ -269,7 +269,7 @@ class ElasticSearchRepository implements RepositoryInterface
     /**
      * Creates the index for this repository's ReadModel.
      *
-     * @return boolean True, if the index was successfully created
+     * @return bool True, if the index was successfully created
      */
     public function createIndex()
     {

@@ -35,7 +35,7 @@ class CommandLogger
     }
 
     /**
-     * @param mixed $command Command that was executed successfully
+     * @param object $command Command that was executed successfully
      */
     public function onCommandHandlingSuccess($command)
     {
@@ -48,7 +48,7 @@ class CommandLogger
     }
 
     /**
-     * @param mixed     $command   Command that failed
+     * @param object    $command   Command that failed
      * @param Exception $exception Exception that occurred during the execution of the command
      */
     public function onCommandHandlingFailure($command, Exception $exception)
@@ -69,7 +69,7 @@ class CommandLogger
     }
 
     /**
-     * @param mixed $command
+     * @param object $command
      * @return array
      */
     private function getCommandData($command)

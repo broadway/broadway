@@ -17,7 +17,7 @@ interface MetadataInterface
 {
     /**
      * @param object $event
-     * @return boolean True, if the saga can handle the event
+     * @return bool True, if the saga can handle the event
      */
     public function handles($event);
 
