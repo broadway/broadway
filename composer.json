@@ -42,7 +42,8 @@
         "instaclick/base-test-bundle": "~0.5",
         "monolog/monolog": "~1.8",
         "symfony/console": "~2.4",
-        "symfony/proxy-manager-bridge": "~2.4"
+        "symfony/proxy-manager-bridge": "~2.4",
+        "phpunit/phpunit": "^4.8"
     },
     "suggest": {
         "doctrine/dbal": "For the BroadwayBundle (to persist events)",
