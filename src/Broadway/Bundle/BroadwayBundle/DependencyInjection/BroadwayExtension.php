@@ -124,14 +124,19 @@ class BroadwayExtension extends Extension
     {
         $loader->load('event_store.xml');
 
-        if ($config['dbal']['enabled']) {
-            $this->loadDBALEventStore($config, $container, $loader);
+        switch ($config['store']) {
+            case 'dbal':
+                $this->loadDBALEventStore($config['dbal'], $container, $loader);
+                break;
+            case 'custom':
+                $this->loadCustomEventStore($config['custom'], $container);
         }
     }
 
     private function loadDBALEventStore(array $config, ContainerBuilder $container, XmlFileLoader $loader)
     {
         $loader->load('event_store_dbal.xml');
+
         $container->setAlias(
             'broadway.event_store',
             'broadway.event_store.dbal'
@@ -139,17 +144,25 @@ class BroadwayExtension extends Extension
 
         $container->setParameter(
             'broadway.event_store.dbal.connection',
-            $config['dbal']['connection']
+            $config['connection']
         );
 
         $container->setParameter(
             'broadway.event_store.dbal.table',
-            $config['dbal']['table']
+            $config['table']
         );
 
         $container->setParameter(
             'broadway.event_store.dbal.use_binary',
-            $config['dbal']['use_binary']
+            $config['use_binary']
+        );
+    }
+
+    private function loadCustomEventStore(array $config, ContainerBuilder $container)
+    {
+        $container->setAlias(
+            'broadway.event_store',
+            $config['store_id']
         );
     }
 
