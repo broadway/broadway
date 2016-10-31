@@ -12,6 +12,7 @@
 namespace Broadway\Bundle\BroadwayBundle\DependencyInjection;
 
 use IC\Bundle\Base\TestBundle\Test\DependencyInjection\ExtensionTestCase;
+use Symfony\Component\DependencyInjection\Definition;
 
 class BroadwayExtensionTest extends ExtensionTestCase
 {
@@ -123,6 +124,20 @@ class BroadwayExtensionTest extends ExtensionTestCase
             ['in_memory',     'Broadway\ReadModel\InMemory\InMemoryRepositoryFactory'],
             ['elasticsearch', 'Broadway\ReadModel\ElasticSearch\ElasticSearchRepositoryFactory'],
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function read_model_repository_factory_set_to_custom_repository_factory()
+    {
+        $this->container->setDefinition('custom_factory_service', new Definition('Broadway\ReadModel\Custom\CustomRepository\Factory'));
+
+        $configuration = ['read_model' => ['repository' => 'custom', 'custom' => ['factory_id' => 'custom_factory_service']]];
+
+        $this->load($this->extension, $configuration);
+
+        $this->assertDICAliasClass('broadway.read_model.repository_factory', 'Broadway\ReadModel\Custom\CustomRepository\Factory');
     }
 
     /**

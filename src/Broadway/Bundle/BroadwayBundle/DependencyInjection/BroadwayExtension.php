@@ -114,6 +114,9 @@ class BroadwayExtension extends Extension
                 $loader->load('read_model/in_memory.xml');
                 $this->configInMemory($container);
                 break;
+            case 'custom':
+                $this->configCustom($config['custom'], $container);
+                break;
         }
     }
 
@@ -178,6 +181,14 @@ class BroadwayExtension extends Extension
         $container->setAlias(
             'broadway.read_model.repository_factory',
             'broadway.read_model.in_memory.repository_factory'
+        );
+    }
+
+    private function configCustom(array $config, ContainerBuilder $container)
+    {
+        $container->setAlias(
+            'broadway.read_model.repository_factory',
+            $config['factory_id']
         );
     }
 }

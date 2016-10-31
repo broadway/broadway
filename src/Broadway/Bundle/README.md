@@ -107,10 +107,11 @@ broadway:
     saga:
         repository:           ~ # One of "in_memory"; "mongodb"
     read_model:
-        repository:           ~ # One of "in_memory"; "elasticsearch"
+        repository:           ~ # One of "in_memory"; "elasticsearch"; "custom"
         elasticsearch:
             hosts:
-
                 # Default:
                 - localhost:9200
+        custom:
+            factory_id: your_custom_factory
 ```
