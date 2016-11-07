@@ -41,17 +41,10 @@
         "elasticsearch/elasticsearch": "~1.0|^2.0",
         "instaclick/base-test-bundle": "~0.5",
         "monolog/monolog": "~1.8",
-        "symfony/console": "~2.4",
-        "symfony/proxy-manager-bridge": "~2.4",
         "phpunit/phpunit": "^4.8"
     },
     "suggest": {
-        "doctrine/dbal": "For the BroadwayBundle (to persist events)",
-        "doctrine/mongodb": "For persisting saga states (required for BroadwayBundle)",
-        "elasticsearch/elasticsearch": "For persisting read models (required for BroadwayBundle)",
-        "psr/log-implementation": "Implementation for PSR3, LoggerInterface",
-        "symfony/console": "For the BroadwayBundle",
-        "symfony/proxy-manager-bridge": "For the BroadwayBundle"
+        "psr/log-implementation": "Implementation for PSR3, LoggerInterface"
     },
     "autoload": {
         "psr-0": {

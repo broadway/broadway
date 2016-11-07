@@ -60,7 +60,7 @@ component for more information.
 
 Contributions for integrations with other projects are appreciated!
 
-[bundle]: src/Broadway/Bundle/
+[bundle]: https://github.com/broadway/broadway-bundle
 
 ## Acknowledgements
 

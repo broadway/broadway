@@ -7,17 +7,10 @@ cache:
         - $HOME/.composer/cache
         - vendor
 
-env:
-    global:
-        - COMPOSER_LOWEST=""
-
 matrix:
     include:
         - php: 5.5
         - php: 5.6
-          env: COMPOSER_LOWEST=""
-        - php: 5.6
-          env: COMPOSER_LOWEST="--prefer-lowest"
         - php: 7
         - php: hhvm
     fast_finish: true
@@ -39,7 +32,6 @@ before_install:
 install:
     - travis_retry composer self-update
     - travis_retry composer install --ignore-platform-reqs
-    - travis_retry php -dmemory_limit=3G `which composer` update symfony/framework-bundle $COMPOSER_LOWEST --ignore-platform-reqs
     - composer info -i
 
 script:
