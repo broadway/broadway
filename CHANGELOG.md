@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.0.x
+
+#### BC breaks
+
+- We moved the Symfony bundle to a [separate repository](https://github.com/broadway/broadway-bundle)
+
 ## v0.10.x
 
 #### Other changes
