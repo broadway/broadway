@@ -5,6 +5,7 @@
 #### BC breaks
 
 - We moved the Symfony bundle to a [separate repository](https://github.com/broadway/broadway-bundle)
+- The DBALEventStore requires a BinaryUuidConverter
 
 ## v0.10.x
 
@@ -13,7 +14,7 @@
 - allow specifying the DateTime used in the ReadModel Scenario
 - added the ReflectionAggregateFactory as an alternative to the NamedConstructorAggregateFactory
 - specify ReadModel type searching Elasticsearch read model repository
-- added PHPUnit as a development dependenvy
+- added PHPUnit as a development dependency
 - adopted new PHP 5.4 and PHP 5.5 language features (DateTimeImmutable, ::class, short array syntax)
 
 ## v0.9.x

@@ -13,10 +13,11 @@ namespace Broadway\EventStore;
 
 use Broadway\Domain\DomainEventStream;
 use Broadway\Serializer\SimpleInterfaceSerializer;
+use Broadway\UuidGenerator\Converter\BinaryUuidConverter;
+use Broadway\UuidGenerator\Rfc4122\Version4Generator;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Version;
-use Rhumsaa\Uuid\Uuid;
 
 /**
  * @requires extension pdo_sqlite
@@ -35,7 +36,14 @@ class BinaryDBALEventStoreTest extends DBALEventStoreTest
         $connection       = DriverManager::getConnection(['driver' => 'pdo_sqlite', 'memory' => true]);
         $schemaManager    = $connection->getSchemaManager();
         $schema           = $schemaManager->createSchema();
-        $this->eventStore = new DBALEventStore($connection, new SimpleInterfaceSerializer(), new SimpleInterfaceSerializer(), 'events', true);
+        $this->eventStore = new DBALEventStore(
+            $connection,
+            new SimpleInterfaceSerializer(),
+            new SimpleInterfaceSerializer(),
+            'events',
+            true,
+            new BinaryUuidConverter()
+        );
 
         $this->table = $this->eventStore->configureSchema($schema);
 
@@ -71,11 +79,9 @@ class BinaryDBALEventStoreTest extends DBALEventStoreTest
 
     public function idDataProvider()
     {
-        $uuid = Uuid::uuid4();
-
         return [
             'UUID String' => [
-                $uuid->toString(), // test UUID
+                (new Version4Generator())->generate(), // test UUID
             ],
         ];
     }
