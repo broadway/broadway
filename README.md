@@ -49,7 +49,7 @@ component for more information.
 - [Processor](src/Broadway/Processor/)
 - [ReadModel](src/Broadway/ReadModel/)
 - [Repository](src/Broadway/Repository/)
-- [Saga](src/Broadway/Saga/)
+- [Saga](https://github.com/broadway/broadway-saga)
 - [Serializer](src/Broadway/Serializer/)
 
 ## Integrations

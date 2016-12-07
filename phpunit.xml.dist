@@ -24,7 +24,6 @@
   <groups>
     <exclude>
       <group>functional</group>
-      <group>mongo</group>
     </exclude>
   </groups>
 </phpunit>

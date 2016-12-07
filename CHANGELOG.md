@@ -6,6 +6,7 @@
 
 - We moved the Symfony bundle to a [separate repository](https://github.com/broadway/broadway-bundle)
 - The DBALEventStore requires a BinaryUuidConverter
+- We moved the Saga component to a [separate repository](https://github.com/broadway/broadway-saga)
 
 ## v0.10.x
 
