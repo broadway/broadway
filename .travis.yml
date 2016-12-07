@@ -38,7 +38,8 @@ before_install:
 
 install:
     - travis_retry composer self-update
-    - travis_retry composer install --ignore-platform-reqs
+    - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]]; then composer require "alcaeus/mongo-php-adapter=^1.0.0" --ignore-platform-reqs; fi
+    - travis_retry composer install
     - travis_retry php -dmemory_limit=3G `which composer` update symfony/framework-bundle $COMPOSER_LOWEST --ignore-platform-reqs
     - composer info -i
 
