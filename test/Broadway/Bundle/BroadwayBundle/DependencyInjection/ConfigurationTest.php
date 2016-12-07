@@ -17,6 +17,15 @@ class ConfigurationTest extends ConfigurationTestCase
 {
     /**
      * @test
+     */
+    public function it_sets_dbal_as_default_event_store()
+    {
+        $configuration = $this->processConfiguration(new Configuration(), []);
+        $this->assertEquals($configuration['event_store']['store'], 'dbal');
+    }
+
+    /**
+     * @test
      * @expectedException Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      * @expectedExceptionMessage is not allowed for path "broadway.saga.repository". Permissible values: "in_memory", "mongodb"
      */

@@ -99,18 +99,22 @@ or testing usage.
 ```yml
 broadway:
     event_store:
+        store:                ~ # One of "dbal"; "custom"
         dbal:
             table:            events
             use_binary:       false # If you want to use UUIDs to be stored as BINARY(16), required DBAL >= 2.5.0
+        custom:
+            store_id:         your_custom_store 
     command_handling:
         logger:               false # If you want to log every command handled, provide the logger's service id here (e.g. "logger")
     saga:
         repository:           ~ # One of "in_memory"; "mongodb"
     read_model:
-        repository:           ~ # One of "in_memory"; "elasticsearch"
+        repository:           ~ # One of "in_memory"; "elasticsearch"; "custom"
         elasticsearch:
             hosts:
-
                 # Default:
                 - localhost:9200
+        custom:
+            factory_id: your_custom_factory
 ```

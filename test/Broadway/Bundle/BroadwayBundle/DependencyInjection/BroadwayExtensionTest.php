@@ -12,6 +12,7 @@
 namespace Broadway\Bundle\BroadwayBundle\DependencyInjection;
 
 use IC\Bundle\Base\TestBundle\Test\DependencyInjection\ExtensionTestCase;
+use Symfony\Component\DependencyInjection\Definition;
 
 class BroadwayExtensionTest extends ExtensionTestCase
 {
@@ -128,6 +129,20 @@ class BroadwayExtensionTest extends ExtensionTestCase
     /**
      * @test
      */
+    public function read_model_repository_factory_set_to_custom_repository_factory()
+    {
+        $this->container->setDefinition('custom_factory_service', new Definition('Broadway\ReadModel\Custom\CustomRepository\Factory'));
+
+        $configuration = ['read_model' => ['repository' => 'custom', 'custom' => ['factory_id' => 'custom_factory_service']]];
+
+        $this->load($this->extension, $configuration);
+
+        $this->assertDICAliasClass('broadway.read_model.repository_factory', 'Broadway\ReadModel\Custom\CustomRepository\Factory');
+    }
+
+    /**
+     * @test
+     */
     public function default_read_model_repository_factory_is_elasticsearch()
     {
         $this->load($this->extension, []);
@@ -206,17 +221,16 @@ class BroadwayExtensionTest extends ExtensionTestCase
     /**
      * @test
      */
-    public function disabling_dbal_event_store_does_not_load_its_definitions()
+    public function it_can_be_configured_to_have_custom_event_store()
     {
+        $this->container->setDefinition('custom_event_store', new Definition('Broadway\EventStore\CustomEventStore'));
+
         $this->load(
             $this->extension,
-            array('event_store' => array('dbal' => array('enabled' => false)))
+            ['event_store' => ['store' => 'custom', 'custom' => ['store_id' => 'custom_event_store']]]
         );
 
-        $this->assertFalse(
-            $this->container->hasDefinition('broadway.event_store.dbal')
-        );
-        $this->assertFalse($this->container->hasAlias('broadway.event_store'));
+        $this->assertDICAliasClass('broadway.event_store', 'Broadway\EventStore\CustomEventStore');
     }
 
     private function assertDICAliasClass($aliasId, $class)
