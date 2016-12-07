@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.0.x
+
+#### BC breaks
+
+- The DBALEventStore requires a BinaryUuidConverter
+
 ## v0.10.x
 
 #### Other changes
@@ -7,7 +13,7 @@
 - allow specifying the DateTime used in the ReadModel Scenario
 - added the ReflectionAggregateFactory as an alternative to the NamedConstructorAggregateFactory
 - specify ReadModel type searching Elasticsearch read model repository
-- added PHPUnit as a development dependenvy
+- added PHPUnit as a development dependency
 - adopted new PHP 5.4 and PHP 5.5 language features (DateTimeImmutable, ::class, short array syntax)
 
 ## v0.9.x
