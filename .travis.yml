@@ -38,8 +38,8 @@ before_install:
 
 install:
     - travis_retry composer self-update
-    - travis_retry composer install --ignore-platform-reqs
-    - travis_retry php -dmemory_limit=3G `which composer` update symfony/framework-bundle $COMPOSER_LOWEST --ignore-platform-reqs
+    - travis_retry composer install
+    - travis_retry php -dmemory_limit=3G `which composer` update symfony/framework-bundle $COMPOSER_LOWEST
     - composer info -i
 
 script:
