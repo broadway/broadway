@@ -23,16 +23,33 @@ use Elasticsearch\Common\Exceptions\Missing404Exception;
  */
 class ElasticSearchRepository implements RepositoryInterface
 {
+    /**
+     * @var Client
+     */
     private $client;
+    /**
+     * @var SerializerInterface
+     */
     private $serializer;
+    /**
+     * @var string
+     */
     private $index;
+    /**
+     * @var string
+     */
     private $class;
+    /**
+     * @var array
+     */
     private $notAnalyzedFields;
 
     /**
+     * @param Client $client
+     * @param SerializerInterface $serializer
      * @param string $index
      * @param string $class
-     * @param array  $notAnalyzedFields = array
+     * @param array $notAnalyzedFields = array
      */
     public function __construct(
         Client $client,
@@ -124,6 +141,10 @@ class ElasticSearchRepository implements RepositoryInterface
         }
     }
 
+    /**
+     * @param array $query
+     * @return array
+     */
     private function searchAndDeserializeHits(array $query)
     {
         try {
@@ -163,6 +184,10 @@ class ElasticSearchRepository implements RepositoryInterface
         }
     }
 
+    /**
+     * @param array $query
+     * @return array
+     */
     protected function query(array $query)
     {
         return $this->searchAndDeserializeHits(
@@ -177,6 +202,10 @@ class ElasticSearchRepository implements RepositoryInterface
         );
     }
 
+    /**
+     * @param array $fields
+     * @return array
+     */
     private function buildFindByQuery(array $fields)
     {
         return [
@@ -189,6 +218,9 @@ class ElasticSearchRepository implements RepositoryInterface
         ];
     }
 
+    /**
+     * @return array
+     */
     private function buildFindAllQuery()
     {
         return [
@@ -196,6 +228,10 @@ class ElasticSearchRepository implements RepositoryInterface
         ];
     }
 
+    /**
+     * @param array $hit
+     * @return mixed
+     */
     private function deserializeHit(array $hit)
     {
         return $this->serializer->deserialize(
@@ -206,11 +242,19 @@ class ElasticSearchRepository implements RepositoryInterface
         );
     }
 
+    /**
+     * @param array $hits
+     * @return array
+     */
     private function deserializeHits(array $hits)
     {
         return array_map([$this, 'deserializeHit'], $hits);
     }
 
+    /**
+     * @param array $filter
+     * @return array
+     */
     private function buildFilter(array $filter)
     {
         $retval = [];
@@ -225,7 +269,7 @@ class ElasticSearchRepository implements RepositoryInterface
     /**
      * Creates the index for this repository's ReadModel.
      *
-     * @return boolean True, if the index was successfully created
+     * @return bool True, if the index was successfully created
      */
     public function createIndex()
     {
@@ -281,6 +325,10 @@ class ElasticSearchRepository implements RepositoryInterface
         return isset($response['status']) && $response['status'] !== 'red';
     }
 
+    /**
+     * @param array $notAnalyzedFields
+     * @return array
+     */
     private function createNotAnalyzedFieldsMapping(array $notAnalyzedFields)
     {
         $fields = [];

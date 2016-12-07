@@ -22,6 +22,9 @@ use Broadway\ReadModel\TransferableInterface;
  */
 class InMemoryRepository implements RepositoryInterface, TransferableInterface
 {
+    /**
+     * @var array
+     */
     private $data = [];
 
     /**

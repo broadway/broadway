@@ -37,6 +37,10 @@ abstract class CommandHandler implements CommandHandlerInterface
         $this->$method($command);
     }
 
+    /**
+     * @param object $command
+     * @return string
+     */
     private function getHandleMethod($command)
     {
         if (! is_object($command)) {

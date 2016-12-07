@@ -19,10 +19,22 @@ use Broadway\Domain\DomainMessage;
  */
 class TraceableEventStore implements EventStoreInterface
 {
+    /**
+     * @var EventStoreInterface
+     */
     private $eventStore;
+    /**
+     * @var DomainMessage[]
+     */
     private $recorded = [];
+    /**
+     * @var bool
+     */
     private $tracing  = false;
 
+    /**
+     * @param EventStoreInterface $eventStore
+     */
     public function __construct(EventStoreInterface $eventStore)
     {
         $this->eventStore = $eventStore;
@@ -39,6 +51,7 @@ class TraceableEventStore implements EventStoreInterface
             return;
         }
 
+        /** @var DomainMessage $event */
         foreach ($eventStream as $event) {
             $this->recorded[] = $event;
         }

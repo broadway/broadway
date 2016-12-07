@@ -17,7 +17,8 @@ namespace Broadway\Serializer;
 interface SerializableInterface
 {
     /**
-     * @return mixed The object instance
+     * @param array $data
+     * @return object The object instance
      */
     public static function deserialize(array $data);
 

@@ -18,6 +18,7 @@ namespace Broadway\Serializer;
 interface SerializerInterface
 {
     /**
+     * @param object $object
      * @return array
      *
      * @throws SerializationException
@@ -26,8 +27,7 @@ interface SerializerInterface
 
     /**
      * @param array $serializedObject
-     *
-     * @return mixed
+     * @return object
      *
      * @throws SerializationException
      */

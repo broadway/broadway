@@ -26,10 +26,25 @@ use Broadway\Repository\RepositoryInterface;
  */
 class EventSourcingRepository implements RepositoryInterface
 {
+    /**
+     * @var EventStoreInterface
+     */
     private $eventStore;
+    /**
+     * @var EventBusInterface
+     */
     private $eventBus;
+    /**
+     * @var string
+     */
     private $aggregateClass;
+    /**
+     * @var EventStreamDecoratorInterface[]
+     */
     private $eventStreamDecorators = [];
+    /**
+     * @var AggregateFactoryInterface
+     */
     private $aggregateFactory;
 
     /**
@@ -83,6 +98,11 @@ class EventSourcingRepository implements RepositoryInterface
         $this->eventBus->publish($eventStream);
     }
 
+    /**
+     * @param AggregateRoot $aggregate
+     * @param DomainEventStream $eventStream
+     * @return DomainEventStream
+     */
     private function decorateForWrite(AggregateRoot $aggregate, DomainEventStream $eventStream)
     {
         $aggregateType       = $this->getType();
@@ -95,6 +115,9 @@ class EventSourcingRepository implements RepositoryInterface
         return $eventStream;
     }
 
+    /**
+     * @param string $class
+     */
     private function assertExtendsEventSourcedAggregateRoot($class)
     {
         Assert::subclassOf(
@@ -104,6 +127,9 @@ class EventSourcingRepository implements RepositoryInterface
         );
     }
 
+    /**
+     * @return string
+     */
     private function getType()
     {
         return $this->aggregateClass;

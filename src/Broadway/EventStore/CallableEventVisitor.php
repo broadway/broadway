@@ -20,11 +20,17 @@ class CallableEventVisitor implements EventVisitorInterface
      */
     private $callable;
 
+    /**
+     * @param callable $callable
+     */
     public function __construct(callable $callable)
     {
         $this->callable = $callable;
     }
 
+    /**
+     * @param DomainMessage $domainMessage
+     */
     public function doWithEvent(DomainMessage $domainMessage)
     {
         call_user_func($this->callable, $domainMessage);

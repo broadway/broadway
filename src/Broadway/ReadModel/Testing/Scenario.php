@@ -30,13 +30,36 @@ use PHPUnit_Framework_TestCase;
  */
 class Scenario
 {
+    /**
+     * @var PHPUnit_Framework_TestCase
+     */
     private $testCase;
+    /**
+     * @var ProjectorInterface
+     */
     private $projector;
+    /**
+     * @var RepositoryInterface
+     */
     private $repository;
+    /**
+     * @var int
+     */
     private $playhead;
+    /**
+     * @var string
+     */
     private $aggregateId;
+    /**
+     * @var callable
+     */
     private $dateTimeGenerator;
 
+    /**
+     * @param PHPUnit_Framework_TestCase $testCase
+     * @param RepositoryInterface $repository
+     * @param ProjectorInterface $projector
+     */
     public function __construct(
         PHPUnit_Framework_TestCase $testCase,
         RepositoryInterface $repository,
@@ -46,7 +69,7 @@ class Scenario
         $this->repository        = $repository;
         $this->projector         = $projector;
         $this->playhead          = -1;
-        $this->aggregateId       = 1;
+        $this->aggregateId       = '1';
         $this->dateTimeGenerator = function($event) {
             return DateTime::now();
         };

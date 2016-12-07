@@ -50,6 +50,10 @@ class Metadata implements MetadataInterface
         return $this->criteria[$eventName]($event);
     }
 
+    /**
+     * @param object $event
+     * @return string
+     */
     private function getClassName($event)
     {
         $classParts = explode('\\', get_class($event));

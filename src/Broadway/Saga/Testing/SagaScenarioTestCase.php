@@ -44,6 +44,9 @@ abstract class SagaScenarioTestCase extends TestCase
         $this->scenario = $this->createScenario();
     }
 
+    /**
+     * @return Scenario
+     */
     protected function createScenario()
     {
         $traceableCommandBus = new TraceableCommandBus();

@@ -16,6 +16,9 @@ namespace Broadway\EventDispatcher;
  */
 class EventDispatcher implements EventDispatcherInterface
 {
+    /**
+     * @var array
+     */
     private $listeners = [];
 
     /**

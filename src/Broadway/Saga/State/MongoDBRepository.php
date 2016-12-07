@@ -13,11 +13,15 @@ namespace Broadway\Saga\State;
 
 use Broadway\Saga\State;
 use Doctrine\MongoDB\Collection;
+use Doctrine\MongoDB\Query\Query;
 
 class MongoDBRepository implements RepositoryInterface
 {
     private $collection;
 
+    /**
+     * @param Collection $collection
+     */
     public function __construct(Collection $collection)
     {
         $this->collection = $collection;
@@ -56,6 +60,11 @@ class MongoDBRepository implements RepositoryInterface
         $this->collection->save($serializedState);
     }
 
+    /**
+     * @param Criteria $criteria
+     * @param string $sagaId
+     * @return Query
+     */
     private function createQuery(Criteria $criteria, $sagaId)
     {
         $comparisons = $criteria->getComparisons();

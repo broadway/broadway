@@ -17,6 +17,9 @@ class NamedConstructorAggregateFactory implements AggregateFactoryInterface
      */
     private $staticConstructorMethod;
 
+    /**
+     * @param string $staticConstructorMethod
+     */
     public function __construct($staticConstructorMethod = 'instantiateForReconstitution')
     {
         $this->staticConstructorMethod = $staticConstructorMethod;

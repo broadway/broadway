@@ -23,7 +23,7 @@ interface StateManagerInterface
 {
     /**
      * @param null|Criteria $criteria
-     *
+     * @param string $sagaId
      * @return State
      */
     public function findOneBy($criteria, $sagaId);

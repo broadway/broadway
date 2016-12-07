@@ -18,6 +18,9 @@ use Broadway\Serializer\SerializableInterface;
  */
 class Metadata implements SerializableInterface
 {
+    /**
+     * @var array
+     */
     private $values = [];
 
     /**

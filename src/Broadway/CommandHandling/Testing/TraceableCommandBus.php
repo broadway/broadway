@@ -51,6 +51,9 @@ class TraceableCommandBus implements CommandBusInterface
         return $this->commands;
     }
 
+    /**
+     * @return bool
+     */
     public function record()
     {
         return $this->record = true;

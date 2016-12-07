@@ -18,6 +18,9 @@ use ArrayIterator;
  */
 class DomainEventStream implements DomainEventStreamInterface
 {
+    /**
+     * @var array
+     */
     private $events;
 
     /**

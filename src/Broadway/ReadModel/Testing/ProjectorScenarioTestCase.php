@@ -41,6 +41,7 @@ abstract class ProjectorScenarioTestCase extends TestCase
     }
 
     /**
+     * @param InMemoryRepository $repository
      * @return Projector
      */
     abstract protected function createProjector(InMemoryRepository $repository);

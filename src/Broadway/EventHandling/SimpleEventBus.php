@@ -12,7 +12,6 @@
 namespace Broadway\EventHandling;
 
 use Broadway\Domain\DomainEventStreamInterface;
-use Exception;
 
 /**
  * Simple synchronous publishing of events.

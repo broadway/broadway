@@ -33,6 +33,10 @@ abstract class Projector implements ProjectorInterface
         $this->$method($event, $domainMessage);
     }
 
+    /**
+     * @param object $event
+     * @return string
+     */
     private function getHandleMethod($event)
     {
         $classParts = explode('\\', get_class($event));

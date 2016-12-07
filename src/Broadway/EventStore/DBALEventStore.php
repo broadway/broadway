@@ -22,6 +22,7 @@ use Broadway\EventStore\Management\EventStoreManagementInterface;
 use Broadway\Serializer\SerializerInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Version;
 use Rhumsaa\Uuid\Uuid;
@@ -34,20 +35,37 @@ use Rhumsaa\Uuid\Uuid;
  */
 class DBALEventStore implements EventStoreInterface, EventStoreManagementInterface
 {
+    /**
+     * @var Connection
+     */
     private $connection;
-
+    /**
+     * @var SerializerInterface
+     */
     private $payloadSerializer;
-
+    /**
+     * @var SerializerInterface
+     */
     private $metadataSerializer;
-
+    /**
+     * @var Statement|null
+     */
     private $loadStatement = null;
-
+    /**
+     * @var string
+     */
     private $tableName;
-
+    /**
+     * @var bool
+     */
     private $useBinary;
 
     /**
+     * @param Connection $connection
+     * @param SerializerInterface $payloadSerializer
+     * @param SerializerInterface $metadataSerializer
      * @param string $tableName
+     * @param bool $useBinary
      */
     public function __construct(
         Connection $connection,
@@ -117,6 +135,10 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         }
     }
 
+    /**
+     * @param Connection $connection
+     * @param DomainMessage $domainMessage
+     */
     private function insertMessage(Connection $connection, DomainMessage $domainMessage)
     {
         $data = [
@@ -132,6 +154,7 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
     }
 
     /**
+     * @param Schema $schema
      * @return \Doctrine\DBAL\Schema\Table|null
      */
     public function configureSchema(Schema $schema)
@@ -143,6 +166,9 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         return $this->configureTable();
     }
 
+    /**
+     * @return \Doctrine\DBAL\Schema\Table
+     */
     public function configureTable()
     {
         $schema = new Schema();
@@ -178,6 +204,9 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         return $table;
     }
 
+    /**
+     * @return Statement
+     */
     private function prepareLoadStatement()
     {
         if (null === $this->loadStatement) {
@@ -191,7 +220,11 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         return $this->loadStatement;
     }
 
-    private function deserializeEvent($row)
+    /**
+     * @param array $row
+     * @return DomainMessage
+     */
+    private function deserializeEvent(array $row)
     {
         return new DomainMessage(
             $this->convertStorageValueToIdentifier($row['uuid']),
@@ -202,6 +235,10 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         );
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     private function convertIdentifierToStorageValue($id)
     {
         if ($this->useBinary) {
@@ -217,6 +254,10 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         return $id;
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     private function convertStorageValueToIdentifier($id)
     {
         if ($this->useBinary) {
@@ -232,6 +273,10 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         return $id;
     }
 
+    /**
+     * @param Criteria $criteria
+     * @param EventVisitorInterface $eventVisitor
+     */
     public function visitEvents(Criteria $criteria, EventVisitorInterface $eventVisitor)
     {
         $statement = $this->prepareVisitEventsStatement($criteria);
@@ -244,6 +289,10 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         }
     }
 
+    /**
+     * @param Criteria $criteria
+     * @return Statement
+     */
     private function prepareVisitEventsStatement(Criteria $criteria)
     {
         list($where, $bindValues, $bindValueTypes) = $this->prepareVisitEventsStatementWhereAndBindValues($criteria);
@@ -257,6 +306,10 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         return $statement;
     }
 
+    /**
+     * @param Criteria $criteria
+     * @return array
+     */
     private function prepareVisitEventsStatementWhereAndBindValues(Criteria $criteria)
     {
         if ($criteria->getAggregateRootTypes()) {
