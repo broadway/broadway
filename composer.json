@@ -5,9 +5,8 @@
     "license": "MIT",
     "require": {
         "beberlei/assert": "~2.0",
-        "broadway/uuid-generator": "~0.1.0",
-        "php": ">=5.5.9",
-        "ramsey/uuid": "~2.4"
+        "broadway/uuid-generator": "~0.3.0",
+        "php": ">=5.5.9"
     },
     "authors": [
       {
@@ -41,7 +40,8 @@
         "elasticsearch/elasticsearch": "~1.0|^2.0",
         "instaclick/base-test-bundle": "~0.5",
         "monolog/monolog": "~1.8",
-        "phpunit/phpunit": "^4.8"
+        "phpunit/phpunit": "^4.8",
+        "ramsey/uuid": "^3.0"
     },
     "suggest": {
         "psr/log-implementation": "Implementation for PSR3, LoggerInterface"
@@ -51,8 +51,6 @@
             "Broadway\\": "src/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"

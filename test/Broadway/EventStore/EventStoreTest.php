@@ -17,7 +17,7 @@ use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\Serializer\SerializableInterface;
 use Broadway\TestCase;
-use Rhumsaa\Uuid\Uuid;
+use Broadway\UuidGenerator\Rfc4122\Version4Generator;
 
 abstract class EventStoreTest extends TestCase
 {
@@ -77,7 +77,7 @@ abstract class EventStoreTest extends TestCase
     /**
      * @test
      * @dataProvider idDataProvider
-     * @expectedException Broadway\EventStore\EventStreamNotFoundException
+     * @expectedException \Broadway\EventStore\EventStreamNotFoundException
      */
     public function it_throws_an_exception_when_requesting_the_stream_of_a_non_existing_aggregate($id)
     {
@@ -87,7 +87,7 @@ abstract class EventStoreTest extends TestCase
     /**
      * @test
      * @dataProvider idDataProvider
-     * @expectedException Broadway\EventStore\EventStoreException
+     * @expectedException \Broadway\EventStore\EventStoreException
      */
     public function it_throws_an_exception_when_appending_a_duplicate_playhead($id)
     {
@@ -122,8 +122,6 @@ abstract class EventStoreTest extends TestCase
 
     public function idDataProvider()
     {
-        $uuid = Uuid::uuid4();
-
         return [
             'Simple String' => [
                 'Yolntbyaac', //You only live nine times because you are a cat
@@ -137,7 +135,7 @@ abstract class EventStoreTest extends TestCase
                 42, // test an int
             ],
             'UUID String' => [
-                $uuid->toString(), // test UUID
+                (new Version4Generator())->generate(), // test UUID
             ],
         ];
     }
