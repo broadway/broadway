@@ -30,7 +30,7 @@ before_install:
 
 install:
     - travis_retry composer self-update
-    - travis_retry composer install --ignore-platform-reqs
+    - travis_retry composer install
     - composer info -i
 
 script:
