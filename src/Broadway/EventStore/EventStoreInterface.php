@@ -30,4 +30,11 @@ interface EventStoreInterface
      * @param DomainEventStreamInterface $eventStream
      */
     public function append($id, DomainEventStreamInterface $eventStream);
+
+    /**
+     * The stream ids in the event store
+     *
+     * @return array
+     */
+    public function getStreamIds();
 }

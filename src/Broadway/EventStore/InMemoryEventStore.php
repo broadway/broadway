@@ -58,6 +58,14 @@ class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInt
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getStreamIds()
+    {
+        return array_keys($this->events);
+    }
+
     private function assertPlayhead($events, $playhead)
     {
         if (isset($events[$playhead])) {
