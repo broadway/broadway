@@ -13,6 +13,8 @@ namespace Broadway\EventStore;
 
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\DomainMessage;
+use Broadway\EventStore\Exception\DuplicatePlayheadException;
 use Broadway\EventStore\Management\Criteria;
 use Broadway\EventStore\Management\EventStoreManagementInterface;
 
@@ -50,20 +52,29 @@ class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInt
             $this->events[$id] = [];
         }
 
+        $this->assertStream($this->events[$id], $eventStream);
+
+        /** @var DomainMessage $event */
         foreach ($eventStream as $event) {
             $playhead = $event->getPlayhead();
-            $this->assertPlayhead($this->events[$id], $playhead);
 
             $this->events[$id][$playhead] = $event;
         }
     }
 
-    private function assertPlayhead($events, $playhead)
+    /**
+     * @param DomainMessage[]            $events
+     * @param DomainEventStreamInterface $eventsToAppend
+     */
+    private function assertStream($events, $eventsToAppend)
     {
-        if (isset($events[$playhead])) {
-            throw new InMemoryEventStoreException(
-                sprintf("An event with playhead '%d' is already committed.", $playhead)
-            );
+        /** @var DomainMessage $event */
+        foreach ($eventsToAppend as $event) {
+            $playhead = $event->getPlayhead();
+
+            if (isset($events[$playhead])) {
+                throw new DuplicatePlayheadException($eventsToAppend);
+            }
         }
     }
 

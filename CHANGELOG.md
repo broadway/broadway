@@ -7,6 +7,8 @@
 - We moved the Symfony bundle to a [separate repository](https://github.com/broadway/broadway-bundle)
 - The DBALEventStore requires a BinaryUuidConverter
 - We moved the Saga component to a [separate repository](https://github.com/broadway/broadway-saga)
+- DBALEventStore and InMemoryEventStore can now throw DuplicatePlayheadException.
+  Ensure you are catching EventStoreException instead of specific driver exceptions.
 
 ## v0.10.x
 

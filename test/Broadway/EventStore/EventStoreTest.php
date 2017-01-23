@@ -87,7 +87,7 @@ abstract class EventStoreTest extends TestCase
     /**
      * @test
      * @dataProvider idDataProvider
-     * @expectedException \Broadway\EventStore\EventStoreException
+     * @expectedException Broadway\EventStore\Exception\DuplicatePlayheadException
      */
     public function it_throws_an_exception_when_appending_a_duplicate_playhead($id)
     {

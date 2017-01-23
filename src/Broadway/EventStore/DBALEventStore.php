@@ -15,6 +15,7 @@ use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainEventStreamInterface;
 use Broadway\Domain\DomainMessage;
+use Broadway\EventStore\Exception\DuplicatePlayheadException;
 use Broadway\EventStore\Exception\InvalidIdentifierException;
 use Broadway\EventStore\Management\Criteria;
 use Broadway\EventStore\Management\CriteriaNotSupportedException;
@@ -23,6 +24,7 @@ use Broadway\Serializer\SerializerInterface;
 use Broadway\UuidGenerator\Converter\BinaryUuidConverterInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Version;
 
@@ -110,11 +112,16 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
         $this->connection->beginTransaction();
 
         try {
+            /** @var DomainMessage $domainMessage */
             foreach ($eventStream as $domainMessage) {
                 $this->insertMessage($this->connection, $domainMessage);
             }
 
             $this->connection->commit();
+        } catch (UniqueConstraintViolationException $exception) {
+            $this->connection->rollBack();
+
+            throw new DuplicatePlayheadException($eventStream, $exception);
         } catch (DBALException $exception) {
             $this->connection->rollBack();
 
