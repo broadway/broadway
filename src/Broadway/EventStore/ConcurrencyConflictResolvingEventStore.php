@@ -68,7 +68,7 @@ class ConcurrencyConflictResolvingEventStore implements EventStoreInterface
      */
     public function load($id)
     {
-        $this->eventStore->load($id);
+        return $this->eventStore->load($id);
     }
 
     /**
