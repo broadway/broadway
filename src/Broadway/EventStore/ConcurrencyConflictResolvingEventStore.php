@@ -76,12 +76,10 @@ class ConcurrencyConflictResolvingEventStore implements EventStoreInterface
      */
     private function getCurrentPlayhead(DomainEventStreamInterface $committedEvents)
     {
-        $playhead = 0;
-
-        foreach ($committedEvents as $committedEvent) {
-            /** @var DomainMessage $committedEvent */
-            $playhead = $committedEvent->getPlayhead();
-        }
+        $events = iterator_to_array($committedEvents);
+        /** @var DomainMessage $lastEvent */
+        $lastEvent = end($events);
+        $playhead  = $lastEvent->getPlayhead();
 
         return $playhead;
     }
