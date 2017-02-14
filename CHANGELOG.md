@@ -5,6 +5,7 @@
 #### BC breaks
 
 - We moved the Doctrine DBAL event store implementation to a [separate repository](https://github.com/broadway/event-store-dbal)
+- We moved the Elasticsearch read model implementation to a [separate repository](https://github.com/broadway/read-model-elasticsearch) 
 - We moved the Symfony bundle to a [separate repository](https://github.com/broadway/broadway-bundle)
 - The DBALEventStore requires a BinaryUuidConverter
 - We moved the Saga component to a [separate repository](https://github.com/broadway/broadway-saga)
