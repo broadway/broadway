@@ -44,6 +44,29 @@ class InMemoryEventStore implements EventStoreInterface, EventStoreManagementInt
     /**
      * {@inheritDoc}
      */
+    public function loadFromPlayhead($id, $playhead)
+    {
+        $id = (string) $id;
+
+        if (!isset($this->events[$id])) {
+            return new DomainEventStream([]);
+        }
+
+        return new DomainEventStream(
+            array_values(
+                array_filter(
+                    $this->events[$id],
+                    function ($event) use ($playhead) {
+                        return $playhead <= $event->getPlayhead();
+                    }
+                )
+            )
+        );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function append($id, DomainEventStreamInterface $eventStream)
     {
         $id = (string) $id;

@@ -66,6 +66,14 @@ class TraceableEventStore implements EventStoreInterface
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function loadFromPlayhead($id, $playhead)
+    {
+        return $this->eventStore->loadFromPlayhead($id, $playhead);
+    }
+
+    /**
      * Start tracing.
      */
     public function trace()
