@@ -83,6 +83,7 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
     {
         $statement = $this->prepareLoadStatement();
         $statement->bindValue(1, $this->convertIdentifierToStorageValue($id));
+        $statement->bindValue(2, 0);
         $statement->execute();
 
         $events = [];
@@ -92,6 +93,24 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
 
         if (empty($events)) {
             throw new EventStreamNotFoundException(sprintf('EventStream not found for aggregate with id %s for table %s', $id, $this->tableName));
+        }
+
+        return new DomainEventStream($events);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function loadFromPlayhead($id, $playhead)
+    {
+        $statement = $this->prepareLoadStatement();
+        $statement->bindValue(1, $this->convertIdentifierToStorageValue($id));
+        $statement->bindValue(2, $playhead);
+        $statement->execute();
+
+        $events = [];
+        while ($row = $statement->fetch()) {
+            $events[] = $this->deserializeEvent($row);
         }
 
         return new DomainEventStream($events);
@@ -196,6 +215,7 @@ class DBALEventStore implements EventStoreInterface, EventStoreManagementInterfa
             $query = 'SELECT uuid, playhead, metadata, payload, recorded_on
                 FROM ' . $this->tableName . '
                 WHERE uuid = ?
+                AND playhead >= ?
                 ORDER BY playhead ASC';
             $this->loadStatement = $this->connection->prepare($query);
         }
