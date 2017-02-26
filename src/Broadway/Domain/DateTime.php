@@ -126,4 +126,12 @@ class DateTime
     {
         return $this->dateTime->format('oW');
     }
+
+    /**
+     * @return DateTimeImmutable
+     */
+    public function toNative()
+    {
+        return $this->dateTime;
+    }
 }

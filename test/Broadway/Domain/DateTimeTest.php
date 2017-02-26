@@ -110,6 +110,14 @@ class DateTimeTest extends TestCase
         $this->assertSame($bool, DateTime::fromString($date1)->comesAfter(DateTime::fromString($date2)));
     }
 
+    /**
+     * @test
+     */
+    public function it_returns_the_native_date_time_object()
+    {
+        $this->assertInstanceOf(\DateTimeImmutable::class, DateTime::now()->toNative());
+    }
+
     public function provideDatesAndIntervals()
     {
         return [
