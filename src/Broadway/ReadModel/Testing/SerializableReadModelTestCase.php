@@ -11,15 +11,15 @@
 
 namespace Broadway\ReadModel\Testing;
 
-use Broadway\ReadModel\ReadModelInterface;
+use Broadway\ReadModel\SerializableReadModelInterface;
 use Broadway\Serializer\SerializableInterface;
 use Broadway\Serializer\SimpleInterfaceSerializer;
 use PHPUnit_Framework_TestCase as TestCase;
 
 /**
- * Base test case that can be used to test a read model.
+ * Base test case that can be used to test a serializable read model.
  */
-abstract class ReadModelTestCase extends TestCase
+abstract class SerializableReadModelTestCase extends TestCase
 {
     /**
      * @test
@@ -35,7 +35,7 @@ abstract class ReadModelTestCase extends TestCase
     public function serializing_and_deserializing_yields_the_same_object()
     {
         $serializer = new SimpleInterfaceSerializer();
-        $readModel  = $this->createReadModel();
+        $readModel  = $this->createSerializableReadModel();
 
         $serialized   = $serializer->serialize($readModel);
         $deserialized = $serializer->deserialize($serialized);
@@ -44,7 +44,7 @@ abstract class ReadModelTestCase extends TestCase
     }
 
     /**
-     * @return ReadModelInterface
+     * @return SerializableReadModelInterface
      */
-    abstract protected function createReadModel();
+    abstract protected function createSerializableReadModel();
 }
