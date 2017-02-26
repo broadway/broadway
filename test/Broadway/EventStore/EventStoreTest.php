@@ -120,6 +120,46 @@ abstract class EventStoreTest extends TestCase
         $this->eventStore->append($id, $domainEventStream);
     }
 
+    /**
+     * @test
+     * @dataProvider idDataProvider
+     */
+    public function it_loads_events_starting_from_a_given_playhead($id)
+    {
+        $dateTime          = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
+        $domainEventStream = new DomainEventStream([
+            $this->createDomainMessage($id, 0, $dateTime),
+            $this->createDomainMessage($id, 1, $dateTime),
+            $this->createDomainMessage($id, 2, $dateTime),
+            $this->createDomainMessage($id, 3, $dateTime),
+        ]);
+
+        $this->eventStore->append($id, $domainEventStream);
+
+        $expected = new DomainEventStream([
+            $this->createDomainMessage($id, 2, $dateTime),
+            $this->createDomainMessage($id, 3, $dateTime),
+        ]);
+
+        $this->assertEquals($expected, $this->eventStore->loadFromPlayhead($id, 2));
+    }
+
+    /**
+     * @test
+     * @dataProvider idDataProvider
+     */
+    public function it_returns_empty_event_stream_when_no_events_are_committed_since_given_playhead($id)
+    {
+        $this->eventStore->append($id, new DomainEventStream([
+            $this->createDomainMessage($id, 0),
+        ]));
+
+        $this->assertEquals(
+            new DomainEventStream([]),
+            $this->eventStore->loadFromPlayhead($id, 1)
+        );
+    }
+
     public function idDataProvider()
     {
         return [
