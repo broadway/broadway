@@ -9,7 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Broadway\EventDispatcher;
+namespace Broadway\EventDispatcher\Testing;
+
+use Broadway\EventDispatcher\EventDispatcherInterface;
 
 class TraceableEventDispatcher implements EventDispatcherInterface
 {
