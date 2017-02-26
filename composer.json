@@ -35,7 +35,6 @@
       }
     ],
     "require-dev": {
-        "doctrine/dbal": "~2.4",
         "elasticsearch/elasticsearch": "~1.0|^2.0",
         "instaclick/base-test-bundle": "~0.5",
         "monolog/monolog": "~1.8",
@@ -43,7 +42,8 @@
         "ramsey/uuid": "^3.0"
     },
     "suggest": {
-        "psr/log-implementation": "Implementation for PSR3, LoggerInterface"
+        "psr/log-implementation": "Implementation for PSR3, LoggerInterface",
+        "broadway/event-store-dbal": "Event store implementation using doctrine/dbal"
     },
     "autoload": {
         "psr-0": {
