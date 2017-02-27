@@ -39,16 +39,24 @@ class EventDispatchingCommandBus implements CommandBusInterface
      */
     public function dispatch($command)
     {
+        $exception = null;
+        $eventData = ['command' => $command];
+
         try {
             $this->commandBus->dispatch($command);
-            $this->dispatcher->dispatch(self::EVENT_COMMAND_SUCCESS, ['command' => $command]);
-        } catch (Exception $e) {
-            $this->dispatcher->dispatch(
-                self::EVENT_COMMAND_FAILURE,
-                ['command' => $command, 'exception' => $e]
-            );
+            $this->dispatcher->dispatch(self::EVENT_COMMAND_SUCCESS, $eventData);
+        } catch (CommandHandlingException $handlingException) {
+            $eventData['exception'] = $exception = $handlingException->getOriginalException();
+            $eventData['incomplete_commands'] = $handlingException->getIncompleteCommandStack();
+        } catch (\Exception $e) {
+            $eventData['exception'] = $e;
+            $exception = $e;
+        }
 
-            throw $e;
+        if (!is_null($exception)) {
+            $this->dispatcher->dispatch(self::EVENT_COMMAND_FAILURE, $eventData);
+
+            throw $exception;
         }
     }
 

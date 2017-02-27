@@ -11,6 +11,7 @@
 
 namespace Broadway\CommandHandling;
 
+use Broadway\CommandHandling\Exception\CommandHandlingException;
 use Broadway\TestCase;
 
 class SimpleCommandBusTest extends TestCase
@@ -42,7 +43,7 @@ class SimpleCommandBusTest extends TestCase
         $command1 = ['foo' => 'bar'];
         $command2 = ['foo' => 'bas'];
 
-        $commandHandler = $this->getMockBuilder('Broadway\CommandHandling\CommandHandler')->getMock();
+        $commandHandler = $this->getMockBuilder(CommandHandler::class)->getMock();
 
         $commandHandler
             ->expects($this->at(0))
@@ -67,8 +68,8 @@ class SimpleCommandBusTest extends TestCase
         $command1 = ['foo' => 'bar'];
         $command2 = ['foo' => 'bas'];
 
-        $commandHandler = $this->getMockBuilder('Broadway\CommandHandling\CommandHandler')->getMock();
-        $simpleHandler  = $this->getMockBuilder('Broadway\CommandHandling\CommandHandler')->getMock();
+        $commandHandler = $this->getMockBuilder(CommandHandler::class)->getMock();
+        $simpleHandler  = $this->getMockBuilder(CommandHandler::class)->getMock();
 
         $commandHandler
             ->expects($this->at(0))
@@ -98,9 +99,85 @@ class SimpleCommandBusTest extends TestCase
         $this->commandBus->dispatch($command2);
     }
 
+    /**
+     * @test
+     */
+    public function it_should_clear_the_queue_after_failing_command()
+    {
+        $command1 = array('foo' => 'bar');
+        $command2 = array('foo' => 'bas');
+        $command3 = array('bar' => 'foo');
+
+        $commandHandler = $this->getMockBuilder(CommandHandler::class)->getMock();
+
+        $commandHandler
+            ->expects($this->at(0))
+            ->method('handle')
+            ->with($command1)
+            ->will(
+                $this->returnCallback(
+                    function () use ($command2) {
+                        $this->commandBus->dispatch($command2);
+
+                        throw new MyException();
+                    }
+                )
+            );
+
+        $commandHandler
+            ->expects($this->at(1))
+            ->method('handle')
+            ->with($command3);
+
+        $this->commandBus->subscribe($commandHandler);
+
+        try {
+            $this->commandBus->dispatch($command1);
+        } catch (\Exception $e) {
+        }
+
+        $this->commandBus->dispatch($command3);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_throw_command_handling_exception()
+    {
+        $command1 = array('foo' => 'bar');
+        $command2 = array('foo' => 'bas');
+        $expectedException = new MyException('I failed.', 479);
+
+        $commandHandler = $this->createCommandHandlerMock($command1);
+        $commandHandler
+            ->expects($this->once())
+            ->method('handle')
+            ->with($command1)
+            ->will(
+                $this->returnCallback(
+                    function () use ($command2, $expectedException) {
+                        $this->commandBus->dispatch($command2);
+
+                        throw $expectedException;
+                    }
+                )
+            );
+
+        $this->commandBus->subscribe($commandHandler);
+
+        try {
+            $this->commandBus->dispatch($command1);
+        } catch (CommandHandlingException $e) {
+            $this->assertEquals('I failed.', $e->getMessage());
+            $this->assertEquals(479, $e->getCode());
+            $this->assertEquals($expectedException, $e->getOriginalException());
+            $this->assertEquals(array($command2), $e->getIncompleteCommandStack());
+        }
+    }
+
     private function createCommandHandlerMock($expectedCommand)
     {
-        $mock = $this->getMockBuilder('Broadway\CommandHandling\CommandHandler')->getMock();
+        $mock = $this->getMockBuilder(CommandHandler::class)->getMock();
 
         $mock
             ->expects($this->once())

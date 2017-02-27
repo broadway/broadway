@@ -11,6 +11,8 @@
 
 namespace Broadway\CommandHandling;
 
+use Broadway\CommandHandling\Exception\CommandHandlingException;
+use Broadway\EventDispatcher\EventDispatcherInterface;
 use Broadway\TestCase;
 
 class EventDispatchingCommandBusTest extends TestCase
@@ -23,15 +25,15 @@ class EventDispatchingCommandBusTest extends TestCase
 
     public function setUp()
     {
-        $this->eventDispatcher = $this->getMockBuilder('Broadway\EventDispatcher\EventDispatcherInterface')
+        $this->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->baseCommandBus = $this->getMockBuilder('Broadway\CommandHandling\CommandBusInterface')
+        $this->baseCommandBus = $this->getMockBuilder(CommandBusInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->subscriber = $this->getMockBuilder('Broadway\CommandHandling\CommandHandlerInterface')
+        $this->subscriber = $this->getMockBuilder(CommandHandlerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -54,7 +56,7 @@ class EventDispatchingCommandBusTest extends TestCase
 
     /**
      * @test
-     * @expectedException Broadway\CommandHandling\MyException
+     * @expectedException \Broadway\CommandHandling\MyException
      */
     public function it_dispatches_the_failure_event_and_forwards_the_exception()
     {
@@ -73,6 +75,32 @@ class EventDispatchingCommandBusTest extends TestCase
 
         $this->eventDispatchingCommandBus->dispatch($this->command);
     }
+
+    /**
+     * @test
+     * @expectedException \Broadway\CommandHandling\MyException
+     */
+    public function it_specially_handles_command_handling_exception()
+    {
+        $exception = new MyException();
+        $incompleteCommands =  array(new Command('foo'));
+        $handlingException = new CommandHandlingException($exception, $incompleteCommands);
+
+        $this->eventDispatcher->expects($this->once())
+            ->method('dispatch')
+            ->with(
+                EventDispatchingCommandBus::EVENT_COMMAND_FAILURE,
+                array('command' => $this->command, 'exception' => $exception, 'incomplete_commands' => $incompleteCommands)
+            );
+
+        $this->baseCommandBus->expects($this->once())
+            ->method('dispatch')
+            ->with($this->command)
+            ->will($this->throwException($handlingException));
+
+        $this->eventDispatchingCommandBus->dispatch($this->command);
+    }
+
 
     /**
      * @test
@@ -101,6 +129,11 @@ class EventDispatchingCommandBusTest extends TestCase
 
 class Command
 {
+    private $value;
+    public function __construct($value = null)
+    {
+        $this->value = $value;
+    }
 }
 
 use Exception;
