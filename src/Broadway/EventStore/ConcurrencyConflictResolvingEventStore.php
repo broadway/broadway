@@ -64,11 +64,19 @@ class ConcurrencyConflictResolvingEventStore implements EventStoreInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function load($id)
     {
         return $this->eventStore->load($id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function loadFromPlayhead($id, $playhead)
+    {
+        return $this->eventStore->loadFromPlayhead($id, $playhead);
     }
 
     /**
