@@ -26,7 +26,7 @@ abstract class SerializableReadModelTestCase extends TestCase
      */
     public function its_serializable()
     {
-        $this->assertInstanceOf(SerializableInterface::class, $this->createReadModel());
+        $this->assertInstanceOf(SerializableInterface::class, $this->createSerializableReadModel());
     }
 
     /**
