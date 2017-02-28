@@ -11,12 +11,12 @@
 
 namespace Broadway\ReadModel\InMemory;
 
-use Broadway\ReadModel\RepositoryFactoryInterface;
+use Broadway\ReadModel\RepositoryFactory;
 
 /**
  * Creates in-memory repositories.
  */
-class InMemoryRepositoryFactory implements RepositoryFactoryInterface
+class InMemoryRepositoryFactory implements RepositoryFactory
 {
     /**
      * {@inheritDoc}

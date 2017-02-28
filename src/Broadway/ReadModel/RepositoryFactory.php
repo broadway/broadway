@@ -14,7 +14,7 @@ namespace Broadway\ReadModel;
 /**
  * Creates repositories.
  */
-interface RepositoryFactoryInterface
+interface RepositoryFactory
 {
     /**
      * @param string $name
