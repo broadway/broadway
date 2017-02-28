@@ -19,12 +19,12 @@ use Broadway\EventSourcing\AggregateFactory\AggregateFactoryInterface;
 use Broadway\EventStore\EventStoreInterface;
 use Broadway\EventStore\EventStreamNotFoundException;
 use Broadway\Repository\AggregateNotFoundException;
-use Broadway\Repository\RepositoryInterface;
+use Broadway\Repository\Repository;
 
 /**
  * Naive initial implementation of an event sourced aggregate repository.
  */
-class EventSourcingRepository implements RepositoryInterface
+class EventSourcingRepository implements Repository
 {
     private $eventStore;
     private $eventBus;

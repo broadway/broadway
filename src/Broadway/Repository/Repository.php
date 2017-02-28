@@ -16,7 +16,7 @@ use Broadway\Domain\AggregateRoot;
 /**
  * Repository for aggregate roots.
  */
-interface RepositoryInterface
+interface Repository
 {
     /**
      * Adds the aggregate to the repository.
