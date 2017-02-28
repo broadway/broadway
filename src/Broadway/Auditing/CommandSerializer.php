@@ -14,7 +14,7 @@ namespace Broadway\Auditing;
 /**
  * Serializes commands to an array of scalars.
  */
-interface CommandSerializerInterface
+interface CommandSerializer
 {
     /**
      * Serializes the command

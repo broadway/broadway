@@ -24,7 +24,7 @@ class CommandLogger
     private $logger;
     private $commandSerializer;
 
-    public function __construct(LoggerInterface $logger, CommandSerializerInterface $commandSerializer)
+    public function __construct(LoggerInterface $logger, CommandSerializer $commandSerializer)
     {
         $this->logger            = $logger;
         $this->commandSerializer = $commandSerializer;
