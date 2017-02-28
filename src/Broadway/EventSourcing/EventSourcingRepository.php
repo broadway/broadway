@@ -16,7 +16,7 @@ use Broadway\Domain\AggregateRoot;
 use Broadway\Domain\DomainEventStream;
 use Broadway\EventHandling\EventBus;
 use Broadway\EventSourcing\AggregateFactory\AggregateFactoryInterface;
-use Broadway\EventStore\EventStoreInterface;
+use Broadway\EventStore\EventStore;
 use Broadway\EventStore\EventStreamNotFoundException;
 use Broadway\Repository\AggregateNotFoundException;
 use Broadway\Repository\Repository;
@@ -33,14 +33,14 @@ class EventSourcingRepository implements Repository
     private $aggregateFactory;
 
     /**
-     * @param EventStoreInterface             $eventStore
+     * @param EventStore                      $eventStore
      * @param EventBus                        $eventBus
      * @param string                          $aggregateClass
      * @param AggregateFactoryInterface       $aggregateFactory
      * @param EventStreamDecoratorInterface[] $eventStreamDecorators
      */
     public function __construct(
-        EventStoreInterface $eventStore,
+        EventStore $eventStore,
         EventBus $eventBus,
         $aggregateClass,
         AggregateFactoryInterface $aggregateFactory,

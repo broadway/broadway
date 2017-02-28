@@ -21,7 +21,7 @@ use Broadway\UuidGenerator\Rfc4122\Version4Generator;
 
 abstract class EventStoreTest extends TestCase
 {
-    /** @var EventStoreInterface */
+    /** @var EventStore */
     protected $eventStore;
 
     /**

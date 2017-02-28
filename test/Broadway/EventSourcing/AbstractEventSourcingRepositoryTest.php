@@ -21,7 +21,7 @@ use Broadway\EventHandling\TraceableEventBus;
 use Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
 use Broadway\EventSourcing\MetadataEnrichment\MetadataEnricherInterface;
 use Broadway\EventSourcing\MetadataEnrichment\MetadataEnrichingEventStreamDecorator;
-use Broadway\EventStore\EventStoreInterface;
+use Broadway\EventStore\EventStore;
 use Broadway\EventStore\InMemoryEventStore;
 use Broadway\EventStore\TraceableEventStore;
 use Broadway\ReadModel\Projector;
@@ -36,7 +36,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
     /** @var TraceableEventStoreDecorator */
     protected $eventStreamDecorator;
 
-    /** @var EventStoreInterface */
+    /** @var EventStore */
     protected $eventStore;
 
     /** @var EventSourcingRepository */

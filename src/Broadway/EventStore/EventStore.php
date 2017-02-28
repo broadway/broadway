@@ -17,7 +17,7 @@ use Broadway\EventStore\Exception\DuplicatePlayheadException;
 /**
  * Loads and stores events.
  */
-interface EventStoreInterface
+interface EventStore
 {
     /**
      * @param mixed $id

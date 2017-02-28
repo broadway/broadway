@@ -15,7 +15,7 @@ use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
-use Broadway\EventStore\EventStoreInterface;
+use Broadway\EventStore\EventStore;
 use Broadway\EventStore\EventVisitorInterface;
 use Broadway\Serializer\SerializableInterface;
 use Broadway\TestCase;
@@ -23,7 +23,7 @@ use Broadway\TestCase;
 abstract class EventStoreManagementTest extends TestCase
 {
     /**
-     * @var EventStoreInterface|EventStoreManagementInterface
+     * @var EventStore|EventStoreManagementInterface
      */
     protected $eventStore;
 

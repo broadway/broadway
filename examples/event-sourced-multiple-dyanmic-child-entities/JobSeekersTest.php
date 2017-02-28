@@ -22,7 +22,7 @@ class JobSeekersCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
         $this->generator = new Broadway\UuidGenerator\Rfc4122\Version4Generator();
     }
 
-    protected function createCommandHandler(Broadway\EventStore\EventStoreInterface $eventStore, Broadway\EventHandling\EventBus $eventBus)
+    protected function createCommandHandler(Broadway\EventStore\EventStore $eventStore, Broadway\EventHandling\EventBus $eventBus)
     {
         $repository = new JobSeekerRepository($eventStore, $eventBus);
 
