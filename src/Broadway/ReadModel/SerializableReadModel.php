@@ -16,6 +16,6 @@ use Broadway\Serializer\SerializableInterface;
 /**
  * Represents a serializable read model.
  */
-interface SerializableReadModelInterface extends SerializableInterface, ReadModelInterface
+interface SerializableReadModel extends SerializableInterface, ReadModelInterface
 {
 }

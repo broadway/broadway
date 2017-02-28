@@ -11,7 +11,7 @@
 
 namespace Broadway\ReadModel\Testing;
 
-use Broadway\ReadModel\SerializableReadModelInterface;
+use Broadway\ReadModel\SerializableReadModel;
 use Broadway\Serializer\SerializableInterface;
 use Broadway\Serializer\SimpleInterfaceSerializer;
 use PHPUnit_Framework_TestCase as TestCase;
@@ -44,7 +44,7 @@ abstract class SerializableReadModelTestCase extends TestCase
     }
 
     /**
-     * @return SerializableReadModelInterface
+     * @return SerializableReadModel
      */
     abstract protected function createSerializableReadModel();
 }
