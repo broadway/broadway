@@ -14,7 +14,7 @@ namespace Broadway\ReadModel;
 /**
  * Represent a repository that can transfer its data to another repository.
  */
-interface TransferableInterface
+interface Transferable
 {
     public function transferTo(RepositoryInterface $otherRepository);
 }

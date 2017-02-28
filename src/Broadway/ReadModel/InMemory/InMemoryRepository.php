@@ -13,14 +13,14 @@ namespace Broadway\ReadModel\InMemory;
 
 use Broadway\ReadModel\ReadModelInterface;
 use Broadway\ReadModel\RepositoryInterface;
-use Broadway\ReadModel\TransferableInterface;
+use Broadway\ReadModel\Transferable;
 
 /**
  * In-memory implementation of a read model repository.
  *
  * The in-memory repository is useful for testing code.
  */
-class InMemoryRepository implements RepositoryInterface, TransferableInterface
+class InMemoryRepository implements RepositoryInterface, Transferable
 {
     private $data = [];
 
