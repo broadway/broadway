@@ -63,7 +63,7 @@ class Part extends Broadway\EventSourcing\EventSourcedAggregateRoot
     }
 }
 
-class Manufacturer extends Broadway\EventSourcing\EventSourcedEntity
+class Manufacturer extends Broadway\EventSourcing\SimpleEventSourcedEntity
 {
     private $partId;
     private $manufacturerId;

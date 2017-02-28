@@ -81,7 +81,7 @@ class JobSeeker extends Broadway\EventSourcing\EventSourcedAggregateRoot
     }
 }
 
-class Job extends Broadway\EventSourcing\EventSourcedEntity
+class Job extends Broadway\EventSourcing\SimpleEventSourcedEntity
 {
     private $jobSeekerId;
     private $jobId;

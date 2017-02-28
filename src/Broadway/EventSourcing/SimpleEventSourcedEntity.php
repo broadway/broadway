@@ -14,7 +14,7 @@ namespace Broadway\EventSourcing;
 /**
  * Convenience base class for event sourced entities.
  */
-abstract class EventSourcedEntity implements EventSourcedEntityInterface
+abstract class SimpleEventSourcedEntity implements EventSourcedEntityInterface
 {
     /**
      * @var EventSourcedAggregateRoot|null
