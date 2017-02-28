@@ -12,12 +12,11 @@
 namespace Broadway\EventHandling;
 
 use Broadway\Domain\DomainEventStreamInterface;
-use Exception;
 
 /**
  * Simple synchronous publishing of events.
  */
-class SimpleEventBus implements EventBusInterface
+class SimpleEventBus implements EventBus
 {
     private $eventListeners = [];
     private $queue          = [];

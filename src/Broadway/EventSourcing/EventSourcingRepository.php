@@ -14,7 +14,7 @@ namespace Broadway\EventSourcing;
 use Assert\Assertion as Assert;
 use Broadway\Domain\AggregateRoot;
 use Broadway\Domain\DomainEventStream;
-use Broadway\EventHandling\EventBusInterface;
+use Broadway\EventHandling\EventBus;
 use Broadway\EventSourcing\AggregateFactory\AggregateFactoryInterface;
 use Broadway\EventStore\EventStoreInterface;
 use Broadway\EventStore\EventStreamNotFoundException;
@@ -34,14 +34,14 @@ class EventSourcingRepository implements Repository
 
     /**
      * @param EventStoreInterface             $eventStore
-     * @param EventBusInterface               $eventBus
+     * @param EventBus                        $eventBus
      * @param string                          $aggregateClass
      * @param AggregateFactoryInterface       $aggregateFactory
      * @param EventStreamDecoratorInterface[] $eventStreamDecorators
      */
     public function __construct(
         EventStoreInterface $eventStore,
-        EventBusInterface $eventBus,
+        EventBus $eventBus,
         $aggregateClass,
         AggregateFactoryInterface $aggregateFactory,
         array $eventStreamDecorators = []

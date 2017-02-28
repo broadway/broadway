@@ -22,7 +22,7 @@ class InvitationCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
         $this->generator = new Broadway\UuidGenerator\Rfc4122\Version4Generator();
     }
 
-    protected function createCommandHandler(Broadway\EventStore\EventStoreInterface $eventStore, Broadway\EventHandling\EventBusInterface $eventBus)
+    protected function createCommandHandler(Broadway\EventStore\EventStoreInterface $eventStore, Broadway\EventHandling\EventBus $eventBus)
     {
         $repository = new InvitationRepository($eventStore, $eventBus);
 

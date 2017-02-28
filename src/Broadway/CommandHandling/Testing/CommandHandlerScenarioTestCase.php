@@ -12,7 +12,7 @@
 namespace Broadway\CommandHandling\Testing;
 
 use Broadway\CommandHandling\CommandHandler;
-use Broadway\EventHandling\EventBusInterface;
+use Broadway\EventHandling\EventBus;
 use Broadway\EventHandling\SimpleEventBus;
 use Broadway\EventStore\EventStoreInterface;
 use Broadway\EventStore\InMemoryEventStore;
@@ -50,9 +50,9 @@ abstract class CommandHandlerScenarioTestCase extends TestCase
      * Create a command handler for the given scenario test case.
      *
      * @param EventStoreInterface $eventStore
-     * @param EventBusInterface   $eventBus
+     * @param EventBus            $eventBus
      *
      * @return CommandHandler
      */
-    abstract protected function createCommandHandler(EventStoreInterface $eventStore, EventBusInterface $eventBus);
+    abstract protected function createCommandHandler(EventStoreInterface $eventStore, EventBus $eventBus);
 }

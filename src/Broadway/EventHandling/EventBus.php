@@ -16,7 +16,7 @@ use Broadway\Domain\DomainEventStreamInterface;
 /**
  * Publishes events to the subscribed event listeners.
  */
-interface EventBusInterface
+interface EventBus
 {
     /**
      * Subscribes the event listener to the event bus.
