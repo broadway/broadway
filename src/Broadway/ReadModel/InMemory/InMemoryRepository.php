@@ -11,7 +11,7 @@
 
 namespace Broadway\ReadModel\InMemory;
 
-use Broadway\ReadModel\ReadModelInterface;
+use Broadway\ReadModel\Identifiable;
 use Broadway\ReadModel\Repository;
 use Broadway\ReadModel\Transferable;
 
@@ -27,7 +27,7 @@ class InMemoryRepository implements Repository, Transferable
     /**
      * {@inheritDoc}
      */
-    public function save(ReadModelInterface $model)
+    public function save(Identifiable $model)
     {
         $this->data[(string) $model->getId()] = $model;
     }

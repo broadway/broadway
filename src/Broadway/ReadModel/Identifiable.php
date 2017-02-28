@@ -14,7 +14,7 @@ namespace Broadway\ReadModel;
 /**
  * Represents a read model.
  */
-interface ReadModelInterface
+interface Identifiable
 {
     /**
      * @return string
