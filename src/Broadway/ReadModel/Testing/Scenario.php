@@ -14,7 +14,7 @@ namespace Broadway\ReadModel\Testing;
 use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
-use Broadway\ReadModel\ProjectorInterface;
+use Broadway\EventHandling\EventListenerInterface;
 use Broadway\ReadModel\RepositoryInterface;
 use PHPUnit_Framework_TestCase;
 
@@ -40,7 +40,7 @@ class Scenario
     public function __construct(
         PHPUnit_Framework_TestCase $testCase,
         RepositoryInterface $repository,
-        ProjectorInterface $projector
+        EventListenerInterface $projector
     ) {
         $this->testCase          = $testCase;
         $this->repository        = $repository;
