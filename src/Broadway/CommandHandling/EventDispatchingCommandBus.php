@@ -20,7 +20,7 @@ use Exception;
  * Dispatches events signalling whether a command was executed successfully or
  * if it failed.
  */
-class EventDispatchingCommandBus implements CommandBusInterface
+class EventDispatchingCommandBus implements CommandBus
 {
     const EVENT_COMMAND_SUCCESS = 'broadway.command_handling.command_success';
     const EVENT_COMMAND_FAILURE = 'broadway.command_handling.command_failure';
@@ -28,7 +28,7 @@ class EventDispatchingCommandBus implements CommandBusInterface
     private $commandBus;
     private $dispatcher;
 
-    public function __construct(CommandBusInterface $commandBus, EventDispatcherInterface $dispatcher)
+    public function __construct(CommandBus $commandBus, EventDispatcherInterface $dispatcher)
     {
         $this->commandBus = $commandBus;
         $this->dispatcher = $dispatcher;

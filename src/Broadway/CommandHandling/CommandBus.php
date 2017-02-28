@@ -14,7 +14,7 @@ namespace Broadway\CommandHandling;
 /**
  * Dispatches command objects to the subscribed command handlers.
  */
-interface CommandBusInterface
+interface CommandBus
 {
     /**
      * Dispatches the command $command to the proper CommandHandler

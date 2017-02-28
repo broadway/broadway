@@ -27,7 +27,7 @@ class EventDispatchingCommandBusTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->baseCommandBus = $this->getMockBuilder('Broadway\CommandHandling\CommandBusInterface')
+        $this->baseCommandBus = $this->getMockBuilder('Broadway\CommandHandling\CommandBus')
             ->disableOriginalConstructor()
             ->getMock();
 
