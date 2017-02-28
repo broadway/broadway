@@ -15,7 +15,7 @@ use Assert\Assertion as Assert;
 use Broadway\Domain\AggregateRoot;
 use Broadway\Domain\DomainEventStream;
 use Broadway\EventHandling\EventBus;
-use Broadway\EventSourcing\AggregateFactory\AggregateFactoryInterface;
+use Broadway\EventSourcing\AggregateFactory\AggregateFactory;
 use Broadway\EventStore\EventStore;
 use Broadway\EventStore\EventStreamNotFoundException;
 use Broadway\Repository\AggregateNotFoundException;
@@ -33,17 +33,17 @@ class EventSourcingRepository implements Repository
     private $aggregateFactory;
 
     /**
-     * @param EventStore                $eventStore
-     * @param EventBus                  $eventBus
-     * @param string                    $aggregateClass
-     * @param AggregateFactoryInterface $aggregateFactory
-     * @param EventStreamDecorator[]    $eventStreamDecorators
+     * @param EventStore             $eventStore
+     * @param EventBus               $eventBus
+     * @param string                 $aggregateClass
+     * @param AggregateFactory       $aggregateFactory
+     * @param EventStreamDecorator[] $eventStreamDecorators
      */
     public function __construct(
         EventStore $eventStore,
         EventBus $eventBus,
         $aggregateClass,
-        AggregateFactoryInterface $aggregateFactory,
+        AggregateFactory $aggregateFactory,
         array $eventStreamDecorators = []
     ) {
         $this->assertExtendsEventSourcedAggregateRoot($aggregateClass);

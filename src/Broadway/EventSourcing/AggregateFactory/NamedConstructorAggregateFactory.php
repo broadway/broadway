@@ -10,7 +10,7 @@ use Broadway\Domain\DomainEventStreamInterface;
  * which is itself responsible for returning an instance of itself.
  * E.g. (\Vendor\AggregateRoot::instantiateForReconstitution())->initializeState($domainEventStream);
  */
-class NamedConstructorAggregateFactory implements AggregateFactoryInterface
+class NamedConstructorAggregateFactory implements AggregateFactory
 {
     /**
      * @var string the name of the method to call on the Aggregate

@@ -14,7 +14,7 @@ namespace Broadway\EventSourcing\Testing;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
-use Broadway\EventSourcing\AggregateFactory\AggregateFactoryInterface;
+use Broadway\EventSourcing\AggregateFactory\AggregateFactory;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -38,11 +38,11 @@ class Scenario
 
     /**
      * @param PHPUnit_Framework_TestCase $testCase
-     * @param AggregateFactoryInterface  $factory
+     * @param AggregateFactory           $factory
      * @param string                     $aggregateRootClass
      * @internal param PHPUnit_Framework_TestCase $testcase
      */
-    public function __construct(PHPUnit_Framework_TestCase $testCase, AggregateFactoryInterface $factory, $aggregateRootClass)
+    public function __construct(PHPUnit_Framework_TestCase $testCase, AggregateFactory $factory, $aggregateRootClass)
     {
         $this->testCase           = $testCase;
         $this->factory            = $factory;

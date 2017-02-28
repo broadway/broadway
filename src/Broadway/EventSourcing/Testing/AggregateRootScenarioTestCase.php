@@ -50,7 +50,7 @@ abstract class AggregateRootScenarioTestCase extends TestCase
     /**
      * Returns a factory for instantiating an aggregate
      *
-     * @return \Broadway\EventSourcing\AggregateFactory\AggregateFactoryInterface $factory
+     * @return \Broadway\EventSourcing\AggregateFactory\AggregateFactory $factory
      */
     protected function getAggregateRootFactory()
     {

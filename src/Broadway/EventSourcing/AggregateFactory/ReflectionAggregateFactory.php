@@ -10,7 +10,7 @@ use ReflectionClass;
 /**
  * Creates aggregates with reflection without constructor.
  */
-final class ReflectionAggregateFactory implements AggregateFactoryInterface
+final class ReflectionAggregateFactory implements AggregateFactory
 {
     /**
      * {@inheritDoc}

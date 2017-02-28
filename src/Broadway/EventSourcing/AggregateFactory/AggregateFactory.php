@@ -4,10 +4,7 @@ namespace Broadway\EventSourcing\AggregateFactory;
 
 use Broadway\Domain\DomainEventStreamInterface;
 
-/**
- * Interface AggregateFactoryInterface
- */
-interface AggregateFactoryInterface
+interface AggregateFactory
 {
     /**
      * @param string                     $aggregateClass    the FQCN of the Aggregate to create
