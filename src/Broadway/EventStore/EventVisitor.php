@@ -13,7 +13,7 @@ namespace Broadway\EventStore;
 
 use Broadway\Domain\DomainMessage;
 
-interface EventVisitorInterface
+interface EventVisitor
 {
     public function doWithEvent(DomainMessage $domainMessage);
 }

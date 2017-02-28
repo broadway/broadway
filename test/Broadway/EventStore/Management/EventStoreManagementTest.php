@@ -16,7 +16,7 @@ use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventStore\EventStore;
-use Broadway\EventStore\EventVisitorInterface;
+use Broadway\EventStore\EventVisitor;
 use Broadway\Serializer\SerializableInterface;
 use Broadway\TestCase;
 
@@ -214,7 +214,7 @@ abstract class EventStoreManagementTest extends TestCase
     }
 }
 
-class RecordingEventVisitor implements EventVisitorInterface
+class RecordingEventVisitor implements EventVisitor
 {
     /**
      * @var DomainMessage

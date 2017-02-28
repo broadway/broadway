@@ -101,7 +101,7 @@ class InMemoryEventStore implements EventStore, EventStoreManagementInterface
         }
     }
 
-    public function visitEvents(Criteria $criteria, EventVisitorInterface $eventVisitor)
+    public function visitEvents(Criteria $criteria, EventVisitor $eventVisitor)
     {
         foreach ($this->events as $id => $events) {
             foreach ($events as $event) {
