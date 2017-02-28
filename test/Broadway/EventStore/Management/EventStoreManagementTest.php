@@ -23,7 +23,7 @@ use Broadway\TestCase;
 abstract class EventStoreManagementTest extends TestCase
 {
     /**
-     * @var EventStore|EventStoreManagementInterface
+     * @var EventStore|EventStoreManagement
      */
     protected $eventStore;
 

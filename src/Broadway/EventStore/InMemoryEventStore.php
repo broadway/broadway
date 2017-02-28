@@ -16,14 +16,14 @@ use Broadway\Domain\DomainEventStreamInterface;
 use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\Exception\DuplicatePlayheadException;
 use Broadway\EventStore\Management\Criteria;
-use Broadway\EventStore\Management\EventStoreManagementInterface;
+use Broadway\EventStore\Management\EventStoreManagement;
 
 /**
  * In-memory implementation of an event store.
  *
  * Useful for testing code that uses an event store.
  */
-class InMemoryEventStore implements EventStore, EventStoreManagementInterface
+class InMemoryEventStore implements EventStore, EventStoreManagement
 {
     private $events = [];
 

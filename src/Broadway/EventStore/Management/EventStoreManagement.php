@@ -13,7 +13,7 @@ namespace Broadway\EventStore\Management;
 
 use Broadway\EventStore\EventVisitor;
 
-interface EventStoreManagementInterface
+interface EventStoreManagement
 {
     public function visitEvents(Criteria $criteria, EventVisitor $eventVisitor);
 }
