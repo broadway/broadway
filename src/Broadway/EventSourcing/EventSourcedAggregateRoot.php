@@ -103,7 +103,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
      *
      * Override this method if your aggregate root contains child entities.
      *
-     * @return EventSourcedEntityInterface[]
+     * @return EventSourcedEntity[]
      */
     protected function getChildEntities()
     {

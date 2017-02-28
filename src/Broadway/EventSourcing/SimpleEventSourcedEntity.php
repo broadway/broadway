@@ -14,7 +14,7 @@ namespace Broadway\EventSourcing;
 /**
  * Convenience base class for event sourced entities.
  */
-abstract class SimpleEventSourcedEntity implements EventSourcedEntityInterface
+abstract class SimpleEventSourcedEntity implements EventSourcedEntity
 {
     /**
      * @var EventSourcedAggregateRoot|null
@@ -70,7 +70,7 @@ abstract class SimpleEventSourcedEntity implements EventSourcedEntityInterface
     /**
      * Returns all child entities
      *
-     * @return EventSourcedEntityInterface[]
+     * @return EventSourcedEntity[]
      */
     protected function getChildEntities()
     {

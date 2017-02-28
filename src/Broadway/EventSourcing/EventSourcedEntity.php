@@ -14,7 +14,7 @@ namespace Broadway\EventSourcing;
 /**
  * Interface representing event sourced entities.
  */
-interface EventSourcedEntityInterface
+interface EventSourcedEntity
 {
     /**
      * Recursively handles $event
