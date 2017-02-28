@@ -14,12 +14,12 @@ namespace Broadway\EventSourcing\MetadataEnrichment;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainEventStreamInterface;
 use Broadway\Domain\Metadata;
-use Broadway\EventSourcing\EventStreamDecoratorInterface;
+use Broadway\EventSourcing\EventStreamDecorator;
 
 /**
  * Event stream decorator that adds extra metadata.
  */
-class MetadataEnrichingEventStreamDecorator implements EventStreamDecoratorInterface
+class MetadataEnrichingEventStreamDecorator implements EventStreamDecorator
 {
     private $metadataEnrichers;
 

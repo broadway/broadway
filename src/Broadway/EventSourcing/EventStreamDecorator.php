@@ -20,7 +20,7 @@ use Broadway\Domain\DomainEventStreamInterface;
  * written. An example would be adding metadata before writing the events to
  * storage.
  */
-interface EventStreamDecoratorInterface
+interface EventStreamDecorator
 {
     /**
      * @param string                     $aggregateType

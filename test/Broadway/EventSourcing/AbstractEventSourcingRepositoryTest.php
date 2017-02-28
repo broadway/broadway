@@ -221,7 +221,7 @@ class TestAggregate implements AggregateRoot
     }
 }
 
-class TraceableEventstoreDecorator implements EventStreamDecoratorInterface
+class TraceableEventstoreDecorator implements EventStreamDecorator
 {
     private $tracing = false;
     private $calls;
