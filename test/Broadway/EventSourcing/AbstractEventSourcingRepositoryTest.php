@@ -19,7 +19,7 @@ use Broadway\Domain\Metadata;
 use Broadway\EventHandling\SimpleEventBus;
 use Broadway\EventHandling\TraceableEventBus;
 use Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
-use Broadway\EventSourcing\MetadataEnrichment\MetadataEnricherInterface;
+use Broadway\EventSourcing\MetadataEnrichment\MetadataEnricher;
 use Broadway\EventSourcing\MetadataEnrichment\MetadataEnrichingEventStreamDecorator;
 use Broadway\EventStore\EventStore;
 use Broadway\EventStore\InMemoryEventStore;
@@ -255,7 +255,7 @@ class TraceableEventstoreDecorator implements EventStreamDecoratorInterface
     }
 }
 
-class TestDecorationMetadataEnricher implements MetadataEnricherInterface
+class TestDecorationMetadataEnricher implements MetadataEnricher
 {
     public function enrich(Metadata $metadata)
     {
