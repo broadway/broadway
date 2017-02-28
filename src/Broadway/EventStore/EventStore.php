@@ -11,7 +11,7 @@
 
 namespace Broadway\EventStore;
 
-use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\DomainEventStream;
 use Broadway\EventStore\Exception\DuplicatePlayheadException;
 
 /**
@@ -22,7 +22,7 @@ interface EventStore
     /**
      * @param mixed $id
      *
-     * @return DomainEventStreamInterface
+     * @return DomainEventStream
      */
     public function load($id);
 
@@ -33,10 +33,10 @@ interface EventStore
     public function loadFromPlayhead($id, $playhead);
 
     /**
-     * @param mixed                      $id
-     * @param DomainEventStreamInterface $eventStream
+     * @param mixed             $id
+     * @param DomainEventStream $eventStream
      *
      * @throws DuplicatePlayheadException
      */
-    public function append($id, DomainEventStreamInterface $eventStream);
+    public function append($id, DomainEventStream $eventStream);
 }

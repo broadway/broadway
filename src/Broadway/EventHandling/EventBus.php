@@ -11,7 +11,7 @@
 
 namespace Broadway\EventHandling;
 
-use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\DomainEventStream;
 
 /**
  * Publishes events to the subscribed event listeners.
@@ -28,7 +28,7 @@ interface EventBus
     /**
      * Publishes the events from the domain event stream to the listeners.
      *
-     * @param DomainEventStreamInterface $domainMessages
+     * @param DomainEventStream $domainMessages
      */
-    public function publish(DomainEventStreamInterface $domainMessages);
+    public function publish(DomainEventStream $domainMessages);
 }

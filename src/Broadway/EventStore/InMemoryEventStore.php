@@ -12,7 +12,6 @@
 namespace Broadway\EventStore;
 
 use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainEventStreamInterface;
 use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\Exception\DuplicatePlayheadException;
 use Broadway\EventStore\Management\Criteria;
@@ -67,7 +66,7 @@ class InMemoryEventStore implements EventStore, EventStoreManagement
     /**
      * {@inheritDoc}
      */
-    public function append($id, DomainEventStreamInterface $eventStream)
+    public function append($id, DomainEventStream $eventStream)
     {
         $id = (string) $id;
 
@@ -86,8 +85,8 @@ class InMemoryEventStore implements EventStore, EventStoreManagement
     }
 
     /**
-     * @param DomainMessage[]            $events
-     * @param DomainEventStreamInterface $eventsToAppend
+     * @param DomainMessage[]   $events
+     * @param DomainEventStream $eventsToAppend
      */
     private function assertStream($events, $eventsToAppend)
     {

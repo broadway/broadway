@@ -12,7 +12,6 @@
 namespace Broadway\EventSourcing\MetadataEnrichment;
 
 use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainEventStreamInterface;
 use Broadway\Domain\Metadata;
 use Broadway\EventSourcing\EventStreamDecorator;
 
@@ -39,7 +38,7 @@ class MetadataEnrichingEventStreamDecorator implements EventStreamDecorator
     /**
      * {@inheritDoc}
      */
-    public function decorateForWrite($aggregateType, $aggregateIdentifier, DomainEventStreamInterface $eventStream)
+    public function decorateForWrite($aggregateType, $aggregateIdentifier, DomainEventStream $eventStream)
     {
         if (empty($this->metadataEnrichers)) {
             return $eventStream;

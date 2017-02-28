@@ -11,7 +11,7 @@
 
 namespace Broadway\EventHandling;
 
-use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\DomainEventStream;
 
 /**
  * Simple synchronous publishing of events.
@@ -33,7 +33,7 @@ class SimpleEventBus implements EventBus
     /**
      * {@inheritDoc}
      */
-    public function publish(DomainEventStreamInterface $domainMessages)
+    public function publish(DomainEventStream $domainMessages)
     {
         foreach ($domainMessages as $domainMessage) {
             $this->queue[] = $domainMessage;

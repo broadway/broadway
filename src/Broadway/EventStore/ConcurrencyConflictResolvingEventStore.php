@@ -2,7 +2,6 @@
 namespace Broadway\EventStore;
 
 use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainEventStreamInterface;
 use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\ConcurrencyConflictResolver\ConcurrencyConflictResolver;
 use Broadway\EventStore\Exception\DuplicatePlayheadException;
@@ -30,7 +29,7 @@ class ConcurrencyConflictResolvingEventStore implements EventStore
     /**
      * @inheritDoc
      */
-    public function append($id, DomainEventStreamInterface $uncommittedEvents)
+    public function append($id, DomainEventStream $uncommittedEvents)
     {
         try {
             $this->eventStore->append($id, $uncommittedEvents);
@@ -82,7 +81,7 @@ class ConcurrencyConflictResolvingEventStore implements EventStore
     /**
      * @return int
      */
-    private function getCurrentPlayhead(DomainEventStreamInterface $committedEvents)
+    private function getCurrentPlayhead(DomainEventStream $committedEvents)
     {
         $events = iterator_to_array($committedEvents);
         /** @var DomainMessage $lastEvent */
@@ -96,8 +95,8 @@ class ConcurrencyConflictResolvingEventStore implements EventStore
      * @return DomainMessage[]
      */
     private function getConflictingEvents(
-        DomainEventStreamInterface $uncommittedEvents,
-        DomainEventStreamInterface $committedEvents
+        DomainEventStream $uncommittedEvents,
+        DomainEventStream $committedEvents
     ) {
         $conflictingEvents = [];
 

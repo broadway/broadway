@@ -11,7 +11,7 @@
 
 namespace Broadway\EventStore;
 
-use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 
 /**
@@ -31,7 +31,7 @@ class TraceableEventStore implements EventStore
     /**
      * {@inheritDoc}
      */
-    public function append($id, DomainEventStreamInterface $eventStream)
+    public function append($id, DomainEventStream $eventStream)
     {
         $this->eventStore->append($id, $eventStream);
 

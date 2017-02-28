@@ -13,7 +13,6 @@ namespace Broadway\EventSourcing;
 
 use Broadway\Domain\AggregateRoot as AggregateRootInterface;
 use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainEventStreamInterface;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 
@@ -61,7 +60,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     /**
      * Initializes the aggregate using the given "history" of events.
      */
-    public function initializeState(DomainEventStreamInterface $stream)
+    public function initializeState(DomainEventStream $stream)
     {
         foreach ($stream as $message) {
             $this->playhead++;

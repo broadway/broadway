@@ -2,7 +2,7 @@
 
 namespace Broadway\EventSourcing\AggregateFactory;
 
-use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\DomainEventStream;
 
 /**
  * Creates aggregates by instantiating the aggregateClass and then
@@ -14,7 +14,7 @@ class PublicConstructorAggregateFactory implements AggregateFactory
     /**
      * {@inheritDoc}
      */
-    public function create($aggregateClass, DomainEventStreamInterface $domainEventStream)
+    public function create($aggregateClass, DomainEventStream $domainEventStream)
     {
         $aggregate = new $aggregateClass();
         $aggregate->initializeState($domainEventStream);
