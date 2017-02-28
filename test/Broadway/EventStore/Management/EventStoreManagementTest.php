@@ -17,7 +17,7 @@ use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventStore\EventStore;
 use Broadway\EventStore\EventVisitor;
-use Broadway\Serializer\SerializableInterface;
+use Broadway\Serializer\Serializable;
 use Broadway\TestCase;
 
 abstract class EventStoreManagementTest extends TestCase
@@ -237,7 +237,7 @@ class RecordingEventVisitor implements EventVisitor
     }
 }
 
-class Event implements SerializableInterface
+class Event implements Serializable
 {
     public static function deserialize(array $data)
     {

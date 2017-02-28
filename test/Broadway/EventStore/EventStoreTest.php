@@ -15,7 +15,7 @@ use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
-use Broadway\Serializer\SerializableInterface;
+use Broadway\Serializer\Serializable;
 use Broadway\TestCase;
 use Broadway\UuidGenerator\Rfc4122\Version4Generator;
 
@@ -187,7 +187,7 @@ abstract class EventStoreTest extends TestCase
     }
 }
 
-class Event implements SerializableInterface
+class Event implements Serializable
 {
     public static function deserialize(array $data)
     {

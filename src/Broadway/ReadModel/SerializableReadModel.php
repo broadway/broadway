@@ -11,11 +11,11 @@
 
 namespace Broadway\ReadModel;
 
-use Broadway\Serializer\SerializableInterface;
+use Broadway\Serializer\Serializable;
 
 /**
  * Represents a serializable read model.
  */
-interface SerializableReadModel extends SerializableInterface, Identifiable
+interface SerializableReadModel extends Serializable, Identifiable
 {
 }
