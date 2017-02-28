@@ -41,7 +41,7 @@ class ExampleFailureCommand extends BaseCommand
 
 // Setup the system to handle commands
 $commandHandler   = new ExampleCommandHandler();
-$eventDispatcher  = new Broadway\EventDispatcher\EventDispatcher();
+$eventDispatcher  = new Broadway\EventDispatcher\CallableEventDispatcher();
 $simpleCommandBus = new Broadway\CommandHandling\SimpleCommandBus();
 $commandBus       = new Broadway\CommandHandling\EventDispatchingCommandBus($simpleCommandBus, $eventDispatcher);
 $commandBus->subscribe($commandHandler);
