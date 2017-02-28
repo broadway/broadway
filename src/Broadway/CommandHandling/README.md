@@ -18,12 +18,12 @@ handler can handle a command `ExampleCommand`, just implement the
 `handleExampleCommand` method in the extending class.
 
 ```php
-use Broadway\CommandHandling\CommandHandler;
+use Broadway\CommandHandling\SimpleCommandHandler;
 
 /**
  * A command handler that only handles ExampleCommand commands.
  */
-class ExampleCommandHandler extends CommandHandler
+class ExampleCommandHandler extends SimpleCommandHandler
 {
     /**
      * Method handling ExampleCommand commands.

@@ -182,7 +182,7 @@ class DeclinedEvent extends InvitationEvent
  * In the end a command handler listens for commands and translates commands to
  * method calls on the actual aggregate roots.
  */
-class InvitationCommandHandler extends Broadway\CommandHandling\CommandHandler
+class InvitationCommandHandler extends Broadway\CommandHandling\SimpleCommandHandler
 {
     private $repository;
 

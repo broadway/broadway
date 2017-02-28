@@ -5,7 +5,7 @@ require_once __DIR__ . '/../bootstrap.php';
 /*
  * Some setup and helpers. Real example below. ;)
  */
-class ExampleCommandHandler extends Broadway\CommandHandling\CommandHandler
+class ExampleCommandHandler extends Broadway\CommandHandling\SimpleCommandHandler
 {
     public function handleExampleCommand(ExampleCommand $command)
     {

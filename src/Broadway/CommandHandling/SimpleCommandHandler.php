@@ -21,7 +21,7 @@ use Broadway\CommandHandling\Exception\CommandNotAnObjectException;
  *
  * Note: the convention used does not take namespaces into account.
  */
-abstract class CommandHandler implements CommandHandlerInterface
+abstract class SimpleCommandHandler implements CommandHandlerInterface
 {
     /**
      * {@inheritDoc}

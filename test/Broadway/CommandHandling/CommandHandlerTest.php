@@ -51,7 +51,7 @@ class CommandHandlerTest extends TestCase
     }
 }
 
-class TestCommandHandler extends CommandHandler
+class TestCommandHandler extends SimpleCommandHandler
 {
     public $handled = false;
 

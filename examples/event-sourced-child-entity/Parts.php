@@ -161,7 +161,7 @@ class PartRepository extends Broadway\EventSourcing\EventSourcingRepository
  * A command handler will be registered with the command bus and handle the
  * commands that are dispatched.
  */
-class PartCommandHandler extends Broadway\CommandHandling\CommandHandler
+class PartCommandHandler extends Broadway\CommandHandling\SimpleCommandHandler
 {
     private $repository;
 

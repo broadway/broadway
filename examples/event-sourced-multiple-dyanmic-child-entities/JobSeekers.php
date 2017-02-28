@@ -248,7 +248,7 @@ class JobSeekerRepository extends Broadway\EventSourcing\EventSourcingRepository
  * A command handler will be registered with the command bus and handle the
  * commands that are dispatched.
  */
-class JobSeekerCommandHandler extends Broadway\CommandHandling\CommandHandler
+class JobSeekerCommandHandler extends Broadway\CommandHandling\SimpleCommandHandler
 {
     private $repository;
 
