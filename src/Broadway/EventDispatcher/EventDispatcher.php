@@ -14,7 +14,7 @@ namespace Broadway\EventDispatcher;
 /**
  * Base type for an event dispatcher.
  */
-interface EventDispatcherInterface
+interface EventDispatcher
 {
     /**
      * @param string $eventName
