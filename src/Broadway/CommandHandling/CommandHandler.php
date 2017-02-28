@@ -14,7 +14,7 @@ namespace Broadway\CommandHandling;
 /**
  * Handles dispatched commands.
  */
-interface CommandHandlerInterface
+interface CommandHandler
 {
     /**
      * @param mixed $command

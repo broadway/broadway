@@ -12,7 +12,7 @@
 namespace Broadway\CommandHandling\Testing;
 
 use Broadway\CommandHandling\CommandBus;
-use Broadway\CommandHandling\CommandHandlerInterface;
+use Broadway\CommandHandling\CommandHandler;
 
 /**
  * Command bus that is able to record all dispatched commands.
@@ -26,7 +26,7 @@ class TraceableCommandBus implements CommandBus
     /**
      * {@inheritDoc}
      */
-    public function subscribe(CommandHandlerInterface $handler)
+    public function subscribe(CommandHandler $handler)
     {
         $this->commandHandlers[] = $handler;
     }

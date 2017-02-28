@@ -111,7 +111,7 @@ class SimpleCommandBusTest extends TestCase
     }
 }
 
-class SimpleCommandBusTestHandler implements CommandHandlerInterface
+class SimpleCommandBusTestHandler implements CommandHandler
 {
     private $commandBus;
     private $handled = false;

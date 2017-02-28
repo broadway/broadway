@@ -26,5 +26,5 @@ interface CommandBus
     /**
      * Subscribes the command handler to this CommandBus
      */
-    public function subscribe(CommandHandlerInterface $handler);
+    public function subscribe(CommandHandler $handler);
 }

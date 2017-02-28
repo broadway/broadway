@@ -23,7 +23,7 @@ class SimpleCommandBus implements CommandBus
     /**
      * {@inheritDoc}
      */
-    public function subscribe(CommandHandlerInterface $handler)
+    public function subscribe(CommandHandler $handler)
     {
         $this->commandHandlers[] = $handler;
     }

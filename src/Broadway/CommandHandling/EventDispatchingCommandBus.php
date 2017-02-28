@@ -55,7 +55,7 @@ class EventDispatchingCommandBus implements CommandBus
     /**
      * {@inheritDoc}
      */
-    public function subscribe(CommandHandlerInterface $handler)
+    public function subscribe(CommandHandler $handler)
     {
         $this->commandBus->subscribe($handler);
     }
