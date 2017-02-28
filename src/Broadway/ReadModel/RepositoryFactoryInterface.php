@@ -20,7 +20,7 @@ interface RepositoryFactoryInterface
      * @param string $name
      * @param string $class
      *
-     * @return RepositoryInterface
+     * @return Repository
      */
     public function create($name, $class);
 }

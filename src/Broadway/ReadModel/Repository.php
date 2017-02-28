@@ -14,7 +14,7 @@ namespace Broadway\ReadModel;
 /**
  * Abstraction for the storage of read models.
  */
-interface RepositoryInterface
+interface Repository
 {
     public function save(ReadModelInterface $data);
 

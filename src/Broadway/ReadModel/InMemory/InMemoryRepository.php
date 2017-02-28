@@ -12,7 +12,7 @@
 namespace Broadway\ReadModel\InMemory;
 
 use Broadway\ReadModel\ReadModelInterface;
-use Broadway\ReadModel\RepositoryInterface;
+use Broadway\ReadModel\Repository;
 use Broadway\ReadModel\Transferable;
 
 /**
@@ -20,7 +20,7 @@ use Broadway\ReadModel\Transferable;
  *
  * The in-memory repository is useful for testing code.
  */
-class InMemoryRepository implements RepositoryInterface, Transferable
+class InMemoryRepository implements Repository, Transferable
 {
     private $data = [];
 
@@ -82,7 +82,7 @@ class InMemoryRepository implements RepositoryInterface, Transferable
     /**
      * {@inheritDoc}
      */
-    public function transferTo(RepositoryInterface $otherRepository)
+    public function transferTo(Repository $otherRepository)
     {
         foreach ($this->data as $model) {
             $otherRepository->save($model);

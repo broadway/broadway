@@ -14,7 +14,7 @@ namespace Broadway\ReadModel\Testing;
 use Assert\Assertion;
 use Broadway\Domain\DomainMessage;
 use Broadway\EventHandling\EventListenerInterface;
-use Broadway\ReadModel\RepositoryInterface;
+use Broadway\ReadModel\Repository;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -35,7 +35,7 @@ class DomainMessageScenario
 
     public function __construct(
         PHPUnit_Framework_TestCase $testCase,
-        RepositoryInterface $repository,
+        Repository $repository,
         EventListenerInterface $projector
     ) {
         $this->testCase   = $testCase;
