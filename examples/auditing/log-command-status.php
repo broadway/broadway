@@ -48,7 +48,7 @@ $commandBus->subscribe($commandHandler);
 
 // Dependencies of auditing logger
 $logger            = new StdoutLogger();
-$commandSerializer = new Broadway\Auditing\CommandSerializer();
+$commandSerializer = new Broadway\Auditing\NullByteCommandSerializer();
 
 /*
  * The actual example!

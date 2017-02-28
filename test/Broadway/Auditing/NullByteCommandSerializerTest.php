@@ -13,14 +13,14 @@ namespace Broadway\Auditing;
 
 use Broadway\TestCase;
 
-class CommandSerializerTest extends TestCase
+class NullByteCommandSerializerTest extends TestCase
 {
     private $commandSerializer;
     private $command;
 
     public function setUp()
     {
-        $this->commandSerializer = new CommandSerializer();
+        $this->commandSerializer = new NullByteCommandSerializer();
         $this->command           = new MyCommand();
     }
 
