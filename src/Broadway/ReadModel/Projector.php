@@ -12,12 +12,12 @@
 namespace Broadway\ReadModel;
 
 use Broadway\Domain\DomainMessage;
-use Broadway\EventHandling\EventListenerInterface;
+use Broadway\EventHandling\EventListener;
 
 /**
  * Handles events and projects to a read model.
  */
-abstract class Projector implements EventListenerInterface
+abstract class Projector implements EventListener
 {
     /**
      * {@inheritDoc}

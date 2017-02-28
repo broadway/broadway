@@ -31,7 +31,7 @@ class TraceableEventBus implements EventBus
     /**
      * {@inheritDoc}
      */
-    public function subscribe(EventListenerInterface $eventListener)
+    public function subscribe(EventListener $eventListener)
     {
         $this->eventBus->subscribe($eventListener);
     }

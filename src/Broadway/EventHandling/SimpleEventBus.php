@@ -25,7 +25,7 @@ class SimpleEventBus implements EventBus
     /**
      * {@inheritDoc}
      */
-    public function subscribe(EventListenerInterface $eventListener)
+    public function subscribe(EventListener $eventListener)
     {
         $this->eventListeners[] = $eventListener;
     }

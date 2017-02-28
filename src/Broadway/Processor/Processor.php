@@ -12,12 +12,12 @@
 namespace Broadway\Processor;
 
 use Broadway\Domain\DomainMessage;
-use Broadway\EventHandling\EventListenerInterface;
+use Broadway\EventHandling\EventListener;
 
 /**
  * Base class for event stream processors.
  */
-abstract class Processor implements EventListenerInterface
+abstract class Processor implements EventListener
 {
     /**
      * {@inheritDoc}

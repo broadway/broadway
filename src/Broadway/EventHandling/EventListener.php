@@ -16,7 +16,7 @@ use Broadway\Domain\DomainMessage;
 /**
  * Handles dispatched events.
  */
-interface EventListenerInterface
+interface EventListener
 {
     /**
      * @param DomainMessage $domainMessage

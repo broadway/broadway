@@ -21,9 +21,9 @@ interface EventBus
     /**
      * Subscribes the event listener to the event bus.
      *
-     * @param EventListenerInterface $eventListener
+     * @param EventListener $eventListener
      */
-    public function subscribe(EventListenerInterface $eventListener);
+    public function subscribe(EventListener $eventListener);
 
     /**
      * Publishes the events from the domain event stream to the listeners.
