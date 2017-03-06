@@ -12,35 +12,19 @@
 namespace Broadway\EventDispatcher;
 
 /**
- * Event dispatcher implementation.
+ * Base type for an event dispatcher.
  */
-class EventDispatcher implements EventDispatcherInterface
+interface EventDispatcher
 {
-    private $listeners = [];
+    /**
+     * @param string $eventName
+     * @param array  $arguments
+     */
+    public function dispatch($eventName, array $arguments);
 
     /**
-     * {@inheritDoc}
+     * @param string   $eventName
+     * @param callable $callable
      */
-    public function dispatch($eventName, array $arguments)
-    {
-        if (! isset($this->listeners[$eventName])) {
-            return;
-        }
-
-        foreach ($this->listeners[$eventName] as $listener) {
-            call_user_func_array($listener, $arguments);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function addListener($eventName, /* callable */ $callable)
-    {
-        if (! isset($this->listeners[$eventName])) {
-            $this->listeners[$eventName] = [];
-        }
-
-        $this->listeners[$eventName][] = $callable;
-    }
+    public function addListener($eventName, /* callable */ $callable);
 }

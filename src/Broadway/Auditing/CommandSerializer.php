@@ -12,23 +12,14 @@
 namespace Broadway\Auditing;
 
 /**
- * Command serializer that uses php hacks to get the data from a command.
- *
- * There are many other ways to implement serialization on commands, but since
- * this is only for logging purposes we get away with this solution for now.
+ * Serializes commands to an array of scalars.
  */
-class CommandSerializer implements CommandSerializerInterface
+interface CommandSerializer
 {
     /**
-     * {@inheritDoc}
+     * Serializes the command
+     *
+     * @return array
      */
-    public function serialize($command)
-    {
-        $serializedCommand = [];
-        foreach ((array) $command as $key => $value) {
-            $serializedCommand[str_replace("\0", '-', $key)] = $value;
-        }
-
-        return $serializedCommand;
-    }
+    public function serialize($command);
 }

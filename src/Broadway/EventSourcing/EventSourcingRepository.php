@@ -14,17 +14,17 @@ namespace Broadway\EventSourcing;
 use Assert\Assertion as Assert;
 use Broadway\Domain\AggregateRoot;
 use Broadway\Domain\DomainEventStream;
-use Broadway\EventHandling\EventBusInterface;
-use Broadway\EventSourcing\AggregateFactory\AggregateFactoryInterface;
-use Broadway\EventStore\EventStoreInterface;
+use Broadway\EventHandling\EventBus;
+use Broadway\EventSourcing\AggregateFactory\AggregateFactory;
+use Broadway\EventStore\EventStore;
 use Broadway\EventStore\EventStreamNotFoundException;
 use Broadway\Repository\AggregateNotFoundException;
-use Broadway\Repository\RepositoryInterface;
+use Broadway\Repository\Repository;
 
 /**
  * Naive initial implementation of an event sourced aggregate repository.
  */
-class EventSourcingRepository implements RepositoryInterface
+class EventSourcingRepository implements Repository
 {
     private $eventStore;
     private $eventBus;
@@ -33,17 +33,17 @@ class EventSourcingRepository implements RepositoryInterface
     private $aggregateFactory;
 
     /**
-     * @param EventStoreInterface             $eventStore
-     * @param EventBusInterface               $eventBus
-     * @param string                          $aggregateClass
-     * @param AggregateFactoryInterface       $aggregateFactory
-     * @param EventStreamDecoratorInterface[] $eventStreamDecorators
+     * @param EventStore             $eventStore
+     * @param EventBus               $eventBus
+     * @param string                 $aggregateClass
+     * @param AggregateFactory       $aggregateFactory
+     * @param EventStreamDecorator[] $eventStreamDecorators
      */
     public function __construct(
-        EventStoreInterface $eventStore,
-        EventBusInterface $eventBus,
+        EventStore $eventStore,
+        EventBus $eventBus,
         $aggregateClass,
-        AggregateFactoryInterface $aggregateFactory,
+        AggregateFactory $aggregateFactory,
         array $eventStreamDecorators = []
     ) {
         $this->assertExtendsEventSourcedAggregateRoot($aggregateClass);

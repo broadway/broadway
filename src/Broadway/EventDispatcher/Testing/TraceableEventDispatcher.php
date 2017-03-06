@@ -11,9 +11,9 @@
 
 namespace Broadway\EventDispatcher\Testing;
 
-use Broadway\EventDispatcher\EventDispatcherInterface;
+use Broadway\EventDispatcher\EventDispatcher;
 
-class TraceableEventDispatcher implements EventDispatcherInterface
+class TraceableEventDispatcher implements EventDispatcher
 {
     private $dispatchedEvents = [];
 

@@ -9,17 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Broadway\EventHandling;
-
-use Broadway\Domain\DomainMessage;
+namespace Broadway\ReadModel;
 
 /**
- * Handles dispatched events.
+ * Represents a read model.
  */
-interface EventListenerInterface
+interface Identifiable
 {
     /**
-     * @param DomainMessage $domainMessage
+     * @return string
      */
-    public function handle(DomainMessage $domainMessage);
+    public function getId();
 }

@@ -9,15 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Broadway\CommandHandling;
+namespace Broadway\ReadModel;
 
 /**
- * Handles dispatched commands.
+ * Creates repositories.
  */
-interface CommandHandlerInterface
+interface RepositoryFactory
 {
     /**
-     * @param mixed $command
+     * @param string $name
+     * @param string $class
+     *
+     * @return Repository
      */
-    public function handle($command);
+    public function create($name, $class);
 }

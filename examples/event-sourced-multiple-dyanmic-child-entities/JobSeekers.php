@@ -81,7 +81,7 @@ class JobSeeker extends Broadway\EventSourcing\EventSourcedAggregateRoot
     }
 }
 
-class Job extends Broadway\EventSourcing\EventSourcedEntity
+class Job extends Broadway\EventSourcing\SimpleEventSourcedEntity
 {
     private $jobSeekerId;
     private $jobId;
@@ -238,7 +238,7 @@ class AccidentallyAddedJobWasRemovedFromJobSeekerEvent
  */
 class JobSeekerRepository extends Broadway\EventSourcing\EventSourcingRepository
 {
-    public function __construct(Broadway\EventStore\EventStoreInterface $eventStore, Broadway\EventHandling\EventBusInterface $eventBus)
+    public function __construct(Broadway\EventStore\EventStore $eventStore, Broadway\EventHandling\EventBus $eventBus)
     {
         parent::__construct($eventStore, $eventBus, 'JobSeeker', new Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory());
     }
@@ -248,7 +248,7 @@ class JobSeekerRepository extends Broadway\EventSourcing\EventSourcingRepository
  * A command handler will be registered with the command bus and handle the
  * commands that are dispatched.
  */
-class JobSeekerCommandHandler extends Broadway\CommandHandling\CommandHandler
+class JobSeekerCommandHandler extends Broadway\CommandHandling\SimpleCommandHandler
 {
     private $repository;
 

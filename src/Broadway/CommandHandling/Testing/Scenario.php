@@ -11,7 +11,7 @@
 
 namespace Broadway\CommandHandling\Testing;
 
-use Broadway\CommandHandling\CommandHandlerInterface;
+use Broadway\CommandHandling\CommandHandler;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
@@ -38,7 +38,7 @@ class Scenario
     public function __construct(
         PHPUnit_Framework_TestCase $testCase,
         TraceableEventStore $eventStore,
-        CommandHandlerInterface $commandHandler
+        CommandHandler $commandHandler
     ) {
         $this->testCase       = $testCase;
         $this->eventStore     = $eventStore;

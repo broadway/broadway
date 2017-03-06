@@ -11,12 +11,12 @@
 
 namespace Broadway\Serializer\Testing;
 
-use Broadway\Serializer\SerializableInterface;
+use Broadway\Serializer\Serializable;
 use Broadway\Serializer\SimpleInterfaceSerializer;
 use PHPUnit_Framework_TestCase as TestCase;
 
 /**
- * Helper to test if events implement the SerializableInterface contract.
+ * Helper to test if events implement the Serializable contract.
  */
 abstract class SerializableEventTestCase extends TestCase
 {
@@ -25,7 +25,7 @@ abstract class SerializableEventTestCase extends TestCase
      */
     public function its_serializable()
     {
-        $this->assertInstanceOf(SerializableInterface::class, $this->createEvent());
+        $this->assertInstanceOf(Serializable::class, $this->createEvent());
     }
 
     /**

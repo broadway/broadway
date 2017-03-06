@@ -15,15 +15,15 @@ use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
-use Broadway\EventStore\EventStoreInterface;
-use Broadway\EventStore\EventVisitorInterface;
-use Broadway\Serializer\SerializableInterface;
+use Broadway\EventStore\EventStore;
+use Broadway\EventStore\EventVisitor;
+use Broadway\Serializer\Serializable;
 use Broadway\TestCase;
 
 abstract class EventStoreManagementTest extends TestCase
 {
     /**
-     * @var EventStoreInterface|EventStoreManagementInterface
+     * @var EventStore|EventStoreManagement
      */
     protected $eventStore;
 
@@ -214,7 +214,7 @@ abstract class EventStoreManagementTest extends TestCase
     }
 }
 
-class RecordingEventVisitor implements EventVisitorInterface
+class RecordingEventVisitor implements EventVisitor
 {
     /**
      * @var DomainMessage
@@ -237,7 +237,7 @@ class RecordingEventVisitor implements EventVisitorInterface
     }
 }
 
-class Event implements SerializableInterface
+class Event implements Serializable
 {
     public static function deserialize(array $data)
     {

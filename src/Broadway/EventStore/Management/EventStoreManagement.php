@@ -11,9 +11,9 @@
 
 namespace Broadway\EventStore\Management;
 
-use Broadway\EventStore\EventVisitorInterface;
+use Broadway\EventStore\EventVisitor;
 
-interface EventStoreManagementInterface
+interface EventStoreManagement
 {
-    public function visitEvents(Criteria $criteria, EventVisitorInterface $eventVisitor);
+    public function visitEvents(Criteria $criteria, EventVisitor $eventVisitor);
 }

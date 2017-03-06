@@ -11,10 +11,11 @@
 
 namespace Broadway\ReadModel;
 
+use Broadway\Serializer\Serializable;
+
 /**
- * Represent a repository that can transfer its data to another repository.
+ * Represents a serializable read model.
  */
-interface TransferableInterface
+interface SerializableReadModel extends Serializable, Identifiable
 {
-    public function transferTo(RepositoryInterface $otherRepository);
 }

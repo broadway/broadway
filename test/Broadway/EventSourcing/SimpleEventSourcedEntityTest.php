@@ -13,7 +13,7 @@ namespace Broadway\EventSourcing;
 
 use Broadway\TestCase;
 
-class EventSourcedEntityTest extends TestCase
+class SimpleEventSourcedEntityTest extends TestCase
 {
     /**
      * @test
@@ -102,7 +102,7 @@ class Aggregate extends EventSourcedAggregateRoot
     }
 }
 
-class Entity extends EventSourcedEntity
+class Entity extends SimpleEventSourcedEntity
 {
     private $children = [];
 

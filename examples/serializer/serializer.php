@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../bootstrap.php';
 
-class SerializeMe implements Broadway\Serializer\SerializableInterface
+class SerializeMe implements Broadway\Serializer\Serializable
 {
     private $message;
 

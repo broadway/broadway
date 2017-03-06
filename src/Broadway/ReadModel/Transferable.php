@@ -12,12 +12,9 @@
 namespace Broadway\ReadModel;
 
 /**
- * Represents a read model.
+ * Represent a repository that can transfer its data to another repository.
  */
-interface ReadModelInterface
+interface Transferable
 {
-    /**
-     * @return string
-     */
-    public function getId();
+    public function transferTo(Repository $otherRepository);
 }

@@ -9,11 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Broadway\EventStore;
+namespace Broadway\EventHandling;
 
 use Broadway\Domain\DomainMessage;
 
-interface EventVisitorInterface
+/**
+ * Handles dispatched events.
+ */
+interface EventListener
 {
-    public function doWithEvent(DomainMessage $domainMessage);
+    /**
+     * @param DomainMessage $domainMessage
+     */
+    public function handle(DomainMessage $domainMessage);
 }

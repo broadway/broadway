@@ -5,7 +5,7 @@ require_once __DIR__ . '/../bootstrap.php';
 /**
  * A command handler that only handles ExampleCommand commands.
  */
-class ExampleCommandHandler extends Broadway\CommandHandling\CommandHandler
+class ExampleCommandHandler extends Broadway\CommandHandling\SimpleCommandHandler
 {
     /**
      * Method handling ExampleCommand commands.

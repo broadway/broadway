@@ -9,17 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace Broadway\Auditing;
+namespace Broadway\Serializer;
 
 /**
- * Serializes commands to an array of scalars.
+ * Contract for objects serializable by the SimpleInterfaceSerializer.
  */
-interface CommandSerializerInterface
+interface Serializable
 {
     /**
-     * Serializes the command
-     *
+     * @return mixed The object instance
+     */
+    public static function deserialize(array $data);
+
+    /**
      * @return array
      */
-    public function serialize($command);
+    public function serialize();
 }

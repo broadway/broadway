@@ -11,13 +11,12 @@
 
 namespace Broadway\EventHandling;
 
-use Broadway\Domain\DomainEventStreamInterface;
-use Exception;
+use Broadway\Domain\DomainEventStream;
 
 /**
  * Simple synchronous publishing of events.
  */
-class SimpleEventBus implements EventBusInterface
+class SimpleEventBus implements EventBus
 {
     private $eventListeners = [];
     private $queue          = [];
@@ -26,7 +25,7 @@ class SimpleEventBus implements EventBusInterface
     /**
      * {@inheritDoc}
      */
-    public function subscribe(EventListenerInterface $eventListener)
+    public function subscribe(EventListener $eventListener)
     {
         $this->eventListeners[] = $eventListener;
     }
@@ -34,7 +33,7 @@ class SimpleEventBus implements EventBusInterface
     /**
      * {@inheritDoc}
      */
-    public function publish(DomainEventStreamInterface $domainMessages)
+    public function publish(DomainEventStream $domainMessages)
     {
         foreach ($domainMessages as $domainMessage) {
             $this->queue[] = $domainMessage;

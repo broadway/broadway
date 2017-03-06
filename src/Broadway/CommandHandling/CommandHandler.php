@@ -11,40 +11,13 @@
 
 namespace Broadway\CommandHandling;
 
-use Broadway\CommandHandling\Exception\CommandNotAnObjectException;
-
 /**
- * Convenience base class for command handlers.
- *
- * Command handlers using this base class will implement `handle<CommandName>`
- * methods for each command they can handle.
- *
- * Note: the convention used does not take namespaces into account.
+ * Handles dispatched commands.
  */
-abstract class CommandHandler implements CommandHandlerInterface
+interface CommandHandler
 {
     /**
-     * {@inheritDoc}
+     * @param mixed $command
      */
-    public function handle($command)
-    {
-        $method = $this->getHandleMethod($command);
-
-        if (! method_exists($this, $method)) {
-            return;
-        }
-
-        $this->$method($command);
-    }
-
-    private function getHandleMethod($command)
-    {
-        if (! is_object($command)) {
-            throw new CommandNotAnObjectException();
-        }
-
-        $classParts = explode('\\', get_class($command));
-
-        return 'handle' . end($classParts);
-    }
+    public function handle($command);
 }

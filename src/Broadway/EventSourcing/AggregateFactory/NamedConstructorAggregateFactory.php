@@ -3,14 +3,14 @@
 namespace Broadway\EventSourcing\AggregateFactory;
 
 use Assert\Assertion as Assert;
-use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\DomainEventStream;
 
 /**
  * Creates aggregates by passing a DomainEventStream to the given public static method
  * which is itself responsible for returning an instance of itself.
  * E.g. (\Vendor\AggregateRoot::instantiateForReconstitution())->initializeState($domainEventStream);
  */
-class NamedConstructorAggregateFactory implements AggregateFactoryInterface
+class NamedConstructorAggregateFactory implements AggregateFactory
 {
     /**
      * @var string the name of the method to call on the Aggregate
@@ -25,7 +25,7 @@ class NamedConstructorAggregateFactory implements AggregateFactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create($aggregateClass, DomainEventStreamInterface $domainEventStream)
+    public function create($aggregateClass, DomainEventStream $domainEventStream)
     {
         $methodCall = sprintf('%s::%s', $aggregateClass, $this->staticConstructorMethod);
 

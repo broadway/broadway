@@ -22,7 +22,7 @@ class PartsCommandHandlerTest extends Broadway\CommandHandling\Testing\CommandHa
         $this->generator = new Broadway\UuidGenerator\Rfc4122\Version4Generator();
     }
 
-    protected function createCommandHandler(Broadway\EventStore\EventStoreInterface $eventStore, Broadway\EventHandling\EventBusInterface $eventBus)
+    protected function createCommandHandler(Broadway\EventStore\EventStore $eventStore, Broadway\EventHandling\EventBus $eventBus)
     {
         $repository = new PartRepository($eventStore, $eventBus);
 

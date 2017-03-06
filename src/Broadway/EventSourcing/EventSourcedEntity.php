@@ -12,75 +12,23 @@
 namespace Broadway\EventSourcing;
 
 /**
- * Convenience base class for event sourced entities.
+ * Interface representing event sourced entities.
  */
-abstract class EventSourcedEntity implements EventSourcedEntityInterface
+interface EventSourcedEntity
 {
     /**
-     * @var EventSourcedAggregateRoot|null
-     */
-    private $aggregateRoot;
-
-    /**
-     * {@inheritDoc}
-     */
-    public function handleRecursively($event)
-    {
-        $this->handle($event);
-
-        foreach ($this->getChildEntities() as $entity) {
-            $entity->registerAggregateRoot($this->aggregateRoot);
-            $entity->handleRecursively($event);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function registerAggregateRoot(EventSourcedAggregateRoot $aggregateRoot)
-    {
-        if (null !== $this->aggregateRoot && $this->aggregateRoot !== $aggregateRoot) {
-            throw new AggregateRootAlreadyRegisteredException();
-        }
-
-        $this->aggregateRoot = $aggregateRoot;
-    }
-
-    protected function apply($event)
-    {
-        $this->aggregateRoot->apply($event);
-    }
-
-    /**
-     * Handles event if capable.
+     * Recursively handles $event
      *
      * @param $event
      */
-    protected function handle($event)
-    {
-        $method = $this->getApplyMethod($event);
-
-        if (! method_exists($this, $method)) {
-            return;
-        }
-
-        $this->$method($event);
-    }
+    public function handleRecursively($event);
 
     /**
-     * Returns all child entities
+     * Registers aggregateRoot as this EventSourcedEntity's aggregate root
      *
-     * @return EventSourcedEntityInterface[]
+     * @param EventSourcedAggregateRoot $aggregateRoot
+     *
+     * @throws AggregateRootAlreadyRegisteredException
      */
-    protected function getChildEntities()
-    {
-        return [];
-    }
-
-    private function getApplyMethod($event)
-    {
-        $classParts = explode('\\', get_class($event));
-
-        return 'apply' . end($classParts);
-    }
+    public function registerAggregateRoot(EventSourcedAggregateRoot $aggregateRoot);
 }

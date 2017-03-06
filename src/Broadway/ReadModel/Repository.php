@@ -14,26 +14,26 @@ namespace Broadway\ReadModel;
 /**
  * Abstraction for the storage of read models.
  */
-interface RepositoryInterface
+interface Repository
 {
-    public function save(ReadModelInterface $data);
+    public function save(Identifiable $data);
 
     /**
      * @param string $id
      *
-     * @return ReadModelInterface|null
+     * @return Identifiable|null
      */
     public function find($id);
 
     /**
      * @param array $fields
      *
-     * @return ReadModelInterface[]
+     * @return Identifiable[]
      */
     public function findBy(array $fields);
 
     /**
-     * @return ReadModelInterface[]
+     * @return Identifiable[]
      */
     public function findAll();
 

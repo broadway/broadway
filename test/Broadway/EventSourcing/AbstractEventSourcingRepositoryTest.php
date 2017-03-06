@@ -13,15 +13,14 @@ namespace Broadway\EventSourcing;
 
 use Broadway\Domain\AggregateRoot;
 use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainEventStreamInterface;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventHandling\SimpleEventBus;
 use Broadway\EventHandling\TraceableEventBus;
 use Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
-use Broadway\EventSourcing\MetadataEnrichment\MetadataEnricherInterface;
+use Broadway\EventSourcing\MetadataEnrichment\MetadataEnricher;
 use Broadway\EventSourcing\MetadataEnrichment\MetadataEnrichingEventStreamDecorator;
-use Broadway\EventStore\EventStoreInterface;
+use Broadway\EventStore\EventStore;
 use Broadway\EventStore\InMemoryEventStore;
 use Broadway\EventStore\TraceableEventStore;
 use Broadway\ReadModel\Projector;
@@ -36,7 +35,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
     /** @var TraceableEventStoreDecorator */
     protected $eventStreamDecorator;
 
-    /** @var EventStoreInterface */
+    /** @var EventStore */
     protected $eventStore;
 
     /** @var EventSourcingRepository */
@@ -221,12 +220,12 @@ class TestAggregate implements AggregateRoot
     }
 }
 
-class TraceableEventstoreDecorator implements EventStreamDecoratorInterface
+class TraceableEventstoreDecorator implements EventStreamDecorator
 {
     private $tracing = false;
     private $calls;
 
-    public function decorateForWrite($aggregateType, $aggregateIdentifier, DomainEventStreamInterface $eventStream)
+    public function decorateForWrite($aggregateType, $aggregateIdentifier, DomainEventStream $eventStream)
     {
         if ($this->tracing) {
             $this->calls[] = ['aggregateType' => $aggregateType, 'aggregateIdentifier' => $aggregateIdentifier, 'eventStream' => $eventStream];
@@ -255,7 +254,7 @@ class TraceableEventstoreDecorator implements EventStreamDecoratorInterface
     }
 }
 
-class TestDecorationMetadataEnricher implements MetadataEnricherInterface
+class TestDecorationMetadataEnricher implements MetadataEnricher
 {
     public function enrich(Metadata $metadata)
     {

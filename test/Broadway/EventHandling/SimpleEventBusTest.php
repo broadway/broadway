@@ -140,7 +140,7 @@ class SimpleEventBusTest extends TestCase
 
     private function createEventListenerMock()
     {
-        return $this->getMockBuilder('Broadway\EventHandling\EventListenerInterface')->getMock();
+        return $this->getMockBuilder('Broadway\EventHandling\EventListener')->getMock();
     }
 
     private function createDomainMessage($payload)
@@ -159,7 +159,7 @@ class SimpleEventBusTestEvent
     }
 }
 
-class SimpleEventBusTestListener implements EventListenerInterface
+class SimpleEventBusTestListener implements EventListener
 {
     private $eventBus;
     private $handled = false;

@@ -103,7 +103,7 @@ class Invitation extends Broadway\EventSourcing\EventSourcedAggregateRoot
  */
 class InvitationRepository extends Broadway\EventSourcing\EventSourcingRepository
 {
-    public function __construct(Broadway\EventStore\EventStoreInterface $eventStore, Broadway\EventHandling\EventBusInterface $eventBus)
+    public function __construct(Broadway\EventStore\EventStore $eventStore, Broadway\EventHandling\EventBus $eventBus)
     {
         parent::__construct($eventStore, $eventBus, 'Invitation', new Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory());
     }
@@ -182,7 +182,7 @@ class DeclinedEvent extends InvitationEvent
  * In the end a command handler listens for commands and translates commands to
  * method calls on the actual aggregate roots.
  */
-class InvitationCommandHandler extends Broadway\CommandHandling\CommandHandler
+class InvitationCommandHandler extends Broadway\CommandHandling\SimpleCommandHandler
 {
     private $repository;
 

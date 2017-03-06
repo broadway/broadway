@@ -12,11 +12,12 @@
 namespace Broadway\Domain;
 
 use ArrayIterator;
+use IteratorAggregate;
 
 /**
- * Implementation of the DomainEventStreamInterface.
+ * Represents a stream of DomainEventMessages in sequence.
  */
-class DomainEventStream implements DomainEventStreamInterface
+class DomainEventStream implements IteratorAggregate
 {
     private $events;
 

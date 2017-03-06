@@ -63,7 +63,7 @@ class Part extends Broadway\EventSourcing\EventSourcedAggregateRoot
     }
 }
 
-class Manufacturer extends Broadway\EventSourcing\EventSourcedEntity
+class Manufacturer extends Broadway\EventSourcing\SimpleEventSourcedEntity
 {
     private $partId;
     private $manufacturerId;
@@ -151,7 +151,7 @@ class PartManufacturerWasRenamedEvent
  */
 class PartRepository extends Broadway\EventSourcing\EventSourcingRepository
 {
-    public function __construct(Broadway\EventStore\EventStoreInterface $eventStore, Broadway\EventHandling\EventBusInterface $eventBus)
+    public function __construct(Broadway\EventStore\EventStore $eventStore, Broadway\EventHandling\EventBus $eventBus)
     {
         parent::__construct($eventStore, $eventBus, 'Part', new Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory());
     }
@@ -161,7 +161,7 @@ class PartRepository extends Broadway\EventSourcing\EventSourcingRepository
  * A command handler will be registered with the command bus and handle the
  * commands that are dispatched.
  */
-class PartCommandHandler extends Broadway\CommandHandling\CommandHandler
+class PartCommandHandler extends Broadway\CommandHandling\SimpleCommandHandler
 {
     private $repository;
 

@@ -9,13 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Broadway\Domain;
+namespace Broadway\EventStore;
 
-use IteratorAggregate;
+use Broadway\Domain\DomainMessage;
 
-/**
- * Represents a stream of DomainEventMessages in sequence.
- */
-interface DomainEventStreamInterface extends IteratorAggregate
+interface EventVisitor
 {
+    public function doWithEvent(DomainMessage $domainMessage);
 }

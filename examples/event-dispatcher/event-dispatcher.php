@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../bootstrap.php';
 
-$eventDispatcher = new Broadway\EventDispatcher\EventDispatcher();
+$eventDispatcher = new Broadway\EventDispatcher\CallableEventDispatcher();
 
 // You can register any callable
 $eventDispatcher->addListener('my_event', function ($arg1, $arg2) {

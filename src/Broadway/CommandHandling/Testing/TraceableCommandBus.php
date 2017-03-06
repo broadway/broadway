@@ -11,13 +11,13 @@
 
 namespace Broadway\CommandHandling\Testing;
 
-use Broadway\CommandHandling\CommandBusInterface;
-use Broadway\CommandHandling\CommandHandlerInterface;
+use Broadway\CommandHandling\CommandBus;
+use Broadway\CommandHandling\CommandHandler;
 
 /**
  * Command bus that is able to record all dispatched commands.
  */
-class TraceableCommandBus implements CommandBusInterface
+class TraceableCommandBus implements CommandBus
 {
     private $commandHandlers = [];
     private $commands        = [];
@@ -26,7 +26,7 @@ class TraceableCommandBus implements CommandBusInterface
     /**
      * {@inheritDoc}
      */
-    public function subscribe(CommandHandlerInterface $handler)
+    public function subscribe(CommandHandler $handler)
     {
         $this->commandHandlers[] = $handler;
     }

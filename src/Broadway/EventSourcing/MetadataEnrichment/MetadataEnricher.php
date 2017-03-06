@@ -9,13 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Broadway\ReadModel;
+namespace Broadway\EventSourcing\MetadataEnrichment;
 
-use Broadway\EventHandling\EventListenerInterface;
+use Broadway\Domain\Metadata;
 
 /**
- * Handles events and projects to a read model.
+ * Adds extra metadata to already existing metadata.
  */
-interface ProjectorInterface extends EventListenerInterface
+interface MetadataEnricher
 {
+    /**
+     * @return Metadata
+     */
+    public function enrich(Metadata $metadata);
 }
