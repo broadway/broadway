@@ -20,7 +20,7 @@ use Exception;
  * Dispatches events signalling whether a command was executed successfully or
  * if it failed.
  */
-class EventDispatchingCommandBus implements CommandBus
+final class EventDispatchingCommandBus implements CommandBus
 {
     const EVENT_COMMAND_SUCCESS = 'broadway.command_handling.command_success';
     const EVENT_COMMAND_FAILURE = 'broadway.command_handling.command_failure';

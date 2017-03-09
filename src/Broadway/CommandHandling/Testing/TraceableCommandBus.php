@@ -17,7 +17,7 @@ use Broadway\CommandHandling\CommandHandler;
 /**
  * Command bus that is able to record all dispatched commands.
  */
-class TraceableCommandBus implements CommandBus
+final class TraceableCommandBus implements CommandBus
 {
     private $commandHandlers = [];
     private $commands        = [];

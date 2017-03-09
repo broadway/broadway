@@ -18,7 +18,7 @@ use DateTimeZone;
 /**
  * Immutable DateTime implementation with some helper methods.
  */
-class DateTime
+final class DateTime
 {
     const FORMAT_STRING = 'Y-m-d\TH:i:s.uP';
 

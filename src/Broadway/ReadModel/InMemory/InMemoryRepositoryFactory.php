@@ -16,7 +16,7 @@ use Broadway\ReadModel\RepositoryFactory;
 /**
  * Creates in-memory repositories.
  */
-class InMemoryRepositoryFactory implements RepositoryFactory
+final class InMemoryRepositoryFactory implements RepositoryFactory
 {
     /**
      * {@inheritDoc}

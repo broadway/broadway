@@ -21,6 +21,6 @@ namespace Broadway\EventStore\Management;
  * Class CriteriaNotSupportedException
  * @package Broadway\EventStore\Management
  */
-class CriteriaNotSupportedException extends EventStoreManagementException
+final class CriteriaNotSupportedException extends EventStoreManagementException
 {
 }

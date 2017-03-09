@@ -13,7 +13,7 @@ namespace Broadway\EventStore\Management;
 
 use Broadway\Domain\DomainMessage;
 
-class Criteria
+final class Criteria
 {
     private $aggregateRootTypes = [];
     private $aggregateRootIds   = [];

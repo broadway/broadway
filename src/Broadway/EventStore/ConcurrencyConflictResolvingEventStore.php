@@ -6,7 +6,7 @@ use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\ConcurrencyConflictResolver\ConcurrencyConflictResolver;
 use Broadway\EventStore\Exception\DuplicatePlayheadException;
 
-class ConcurrencyConflictResolvingEventStore implements EventStore
+final class ConcurrencyConflictResolvingEventStore implements EventStore
 {
     /** @var EventStore */
     private $eventStore;

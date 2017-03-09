@@ -27,7 +27,7 @@ use PHPUnit_Framework_TestCase;
  * 2) when():  When a specific domain message is handled
  * 3) then():  The repository should contain these read models
  */
-class DomainMessageScenario
+final class DomainMessageScenario
 {
     private $testCase;
     private $projector;

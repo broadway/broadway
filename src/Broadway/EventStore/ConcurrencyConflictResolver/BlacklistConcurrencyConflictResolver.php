@@ -4,7 +4,7 @@ namespace Broadway\EventStore\ConcurrencyConflictResolver;
 use Broadway\Domain\DomainMessage;
 use Webmozart\Assert\Assert;
 
-class BlacklistConcurrencyConflictResolver implements ConcurrencyConflictResolver
+final class BlacklistConcurrencyConflictResolver implements ConcurrencyConflictResolver
 {
     private $conflictingEvents = [];
 

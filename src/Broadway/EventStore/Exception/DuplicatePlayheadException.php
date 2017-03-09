@@ -6,7 +6,7 @@ use Broadway\Domain\DomainEventStream;
 use Broadway\EventStore\EventStoreException;
 use Exception;
 
-class DuplicatePlayheadException extends EventStoreException
+final class DuplicatePlayheadException extends EventStoreException
 {
     /**
      * @var DomainEventStream

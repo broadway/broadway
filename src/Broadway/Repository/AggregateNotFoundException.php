@@ -17,7 +17,7 @@ use RuntimeException;
 /**
  * Exception thrown when an aggregate is not found.
  */
-class AggregateNotFoundException extends RuntimeException
+final class AggregateNotFoundException extends RuntimeException
 {
     /**
      * @param mixed     $id

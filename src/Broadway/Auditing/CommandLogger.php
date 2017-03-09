@@ -19,7 +19,7 @@ use Psr\Log\LoggerInterface;
  *
  * This object can be registered as an event listener.
  */
-class CommandLogger
+final class CommandLogger
 {
     private $logger;
     private $commandSerializer;

@@ -14,7 +14,7 @@ namespace Broadway\EventDispatcher;
 /**
  * Event dispatcher implementation.
  */
-class CallableEventDispatcher implements EventDispatcher
+final class CallableEventDispatcher implements EventDispatcher
 {
     private $listeners = [];
 

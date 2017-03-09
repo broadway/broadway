@@ -18,7 +18,7 @@ use Broadway\EventSourcing\EventStreamDecorator;
 /**
  * Event stream decorator that adds extra metadata.
  */
-class MetadataEnrichingEventStreamDecorator implements EventStreamDecorator
+final class MetadataEnrichingEventStreamDecorator implements EventStreamDecorator
 {
     private $metadataEnrichers;
 
