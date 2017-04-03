@@ -107,4 +107,15 @@ class Scenario
 
         return $this;
     }
+    /**
+     * @param $event
+     *
+     * @return Scenario
+     */
+    public function thenEventExists($event)
+    {
+        $this->testCase->assertContains($event, $this->eventStore->getEvents(), '', false, false);
+
+        return $this;
+    }
 }
