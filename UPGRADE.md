@@ -57,7 +57,7 @@ This is the complete list of changes:
 * Broadway/Auditing/CommandSerializer -> NullByteCommandSerializer
 * Broadway/CommandHandling/CommandHandler -> SimpleCommandHandler
 * Broadway/EventDispatcher/EventDispatcher -> CallableEventDispatcher
-* Broadway/EventSourcing/EventSourcedEntity > SimpleEventSourcedEntity
+* Broadway/EventSourcing/EventSourcedEntity -> SimpleEventSourcedEntity
 * Broadway/ReadModel/ReadModelTestCase -> SerializableReadModelTestCase
 
 ### Dropped interfaces
