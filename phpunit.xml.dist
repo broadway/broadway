@@ -26,4 +26,9 @@
       <group>functional</group>
     </exclude>
   </groups>
+
+  <php>
+    <const name="MONGODB_SERVER" value="mongodb://localhost:27017" />
+    <const name="MONGODB_DATABASE" value="broadway_tests" />
+  </php>
 </phpunit>
