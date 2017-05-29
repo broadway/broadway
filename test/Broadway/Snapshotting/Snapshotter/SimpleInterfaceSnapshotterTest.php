@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the broadway/broadway package.
  *
@@ -98,5 +99,13 @@ final class TestSnapshotableAggregate extends EventSourcedAggregateRoot implemen
             'baz' => ['foo' => 'bar'],
             'foobar'
         ];
+    }
+
+    /**
+     * @param Snapshot $snapshot
+     */
+    public function applySnapshot(Snapshot $snapshot)
+    {
+        // NO-OP
     }
 }

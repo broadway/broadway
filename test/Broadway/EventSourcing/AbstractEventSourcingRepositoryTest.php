@@ -24,6 +24,7 @@ use Broadway\EventStore\EventStore;
 use Broadway\EventStore\InMemoryEventStore;
 use Broadway\EventStore\TraceableEventStore;
 use Broadway\ReadModel\Projector;
+use Broadway\Repository\Repository;
 use Broadway\TestCase;
 use RuntimeException;
 
@@ -160,11 +161,9 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
         $projector = new TestMetadataPublishedProjector();
         $this->eventBus->subscribe($projector);
 
-        $repository = new EventSourcingRepository(
+        $repository = $this->createEventSourcingRepository(
             $this->eventStore,
             $this->eventBus,
-            get_class($this->createAggregate()),
-            new PublicConstructorAggregateFactory(),
             [new MetadataEnrichingEventStreamDecorator([new TestDecorationMetadataEnricher()])]
         );
 
@@ -180,7 +179,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
     }
 
     /**
-     * @return EventSourcingRepository
+     * @return Repository
      */
     abstract protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, array $eventStreamDecorators);
 

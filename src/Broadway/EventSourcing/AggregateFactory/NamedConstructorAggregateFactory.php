@@ -4,6 +4,7 @@ namespace Broadway\EventSourcing\AggregateFactory;
 
 use Assert\Assertion as Assert;
 use Broadway\Domain\DomainEventStream;
+use Broadway\Snapshotting\Snapshot;
 
 /**
  * Creates aggregates by passing a DomainEventStream to the given public static method
@@ -25,7 +26,7 @@ class NamedConstructorAggregateFactory implements AggregateFactory
     /**
      * {@inheritDoc}
      */
-    public function create($aggregateClass, DomainEventStream $domainEventStream)
+    public function create($aggregateClass, DomainEventStream $domainEventStream, Snapshot $snapshot = null)
     {
         $methodCall = sprintf('%s::%s', $aggregateClass, $this->staticConstructorMethod);
 
@@ -38,7 +39,7 @@ class NamedConstructorAggregateFactory implements AggregateFactory
 
         Assert::isInstanceOf($aggregate, $aggregateClass);
 
-        $aggregate->initializeState($domainEventStream);
+        $aggregate->initializeState($domainEventStream, $snapshot);
 
         return $aggregate;
     }

@@ -4,6 +4,7 @@ namespace Broadway\EventSourcing\AggregateFactory;
 
 use Broadway\Domain\DomainEventStream;
 use Broadway\EventSourcing\EventSourcedAggregateRoot;
+use Broadway\Snapshotting\Snapshot;
 use LogicException;
 use ReflectionClass;
 
@@ -15,7 +16,7 @@ final class ReflectionAggregateFactory implements AggregateFactory
     /**
      * {@inheritDoc}
      */
-    public function create($aggregateClass, DomainEventStream $domainEventStream)
+    public function create($aggregateClass, DomainEventStream $domainEventStream, Snapshot $snapshot = null)
     {
         $class = new ReflectionClass($aggregateClass);
         $aggregate = $class->newInstanceWithoutConstructor();
@@ -24,7 +25,7 @@ final class ReflectionAggregateFactory implements AggregateFactory
             throw new LogicException(sprintf('Impossible to initialize "%s"', $aggregateClass));
         }
 
-        $aggregate->initializeState($domainEventStream);
+        $aggregate->initializeState($domainEventStream, $snapshot);
 
         return $aggregate;
     }
