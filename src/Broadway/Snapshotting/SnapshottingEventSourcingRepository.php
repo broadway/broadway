@@ -62,7 +62,7 @@ class SnapshottingEventSourcingRepository implements Repository
     public function load($id)
     {
         try {
-            $snapshot = $this->loadSnapshot($id);
+            $snapshot = $this->snapshotStore->load($id);
             if ($snapshot !== null) {
                 $domainEventStream = $this->eventStore->loadFromPlayhead($id, $snapshot->getPlayhead());
             } else {
@@ -92,20 +92,6 @@ class SnapshottingEventSourcingRepository implements Repository
 
         if ($shouldTakeSnapshot) {
             $this->snapshotStore->save($this->snapshotter->takeSnapshot($aggregate));
-        }
-    }
-
-    /**
-     * @param mixed $id
-     *
-     * @return Snapshot|null
-     */
-    private function loadSnapshot($id)
-    {
-        try {
-            return $this->snapshotStore->load($id);
-        } catch (SnapshotNotFoundException $e) {
-            return null;
         }
     }
 

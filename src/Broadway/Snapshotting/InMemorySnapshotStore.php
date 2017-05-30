@@ -26,16 +26,10 @@ class InMemorySnapshotStore implements SnapshotStore
     /**
      * @param mixed $id
      *
-     * @return Snapshot
-     *
-     * @throws SnapshotNotFoundException
+     * @return Snapshot|null
      */
     public function load($id)
     {
-        if (! isset($this->snapshots[(string)$id])) {
-            throw SnapshotNotFoundException::create($id);
-        }
-
-        return $this->snapshots[(string)$id];
+        return ! isset($this->snapshots[(string)$id]) ? null : $this->snapshots[(string)$id];
     }
 }

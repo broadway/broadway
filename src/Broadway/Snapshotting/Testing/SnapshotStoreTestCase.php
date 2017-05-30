@@ -32,11 +32,10 @@ abstract class SnapshotStoreTestCase extends TestCase
 
     /**
      * @test
-     * @expectedException \Broadway\Snapshotting\SnapshotNotFoundException
      */
-    public final function it_throws_SnapshotNotFoundException_when_no_snapshot_found()
+    public final function it_returns_null_when_no_snapshot_found()
     {
-        $this->store->load(42);
+        $this->assertNull($this->store->load(42));
     }
 
     /**

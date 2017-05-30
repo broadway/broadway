@@ -21,9 +21,7 @@ interface SnapshotStore
     /**
      * @param mixed $id
      *
-     * @return Snapshot
-     *
-     * @throws SnapshotNotFoundException
+     * @return Snapshot|null
      */
     public function load($id);
 }
