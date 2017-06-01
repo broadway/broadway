@@ -23,6 +23,7 @@ Read the blog post about this repository at:
 ```
 $ composer require broadway/broadway
 ```
+[packagist]: https://packagist.org/packages/broadway/broadway
 
 ## Examples
 
