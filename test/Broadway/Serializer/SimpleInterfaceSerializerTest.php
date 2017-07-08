@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\Serializer;
 
 use Broadway\TestCase;
@@ -36,6 +38,7 @@ class SimpleInterfaceSerializerTest extends TestCase
      * @test
      * @expectedException Assert\InvalidArgumentException
      * @expectedExceptionMessage Key 'class' should be set
+     *
      * @todo custom exception
      */
     public function it_throws_an_exception_if_class_not_set_in_data()

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Broadway\EventSourcing\AggregateFactory;
 
 use Assert\Assertion as Assert;

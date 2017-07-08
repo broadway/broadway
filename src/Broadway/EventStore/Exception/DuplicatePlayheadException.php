@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Broadway\EventStore\Exception;
 
 use Broadway\Domain\DomainEventStream;
@@ -19,7 +21,7 @@ final class DuplicatePlayheadException extends EventStoreException
      */
     public function __construct(DomainEventStream $eventStream, $previous = null)
     {
-        parent::__construct(null, 0, $previous);
+        parent::__construct('', 0, $previous);
 
         $this->eventStream = $eventStream;
     }
