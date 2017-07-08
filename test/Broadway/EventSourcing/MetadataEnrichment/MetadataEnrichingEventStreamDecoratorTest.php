@@ -82,8 +82,7 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
         $decorator               = new MetadataEnrichingEventStreamDecorator([$constructorEnricher]);
         $decorator->registerEnricher($newlyRegisteredEnricher);
 
-        $eventStream    = $this->createDomainEventStream();
-        $newEventStream = $decorator->decorateForWrite('id', 'type', $eventStream);
+        $decorator->decorateForWrite('id', 'type', $this->createDomainEventStream());
 
         $this->assertEquals(2, $constructorEnricher->callCount());
         $this->assertEquals(2, $newlyRegisteredEnricher->callCount());
