@@ -30,7 +30,7 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function append($id, DomainEventStream $uncommittedEvents)
     {
@@ -68,7 +68,7 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
     /**
      * {@inheritDoc}
      */
-    public function load($id)
+    public function load($id): DomainEventStream
     {
         return $this->eventStore->load($id);
     }
@@ -76,7 +76,7 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
     /**
      * {@inheritDoc}
      */
-    public function loadFromPlayhead($id, $playhead)
+    public function loadFromPlayhead($id, int $playhead): DomainEventStream
     {
         return $this->eventStore->loadFromPlayhead($id, $playhead);
     }
@@ -84,7 +84,7 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
     /**
      * @return int
      */
-    private function getCurrentPlayhead(DomainEventStream $committedEvents)
+    private function getCurrentPlayhead(DomainEventStream $committedEvents): int
     {
         $events = iterator_to_array($committedEvents);
         /** @var DomainMessage $lastEvent */
@@ -100,7 +100,7 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
     private function getConflictingEvents(
         DomainEventStream $uncommittedEvents,
         DomainEventStream $committedEvents
-    ) {
+    ): array {
         $conflictingEvents = [];
 
         /** @var DomainMessage $committedEvent */

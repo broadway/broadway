@@ -24,10 +24,11 @@ final class Criteria
     /**
      * Create a new criteria with the specified aggregate root types
      *
-     * @param  array  $aggregateRootTypes
-     * @return static
+     * @param array $aggregateRootTypes
+     *
+     * @return Criteria
      */
-    public function withAggregateRootTypes(array $aggregateRootTypes)
+    public function withAggregateRootTypes(array $aggregateRootTypes): Criteria
     {
         $instance                     = clone($this);
         $instance->aggregateRootTypes = $aggregateRootTypes;
@@ -38,10 +39,11 @@ final class Criteria
     /**
      * Create a new criteria with the specified aggregate root IDs
      *
-     * @param  array    $aggregateRootIds
+     * @param array $aggregateRootIds
+     *
      * @return Criteria
      */
-    public function withAggregateRootIds(array $aggregateRootIds)
+    public function withAggregateRootIds(array $aggregateRootIds): Criteria
     {
         $instance                   = clone($this);
         $instance->aggregateRootIds = $aggregateRootIds;
@@ -52,10 +54,11 @@ final class Criteria
     /**
      * Create a new criteria with the specified event types
      *
-     * @param  array    $eventTypes
+     * @param array $eventTypes
+     *
      * @return Criteria
      */
-    public function withEventTypes(array $eventTypes)
+    public function withEventTypes(array $eventTypes): Criteria
     {
         $instance             = clone($this);
         $instance->eventTypes = $eventTypes;
@@ -68,7 +71,7 @@ final class Criteria
      *
      * @return string[]
      */
-    public function getAggregateRootTypes()
+    public function getAggregateRootTypes(): array
     {
         return $this->aggregateRootTypes;
     }
@@ -78,7 +81,7 @@ final class Criteria
      *
      * @return array
      */
-    public function getAggregateRootIds()
+    public function getAggregateRootIds(): array
     {
         return $this->aggregateRootIds;
     }
@@ -88,7 +91,7 @@ final class Criteria
      *
      * @return array
      */
-    public function getEventTypes()
+    public function getEventTypes(): array
     {
         return $this->eventTypes;
     }
@@ -96,9 +99,9 @@ final class Criteria
     /**
      * Create a new criteria
      *
-     * @return static
+     * @return Criteria
      */
-    public static function create()
+    public static function create(): Criteria
     {
         return new static();
     }
@@ -106,10 +109,11 @@ final class Criteria
     /**
      * Determine if a domain message is matched by this criteria
      *
-     * @param  DomainMessage $domainMessage
+     * @param DomainMessage $domainMessage
+     *
      * @return bool
      */
-    public function isMatchedBy(DomainMessage $domainMessage)
+    public function isMatchedBy(DomainMessage $domainMessage): bool
     {
         if ($this->aggregateRootTypes) {
             throw new CriteriaNotSupportedException(

@@ -50,7 +50,7 @@ final class InMemoryRepository implements Repository, Transferable
     /**
      * {@inheritDoc}
      */
-    public function findBy(array $fields)
+    public function findBy(array $fields): array
     {
         if (! $fields) {
             return [];
@@ -76,7 +76,7 @@ final class InMemoryRepository implements Repository, Transferable
     /**
      * {@inheritDoc}
      */
-    public function findAll()
+    public function findAll(): array
     {
         return array_values($this->data);
     }

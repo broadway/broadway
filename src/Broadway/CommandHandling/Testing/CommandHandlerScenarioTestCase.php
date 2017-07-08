@@ -39,7 +39,7 @@ abstract class CommandHandlerScenarioTestCase extends TestCase
     /**
      * @return Scenario
      */
-    protected function createScenario()
+    protected function createScenario(): Scenario
     {
         $eventStore     = new TraceableEventStore(new InMemoryEventStore());
         $eventBus       = new SimpleEventBus();
@@ -56,5 +56,5 @@ abstract class CommandHandlerScenarioTestCase extends TestCase
      *
      * @return CommandHandler
      */
-    abstract protected function createCommandHandler(EventStore $eventStore, EventBus $eventBus);
+    abstract protected function createCommandHandler(EventStore $eventStore, EventBus $eventBus): CommandHandler;
 }

@@ -112,9 +112,9 @@ class TestSerializable implements Serializable
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public function serialize()
+    public function serialize(): array
     {
         return ['foo' => $this->foo];
     }

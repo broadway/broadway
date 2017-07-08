@@ -36,7 +36,7 @@ abstract class Processor implements EventListener
         $this->$method($event, $domainMessage);
     }
 
-    private function getHandleMethod($event)
+    private function getHandleMethod($event): string
     {
         $classParts = explode('\\', get_class($event));
 

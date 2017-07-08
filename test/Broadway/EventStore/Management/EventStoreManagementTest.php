@@ -169,18 +169,16 @@ abstract class EventStoreManagementTest extends TestCase
         ];
     }
 
-    private function createDomainMessage($id, $playhead, $event)
+    private function createDomainMessage($id, int $playhead, $event)
     {
         $id = $this->getId($id);
 
-        return new DomainMessage((string) $id, (string) $playhead, new Metadata([]), $event, $this->now);
+        return new DomainMessage((string) $id, $playhead, new Metadata([]), $event, $this->now);
     }
 
-    private function getId($id)
+    private function getId($id): string
     {
-        $uuid = sprintf('%08d-%04d-4%03d-%04d-%012d', $id, $id, $id, $id, $id);
-
-        return $uuid;
+        return sprintf('%08d-%04d-4%03d-%04d-%012d', $id, $id, $id, $id, $id);
     }
 
     private function assertVisitedEventsArEquals(array $expectedEvents, array $actualEvents)
@@ -246,7 +244,7 @@ class Event implements Serializable
         return new static();
     }
 
-    public function serialize()
+    public function serialize(): array
     {
         return [];
     }
@@ -269,7 +267,7 @@ class Middle extends Event
         return new static($data['position']);
     }
 
-    public function serialize()
+    public function serialize(): array
     {
         return [
             'position' => $this->position,

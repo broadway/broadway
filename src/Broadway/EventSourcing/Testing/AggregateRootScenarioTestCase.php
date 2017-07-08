@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Broadway\EventSourcing\Testing;
 
+use Broadway\EventSourcing\AggregateFactory\AggregateFactory;
 use Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
 use PHPUnit_Framework_TestCase as TestCase;
 
@@ -34,7 +35,7 @@ abstract class AggregateRootScenarioTestCase extends TestCase
     /**
      * @return Scenario
      */
-    protected function createScenario()
+    protected function createScenario(): Scenario
     {
         $aggregateRootClass = $this->getAggregateRootClass();
         $factory            = $this->getAggregateRootFactory();
@@ -47,14 +48,14 @@ abstract class AggregateRootScenarioTestCase extends TestCase
      *
      * @return string AggregateRoot
      */
-    abstract protected function getAggregateRootClass();
+    abstract protected function getAggregateRootClass(): string;
 
     /**
      * Returns a factory for instantiating an aggregate
      *
-     * @return \Broadway\EventSourcing\AggregateFactory\AggregateFactory $factory
+     * @return AggregateFactory $factory
      */
-    protected function getAggregateRootFactory()
+    protected function getAggregateRootFactory(): AggregateFactory
     {
         return new PublicConstructorAggregateFactory();
     }

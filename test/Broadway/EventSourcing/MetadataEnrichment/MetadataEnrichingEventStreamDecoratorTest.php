@@ -102,14 +102,14 @@ class TracableMetadataEnricher implements MetadataEnricher
 {
     private $calls;
 
-    public function enrich(Metadata $metadata)
+    public function enrich(Metadata $metadata): Metadata
     {
         $this->calls[] = $metadata;
 
         return $metadata->merge(Metadata::kv('traced', true));
     }
 
-    public function callCount()
+    public function callCount(): int
     {
         return count($this->calls);
     }

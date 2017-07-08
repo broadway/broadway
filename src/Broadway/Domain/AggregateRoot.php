@@ -21,10 +21,10 @@ interface AggregateRoot
     /**
      * @return DomainEventStream
      */
-    public function getUncommittedEvents();
+    public function getUncommittedEvents(): DomainEventStream;
 
     /**
      * @return string
      */
-    public function getAggregateRootId();
+    public function getAggregateRootId(): string;
 }

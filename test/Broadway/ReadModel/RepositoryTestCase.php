@@ -24,7 +24,7 @@ abstract class RepositoryTestCase extends TestCase
         $this->repository = $this->createRepository();
     }
 
-    abstract protected function createRepository();
+    abstract protected function createRepository(): Repository;
 
     /**
      * @test

@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace Broadway\ReadModel\InMemory;
 
+use Broadway\ReadModel\Repository;
 use Broadway\ReadModel\RepositoryTestCase;
 use Broadway\ReadModel\RepositoryTestReadModel;
 
 class InMemoryRepositoryTest extends RepositoryTestCase
 {
-    protected function createRepository()
+    protected function createRepository(): Repository
     {
         return new InMemoryRepository();
     }

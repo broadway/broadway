@@ -24,5 +24,5 @@ interface RepositoryFactory
      *
      * @return Repository
      */
-    public function create($name, $class);
+    public function create(string $name, string $class): Repository;
 }

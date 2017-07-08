@@ -57,7 +57,7 @@ final class TraceableEventBus implements EventBus
     /**
      * @return array Payloads of the recorded events
      */
-    public function getEvents()
+    public function getEvents(): array
     {
         return array_map(
             function (DomainMessage $message) {

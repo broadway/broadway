@@ -82,7 +82,7 @@ class MyTestAggregateRoot extends EventSourcedAggregateRoot
 {
     public $isCalled = false;
 
-    public function getAggregateRootId()
+    public function getAggregateRootId(): string
     {
         return 'y0l0';
     }

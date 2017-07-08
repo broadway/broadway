@@ -44,15 +44,15 @@ final class DomainMessage
     private $recordedOn;
 
     /**
-     * @param string   $id
+     * @param mixed    $id
      * @param int      $playhead
      * @param Metadata $metadata
      * @param mixed    $payload
      * @param DateTime $recordedOn
      */
-    public function __construct($id, $playhead, Metadata $metadata, $payload, DateTime $recordedOn)
+    public function __construct($id, int $playhead, Metadata $metadata, $payload, DateTime $recordedOn)
     {
-        $this->id         = $id;
+        $this->id         = (string) $id;
         $this->playhead   = $playhead;
         $this->metadata   = $metadata;
         $this->payload    = $payload;
@@ -62,7 +62,7 @@ final class DomainMessage
     /**
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -70,7 +70,7 @@ final class DomainMessage
     /**
      * @return int
      */
-    public function getPlayhead()
+    public function getPlayhead(): int
     {
         return $this->playhead;
     }
@@ -78,7 +78,7 @@ final class DomainMessage
     /**
      * @return Metadata
      */
-    public function getMetadata()
+    public function getMetadata(): Metadata
     {
         return $this->metadata;
     }
@@ -94,7 +94,7 @@ final class DomainMessage
     /**
      * @return DateTime
      */
-    public function getRecordedOn()
+    public function getRecordedOn(): DateTime
     {
         return $this->recordedOn;
     }
@@ -102,20 +102,20 @@ final class DomainMessage
     /**
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return strtr(get_class($this->payload), '\\', '.');
     }
 
     /**
-     * @param string   $id
+     * @param mixed    $id
      * @param int      $playhead
      * @param Metadata $metadata
      * @param mixed    $payload
      *
      * @return DomainMessage
      */
-    public static function recordNow($id, $playhead, Metadata $metadata, $payload)
+    public static function recordNow($id, int $playhead, Metadata $metadata, $payload)
     {
         return new DomainMessage($id, $playhead, $metadata, $payload, DateTime::now());
     }
@@ -127,7 +127,7 @@ final class DomainMessage
      *
      * @return DomainMessage
      */
-    public function andMetadata(Metadata $metadata)
+    public function andMetadata(Metadata $metadata): DomainMessage
     {
         $newMetadata = $this->metadata->merge($metadata);
 

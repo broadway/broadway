@@ -48,5 +48,5 @@ abstract class SerializableReadModelTestCase extends TestCase
     /**
      * @return SerializableReadModel
      */
-    abstract protected function createSerializableReadModel();
+    abstract protected function createSerializableReadModel(): SerializableReadModel;
 }

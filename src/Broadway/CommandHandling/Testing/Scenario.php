@@ -45,14 +45,15 @@ class Scenario
         $this->testCase       = $testCase;
         $this->eventStore     = $eventStore;
         $this->commandHandler = $commandHandler;
-        $this->aggregateId    = 1;
+        $this->aggregateId    = '1';
     }
 
     /**
-     * @param  string $aggregateId
+     * @param string $aggregateId
+     *
      * @return Scenario
      */
-    public function withAggregateId($aggregateId)
+    public function withAggregateId(string $aggregateId): Scenario
     {
         $this->aggregateId = $aggregateId;
 
@@ -64,7 +65,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function given(array $events = null)
+    public function given(array $events = null): Scenario
     {
         if ($events === null) {
             return $this;
@@ -87,7 +88,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function when($command)
+    public function when($command): Scenario
     {
         $this->eventStore->trace();
 
@@ -101,7 +102,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function then(array $events)
+    public function then(array $events): Scenario
     {
         $this->testCase->assertEquals($events, $this->eventStore->getEvents());
 

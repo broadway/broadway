@@ -183,7 +183,7 @@ abstract class EventStoreTest extends TestCase
         ];
     }
 
-    protected function createDomainMessage($id, $playhead, $recordedOn = null)
+    protected function createDomainMessage($id, int $playhead, DateTime $recordedOn = null)
     {
         return new DomainMessage($id, $playhead, new MetaData([]), new Event(), $recordedOn ? $recordedOn : DateTime::now());
     }
@@ -196,7 +196,7 @@ class Event implements Serializable
         return new Event();
     }
 
-    public function serialize()
+    public function serialize(): array
     {
         return [];
     }

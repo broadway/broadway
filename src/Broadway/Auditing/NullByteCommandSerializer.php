@@ -24,7 +24,7 @@ final class NullByteCommandSerializer implements CommandSerializer
     /**
      * {@inheritDoc}
      */
-    public function serialize($command)
+    public function serialize($command): array
     {
         $serializedCommand = [];
         foreach ((array) $command as $key => $value) {

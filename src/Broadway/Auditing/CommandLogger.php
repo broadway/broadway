@@ -66,7 +66,7 @@ final class CommandLogger
         $this->logger->info(json_encode($messageData));
     }
 
-    private function getCommandData($command)
+    private function getCommandData($command): array
     {
         return [
             'class' => get_class($command),

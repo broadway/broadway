@@ -23,5 +23,5 @@ interface MetadataEnricher
     /**
      * @return Metadata
      */
-    public function enrich(Metadata $metadata);
+    public function enrich(Metadata $metadata): Metadata;
 }

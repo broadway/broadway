@@ -51,11 +51,9 @@ final class Metadata implements Serializable
      *
      * @return Metadata a new instance
      */
-    public function merge(Metadata $otherMetadata)
+    public function merge(Metadata $otherMetadata): Metadata
     {
-        $mergedValues = array_merge($this->values, $otherMetadata->values);
-
-        return new Metadata($mergedValues);
+        return new Metadata(array_merge($this->values, $otherMetadata->values));
     }
 
     /**
@@ -63,7 +61,7 @@ final class Metadata implements Serializable
      *
      * @return array
      */
-    public function all()
+    public function all(): array
     {
         return $this->values;
     }
@@ -77,17 +75,13 @@ final class Metadata implements Serializable
      */
     public function get($key)
     {
-        if (!array_key_exists($key, $this->values)) {
-            return null;
-        }
-
-        return $this->values[$key];
+        return $this->values[$key] ?? null;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function serialize()
+    public function serialize(): array
     {
         return $this->values;
     }

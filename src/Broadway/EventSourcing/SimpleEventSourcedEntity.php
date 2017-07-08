@@ -74,12 +74,12 @@ abstract class SimpleEventSourcedEntity implements EventSourcedEntity
      *
      * @return EventSourcedEntity[]
      */
-    protected function getChildEntities()
+    protected function getChildEntities(): array
     {
         return [];
     }
 
-    private function getApplyMethod($event)
+    private function getApplyMethod($event): string
     {
         $classParts = explode('\\', get_class($event));
 

@@ -23,5 +23,5 @@ interface CommandSerializer
      *
      * @return array
      */
-    public function serialize($command);
+    public function serialize($command): array;
 }
