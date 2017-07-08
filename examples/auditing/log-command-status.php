@@ -60,8 +60,8 @@ $commandSerializer = new Broadway\Auditing\NullByteCommandSerializer();
 $commandAuditLogger = new Broadway\Auditing\CommandLogger($logger, $commandSerializer);
 
 // register the command logger with the event dispatcher of the command bus
-$eventDispatcher->addListener("broadway.command_handling.command_success", [$commandAuditLogger, "onCommandHandlingSuccess"]);
-$eventDispatcher->addListener("broadway.command_handling.command_failure", [$commandAuditLogger, "onCommandHandlingFailure"]);
+$eventDispatcher->addListener('broadway.command_handling.command_success', [$commandAuditLogger, 'onCommandHandlingSuccess']);
+$eventDispatcher->addListener('broadway.command_handling.command_failure', [$commandAuditLogger, 'onCommandHandlingFailure']);
 
 echo "Dispatching the command that will succeed.\n";
 $command = new ExampleCommand('Hi from command!');
