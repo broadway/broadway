@@ -17,12 +17,6 @@ matrix:
     allow_failures:
         - php: hhvm
 
-addons:
-    apt:
-        packages:
-            - language-pack-fr
-            - language-pack-en
-
 before_install:
     # Disable XDebug speed up test execution. (Ignore failures if platform does not had the extension installed)
     - phpenv config-rm xdebug.ini || return 0
