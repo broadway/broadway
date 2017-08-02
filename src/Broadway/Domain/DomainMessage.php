@@ -34,7 +34,7 @@ final class DomainMessage
     /**
      * @var string
      */
-    private $id;
+    private $aggregateId;
 
     /**
      * @var DateTime
@@ -42,27 +42,27 @@ final class DomainMessage
     private $recordedOn;
 
     /**
-     * @param string   $id
+     * @param string   $aggregateId
      * @param int      $playhead
      * @param Metadata $metadata
      * @param mixed    $payload
      * @param DateTime $recordedOn
      */
-    public function __construct($id, $playhead, Metadata $metadata, $payload, DateTime $recordedOn)
+    public function __construct($aggregateId, $playhead, Metadata $metadata, $payload, DateTime $recordedOn)
     {
-        $this->id         = $id;
-        $this->playhead   = $playhead;
-        $this->metadata   = $metadata;
-        $this->payload    = $payload;
+        $this->aggregateId = $aggregateId;
+        $this->playhead = $playhead;
+        $this->metadata = $metadata;
+        $this->payload = $payload;
         $this->recordedOn = $recordedOn;
     }
 
     /**
      * @return string
      */
-    public function getId()
+    public function getAggregateId()
     {
-        return $this->id;
+        return $this->aggregateId;
     }
 
     /**
@@ -106,16 +106,16 @@ final class DomainMessage
     }
 
     /**
-     * @param string   $id
+     * @param string   $aggregateId
      * @param int      $playhead
      * @param Metadata $metadata
      * @param mixed    $payload
      *
      * @return DomainMessage
      */
-    public static function recordNow($id, $playhead, Metadata $metadata, $payload)
+    public static function recordNow($aggregateId, $playhead, Metadata $metadata, $payload)
     {
-        return new DomainMessage($id, $playhead, $metadata, $payload, DateTime::now());
+        return new DomainMessage($aggregateId, $playhead, $metadata, $payload, DateTime::now());
     }
 
     /**
@@ -127,8 +127,9 @@ final class DomainMessage
      */
     public function andMetadata(Metadata $metadata)
     {
-        $newMetadata = $this->metadata->merge($metadata);
+        $domainMessage = clone $this;
+        $domainMessage->metadata = $this->metadata->merge($metadata);
 
-        return new DomainMessage($this->id, $this->playhead, $newMetadata, $this->payload, $this->recordedOn);
+        return $domainMessage;
     }
 }

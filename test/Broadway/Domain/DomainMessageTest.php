@@ -28,7 +28,7 @@ class DomainMessageTest extends TestCase
 
         $domainMessage = DomainMessage::recordNow($id, $playhead, $metadata, $payload);
 
-        $this->assertEquals($id,       $domainMessage->getId());
+        $this->assertEquals($id,       $domainMessage->getAggregateId());
         $this->assertEquals($payload,  $domainMessage->getPayload());
         $this->assertEquals($playhead, $domainMessage->getPlayhead());
         $this->assertEquals($metadata, $domainMessage->getMetadata());
@@ -55,7 +55,7 @@ class DomainMessageTest extends TestCase
 
         $newMessage = $domainMessage->andMetadata(Metadata::kv('foo', 42));
 
-        $this->assertSame($domainMessage->getId(), $newMessage->getId());
+        $this->assertSame($domainMessage->getAggregateId(), $newMessage->getAggregateId());
         $this->assertSame($domainMessage->getPlayhead(), $newMessage->getPlayhead());
         $this->assertSame($domainMessage->getPayload(), $newMessage->getPayload());
         $this->assertSame($domainMessage->getRecordedOn(), $newMessage->getRecordedOn());
