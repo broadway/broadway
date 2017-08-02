@@ -28,21 +28,10 @@ class DateTimeTest extends TestCase
 
     /**
      * @test
-     * @dataProvider providesLocales
      */
-    public function it_creates_now($locale)
+    public function it_creates_now()
     {
-        $this->setLocale(LC_ALL, $locale);
-
         $this->assertInstanceOf('Broadway\Domain\DateTime', DateTime::now());
-    }
-
-    public function providesLocales()
-    {
-        return array(
-            array('en_GB.UTF-8'),
-            array('fr_FR.UTF-8'),
-        );
     }
 
     /**
