@@ -16,4 +16,6 @@ use Broadway\EventStore\EventVisitor;
 interface EventStoreManagement
 {
     public function visitEvents(Criteria $criteria, EventVisitor $eventVisitor);
+
+    public function replayEventsBetween($lastKnownSequenceId, $sequenceIdTryingToApply, EventVisitor $eventVisitor);
 }

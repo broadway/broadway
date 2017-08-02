@@ -19,6 +19,11 @@ final class DomainMessage
     /**
      * @var int
      */
+    private $sequenceId;
+
+    /**
+     * @var int
+     */
     private $playhead;
 
     /**
@@ -55,6 +60,14 @@ final class DomainMessage
         $this->metadata = $metadata;
         $this->payload = $payload;
         $this->recordedOn = $recordedOn;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSequenceId()
+    {
+        return $this->sequenceId;
     }
 
     /**
@@ -116,6 +129,19 @@ final class DomainMessage
     public static function recordNow($aggregateId, $playhead, Metadata $metadata, $payload)
     {
         return new DomainMessage($aggregateId, $playhead, $metadata, $payload, DateTime::now());
+    }
+
+    /**
+     * @param int $sequenceId
+     *
+     * @return DomainMessage
+     */
+    public function withSequenceId($sequenceId)
+    {
+        $domainMessage = clone $this;
+        $domainMessage->sequenceId = $sequenceId;
+
+        return $domainMessage;
     }
 
     /**
