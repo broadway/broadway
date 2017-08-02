@@ -29,6 +29,19 @@ class Metadata implements Serializable
     }
 
     /**
+     * Helper method to construct an instance containing the key and value.
+     *
+     * @param mixed $key
+     * @param mixed $value
+     *
+     * @return Metadata
+     */
+    public static function kv($key, $value)
+    {
+        return new Metadata([$key => $value]);
+    }
+
+    /**
      * Merges the values of this and the other instance.
      *
      * @param Metadata $otherMetadata
@@ -43,24 +56,37 @@ class Metadata implements Serializable
     }
 
     /**
-     * {@inheritDoc}
+     * Returns an array with all metadata.
+     *
+     * @return array
      */
-    public function serialize()
+    public function all()
     {
         return $this->values;
     }
 
     /**
-     * Helper method to construct an instance containing the key and value.
+     * Get a specific metadata value based on key.
      *
-     * @param mixed $key
-     * @param mixed $value
+     * @param string $key
      *
-     * @return Metadata
+     * @return mixed
      */
-    public static function kv($key, $value)
+    public function get($key)
     {
-        return new Metadata([$key => $value]);
+        if (!array_key_exists($key, $this->values)) {
+            return null;
+        }
+
+        return $this->values[$key];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function serialize()
+    {
+        return $this->values;
     }
 
     /**
