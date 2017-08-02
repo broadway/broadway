@@ -19,6 +19,11 @@ final class DomainMessage
     /**
      * @var int
      */
+    private $sequenceId;
+
+    /**
+     * @var int
+     */
     private $playhead;
 
     /**
@@ -34,7 +39,7 @@ final class DomainMessage
     /**
      * @var string
      */
-    private $id;
+    private $aggregateId;
 
     /**
      * @var DateTime
@@ -42,31 +47,39 @@ final class DomainMessage
     private $recordedOn;
 
     /**
-     * @param string   $id
+     * @param string   $aggregateId
      * @param int      $playhead
      * @param Metadata $metadata
      * @param mixed    $payload
      * @param DateTime $recordedOn
      */
-    public function __construct($id, $playhead, Metadata $metadata, $payload, DateTime $recordedOn)
+    public function __construct($aggregateId, $playhead, Metadata $metadata, $payload, DateTime $recordedOn)
     {
-        $this->id         = $id;
-        $this->playhead   = $playhead;
-        $this->metadata   = $metadata;
-        $this->payload    = $payload;
+        $this->aggregateId = $aggregateId;
+        $this->playhead = $playhead;
+        $this->metadata = $metadata;
+        $this->payload = $payload;
         $this->recordedOn = $recordedOn;
     }
 
     /**
-     * {@inheritDoc}
+     * @return int|null
      */
-    public function getId()
+    public function getSequenceId()
     {
-        return $this->id;
+        return $this->sequenceId;
     }
 
     /**
-     * {@inheritDoc}
+     * @return string
+     */
+    public function getAggregateId()
+    {
+        return $this->aggregateId;
+    }
+
+    /**
+     * @return int
      */
     public function getPlayhead()
     {
@@ -74,7 +87,7 @@ final class DomainMessage
     }
 
     /**
-     * {@inheritDoc}
+     * @return Metadata
      */
     public function getMetadata()
     {
@@ -82,7 +95,7 @@ final class DomainMessage
     }
 
     /**
-     * {@inheritDoc}
+     * @return mixed
      */
     public function getPayload()
     {
@@ -90,7 +103,7 @@ final class DomainMessage
     }
 
     /**
-     * {@inheritDoc}
+     * @return DateTime
      */
     public function getRecordedOn()
     {
@@ -98,7 +111,7 @@ final class DomainMessage
     }
 
     /**
-     * {@inheritDoc}
+     * @return string
      */
     public function getType()
     {
@@ -106,16 +119,29 @@ final class DomainMessage
     }
 
     /**
-     * @param string   $id
+     * @param string   $aggregateId
      * @param int      $playhead
      * @param Metadata $metadata
      * @param mixed    $payload
      *
      * @return DomainMessage
      */
-    public static function recordNow($id, $playhead, Metadata $metadata, $payload)
+    public static function recordNow($aggregateId, $playhead, Metadata $metadata, $payload)
     {
-        return new DomainMessage($id, $playhead, $metadata, $payload, DateTime::now());
+        return new DomainMessage($aggregateId, $playhead, $metadata, $payload, DateTime::now());
+    }
+
+    /**
+     * @param int $sequenceId
+     *
+     * @return DomainMessage
+     */
+    public function withSequenceId($sequenceId)
+    {
+        $domainMessage = clone $this;
+        $domainMessage->sequenceId = $sequenceId;
+
+        return $domainMessage;
     }
 
     /**
@@ -127,8 +153,9 @@ final class DomainMessage
      */
     public function andMetadata(Metadata $metadata)
     {
-        $newMetadata = $this->metadata->merge($metadata);
+        $domainMessage = clone $this;
+        $domainMessage->metadata = $this->metadata->merge($metadata);
 
-        return new DomainMessage($this->id, $this->playhead, $newMetadata, $this->payload, $this->recordedOn);
+        return $domainMessage;
     }
 }

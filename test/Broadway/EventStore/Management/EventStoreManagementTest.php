@@ -122,7 +122,7 @@ abstract class EventStoreManagementTest extends TestCase
     private function createAndInsertEventFixtures()
     {
         foreach ($this->getEventFixtures() as $domainMessage) {
-            $this->eventStore->append($domainMessage->getId(), new DomainEventStream([$domainMessage]));
+            $this->eventStore->append($domainMessage->getAggregateId(), new DomainEventStream([$domainMessage]));
         }
     }
 
@@ -197,7 +197,7 @@ abstract class EventStoreManagementTest extends TestCase
         $eventsByAggregateTypeAndId = [];
         foreach ($events as $event) {
             $type = $event->getType();
-            $id   = $event->getId();
+            $id   = $event->getAggregateId();
 
             if (! array_key_exists($type, $eventsByAggregateTypeAndId)) {
                 $eventsByAggregateTypeAndId[$type] = [];

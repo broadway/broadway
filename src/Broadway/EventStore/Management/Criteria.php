@@ -115,7 +115,7 @@ final class Criteria
             );
         }
 
-        if ($this->aggregateRootIds && ! in_array($domainMessage->getId(), $this->aggregateRootIds)) {
+        if ($this->aggregateRootIds && ! in_array($domainMessage->getAggregateId(), $this->aggregateRootIds)) {
             return false;
         }
 

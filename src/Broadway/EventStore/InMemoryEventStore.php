@@ -24,7 +24,11 @@ use Broadway\EventStore\Management\EventStoreManagement;
  */
 final class InMemoryEventStore implements EventStore, EventStoreManagement
 {
+    private $sequenceId = 0;
+
     private $events = [];
+
+    private $sequencedEvents = [];
 
     /**
      * {@inheritDoc}
@@ -80,7 +84,11 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
         foreach ($eventStream as $event) {
             $playhead = $event->getPlayhead();
 
+            $sequenceId = ++$this->sequenceId;
+            $event->withSequenceId($sequenceId);
+
             $this->events[$id][$playhead] = $event;
+            $this->sequencedEvents[$sequenceId] = $event;
         }
     }
 
@@ -110,6 +118,15 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
 
                 $eventVisitor->doWithEvent($event);
             }
+        }
+    }
+
+    public function replayEventsBetween($startAfterSequenceId, $sequenceIdTryingToApply, EventVisitor $eventVisitor)
+    {
+        for ($i = $this->sequenceId + 1; $i < $sequenceIdTryingToApply; $i++) {
+            $event = $this->sequencedEvents[$i];
+
+            $eventVisitor->doWithEvent($event);
         }
     }
 }
