@@ -22,7 +22,7 @@ use Broadway\EventStore\Management\EventStoreManagement;
  *
  * Useful for testing code that uses an event store.
  */
-class InMemoryEventStore implements EventStore, EventStoreManagement
+final class InMemoryEventStore implements EventStore, EventStoreManagement
 {
     private $events = [];
 

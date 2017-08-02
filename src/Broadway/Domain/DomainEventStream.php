@@ -17,7 +17,7 @@ use IteratorAggregate;
 /**
  * Represents a stream of DomainEventMessages in sequence.
  */
-class DomainEventStream implements IteratorAggregate
+final class DomainEventStream implements IteratorAggregate
 {
     private $events;
 

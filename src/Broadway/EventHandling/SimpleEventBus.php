@@ -16,7 +16,7 @@ use Broadway\Domain\DomainEventStream;
 /**
  * Simple synchronous publishing of events.
  */
-class SimpleEventBus implements EventBus
+final class SimpleEventBus implements EventBus
 {
     private $eventListeners = [];
     private $queue          = [];

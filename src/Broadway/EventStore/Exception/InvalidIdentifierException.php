@@ -14,6 +14,6 @@ namespace Broadway\EventStore\Exception;
 /**
  * Class InvalidIdentifierException
  */
-class InvalidIdentifierException extends \InvalidArgumentException
+final class InvalidIdentifierException extends \InvalidArgumentException
 {
 }

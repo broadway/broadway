@@ -9,7 +9,7 @@ use Broadway\Domain\DomainEventStream;
  * passing a DomainEventStream to the public initializeState() method.
  * E.g. (new \Vendor\AggregateRoot)->initializeState($domainEventStream);
  */
-class PublicConstructorAggregateFactory implements AggregateFactory
+final class PublicConstructorAggregateFactory implements AggregateFactory
 {
     /**
      * {@inheritDoc}

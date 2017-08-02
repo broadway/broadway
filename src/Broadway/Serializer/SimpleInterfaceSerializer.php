@@ -16,7 +16,7 @@ use Assert\Assertion as Assert;
 /**
  * Serializer that serializes objects that implement a specific interface.
  */
-class SimpleInterfaceSerializer implements Serializer
+final class SimpleInterfaceSerializer implements Serializer
 {
     /**
      * {@inheritDoc}

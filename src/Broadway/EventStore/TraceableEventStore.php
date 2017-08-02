@@ -17,7 +17,7 @@ use Broadway\Domain\DomainMessage;
 /**
  * Event store that is able to record all appended events.
  */
-class TraceableEventStore implements EventStore
+final class TraceableEventStore implements EventStore
 {
     private $eventStore;
     private $recorded = [];

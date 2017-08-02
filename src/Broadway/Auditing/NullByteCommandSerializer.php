@@ -17,7 +17,7 @@ namespace Broadway\Auditing;
  * There are many other ways to implement serialization on commands, but since
  * this is only for logging purposes we get away with this solution for now.
  */
-class NullByteCommandSerializer implements CommandSerializer
+final class NullByteCommandSerializer implements CommandSerializer
 {
     /**
      * {@inheritDoc}

@@ -14,7 +14,7 @@ namespace Broadway\CommandHandling;
 /**
  * Simple synchronous dispatching of commands.
  */
-class SimpleCommandBus implements CommandBus
+final class SimpleCommandBus implements CommandBus
 {
     private $commandHandlers = [];
     private $queue           = [];

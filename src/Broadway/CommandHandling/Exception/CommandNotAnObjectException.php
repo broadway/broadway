@@ -16,6 +16,6 @@ use InvalidArgumentException;
 /**
  * Commands should be objects.
  */
-class CommandNotAnObjectException extends InvalidArgumentException
+final class CommandNotAnObjectException extends InvalidArgumentException
 {
 }

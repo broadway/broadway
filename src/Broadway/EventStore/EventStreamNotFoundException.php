@@ -14,6 +14,6 @@ namespace Broadway\EventStore;
 /**
  * Exception thrown if an event stream is not found.
  */
-class EventStreamNotFoundException extends EventStoreException
+final class EventStreamNotFoundException extends EventStoreException
 {
 }

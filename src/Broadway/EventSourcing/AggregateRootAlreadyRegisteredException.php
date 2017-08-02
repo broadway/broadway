@@ -16,6 +16,6 @@ use RuntimeException;
 /**
  * Exception thrown when an aggregate root is already registered.
  */
-class AggregateRootAlreadyRegisteredException extends RuntimeException
+final class AggregateRootAlreadyRegisteredException extends RuntimeException
 {
 }

@@ -16,7 +16,7 @@ use Broadway\Serializer\Serializable;
 /**
  * Metadata adding extra information to the DomainMessage.
  */
-class Metadata implements Serializable
+final class Metadata implements Serializable
 {
     private $values = [];
 

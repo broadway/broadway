@@ -20,7 +20,7 @@ use Broadway\ReadModel\Transferable;
  *
  * The in-memory repository is useful for testing code.
  */
-class InMemoryRepository implements Repository, Transferable
+final class InMemoryRepository implements Repository, Transferable
 {
     private $data = [];
 

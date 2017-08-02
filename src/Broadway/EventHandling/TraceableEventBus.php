@@ -17,7 +17,7 @@ use Broadway\Domain\DomainMessage;
 /**
  * Event bus that is able to record all dispatched events.
  */
-class TraceableEventBus implements EventBus
+final class TraceableEventBus implements EventBus
 {
     private $eventBus;
     private $recorded = [];
