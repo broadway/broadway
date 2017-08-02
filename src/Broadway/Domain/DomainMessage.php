@@ -58,7 +58,7 @@ final class DomainMessage
     }
 
     /**
-     * {@inheritDoc}
+     * @return string
      */
     public function getId()
     {
@@ -66,7 +66,7 @@ final class DomainMessage
     }
 
     /**
-     * {@inheritDoc}
+     * @return int
      */
     public function getPlayhead()
     {
@@ -74,7 +74,7 @@ final class DomainMessage
     }
 
     /**
-     * {@inheritDoc}
+     * @return Metadata
      */
     public function getMetadata()
     {
@@ -82,7 +82,7 @@ final class DomainMessage
     }
 
     /**
-     * {@inheritDoc}
+     * @return mixed
      */
     public function getPayload()
     {
@@ -90,7 +90,7 @@ final class DomainMessage
     }
 
     /**
-     * {@inheritDoc}
+     * @return DateTime
      */
     public function getRecordedOn()
     {
@@ -98,7 +98,7 @@ final class DomainMessage
     }
 
     /**
-     * {@inheritDoc}
+     * @return string
      */
     public function getType()
     {
