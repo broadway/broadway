@@ -29,7 +29,7 @@ final class InMemoryRepository implements Repository, Transferable
      */
     public function save(Identifiable $model)
     {
-        $this->data[(string) $model->getId()] = $model;
+        $this->data[(string)$model->getId()] = $model;
     }
 
     /**
@@ -37,7 +37,7 @@ final class InMemoryRepository implements Repository, Transferable
      */
     public function find($id)
     {
-        $id = (string) $id;
+        $id = (string)$id;
         if (isset($this->data[$id])) {
             return $this->data[$id];
         }
@@ -50,7 +50,7 @@ final class InMemoryRepository implements Repository, Transferable
      */
     public function findBy(array $fields)
     {
-        if (! $fields) {
+        if (!$fields) {
             return [];
         }
 
@@ -62,7 +62,11 @@ final class InMemoryRepository implements Repository, Transferable
 
                 if (is_array($modelValue) && ! in_array($value, $modelValue)) {
                     return false;
-                } elseif (! is_array($modelValue) && $modelValue !== $value) {
+                } elseif (! is_array($modelValue) && !is_object($modelValue) && $modelValue !== $value) {
+                    return false;
+                } elseif (is_object($modelValue) && !method_exists($modelValue, '__toString') && $modelValue !== $value) {
+                    return false;
+                } elseif (is_object($modelValue) && method_exists($modelValue, '__toString') && (string)$modelValue !== $value) {
                     return false;
                 }
             }
@@ -94,6 +98,6 @@ final class InMemoryRepository implements Repository, Transferable
      */
     public function remove($id)
     {
-        unset($this->data[(string) $id]);
+        unset($this->data[(string)$id]);
     }
 }

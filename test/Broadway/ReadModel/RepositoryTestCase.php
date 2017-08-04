@@ -102,6 +102,45 @@ abstract class RepositoryTestCase extends TestCase
     /**
      * @test
      */
+    public function it_finds_by_a_value_object_name_convertible_to_string()
+    {
+        $name     = new TestValueObject('othillo');
+        $model1   = $this->createReadModel('1', $name, 'bar');
+
+        $this->repository->save($model1);
+
+        $this->assertEquals([$model1], $this->repository->findBy(['name' => 'othillo']));
+    }
+
+    /**
+     * @test
+     */
+    public function it_finds_by_a_value_object_name_not_convertible_to_string()
+    {
+        $name     = new \stdClass('othillo');
+        $model1   = $this->createReadModel('1', $name, 'bar');
+
+        $this->repository->save($model1);
+
+        $this->assertEquals([$model1], $this->repository->findBy(['name' => $name]));
+    }
+
+    /**
+     * @test
+     */
+    public function it_does_not_finds_by_a_value_object_name_not_convertible_to_string()
+    {
+        $name     = new \stdClass('othillo');
+        $model1   = $this->createReadModel('1', $name, 'bar');
+
+        $this->repository->save($model1);
+
+        $this->assertEquals([], $this->repository->findBy(['name' => 'othillo']));
+    }
+
+    /**
+     * @test
+     */
     public function it_finds_if_all_clauses_match()
     {
         $model1 = $this->createReadModel('1', 'othillo', 'bar');
@@ -202,4 +241,8 @@ class TestReadModelId
     {
         return $this->value;
     }
+}
+
+class TestValueObject extends TestReadModelId
+{
 }
