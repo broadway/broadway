@@ -68,33 +68,33 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
      */
     public function append($id, DomainEventStream $eventStream)
     {
-        $id = (string) $id;
-
-        if (! isset($this->events[$id])) {
-            $this->events[$id] = [];
-        }
-
-        $this->assertStream($this->events[$id], $eventStream);
+        $this->assertStream($this->events, $eventStream);
 
         /** @var DomainMessage $event */
         foreach ($eventStream as $event) {
             $playhead = $event->getPlayhead();
+            $id       = (string)$event->getId();
+
+            if (!isset($this->events[$id])) {
+                $this->events[$id] = [];
+            }
 
             $this->events[$id][$playhead] = $event;
         }
     }
 
     /**
-     * @param DomainMessage[]   $events
+     * @param DomainMessage[] $events
      * @param DomainEventStream $eventsToAppend
      */
     private function assertStream($events, $eventsToAppend)
     {
         /** @var DomainMessage $event */
         foreach ($eventsToAppend as $event) {
+            $id       = (string)$event->getId();
             $playhead = $event->getPlayhead();
 
-            if (isset($events[$playhead])) {
+            if (isset($events[$id][$playhead])) {
                 throw new DuplicatePlayheadException($eventsToAppend);
             }
         }

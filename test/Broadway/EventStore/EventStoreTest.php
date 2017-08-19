@@ -161,6 +161,34 @@ abstract class EventStoreTest extends TestCase
         );
     }
 
+    /**
+     * @test
+     */
+    public function it_appends_event_stream_of_events_with_different_id()
+    {
+        $dateTime          = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
+        $domainEventStream = new DomainEventStream([
+            $this->createDomainMessage(1, 0, $dateTime),
+            $this->createDomainMessage(1, 1, $dateTime),
+            $this->createDomainMessage(2, 0, $dateTime),
+            $this->createDomainMessage(2, 1, $dateTime),
+        ]);
+
+        $this->eventStore->append(null, $domainEventStream);
+
+        $expected = new DomainEventStream([
+            $this->createDomainMessage(1, 0, $dateTime),
+            $this->createDomainMessage(1, 1, $dateTime),
+        ]);
+        $this->assertEquals($expected, $this->eventStore->load(1));
+
+        $expected = new DomainEventStream([
+            $this->createDomainMessage(2, 0, $dateTime),
+            $this->createDomainMessage(2, 1, $dateTime),
+        ]);
+        $this->assertEquals($expected, $this->eventStore->load(2));
+    }
+
     public function idDataProvider()
     {
         return [

@@ -48,7 +48,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
         // make sure events exist in the event store
         $id = 'y0l0';
         $this->eventStore->append($id, new DomainEventStream([
-            DomainMessage::recordNow(42, 0, new Metadata([]), new DidEvent())
+            DomainMessage::recordNow($id, 0, new Metadata([]), new DidEvent())
         ]));
 
         $repository = $this->repositoryWithStaticAggregateFactory();
@@ -71,7 +71,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
         // make sure events exist in the event store
         $id = 'y0l0';
         $this->eventStore->append($id, new DomainEventStream([
-            DomainMessage::recordNow(42, 0, new Metadata([]), new DidEvent())
+            DomainMessage::recordNow($id, 0, new Metadata([]), new DidEvent())
         ]));
 
         $repository = $this->repositoryWithStaticAggregateFactory('someUnknownStaticmethod');
