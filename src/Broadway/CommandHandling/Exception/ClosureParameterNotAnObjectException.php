@@ -9,6 +9,10 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * @author Francesco Trucchia <francesco@trucchia.it>
+ */
+
 namespace Broadway\CommandHandling\Exception;
 
 use InvalidArgumentException;
