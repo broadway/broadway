@@ -9,7 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Broadway\ReadModel;
+namespace Broadway\ReadModel\Testing;
+
+use Broadway\ReadModel\SerializableReadModel;
 
 class RepositoryTestReadModel implements SerializableReadModel
 {
