@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Broadway\EventStore;
 
+use Broadway\EventStore\Testing\EventStoreTest;
+
 class InMemoryEventStoreTest extends EventStoreTest
 {
     protected function setUp()

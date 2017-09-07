@@ -11,8 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Broadway\ReadModel;
+namespace Broadway\ReadModel\Testing;
 
+use Broadway\ReadModel\Repository;
 use PHPUnit\Framework\TestCase;
 
 abstract class RepositoryTestCase extends TestCase

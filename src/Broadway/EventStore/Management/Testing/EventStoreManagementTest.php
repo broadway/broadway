@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore\Management;
+namespace Broadway\EventStore\Management\Testing;
 
 use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainEventStream;
@@ -19,6 +19,8 @@ use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventStore\EventStore;
 use Broadway\EventStore\EventVisitor;
+use Broadway\EventStore\Management\Criteria;
+use Broadway\EventStore\Management\CriteriaNotSupportedException;
 use Broadway\Serializer\Serializable;
 use PHPUnit\Framework\TestCase;
 
@@ -90,8 +92,8 @@ abstract class EventStoreManagementTest extends TestCase
     {
         $visitedEvents = $this->visitEvents(Criteria::create()
             ->withEventTypes([
-                'Broadway.EventStore.Management.Start',
-                'Broadway.EventStore.Management.End',
+                'Broadway.EventStore.Management.Testing.Start',
+                'Broadway.EventStore.Management.Testing.End',
             ])
         );
 
@@ -114,10 +116,10 @@ abstract class EventStoreManagementTest extends TestCase
     {
         $this->expectException(CriteriaNotSupportedException::class);
 
-        $visitedEvents = $this->visitEvents(Criteria::create()
+        $this->visitEvents(Criteria::create()
             ->withAggregateRootTypes([
-                'Broadway.EventStore.Management.AggregateTypeOne',
-                'Broadway.EventStore.Management.AggregateTypeTwo',
+                'Broadway.EventStore.Management.Testing.AggregateTypeOne',
+                'Broadway.EventStore.Management.Testing.AggregateTypeTwo',
             ])
         );
     }

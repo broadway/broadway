@@ -11,17 +11,18 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore;
+namespace Broadway\EventStore\Testing;
 
 use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
+use Broadway\EventStore\EventStreamNotFoundException;
 use Broadway\EventStore\Exception\DuplicatePlayheadException;
 use Broadway\Serializer\Serializable;
-use PHPUnit\Framework\TestCase;
 use Broadway\UuidGenerator\Rfc4122\Version4Generator;
 use PHPUnit\Framework\Error\Error;
+use PHPUnit\Framework\TestCase;
 
 abstract class EventStoreTest extends TestCase
 {

@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Broadway\ReadModel\InMemory;
 
 use Broadway\ReadModel\Repository;
-use Broadway\ReadModel\RepositoryTestCase;
-use Broadway\ReadModel\RepositoryTestReadModel;
+use Broadway\ReadModel\Testing\RepositoryTestCase;
+use Broadway\ReadModel\Testing\RepositoryTestReadModel;
 
 class InMemoryRepositoryTest extends RepositoryTestCase
 {
@@ -44,7 +44,7 @@ class InMemoryRepositoryTest extends RepositoryTestCase
         $this->assertEquals($targetRepository->findAll(), $repository->findAll());
     }
 
-    private function createReadModel($id, $name, $foo, array $array = [])
+    private function createReadModel($id, $name, $foo, array $array = []): RepositoryTestReadModel
     {
         return new RepositoryTestReadModel($id, $name, $foo, $array);
     }
