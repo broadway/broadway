@@ -11,8 +11,8 @@
 
 namespace Broadway\ReadModel\InMemory;
 
-use Broadway\ReadModel\RepositoryTestCase;
-use Broadway\ReadModel\RepositoryTestReadModel;
+use Broadway\ReadModel\Testing\RepositoryTestReadModel;
+use Broadway\ReadModel\Testing\RepositoryTestCase;
 
 class InMemoryRepositoryTest extends RepositoryTestCase
 {

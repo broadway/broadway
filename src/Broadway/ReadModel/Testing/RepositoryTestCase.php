@@ -9,19 +9,25 @@
  * file that was distributed with this source code.
  */
 
-namespace Broadway\ReadModel;
+namespace Broadway\ReadModel\Testing;
 
-use Broadway\TestCase;
+use Broadway\ReadModel\Repository;
 
-abstract class RepositoryTestCase extends TestCase
+abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Repository
+     */
     protected $repository;
-
+  
     public function setUp()
     {
         $this->repository = $this->createRepository();
     }
 
+    /**
+     * @returns Repository
+     */
     abstract protected function createRepository();
 
     /**
