@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\Auditing;
 
 /**
@@ -22,7 +24,7 @@ final class NullByteCommandSerializer implements CommandSerializer
     /**
      * {@inheritDoc}
      */
-    public function serialize($command)
+    public function serialize($command): array
     {
         $serializedCommand = [];
         foreach ((array) $command as $key => $value) {

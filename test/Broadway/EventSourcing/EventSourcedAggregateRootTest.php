@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventSourcing;
 
 use Broadway\Domain\DomainEventStream;
@@ -80,7 +82,7 @@ class MyTestAggregateRoot extends EventSourcedAggregateRoot
 {
     public $isCalled = false;
 
-    public function getAggregateRootId()
+    public function getAggregateRootId(): string
     {
         return 'y0l0';
     }

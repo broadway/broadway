@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Broadway\EventSourcing\AggregateFactory;
 
 use Broadway\Domain\DomainEventStream;
@@ -15,7 +17,7 @@ final class ReflectionAggregateFactory implements AggregateFactory
     /**
      * {@inheritDoc}
      */
-    public function create($aggregateClass, DomainEventStream $domainEventStream)
+    public function create(string $aggregateClass, DomainEventStream $domainEventStream): EventSourcedAggregateRoot
     {
         $class = new ReflectionClass($aggregateClass);
         $aggregate = $class->newInstanceWithoutConstructor();

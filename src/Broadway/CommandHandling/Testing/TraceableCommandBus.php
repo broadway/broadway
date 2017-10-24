@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\CommandHandling\Testing;
 
 use Broadway\CommandHandling\CommandBus;
@@ -46,7 +48,7 @@ final class TraceableCommandBus implements CommandBus
     /**
      * @return array
      */
-    public function getRecordedCommands()
+    public function getRecordedCommands(): array
     {
         return $this->commands;
     }

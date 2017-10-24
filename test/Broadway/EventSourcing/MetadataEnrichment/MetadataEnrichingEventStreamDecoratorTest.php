@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventSourcing\MetadataEnrichment;
 
 use Broadway\Domain\DomainEventStream;
@@ -80,8 +82,7 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
         $decorator               = new MetadataEnrichingEventStreamDecorator([$constructorEnricher]);
         $decorator->registerEnricher($newlyRegisteredEnricher);
 
-        $eventStream    = $this->createDomainEventStream();
-        $newEventStream = $decorator->decorateForWrite('id', 'type', $eventStream);
+        $decorator->decorateForWrite('id', 'type', $this->createDomainEventStream());
 
         $this->assertEquals(2, $constructorEnricher->callCount());
         $this->assertEquals(2, $newlyRegisteredEnricher->callCount());
@@ -100,14 +101,14 @@ class TracableMetadataEnricher implements MetadataEnricher
 {
     private $calls;
 
-    public function enrich(Metadata $metadata)
+    public function enrich(Metadata $metadata): Metadata
     {
         $this->calls[] = $metadata;
 
         return $metadata->merge(Metadata::kv('traced', true));
     }
 
-    public function callCount()
+    public function callCount(): int
     {
         return count($this->calls);
     }

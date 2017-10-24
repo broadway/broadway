@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\CommandHandling;
 
 use Broadway\CommandHandling\Exception\CommandNotAnObjectException;
@@ -37,7 +39,7 @@ abstract class SimpleCommandHandler implements CommandHandler
         $this->$method($command);
     }
 
-    private function getHandleMethod($command)
+    private function getHandleMethod($command): string
     {
         if (! is_object($command)) {
             throw new CommandNotAnObjectException();

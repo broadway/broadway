@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventSourcing\MetadataEnrichment;
 
 use Broadway\Domain\Metadata;
@@ -21,5 +23,5 @@ interface MetadataEnricher
     /**
      * @return Metadata
      */
-    public function enrich(Metadata $metadata);
+    public function enrich(Metadata $metadata): Metadata;
 }

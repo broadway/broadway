@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\ReadModel\InMemory;
 
 use Broadway\ReadModel\Identifiable;
@@ -48,7 +50,7 @@ final class InMemoryRepository implements Repository, Transferable
     /**
      * {@inheritDoc}
      */
-    public function findBy(array $fields)
+    public function findBy(array $fields): array
     {
         if (! $fields) {
             return [];
@@ -74,7 +76,7 @@ final class InMemoryRepository implements Repository, Transferable
     /**
      * {@inheritDoc}
      */
-    public function findAll()
+    public function findAll(): array
     {
         return array_values($this->data);
     }

@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\Domain;
 
 use DateInterval;
@@ -32,7 +34,7 @@ final class DateTime
     /**
      * @return DateTime
      */
-    public static function now()
+    public static function now(): DateTime
     {
         return new DateTime(
             DateTimeImmutable::createFromFormat(
@@ -46,7 +48,7 @@ final class DateTime
     /**
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         return $this->dateTime->format(self::FORMAT_STRING);
     }
@@ -56,7 +58,7 @@ final class DateTime
      *
      * @return DateTime
      */
-    public static function fromString($dateTimeString)
+    public static function fromString($dateTimeString): DateTime
     {
         return new DateTime(new DateTimeImmutable($dateTimeString));
     }
@@ -64,16 +66,17 @@ final class DateTime
     /**
      * @return boolean
      */
-    public function equals(DateTime $dateTime)
+    public function equals(DateTime $dateTime): bool
     {
         return $this->toString() === $dateTime->toString();
     }
 
     /**
      * @param DateTime $dateTime
+     *
      * @return bool
      */
-    public function comesAfter(DateTime $dateTime)
+    public function comesAfter(DateTime $dateTime): bool
     {
         return $this->dateTime > $dateTime->dateTime;
     }
@@ -83,7 +86,7 @@ final class DateTime
      *
      * @return DateTime
      */
-    public function add($intervalSpec)
+    public function add(string $intervalSpec): DateTime
     {
         $dateTime = $this->dateTime->add(new DateInterval($intervalSpec));
 
@@ -95,7 +98,7 @@ final class DateTime
      *
      * @return DateTime
      */
-    public function sub($intervalSpec)
+    public function sub(string $intervalSpec): DateTime
     {
         $dateTime = $this->dateTime->sub(new DateInterval($intervalSpec));
 
@@ -104,9 +107,10 @@ final class DateTime
 
     /**
      * @param DateTime $dateTime
+     *
      * @return DateInterval
      */
-    public function diff(DateTime $dateTime)
+    public function diff(DateTime $dateTime): DateInterval
     {
         return $this->dateTime->diff($dateTime->dateTime);
     }
@@ -114,7 +118,7 @@ final class DateTime
     /**
      * @return DateTime
      */
-    public function toBeginningOfWeek()
+    public function toBeginningOfWeek(): DateTime
     {
         return new DateTime(new DateTimeImmutable($this->dateTime->format('o-\WW-1'), new DateTimeZone('UTC')));
     }
@@ -122,7 +126,7 @@ final class DateTime
     /**
      * @return string
      */
-    public function toYearWeekString()
+    public function toYearWeekString(): string
     {
         return $this->dateTime->format('oW');
     }
@@ -130,7 +134,7 @@ final class DateTime
     /**
      * @return DateTimeImmutable
      */
-    public function toNative()
+    public function toNative(): DateTimeImmutable
     {
         return $this->dateTime;
     }

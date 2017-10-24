@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventSourcing\MetadataEnrichment;
 
 use Broadway\Domain\DomainEventStream;
@@ -38,7 +40,7 @@ final class MetadataEnrichingEventStreamDecorator implements EventStreamDecorato
     /**
      * {@inheritDoc}
      */
-    public function decorateForWrite($aggregateType, $aggregateIdentifier, DomainEventStream $eventStream)
+    public function decorateForWrite(string $aggregateType, string $aggregateIdentifier, DomainEventStream $eventStream): DomainEventStream
     {
         if (empty($this->metadataEnrichers)) {
             return $eventStream;

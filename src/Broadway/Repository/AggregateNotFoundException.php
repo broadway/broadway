@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\Repository;
 
 use Exception;
@@ -25,7 +27,7 @@ final class AggregateNotFoundException extends RuntimeException
      *
      * @return AggregateNotFoundException
      */
-    public static function create($id, Exception $previous = null)
+    public static function create($id, Exception $previous = null): AggregateNotFoundException
     {
         return new self(sprintf("Aggregate with id '%s' not found", $id), 0, $previous);
     }

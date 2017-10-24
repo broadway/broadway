@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventSourcing;
 
 use Broadway\Domain\AggregateRoot;
@@ -202,21 +204,22 @@ class DidNumberEvent
 
 class AnotherTestEventSourcedAggregate extends EventSourcedAggregateRoot
 {
-    public function getAggregateRootId()
+    public function getAggregateRootId(): string
     {
-        return 1337;
+        return '1337';
     }
 }
 
 class TestAggregate implements AggregateRoot
 {
-    public function getAggregateRootId()
+    public function getAggregateRootId(): string
     {
-        return 42;
+        return '42';
     }
 
-    public function getUncommittedEvents()
+    public function getUncommittedEvents(): DomainEventStream
     {
+        return new DomainEventStream([]);
     }
 }
 
@@ -225,7 +228,7 @@ class TraceableEventstoreDecorator implements EventStreamDecorator
     private $tracing = false;
     private $calls;
 
-    public function decorateForWrite($aggregateType, $aggregateIdentifier, DomainEventStream $eventStream)
+    public function decorateForWrite(string $aggregateType, string $aggregateIdentifier, DomainEventStream $eventStream): DomainEventStream
     {
         if ($this->tracing) {
             $this->calls[] = ['aggregateType' => $aggregateType, 'aggregateIdentifier' => $aggregateIdentifier, 'eventStream' => $eventStream];
@@ -256,7 +259,7 @@ class TraceableEventstoreDecorator implements EventStreamDecorator
 
 class TestDecorationMetadataEnricher implements MetadataEnricher
 {
-    public function enrich(Metadata $metadata)
+    public function enrich(Metadata $metadata): Metadata
     {
         return new Metadata(['decoration_test' => 'I am a decorated test']);
     }

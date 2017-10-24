@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventSourcing;
 
 use Broadway\Domain\AggregateRoot as AggregateRootInterface;
@@ -48,7 +50,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     /**
      * {@inheritDoc}
      */
-    public function getUncommittedEvents()
+    public function getUncommittedEvents(): DomainEventStream
     {
         $stream = new DomainEventStream($this->uncommittedEvents);
 
@@ -104,12 +106,12 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
      *
      * @return EventSourcedEntity[]
      */
-    protected function getChildEntities()
+    protected function getChildEntities(): array
     {
         return [];
     }
 
-    private function getApplyMethod($event)
+    private function getApplyMethod($event): string
     {
         $classParts = explode('\\', get_class($event));
 
@@ -119,7 +121,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     /**
      * @return int
      */
-    public function getPlayhead()
+    public function getPlayhead(): int
     {
         return $this->playhead;
     }

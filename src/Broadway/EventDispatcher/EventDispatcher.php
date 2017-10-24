@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventDispatcher;
 
 /**
@@ -20,11 +22,11 @@ interface EventDispatcher
      * @param string $eventName
      * @param array  $arguments
      */
-    public function dispatch($eventName, array $arguments);
+    public function dispatch(string $eventName, array $arguments);
 
     /**
      * @param string   $eventName
      * @param callable $callable
      */
-    public function addListener($eventName, /* callable */ $callable);
+    public function addListener(string $eventName, callable $callable);
 }

@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventStore;
 
 use Broadway\Domain\DomainEventStream;
@@ -47,7 +49,7 @@ final class TraceableEventStore implements EventStore
     /**
      * @return array Appended events
      */
-    public function getEvents()
+    public function getEvents(): array
     {
         return array_map(
             function (DomainMessage $message) {
@@ -60,7 +62,7 @@ final class TraceableEventStore implements EventStore
     /**
      * {@inheritDoc}
      */
-    public function load($id)
+    public function load($id): DomainEventStream
     {
         return $this->eventStore->load($id);
     }
@@ -68,7 +70,7 @@ final class TraceableEventStore implements EventStore
     /**
      * {@inheritDoc}
      */
-    public function loadFromPlayhead($id, $playhead)
+    public function loadFromPlayhead($id, int $playhead): DomainEventStream
     {
         return $this->eventStore->loadFromPlayhead($id, $playhead);
     }

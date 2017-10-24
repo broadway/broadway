@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\ReadModel;
 
 /**
@@ -22,5 +24,5 @@ interface RepositoryFactory
      *
      * @return Repository
      */
-    public function create($name, $class);
+    public function create(string $name, string $class): Repository;
 }

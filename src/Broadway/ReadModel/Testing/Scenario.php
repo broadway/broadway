@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\ReadModel\Testing;
 
 use Broadway\Domain\DateTime;
@@ -46,7 +48,7 @@ class Scenario
         $this->repository        = $repository;
         $this->projector         = $projector;
         $this->playhead          = -1;
-        $this->aggregateId       = 1;
+        $this->aggregateId       = '1';
         $this->dateTimeGenerator = function($event) {
             return DateTime::now();
         };
@@ -57,7 +59,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function withAggregateId($aggregateId)
+    public function withAggregateId(string $aggregateId): Scenario
     {
         $this->aggregateId = $aggregateId;
 
@@ -67,7 +69,7 @@ class Scenario
     /**
      * @return Scenario
      */
-    public function withDateTimeGenerator(callable $dateTimeGenerator)
+    public function withDateTimeGenerator(callable $dateTimeGenerator): Scenario
     {
         $this->dateTimeGenerator = $dateTimeGenerator;
 
@@ -79,7 +81,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function given(array $events = [])
+    public function given(array $events = []): Scenario
     {
         foreach ($events as $given) {
             $this->projector->handle($this->createDomainMessageForEvent($given));
@@ -93,7 +95,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function when($event, DateTime $occurredOn = null)
+    public function when($event, DateTime $occurredOn = null): Scenario
     {
         $this->projector->handle($this->createDomainMessageForEvent($event, $occurredOn));
 
@@ -105,7 +107,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function then(array $expectedData)
+    public function then(array $expectedData): Scenario
     {
         $this->testCase->assertEquals($expectedData, $this->repository->findAll());
 

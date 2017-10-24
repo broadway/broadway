@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventStore;
 
 use Broadway\Domain\DomainEventStream;
@@ -29,7 +31,7 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
     /**
      * {@inheritDoc}
      */
-    public function load($id)
+    public function load($id): DomainEventStream
     {
         $id = (string) $id;
 
@@ -43,7 +45,7 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
     /**
      * {@inheritDoc}
      */
-    public function loadFromPlayhead($id, $playhead)
+    public function loadFromPlayhead($id, int $playhead): DomainEventStream
     {
         $id = (string) $id;
 
@@ -88,7 +90,7 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
      * @param DomainMessage[]   $events
      * @param DomainEventStream $eventsToAppend
      */
-    private function assertStream($events, $eventsToAppend)
+    private function assertStream(array $events, DomainEventStream $eventsToAppend)
     {
         /** @var DomainMessage $event */
         foreach ($eventsToAppend as $event) {

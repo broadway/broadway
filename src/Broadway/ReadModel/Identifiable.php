@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\ReadModel;
 
 /**
@@ -19,5 +21,5 @@ interface Identifiable
     /**
      * @return string
      */
-    public function getId();
+    public function getId(): string;
 }

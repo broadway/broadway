@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventSourcing;
 
 use Assert\Assertion as Assert;
@@ -42,7 +44,7 @@ class EventSourcingRepository implements Repository
     public function __construct(
         EventStore $eventStore,
         EventBus $eventBus,
-        $aggregateClass,
+        string $aggregateClass,
         AggregateFactory $aggregateFactory,
         array $eventStreamDecorators = []
     ) {
@@ -58,7 +60,7 @@ class EventSourcingRepository implements Repository
     /**
      * {@inheritDoc}
      */
-    public function load($id)
+    public function load($id): AggregateRoot
     {
         try {
             $domainEventStream = $this->eventStore->load($id);
@@ -83,7 +85,7 @@ class EventSourcingRepository implements Repository
         $this->eventBus->publish($eventStream);
     }
 
-    private function decorateForWrite(AggregateRoot $aggregate, DomainEventStream $eventStream)
+    private function decorateForWrite(AggregateRoot $aggregate, DomainEventStream $eventStream): DomainEventStream
     {
         $aggregateType       = $this->getType();
         $aggregateIdentifier = $aggregate->getAggregateRootId();
@@ -95,7 +97,7 @@ class EventSourcingRepository implements Repository
         return $eventStream;
     }
 
-    private function assertExtendsEventSourcedAggregateRoot($class)
+    private function assertExtendsEventSourcedAggregateRoot(string $class)
     {
         Assert::subclassOf(
             $class,
@@ -104,7 +106,7 @@ class EventSourcingRepository implements Repository
         );
     }
 
-    private function getType()
+    private function getType(): string
     {
         return $this->aggregateClass;
     }

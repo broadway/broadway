@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventSourcing\Testing;
 
 use Broadway\Domain\DomainEventStream;
@@ -40,21 +42,21 @@ class Scenario
      * @param PHPUnit_Framework_TestCase $testCase
      * @param AggregateFactory           $factory
      * @param string                     $aggregateRootClass
-     * @internal param PHPUnit_Framework_TestCase $testcase
      */
-    public function __construct(PHPUnit_Framework_TestCase $testCase, AggregateFactory $factory, $aggregateRootClass)
+    public function __construct(PHPUnit_Framework_TestCase $testCase, AggregateFactory $factory, string $aggregateRootClass)
     {
         $this->testCase           = $testCase;
         $this->factory            = $factory;
         $this->aggregateRootClass = $aggregateRootClass;
-        $this->aggregateId        = 1;
+        $this->aggregateId        = '1';
     }
 
     /**
-     * @param  string $aggregateId
+     * @param string $aggregateId
+     *
      * @return Scenario
      */
-    public function withAggregateId($aggregateId)
+    public function withAggregateId(string $aggregateId): Scenario
     {
         $this->aggregateId = $aggregateId;
 
@@ -66,7 +68,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function given(array $givens = null)
+    public function given(array $givens = null): Scenario
     {
         if ($givens === null) {
             return $this;
@@ -93,7 +95,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function when(/* callable */ $when)
+    public function when(callable $when): Scenario
     {
         if (! is_callable($when)) {
             return $this;
@@ -115,7 +117,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function then(array $thens)
+    public function then(array $thens): Scenario
     {
         $this->testCase->assertEquals($thens, $this->getEvents());
 
@@ -125,15 +127,10 @@ class Scenario
     /**
      * @return array Payloads of the recorded events
      */
-    private function getEvents()
+    private function getEvents(): array
     {
-        $recordedEvents = $this->aggregateRootInstance->getUncommittedEvents();
-        $events         = [];
-
-        foreach ($recordedEvents as $message) {
-            $events[] = $message->getPayload();
-        }
-
-        return $events;
+        return array_map(function (DomainMessage $message) {
+            return $message->getPayload();
+        }, $this->aggregateRootInstance->getUncommittedEvents());
     }
 }

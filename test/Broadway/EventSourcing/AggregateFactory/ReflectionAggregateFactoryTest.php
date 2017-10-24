@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Broadway\EventSourcing\AggregateFactory;
 
 use Broadway\Domain\DomainEventStream;
@@ -67,7 +69,7 @@ final class TestAggregateWithPrivateConstructor extends EventSourcedAggregateRoo
     /**
      * {@inheritDoc}
      */
-    public function getAggregateRootId()
+    public function getAggregateRootId(): string
     {
         return 'foo42';
     }
@@ -78,7 +80,7 @@ final class TestAggregateWithPublicConstructor extends EventSourcedAggregateRoot
     /**
      * {@inheritDoc}
      */
-    public function getAggregateRootId()
+    public function getAggregateRootId(): string
     {
         return 'foo42';
     }

@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\Serializer;
 
 use Assert\Assertion as Assert;
@@ -21,7 +23,7 @@ final class SimpleInterfaceSerializer implements Serializer
     /**
      * {@inheritDoc}
      */
-    public function serialize($object)
+    public function serialize($object): array
     {
         if (! $object instanceof Serializable) {
             throw new SerializationException(sprintf(

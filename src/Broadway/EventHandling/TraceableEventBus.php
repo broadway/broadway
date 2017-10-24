@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventHandling;
 
 use Broadway\Domain\DomainEventStream;
@@ -55,7 +57,7 @@ final class TraceableEventBus implements EventBus
     /**
      * @return array Payloads of the recorded events
      */
-    public function getEvents()
+    public function getEvents(): array
     {
         return array_map(
             function (DomainMessage $message) {

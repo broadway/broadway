@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\Auditing;
 
 /**
@@ -21,5 +23,5 @@ interface CommandSerializer
      *
      * @return array
      */
-    public function serialize($command);
+    public function serialize($command): array;
 }

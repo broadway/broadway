@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventSourcing;
 
 use Broadway\Domain\DomainEventStream;
@@ -100,9 +102,9 @@ class TestEventSourcedAggregate extends EventSourcedAggregateRoot
 {
     public $numbers;
 
-    public function getAggregateRootId()
+    public function getAggregateRootId(): string
     {
-        return 42;
+        return '42';
     }
 
     protected function applyDidNumberEvent($event)
@@ -122,7 +124,7 @@ class TestEventSourcedAggregateWithStaticConstructor extends EventSourcedAggrega
         $this->instantiatedThrough  = $instantiatedThrough;
     }
 
-    public function getAggregateRootId()
+    public function getAggregateRootId(): string
     {
         return 'y0l0';
     }

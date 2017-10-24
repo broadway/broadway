@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\ReadModel;
 
 use Broadway\TestCase;
@@ -22,7 +24,7 @@ abstract class RepositoryTestCase extends TestCase
         $this->repository = $this->createRepository();
     }
 
-    abstract protected function createRepository();
+    abstract protected function createRepository(): Repository;
 
     /**
      * @test

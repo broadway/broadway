@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventStore;
 
 use Broadway\Domain\DateTime;
@@ -88,16 +90,14 @@ abstract class EventStoreTest extends TestCase
     /**
      * @test
      * @dataProvider idDataProvider
-     * @expectedException Broadway\EventStore\Exception\DuplicatePlayheadException
+     * @expectedException \Broadway\EventStore\Exception\DuplicatePlayheadException
      */
     public function it_throws_an_exception_when_appending_a_duplicate_playhead($id)
     {
-        $domainMessage     = $this->createDomainMessage($id, 0);
-        $baseStream        = new DomainEventStream([$domainMessage]);
-        $this->eventStore->append($id, $baseStream);
-        $appendedEventStream = new DomainEventStream([$domainMessage]);
+        $eventStream = new DomainEventStream([$this->createDomainMessage(42, 0)]);
 
-        $this->eventStore->append($id, $appendedEventStream);
+        $this->eventStore->append(42, $eventStream);
+        $this->eventStore->append(42, $eventStream);
     }
 
     /**
@@ -111,14 +111,7 @@ abstract class EventStoreTest extends TestCase
             'Yolntbyaac' //You only live nine times because you are a cat
         );
 
-        $domainEventStream = new DomainEventStream([
-            $this->createDomainMessage($id, 0),
-            $this->createDomainMessage($id, 1),
-            $this->createDomainMessage($id, 2),
-            $this->createDomainMessage($id, 3),
-        ]);
-
-        $this->eventStore->append($id, $domainEventStream);
+        $this->eventStore->append($id, new DomainEventStream([]));
     }
 
     /**
@@ -181,7 +174,7 @@ abstract class EventStoreTest extends TestCase
         ];
     }
 
-    protected function createDomainMessage($id, $playhead, $recordedOn = null)
+    protected function createDomainMessage($id, int $playhead, DateTime $recordedOn = null)
     {
         return new DomainMessage($id, $playhead, new MetaData([]), new Event(), $recordedOn ? $recordedOn : DateTime::now());
     }
@@ -194,7 +187,7 @@ class Event implements Serializable
         return new Event();
     }
 
-    public function serialize()
+    public function serialize(): array
     {
         return [];
     }

@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\Repository;
 
 use Broadway\Domain\AggregateRoot;
@@ -30,9 +32,10 @@ interface Repository
      *
      * @param mixed $id
      *
+     * @throws AggregateNotFoundException
+     *
      * @return AggregateRoot
      *
-     * @throws AggregateNotFoundException
      */
-    public function load($id);
+    public function load($id): AggregateRoot;
 }

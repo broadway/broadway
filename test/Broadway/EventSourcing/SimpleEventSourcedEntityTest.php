@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventSourcing;
 
 use Broadway\TestCase;
@@ -77,7 +79,7 @@ class Aggregate extends EventSourcedAggregateRoot
 {
     private $children = [];
 
-    protected function getChildEntities()
+    protected function getChildEntities(): array
     {
         return $this->children;
     }
@@ -97,8 +99,9 @@ class Aggregate extends EventSourcedAggregateRoot
         $this->handleRecursively(new Event());
     }
 
-    public function getAggregateRootId()
+    public function getAggregateRootId(): string
     {
+        return '42';
     }
 }
 
@@ -106,7 +109,7 @@ class Entity extends SimpleEventSourcedEntity
 {
     private $children = [];
 
-    protected function getChildEntities()
+    protected function getChildEntities(): array
     {
         return $this->children;
     }

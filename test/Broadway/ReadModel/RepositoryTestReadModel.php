@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\ReadModel;
 
 class RepositoryTestReadModel implements SerializableReadModel
@@ -18,7 +20,13 @@ class RepositoryTestReadModel implements SerializableReadModel
     private $foo;
     private $array;
 
-    public function __construct($id, $name, $foo, array $array)
+    /**
+     * @param mixed  $id
+     * @param string $name
+     * @param mixed  $foo
+     * @param array  $array
+     */
+    public function __construct($id, string $name, $foo, array $array)
     {
         $this->id    = (string) $id;
         $this->name  = $name;
@@ -26,27 +34,30 @@ class RepositoryTestReadModel implements SerializableReadModel
         $this->array = $array;
     }
 
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @return mixed
+     */
     public function getFoo()
     {
         return $this->foo;
     }
 
-    public function getArray()
+    public function getArray(): array
     {
         return $this->array;
     }
 
-    public function serialize()
+    public function serialize(): array
     {
         return get_object_vars($this);
     }

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Broadway\EventStore\ConcurrencyConflictResolver;
 
 use Broadway\Domain\DateTime;

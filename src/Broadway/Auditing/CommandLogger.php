@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\Auditing;
 
 use Exception;
@@ -64,7 +66,7 @@ final class CommandLogger
         $this->logger->info(json_encode($messageData));
     }
 
-    private function getCommandData($command)
+    private function getCommandData($command): array
     {
         return [
             'class' => get_class($command),

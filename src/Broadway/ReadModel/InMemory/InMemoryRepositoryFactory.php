@@ -9,8 +9,11 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\ReadModel\InMemory;
 
+use Broadway\ReadModel\Repository;
 use Broadway\ReadModel\RepositoryFactory;
 
 /**
@@ -21,7 +24,7 @@ final class InMemoryRepositoryFactory implements RepositoryFactory
     /**
      * {@inheritDoc}
      */
-    public function create($name, $class)
+    public function create(string $name, string $class): Repository
     {
         return new InMemoryRepository();
     }

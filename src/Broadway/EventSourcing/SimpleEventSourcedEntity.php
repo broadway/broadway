@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventSourcing;
 
 /**
@@ -72,12 +74,12 @@ abstract class SimpleEventSourcedEntity implements EventSourcedEntity
      *
      * @return EventSourcedEntity[]
      */
-    protected function getChildEntities()
+    protected function getChildEntities(): array
     {
         return [];
     }
 
-    private function getApplyMethod($event)
+    private function getApplyMethod($event): string
     {
         $classParts = explode('\\', get_class($event));
 

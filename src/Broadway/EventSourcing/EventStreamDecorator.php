@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\EventSourcing;
 
 use Broadway\Domain\DomainEventStream;
@@ -29,5 +31,5 @@ interface EventStreamDecorator
      *
      * @return DomainEventStream
      */
-    public function decorateForWrite($aggregateType, $aggregateIdentifier, DomainEventStream $eventStream);
+    public function decorateForWrite(string $aggregateType, string $aggregateIdentifier, DomainEventStream $eventStream): DomainEventStream;
 }
