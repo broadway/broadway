@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Broadway\EventStore;
 
 use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\ConcurrencyConflictResolver\ConcurrencyConflictResolver;
+use Prophecy\Argument;
 
 class ConflictResolvingEventStoreTest extends EventStoreTest
 {
@@ -14,23 +16,21 @@ class ConflictResolvingEventStoreTest extends EventStoreTest
 
     public function setUp()
     {
-        $this->concurrencyResolver = $this->getMock(ConcurrencyConflictResolver::class);
-        $this->concurrencyResolver->method('conflictsWith')
-                                  ->willReturn(true);
+        $this->concurrencyResolver = $this->prophesize(ConcurrencyConflictResolver::class);
+        $this->concurrencyResolver
+            ->conflictsWith(Argument::type(DomainMessage::class), Argument::type(DomainMessage::class))
+            ->willReturn(true);
 
         $this->eventStore = new ConcurrencyConflictResolvingEventStore(
-            new InMemoryEventStore(), $this->concurrencyResolver);
+            new InMemoryEventStore(), $this->concurrencyResolver->reveal());
     }
 
     /** @test */
     public function events_can_be_appended_although_playheads_conflict_if_events_are_independent()
     {
-        $this->concurrencyResolver = $this->getMock(ConcurrencyConflictResolver::class);
-        $this->concurrencyResolver->method('conflictsWith')
-                                  ->willReturn(false);
-
-        $this->eventStore = new ConcurrencyConflictResolvingEventStore(
-            new InMemoryEventStore(), $this->concurrencyResolver);
+        $this->concurrencyResolver
+            ->conflictsWith(Argument::type(DomainMessage::class), Argument::type(DomainMessage::class))
+            ->willReturn(false);
 
         $domainMessage = $this->createDomainMessage(1, 0);
         $baseStream = new DomainEventStream([$domainMessage]);
