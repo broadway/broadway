@@ -25,7 +25,7 @@ class ReflectionSerializer implements Serializer
     /**
      * {@inheritdoc}
      */
-    public function serialize($object)
+    public function serialize($object): array
     {
         return $this->serializeObjectRecursively($object);
     }
