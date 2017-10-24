@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-if (file_exists($file = __DIR__ . '/../vendor/autoload.php')) {
+if (file_exists($file = __DIR__.'/../vendor/autoload.php')) {
     $loader = require $file;
     $loader->add('Broadway', __DIR__);
 } else {

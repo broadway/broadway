@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../bootstrap.php';
+require_once __DIR__.'/../bootstrap.php';
 
 /**
  * A command handler that only handles ExampleCommand commands.
@@ -17,7 +17,7 @@ class ExampleCommandHandler extends Broadway\CommandHandling\SimpleCommandHandle
      */
     public function handleExampleCommand(ExampleCommand $command)
     {
-        echo $command->getMessage() . "\n";
+        echo $command->getMessage()."\n";
     }
 }
 

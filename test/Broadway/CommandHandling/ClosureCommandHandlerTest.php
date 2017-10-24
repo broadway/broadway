@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\CommandHandling;
 
 use Broadway\CommandHandling\Exception\ClosureParameterNotAnObjectException;
@@ -27,7 +29,7 @@ class ClosureCommandHandlerTest extends TestCase
             $command->handle = true;
         });
 
-        $command        = new ClosureCommandHandlerTestCommand();
+        $command = new ClosureCommandHandlerTestCommand();
         $commandHandler->handle($command);
 
         $this->assertTrue($command->handle);
@@ -50,7 +52,7 @@ class ClosureCommandHandlerTest extends TestCase
     {
         $commandHandler = new ClosureCommandHandler();
         $this->setExpectedException(ClosureParameterNotAnObjectException::class);
-        $commandHandler->add(function($params = null) { });
+        $commandHandler->add(function ($params = null) { });
     }
 }
 

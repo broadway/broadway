@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/Parts.php';
+require_once __DIR__.'/Parts.php';
 
 /**
  * We drive the tests of our aggregate root through the command handler.

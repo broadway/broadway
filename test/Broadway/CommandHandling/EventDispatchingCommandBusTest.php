@@ -56,7 +56,7 @@ class EventDispatchingCommandBusTest extends TestCase
 
     /**
      * @test
-     * @expectedException Broadway\CommandHandling\MyException
+     * @expectedException \Broadway\CommandHandling\MyException
      */
     public function it_dispatches_the_failure_event_and_forwards_the_exception()
     {

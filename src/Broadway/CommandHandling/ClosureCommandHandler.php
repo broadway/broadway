@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the broadway/broadway package.
  *
@@ -11,13 +9,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\CommandHandling;
 
 use Broadway\CommandHandling\Exception\ClosureParameterNotAnObjectException;
 use Broadway\CommandHandling\Exception\CommandNotAnObjectException;
 
 /**
- * Using this class command handlers can be registered with closures
+ * Using this class command handlers can be registered with closures.
  */
 class ClosureCommandHandler implements CommandHandler
 {
@@ -34,7 +34,7 @@ class ClosureCommandHandler implements CommandHandler
         $reflection = new \ReflectionFunction($handler);
         $reflectionParams = $reflection->getParameters();
 
-        if(!isset($reflectionParams[0]) || !$reflectionParams[0]->getClass()) {
+        if (!isset($reflectionParams[0]) || !$reflectionParams[0]->getClass()) {
             throw new ClosureParameterNotAnObjectException();
         }
 
@@ -54,7 +54,7 @@ class ClosureCommandHandler implements CommandHandler
 
         $index = get_class($command);
 
-        if(!isset($this->handlers[$index])) {
+        if (!isset($this->handlers[$index])) {
             return;
         }
 

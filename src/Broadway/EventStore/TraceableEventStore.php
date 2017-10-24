@@ -23,7 +23,7 @@ final class TraceableEventStore implements EventStore
 {
     private $eventStore;
     private $recorded = [];
-    private $tracing  = false;
+    private $tracing = false;
 
     public function __construct(EventStore $eventStore)
     {
@@ -31,13 +31,13 @@ final class TraceableEventStore implements EventStore
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function append($id, DomainEventStream $eventStream)
     {
         $this->eventStore->append($id, $eventStream);
 
-        if (! $this->tracing) {
+        if (!$this->tracing) {
             return;
         }
 
@@ -60,7 +60,7 @@ final class TraceableEventStore implements EventStore
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load($id): DomainEventStream
     {
@@ -68,7 +68,7 @@ final class TraceableEventStore implements EventStore
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function loadFromPlayhead($id, int $playhead): DomainEventStream
     {

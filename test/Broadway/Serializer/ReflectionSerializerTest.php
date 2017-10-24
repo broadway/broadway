@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\Serializer;
 
 use Broadway\TestCase;
@@ -29,6 +31,7 @@ class ReflectionSerializerTest extends TestCase
      * @test
      * @expectedException \Assert\InvalidArgumentException
      * @expectedExceptionMessage Key 'class' should be set
+     *
      * @todo custom exception
      */
     public function it_throws_an_exception_if_class_not_set_in_data()
@@ -40,6 +43,7 @@ class ReflectionSerializerTest extends TestCase
      * @test
      * @expectedException \Assert\InvalidArgumentException
      * @expectedExceptionMessage Key 'payload' should be set
+     *
      * @todo custom exception
      */
     public function it_throws_an_exception_if_payload_not_set_in_data()
@@ -59,26 +63,26 @@ class ReflectionSerializerTest extends TestCase
         );
 
         $this->assertEquals([
-            'class'   => 'Broadway\Serializer\TestReflectable',
+            'class' => 'Broadway\Serializer\TestReflectable',
             'payload' => [
                 'simpleValue' => 33,
                 'arrayOfObjects' => [
                     [
-                        'class'   => 'Broadway\Serializer\TestReflectableObject',
+                        'class' => 'Broadway\Serializer\TestReflectableObject',
                         'payload' => [
                             'simpleArray' => ['A', 1, 1.0],
-                            'value' => 11
-                        ]
-                    ]
+                            'value' => 11,
+                        ],
+                    ],
                 ],
                 'object' => [
-                    'class'   => 'Broadway\Serializer\TestReflectableObject',
+                    'class' => 'Broadway\Serializer\TestReflectableObject',
                     'payload' => [
                         'simpleArray' => ['B', 2, 2.0],
-                        'value' => 22
-                    ]
-                ]
-            ]
+                        'value' => 22,
+                    ],
+                ],
+            ],
         ], $this->serializer->serialize($object));
     }
 
@@ -88,26 +92,26 @@ class ReflectionSerializerTest extends TestCase
     public function it_deserializes_array()
     {
         $data = [
-            'class'   => 'Broadway\Serializer\TestReflectable',
+            'class' => 'Broadway\Serializer\TestReflectable',
             'payload' => [
                 'simpleValue' => 33,
                 'arrayOfObjects' => [
                     [
-                        'class'   => 'Broadway\Serializer\TestReflectableObject',
+                        'class' => 'Broadway\Serializer\TestReflectableObject',
                         'payload' => [
                             'simpleArray' => ['A', 1, 1.0],
-                            'value' => 11
-                        ]
-                    ]
+                            'value' => 11,
+                        ],
+                    ],
                 ],
                 'object' => [
-                    'class'   => 'Broadway\Serializer\TestReflectableObject',
+                    'class' => 'Broadway\Serializer\TestReflectableObject',
                     'payload' => [
                         'simpleArray' => ['B', 2, 2.0],
-                        'value' => 22
-                    ]
-                ]
-            ]
+                        'value' => 22,
+                    ],
+                ],
+            ],
         ];
 
         $object = new TestReflectable(

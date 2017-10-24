@@ -18,7 +18,7 @@ class ConflictResolvingEventStoreTest extends EventStoreTest
         $this->concurrencyResolver->method('conflictsWith')
                                   ->willReturn(true);
 
-        $this->eventStore          = new ConcurrencyConflictResolvingEventStore(
+        $this->eventStore = new ConcurrencyConflictResolvingEventStore(
             new InMemoryEventStore(), $this->concurrencyResolver);
     }
 
@@ -33,7 +33,7 @@ class ConflictResolvingEventStoreTest extends EventStoreTest
             new InMemoryEventStore(), $this->concurrencyResolver);
 
         $domainMessage = $this->createDomainMessage(1, 0);
-        $baseStream    = new DomainEventStream([$domainMessage]);
+        $baseStream = new DomainEventStream([$domainMessage]);
         $this->eventStore->append(1, $baseStream);
         $appendedEventStream = new DomainEventStream([$domainMessage]);
 

@@ -17,8 +17,8 @@ final class WhitelistConcurrencyConflictResolver implements ConcurrencyConflictR
      */
     public function registerIndependentEvents(string $eventClass1, string $eventClass2)
     {
-        Assert::classExists($eventClass1, $eventClass1 . ' is not a class');
-        Assert::classExists($eventClass2, $eventClass2 . ' is not a class');
+        Assert::classExists($eventClass1, $eventClass1.' is not a class');
+        Assert::classExists($eventClass2, $eventClass2.' is not a class');
 
         // bidirectional, unique class mapping
         $this->independentEvents[$eventClass1][$eventClass2] = true;
@@ -30,6 +30,6 @@ final class WhitelistConcurrencyConflictResolver implements ConcurrencyConflictR
      */
     public function conflictsWith(DomainMessage $event1, DomainMessage $event2): bool
     {
-        return ! isset($this->independentEvents[get_class($event1->getPayload())][get_class($event2->getPayload())]);
+        return !isset($this->independentEvents[get_class($event1->getPayload())][get_class($event2->getPayload())]);
     }
 }

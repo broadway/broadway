@@ -19,14 +19,14 @@ namespace Broadway\EventSourcing;
 interface EventSourcedEntity
 {
     /**
-     * Recursively handles $event
+     * Recursively handles $event.
      *
      * @param $event
      */
     public function handleRecursively($event);
 
     /**
-     * Registers aggregateRoot as this EventSourcedEntity's aggregate root
+     * Registers aggregateRoot as this EventSourcedEntity's aggregate root.
      *
      * @param EventSourcedAggregateRoot $aggregateRoot
      *

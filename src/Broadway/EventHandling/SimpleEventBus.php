@@ -21,11 +21,11 @@ use Broadway\Domain\DomainEventStream;
 final class SimpleEventBus implements EventBus
 {
     private $eventListeners = [];
-    private $queue          = [];
-    private $isPublishing   = false;
+    private $queue = [];
+    private $isPublishing = false;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function subscribe(EventListener $eventListener)
     {
@@ -33,7 +33,7 @@ final class SimpleEventBus implements EventBus
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function publish(DomainEventStream $domainMessages)
     {
@@ -41,7 +41,7 @@ final class SimpleEventBus implements EventBus
             $this->queue[] = $domainMessage;
         }
 
-        if (! $this->isPublishing) {
+        if (!$this->isPublishing) {
             $this->isPublishing = true;
 
             try {

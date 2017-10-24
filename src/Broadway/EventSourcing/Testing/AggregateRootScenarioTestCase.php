@@ -38,20 +38,20 @@ abstract class AggregateRootScenarioTestCase extends TestCase
     protected function createScenario(): Scenario
     {
         $aggregateRootClass = $this->getAggregateRootClass();
-        $factory            = $this->getAggregateRootFactory();
+        $factory = $this->getAggregateRootFactory();
 
         return new Scenario($this, $factory, $aggregateRootClass);
     }
 
     /**
-     * Returns a string representing the aggregate root
+     * Returns a string representing the aggregate root.
      *
      * @return string AggregateRoot
      */
     abstract protected function getAggregateRootClass(): string;
 
     /**
-     * Returns a factory for instantiating an aggregate
+     * Returns a factory for instantiating an aggregate.
      *
      * @return AggregateFactory $factory
      */

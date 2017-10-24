@@ -44,12 +44,12 @@ class Scenario
         Repository $repository,
         EventListener $projector
     ) {
-        $this->testCase          = $testCase;
-        $this->repository        = $repository;
-        $this->projector         = $projector;
-        $this->playhead          = -1;
-        $this->aggregateId       = '1';
-        $this->dateTimeGenerator = function($event) {
+        $this->testCase = $testCase;
+        $this->repository = $repository;
+        $this->projector = $projector;
+        $this->playhead = -1;
+        $this->aggregateId = '1';
+        $this->dateTimeGenerator = function ($event) {
             return DateTime::now();
         };
     }
@@ -116,11 +116,11 @@ class Scenario
 
     private function createDomainMessageForEvent($event, DateTime $occurredOn = null)
     {
-        $this->playhead++;
+        ++$this->playhead;
 
         if (null === $occurredOn) {
             $dateTimeGenerator = $this->dateTimeGenerator;
-            $occurredOn        = $dateTimeGenerator($event);
+            $occurredOn = $dateTimeGenerator($event);
         }
 
         return new DomainMessage($this->aggregateId, $this->playhead, new Metadata([]), $event, $occurredOn);

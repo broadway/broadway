@@ -39,7 +39,7 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
      */
     public function it_calls_the_enricher_for_every_event()
     {
-        $enricher  = new TracableMetadataEnricher();
+        $enricher = new TracableMetadataEnricher();
         $decorator = new MetadataEnrichingEventStreamDecorator([$enricher]);
 
         $eventStream = $this->createDomainEventStream();
@@ -54,7 +54,7 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
      */
     public function it_returns_a_domain_eventstream_with_messages_with_extra_metadata()
     {
-        $enricher  = new TracableMetadataEnricher();
+        $enricher = new TracableMetadataEnricher();
         $decorator = new MetadataEnrichingEventStreamDecorator([$enricher]);
 
         $eventStream = $this->createDomainEventStream();
@@ -77,9 +77,9 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
      */
     public function it_calls_the_enricher_when_registered_later()
     {
-        $constructorEnricher     = new TracableMetadataEnricher();
+        $constructorEnricher = new TracableMetadataEnricher();
         $newlyRegisteredEnricher = new TracableMetadataEnricher();
-        $decorator               = new MetadataEnrichingEventStreamDecorator([$constructorEnricher]);
+        $decorator = new MetadataEnrichingEventStreamDecorator([$constructorEnricher]);
         $decorator->registerEnricher($newlyRegisteredEnricher);
 
         $decorator->decorateForWrite('id', 'type', $this->createDomainEventStream());

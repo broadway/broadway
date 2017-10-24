@@ -15,7 +15,7 @@ use ReflectionClass;
 final class ReflectionAggregateFactory implements AggregateFactory
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function create(string $aggregateClass, DomainEventStream $domainEventStream): EventSourcedAggregateRoot
     {

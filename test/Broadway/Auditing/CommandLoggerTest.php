@@ -30,7 +30,7 @@ class CommandLoggerTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->command   = new Command();
+        $this->command = new Command();
         $this->exception = new MyException('Yolo', 5);
 
         $this->commandAuditLogger = new CommandLogger($this->logger, $this->commandSerializer);

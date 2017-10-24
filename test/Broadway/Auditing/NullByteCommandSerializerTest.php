@@ -23,7 +23,7 @@ class NullByteCommandSerializerTest extends TestCase
     public function setUp()
     {
         $this->commandSerializer = new NullByteCommandSerializer();
-        $this->command           = new MyCommand();
+        $this->command = new MyCommand();
     }
 
     /**
@@ -36,9 +36,9 @@ class NullByteCommandSerializerTest extends TestCase
         $this->assertTrue(is_array($serializedCommand));
 
         $expected = [
-            'public'                                 => 'public',
-            '-*-protected'                           => 'protected',
-            '-Broadway\\Auditing\\MyCommand-private' => 'private'
+            'public' => 'public',
+            '-*-protected' => 'protected',
+            '-Broadway\\Auditing\\MyCommand-private' => 'private',
         ];
 
         $this->assertEquals($expected, $serializedCommand);
@@ -47,7 +47,7 @@ class NullByteCommandSerializerTest extends TestCase
 
 class MyCommand
 {
-    public $public       = 'public';
+    public $public = 'public';
     protected $protected = 'protected';
-    private $private     = 'private';
+    private $private = 'private';
 }

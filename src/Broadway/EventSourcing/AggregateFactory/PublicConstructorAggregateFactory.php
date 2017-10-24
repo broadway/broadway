@@ -10,12 +10,12 @@ use Broadway\EventSourcing\EventSourcedAggregateRoot;
 /**
  * Creates aggregates by instantiating the aggregateClass and then
  * passing a DomainEventStream to the public initializeState() method.
- * E.g. (new \Vendor\AggregateRoot)->initializeState($domainEventStream);
+ * E.g. (new \Vendor\AggregateRoot)->initializeState($domainEventStream);.
  */
 final class PublicConstructorAggregateFactory implements AggregateFactory
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function create(string $aggregateClass, DomainEventStream $domainEventStream): EventSourcedAggregateRoot
     {
