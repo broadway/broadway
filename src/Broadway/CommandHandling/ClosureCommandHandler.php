@@ -11,6 +11,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+/*
+ * @author Francesco Trucchia <francesco@trucchia.it>
+ */
+
 namespace Broadway\CommandHandling;
 
 use Broadway\CommandHandling\Exception\ClosureParameterNotAnObjectException;
