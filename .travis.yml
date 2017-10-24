@@ -27,7 +27,8 @@ install:
     - composer info -i
 
 script:
-  - phpunit --exclude-group=none
+  - vendor/bin/phpunit --exclude-group=none
+  - vendor/bin/php-cs-fixer fix --config=".php_cs" --dry-run --no-interaction --allow-risky=yes --diff --verbose
 
 branches:
   only:
