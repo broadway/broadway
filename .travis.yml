@@ -11,10 +11,7 @@ matrix:
     include:
         - php: 7.0
         - php: 7.1
-        - php: hhvm
     fast_finish: true
-    allow_failures:
-        - php: hhvm
 
 before_install:
     # Disable XDebug speed up test execution. (Ignore failures if platform does not had the extension installed)
