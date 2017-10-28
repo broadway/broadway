@@ -27,7 +27,10 @@ class SimpleEventSourcedEntityTest extends TestCase
 
         $aggregateRoot->addChildEntity($child);
 
-        $mock = $this->getMock('Broadway\EventSourcing\Entity', ['handleRecursively']);
+        $mock = $this->getMockBuilder('Broadway\EventSourcing\Entity')
+            ->setMethods(['handleRecursively'])
+            ->getMock();
+
         $mock->expects($this->once())
             ->method('handleRecursively');
 
@@ -41,7 +44,10 @@ class SimpleEventSourcedEntityTest extends TestCase
      */
     public function it_applies_events_to_aggregate_root()
     {
-        $aggregateRoot = $this->getMock('Broadway\EventSourcing\Aggregate', ['apply']);
+        $aggregateRoot = $this->getMockBuilder('Broadway\EventSourcing\Aggregate')
+            ->setMethods(['apply'])
+            ->getMock();
+
         $aggregateRoot->expects($this->once())
             ->method('apply');
 

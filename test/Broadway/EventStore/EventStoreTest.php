@@ -102,7 +102,7 @@ abstract class EventStoreTest extends TestCase
 
     /**
      * @test
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException \PHPUnit\Framework\Error\Error
      * @expectedExceptionMessage Object of class Broadway\EventStore\IdentityThatCannotBeConvertedToAString could not be converted to string
      */
     public function it_throws_an_exception_when_an_id_cannot_be_converted_to_a_string()

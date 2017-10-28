@@ -11,8 +11,6 @@
 
 namespace Broadway\CommandHandling;
 
-use Broadway\CommandHandling\Exception\ClosureParameterNotAnObjectException;
-use Broadway\CommandHandling\Exception\CommandNotAnObjectException;
 use Broadway\TestCase;
 
 class ClosureCommandHandlerTest extends TestCase
@@ -35,21 +33,23 @@ class ClosureCommandHandlerTest extends TestCase
 
     /**
      * @test
+     *
+     * @expectedException \Broadway\CommandHandling\Exception\CommandNotAnObjectException
      */
     public function it_throws_when_handling_a_non_object_command()
     {
         $commandHandler = new ClosureCommandHandler();
-        $this->setExpectedException(CommandNotAnObjectException::class);
         $commandHandler->handle('foo');
     }
 
     /**
      * @test
+     *
+     * @expectedException \Broadway\CommandHandling\Exception\ClosureParameterNotAnObjectException
      */
     public function it_throws_when_adding_a_closure_without_an_object_argument()
     {
         $commandHandler = new ClosureCommandHandler();
-        $this->setExpectedException(ClosureParameterNotAnObjectException::class);
         $commandHandler->add(function($params = null) { });
     }
 }

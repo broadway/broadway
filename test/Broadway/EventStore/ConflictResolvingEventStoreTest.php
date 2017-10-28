@@ -14,7 +14,7 @@ class ConflictResolvingEventStoreTest extends EventStoreTest
 
     public function setUp()
     {
-        $this->concurrencyResolver = $this->getMock(ConcurrencyConflictResolver::class);
+        $this->concurrencyResolver = $this->createMock(ConcurrencyConflictResolver::class);
         $this->concurrencyResolver->method('conflictsWith')
                                   ->willReturn(true);
 
@@ -25,7 +25,7 @@ class ConflictResolvingEventStoreTest extends EventStoreTest
     /** @test */
     public function events_can_be_appended_although_playheads_conflict_if_events_are_independent()
     {
-        $this->concurrencyResolver = $this->getMock(ConcurrencyConflictResolver::class);
+        $this->concurrencyResolver = $this->createMock(ConcurrencyConflictResolver::class);
         $this->concurrencyResolver->method('conflictsWith')
                                   ->willReturn(false);
 

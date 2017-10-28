@@ -37,7 +37,7 @@
     "require-dev": {
         "instaclick/base-test-bundle": "~0.5",
         "monolog/monolog": "~1.8",
-        "phpunit/phpunit": "^4.8",
+        "phpunit/phpunit": "^6.4",
         "ramsey/uuid": "^3.0"
     },
     "suggest": {
