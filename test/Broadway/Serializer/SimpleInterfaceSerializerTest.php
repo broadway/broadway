@@ -19,7 +19,7 @@ class SimpleInterfaceSerializerTest extends TestCase
 {
     private $serializer;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->serializer = new SimpleInterfaceSerializer();
     }

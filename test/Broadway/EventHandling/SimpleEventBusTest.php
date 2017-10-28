@@ -22,7 +22,7 @@ class SimpleEventBusTest extends TestCase
 {
     private $eventBus;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->eventBus = new SimpleEventBus();
     }

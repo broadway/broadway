@@ -23,7 +23,7 @@ class EventDispatchingCommandBusTest extends TestCase
     private $eventDispatchingCommandBus;
     private $subscriber;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->eventDispatcher = $this->getMockBuilder('Broadway\EventDispatcher\EventDispatcher')
             ->disableOriginalConstructor()

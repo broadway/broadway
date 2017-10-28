@@ -19,7 +19,7 @@ class SimpleCommandBusTest extends TestCase
 {
     private $commandBus;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->commandBus = new SimpleCommandBus();
     }

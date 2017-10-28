@@ -22,7 +22,7 @@ class CommandLoggerTest extends TestCase
     private $commandAuditLogger;
     private $commandSerializer;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->logger = new TraceableLogger();
 

@@ -34,7 +34,7 @@ abstract class EventStoreManagementTest extends TestCase
      */
     protected $now;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->now        = DateTime::now();
         $this->eventStore = $this->createEventStore();
