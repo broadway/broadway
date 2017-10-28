@@ -17,6 +17,9 @@ use Broadway\TestCase;
 
 class SimpleCommandBusTest extends TestCase
 {
+    /**
+     * @var SimpleCommandBus
+     */
     private $commandBus;
 
     protected function setUp()
@@ -100,6 +103,10 @@ class SimpleCommandBusTest extends TestCase
         $this->commandBus->dispatch($command2);
     }
 
+    /**
+     * @param $expectedCommand
+     * @return SimpleCommandHandler|\PHPUnit_Framework_MockObject_MockObject
+     */
     private function createCommandHandlerMock($expectedCommand)
     {
         $mock = $this->getMockBuilder('Broadway\CommandHandling\SimpleCommandHandler')->getMock();

@@ -17,6 +17,9 @@ use Broadway\TestCase;
 
 abstract class RepositoryTestCase extends TestCase
 {
+    /**
+     * @var Repository
+     */
     protected $repository;
 
     protected function setUp()

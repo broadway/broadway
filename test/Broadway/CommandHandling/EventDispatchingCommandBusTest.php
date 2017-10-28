@@ -13,14 +13,34 @@ declare(strict_types=1);
 
 namespace Broadway\CommandHandling;
 
+use Broadway\EventDispatcher\EventDispatcher;
 use Broadway\TestCase;
 
 class EventDispatchingCommandBusTest extends TestCase
 {
+    /**
+     * @var CommandBus|\PHPUnit_Framework_MockObject_MockObject
+     */
     private $baseCommandBus;
+
+    /**
+     * @var Command
+     */
     private $command;
+
+    /**
+     * @var EventDispatcher|\PHPUnit_Framework_MockObject_MockObject
+     */
     private $eventDispatcher;
+
+    /**
+     * @var EventDispatchingCommandBus
+     */
     private $eventDispatchingCommandBus;
+
+    /**
+     * @var CommandHandler|\PHPUnit_Framework_MockObject_MockObject
+     */
     private $subscriber;
 
     protected function setUp()
@@ -56,7 +76,7 @@ class EventDispatchingCommandBusTest extends TestCase
 
     /**
      * @test
-     * @expectedException Broadway\CommandHandling\MyException
+     * @expectedException \Broadway\CommandHandling\MyException
      */
     public function it_dispatches_the_failure_event_and_forwards_the_exception()
     {

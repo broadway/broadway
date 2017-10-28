@@ -17,6 +17,9 @@ use Broadway\TestCase;
 
 class SimpleInterfaceSerializerTest extends TestCase
 {
+    /**
+     * @var SimpleInterfaceSerializer
+     */
     private $serializer;
 
     protected function setUp()
@@ -26,7 +29,7 @@ class SimpleInterfaceSerializerTest extends TestCase
 
     /**
      * @test
-     * @expectedException Broadway\Serializer\SerializationException
+     * @expectedException \Broadway\Serializer\SerializationException
      * @expectedExceptionMessage Object 'stdClass' does not implement Broadway\Serializer\Serializable
      */
     public function it_throws_an_exception_if_an_object_does_not_implement_Serializable()
@@ -36,7 +39,7 @@ class SimpleInterfaceSerializerTest extends TestCase
 
     /**
      * @test
-     * @expectedException Assert\InvalidArgumentException
+     * @expectedException \Assert\InvalidArgumentException
      * @expectedExceptionMessage Key 'class' should be set
      *
      * @todo custom exception
@@ -48,7 +51,7 @@ class SimpleInterfaceSerializerTest extends TestCase
 
     /**
      * @test
-     * @expectedException Assert\InvalidArgumentException
+     * @expectedException \Assert\InvalidArgumentException
      * @expectedExceptionMessage Key 'payload' should be set
      * @todo custom exception
      */
@@ -104,7 +107,7 @@ class TestSerializable implements Serializable
     }
 
     /**
-     * @return this
+     * @return $this
      */
     public static function deserialize(array $data)
     {

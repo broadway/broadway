@@ -64,7 +64,7 @@ class SimpleEventSourcedEntityTest extends TestCase
 
     /**
      * @test
-     * @expectedException Broadway\EventSourcing\AggregateRootAlreadyRegisteredException
+     * @expectedException \Broadway\EventSourcing\AggregateRootAlreadyRegisteredException
      */
     public function it_can_only_have_one_root()
     {

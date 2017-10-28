@@ -17,7 +17,14 @@ use Broadway\TestCase;
 
 class NullByteCommandSerializerTest extends TestCase
 {
+    /**
+     * @var CommandSerializer
+     */
     private $commandSerializer;
+
+    /**
+     * @var MyCommand
+     */
     private $command;
 
     protected function setUp()
