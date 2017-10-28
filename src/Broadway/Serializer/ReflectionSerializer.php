@@ -23,7 +23,7 @@ class ReflectionSerializer implements Serializer
     /**
      * {@inheritDoc}
      */
-    public function serialize($object)
+    public function serialize($object): array
     {
         return $this->serializeObjectRecursively($object);
     }
@@ -49,7 +49,7 @@ class ReflectionSerializer implements Serializer
      *
      * @return array
      */
-    private function serializeArrayRecursively(array $array)
+    private function serializeArrayRecursively(array $array): array
     {
         $data = [];
         foreach ($array as $key => $value) {
@@ -64,7 +64,7 @@ class ReflectionSerializer implements Serializer
      *
      * @return array
      */
-    private function serializeObjectRecursively($object)
+    private function serializeObjectRecursively($object): array
     {
         $reflection = new ReflectionClass($object);
         $properties = $reflection->getProperties();
@@ -115,7 +115,7 @@ class ReflectionSerializer implements Serializer
      *
      * @return array
      */
-    private function deserializeArrayRecursively(array $array)
+    private function deserializeArrayRecursively(array $array): array
     {
         $data = [];
         foreach ($array as $key => $value) {
