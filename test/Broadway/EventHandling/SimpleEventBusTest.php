@@ -148,7 +148,7 @@ class SimpleEventBusTest extends TestCase
      */
     private function createEventListenerMock()
     {
-        return $this->getMockBuilder('Broadway\EventHandling\EventListener')->getMock();
+        return $this->createMock(EventListener::class);
     }
 
     private function createDomainMessage($payload)

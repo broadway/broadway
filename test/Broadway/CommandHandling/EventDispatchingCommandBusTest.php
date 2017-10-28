@@ -45,17 +45,9 @@ class EventDispatchingCommandBusTest extends TestCase
 
     protected function setUp()
     {
-        $this->eventDispatcher = $this->getMockBuilder('Broadway\EventDispatcher\EventDispatcher')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->baseCommandBus = $this->getMockBuilder('Broadway\CommandHandling\CommandBus')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->subscriber = $this->getMockBuilder('Broadway\CommandHandling\CommandHandler')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->eventDispatcher = $this->createMock(EventDispatcher::class);
+        $this->baseCommandBus = $this->createMock(CommandBus::class);
+        $this->subscriber = $this->createMock(CommandHandler::class);
 
         $this->command = new Command();
 
