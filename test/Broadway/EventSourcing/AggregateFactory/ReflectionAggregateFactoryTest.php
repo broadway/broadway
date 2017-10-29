@@ -51,11 +51,12 @@ final class ReflectionAggregateFactoryTest extends TestCase
 
     /**
      * @test
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Impossible to initialize "stdClass"
      */
     public function it_does_not_handle_weird_classes()
     {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage(sprintf('Impossible to initialize "%s"', \stdClass::class));
+
         $this->factory->create(\stdClass::class, new DomainEventStream([]));
     }
 }

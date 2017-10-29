@@ -64,7 +64,6 @@ class SimpleEventSourcedEntityTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Broadway\EventSourcing\AggregateRootAlreadyRegisteredException
      */
     public function it_can_only_have_one_root()
     {
@@ -75,6 +74,8 @@ class SimpleEventSourcedEntityTest extends TestCase
 
         $root1->addChildEntity($entity);
         $root2->addChildEntity($entity);
+
+        $this->expectException(AggregateRootAlreadyRegisteredException::class);
 
         $root1->doHandleRecursively();
         $root2->doHandleRecursively();

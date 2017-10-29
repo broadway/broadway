@@ -11,6 +11,7 @@
 
 namespace Broadway\Serializer;
 
+use Assert\InvalidArgumentException;
 use Broadway\TestCase;
 
 class ReflectionSerializerTest extends TestCase
@@ -27,23 +28,25 @@ class ReflectionSerializerTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Assert\InvalidArgumentException
-     * @expectedExceptionMessage Key 'class' should be set
      * @todo custom exception
      */
     public function it_throws_an_exception_if_class_not_set_in_data()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Key \'class\' should be set');
+
         $this->serializer->deserialize([]);
     }
 
     /**
      * @test
-     * @expectedException \Assert\InvalidArgumentException
-     * @expectedExceptionMessage Key 'payload' should be set
      * @todo custom exception
      */
     public function it_throws_an_exception_if_payload_not_set_in_data()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Key \'payload\' should be set');
+
         $this->serializer->deserialize(['class' => 'SomeClass']);
     }
 

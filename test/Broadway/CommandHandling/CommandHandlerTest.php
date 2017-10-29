@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Broadway\CommandHandling;
 
+use Broadway\CommandHandling\Exception\CommandNotAnObjectException;
 use Broadway\TestCase;
 
 class CommandHandlerTest extends TestCase
@@ -33,11 +34,13 @@ class CommandHandlerTest extends TestCase
      * @test
      *
      * @dataProvider unresolvableCommands
-     * @expectedException \Broadway\CommandHandling\Exception\CommandNotAnObjectException
      */
     public function handle_should_throw_exception_when_impossible_to_delegate_to_a_valid_method($command)
     {
         $commandHandler = new TestCommandHandler();
+
+        $this->expectException(CommandNotAnObjectException::class);
+
         $commandHandler->handle($command);
     }
 

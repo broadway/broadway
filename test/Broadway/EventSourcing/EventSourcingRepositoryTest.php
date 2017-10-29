@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Broadway\EventSourcing;
 
+use Assert\InvalidArgumentException;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
@@ -35,10 +36,11 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
 
     /**
      * @test
-     * @expectedException \Assert\InvalidArgumentException
      */
     public function it_throws_an_exception_when_instantiated_with_a_class_that_is_not_an_EventSourcedAggregateRoot()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         new EventSourcingRepository($this->eventStore, $this->eventBus, 'stdClass', new PublicConstructorAggregateFactory());
     }
 
@@ -66,7 +68,6 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
 
     /**
      * @test
-     * @expectedException \Assert\InvalidArgumentException
      */
     public function it_throws_an_exception_if_the_static_method_does_not_exist()
     {
@@ -75,6 +76,8 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
         $this->eventStore->append($id, new DomainEventStream([
             DomainMessage::recordNow(42, 0, new Metadata([]), new DidEvent())
         ]));
+
+        $this->expectException(InvalidArgumentException::class);
 
         $repository = $this->repositoryWithStaticAggregateFactory('someUnknownStaticmethod');
         $repository->load('y0l0');

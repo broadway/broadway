@@ -68,7 +68,6 @@ class EventDispatchingCommandBusTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Broadway\CommandHandling\MyException
      */
     public function it_dispatches_the_failure_event_and_forwards_the_exception()
     {
@@ -84,6 +83,8 @@ class EventDispatchingCommandBusTest extends TestCase
             ->method('dispatch')
             ->with($this->command)
             ->will($this->throwException($exception));
+
+        $this->expectException(MyException::class);
 
         $this->eventDispatchingCommandBus->dispatch($this->command);
     }

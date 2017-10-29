@@ -109,10 +109,11 @@ abstract class EventStoreManagementTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Broadway\EventStore\Management\CriteriaNotSupportedException
      */
     public function it_visits_aggregate_root_types()
     {
+        $this->expectException(CriteriaNotSupportedException::class);
+
         $visitedEvents = $this->visitEvents(Criteria::create()
             ->withAggregateRootTypes([
                 'Broadway.EventStore.Management.AggregateTypeOne',
