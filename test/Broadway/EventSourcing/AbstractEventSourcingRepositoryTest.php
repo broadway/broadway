@@ -146,7 +146,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
         $lastCall = $this->eventStreamDecorator->getLastCall();
 
         $this->assertEquals($aggregate->getAggregateRootId(), $lastCall['aggregateIdentifier']);
-        $this->assertEquals('\\'.get_class($aggregate), $lastCall['aggregateType']);
+        $this->assertEquals(get_class($aggregate), $this->stripLeadingSlash($lastCall['aggregateType']));
 
         $events = iterator_to_array($lastCall['eventStream']);
         $this->assertCount(1, $events);
@@ -190,6 +190,16 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
      * @return EventSourcedAggregateRoot
      */
     abstract protected function createAggregate();
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    private function stripLeadingSlash(string $value): string
+    {
+        return ($value[0] === '\\') ? substr($value, 1) : $value;
+    }
 }
 
 class DidNumberEvent
