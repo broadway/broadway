@@ -29,7 +29,7 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
     private $events = [];
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load($id): DomainEventStream
     {
@@ -43,7 +43,7 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function loadFromPlayhead($id, int $playhead): DomainEventStream
     {
@@ -66,13 +66,13 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function append($id, DomainEventStream $eventStream)
     {
         $id = (string) $id;
 
-        if (! isset($this->events[$id])) {
+        if (!isset($this->events[$id])) {
             $this->events[$id] = [];
         }
 
@@ -106,7 +106,7 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
     {
         foreach ($this->events as $id => $events) {
             foreach ($events as $event) {
-                if (! $criteria->isMatchedBy($event)) {
+                if (!$criteria->isMatchedBy($event)) {
                     continue;
                 }
 

@@ -23,7 +23,7 @@ class SimpleEventSourcedEntityTest extends TestCase
     public function it_handles_events_recursively()
     {
         $aggregateRoot = new Aggregate();
-        $child         = new Entity();
+        $child = new Entity();
 
         $aggregateRoot->addChildEntity($child);
 
@@ -51,8 +51,8 @@ class SimpleEventSourcedEntityTest extends TestCase
         $aggregateRoot->expects($this->once())
             ->method('apply');
 
-        $child         = new Entity();
-        $grandChild    = new Entity();
+        $child = new Entity();
+        $grandChild = new Entity();
 
         $aggregateRoot->addChildEntity($child);
 

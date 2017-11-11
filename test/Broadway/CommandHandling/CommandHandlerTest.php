@@ -24,7 +24,7 @@ class CommandHandlerTest extends TestCase
     public function it_delegates_command_to_proper_handle_function()
     {
         $commandHandler = new TestCommandHandler();
-        $command        = new CommandHandlerTestCommand();
+        $command = new CommandHandlerTestCommand();
         $commandHandler->handle($command);
 
         $this->assertTrue($commandHandler->handled);
@@ -51,7 +51,7 @@ class CommandHandlerTest extends TestCase
             [false],
             ['foo'],
             [1],
-            [['foo', 'bar']]
+            [['foo', 'bar']],
         ];
     }
 }

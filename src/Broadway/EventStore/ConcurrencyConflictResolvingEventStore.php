@@ -25,23 +25,23 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
      */
     public function __construct(EventStore $eventStore, ConcurrencyConflictResolver $conflictResolver)
     {
-        $this->eventStore       = $eventStore;
+        $this->eventStore = $eventStore;
         $this->conflictResolver = $conflictResolver;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function append($id, DomainEventStream $uncommittedEvents)
     {
         try {
             $this->eventStore->append($id, $uncommittedEvents);
         } catch (DuplicatePlayheadException $e) {
-            $committedEvents   = $this->eventStore->load($id);
+            $committedEvents = $this->eventStore->load($id);
             $conflictingEvents = $this->getConflictingEvents($uncommittedEvents, $committedEvents);
 
             $conflictResolvedEvents = [];
-            $playhead               = $this->getCurrentPlayhead($committedEvents);
+            $playhead = $this->getCurrentPlayhead($committedEvents);
 
             /** @var DomainMessage $uncommittedEvent */
             foreach ($uncommittedEvents as $uncommittedEvent) {
@@ -51,7 +51,7 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
                     }
                 }
 
-                $playhead++;
+                ++$playhead;
 
                 $conflictResolvedEvents[] = new DomainMessage(
                     $id,
@@ -66,7 +66,7 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load($id): DomainEventStream
     {
@@ -74,7 +74,7 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function loadFromPlayhead($id, int $playhead): DomainEventStream
     {
@@ -89,7 +89,7 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
         $events = iterator_to_array($committedEvents);
         /** @var DomainMessage $lastEvent */
         $lastEvent = end($events);
-        $playhead  = $lastEvent->getPlayhead();
+        $playhead = $lastEvent->getPlayhead();
 
         return $playhead;
     }

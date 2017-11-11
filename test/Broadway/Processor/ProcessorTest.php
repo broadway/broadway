@@ -25,7 +25,7 @@ class ProcessorTest extends TestCase
     public function it_passes_the_event_and_domain_message()
     {
         $testProcessor = new TestProcessor();
-        $testEvent     = new TestEvent();
+        $testEvent = new TestEvent();
 
         $this->assertFalse($testProcessor->isCalled());
 

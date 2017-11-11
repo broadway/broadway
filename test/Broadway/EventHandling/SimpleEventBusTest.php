@@ -29,6 +29,7 @@ class SimpleEventBusTest extends TestCase
     {
         $this->eventBus = new SimpleEventBus();
     }
+
     /**
      * @test
      */
@@ -175,13 +176,13 @@ class SimpleEventBusTestListener implements EventListener
 
     public function __construct($eventBus, $publishableStream)
     {
-        $this->eventBus          = $eventBus;
+        $this->eventBus = $eventBus;
         $this->publishableStream = $publishableStream;
     }
 
     public function handle(DomainMessage $domainMessage)
     {
-        if (! $this->handled) {
+        if (!$this->handled) {
             $this->eventBus->publish($this->publishableStream);
             $this->handled = true;
         }

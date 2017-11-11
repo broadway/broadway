@@ -26,13 +26,13 @@ use Broadway\CommandHandling\Exception\CommandNotAnObjectException;
 abstract class SimpleCommandHandler implements CommandHandler
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function handle($command)
     {
         $method = $this->getHandleMethod($command);
 
-        if (! method_exists($this, $method)) {
+        if (!method_exists($this, $method)) {
             return;
         }
 
@@ -41,12 +41,12 @@ abstract class SimpleCommandHandler implements CommandHandler
 
     private function getHandleMethod($command): string
     {
-        if (! is_object($command)) {
+        if (!is_object($command)) {
             throw new CommandNotAnObjectException();
         }
 
         $classParts = explode('\\', get_class($command));
 
-        return 'handle' . end($classParts);
+        return 'handle'.end($classParts);
     }
 }

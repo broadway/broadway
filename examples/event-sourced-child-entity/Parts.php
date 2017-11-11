@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../bootstrap.php';
+require_once __DIR__.'/../bootstrap.php';
 
 /**
- * Part aggregate root
+ * Part aggregate root.
  */
 class Part extends Broadway\EventSourcing\EventSourcedAggregateRoot
 {
@@ -17,7 +17,7 @@ class Part extends Broadway\EventSourcing\EventSourcedAggregateRoot
      */
     public static function manufacture($partId, $manufacturerId, $manufacturerName)
     {
-        $part = new Part();
+        $part = new self();
 
         // After instantiation of the object we apply the "PartWasManufacturedEvent".
         $part->apply(new PartWasManufacturedEvent($partId, $manufacturerId, $manufacturerName));
@@ -73,8 +73,8 @@ class Manufacturer extends Broadway\EventSourcing\SimpleEventSourcedEntity
 
     public function __construct($partId, $manufacturerId, $manufacturerName)
     {
-        $this->partId           = $partId;
-        $this->manufacturerId   = $manufacturerId;
+        $this->partId = $partId;
+        $this->manufacturerId = $manufacturerId;
         $this->manufacturerName = $manufacturerName;
     }
 
@@ -104,8 +104,8 @@ class ManufacturePartCommand
 
     public function __construct($partId, $manufacturerId, $manufacturerName)
     {
-        $this->partId           = $partId;
-        $this->manufacturerId   = $manufacturerId;
+        $this->partId = $partId;
+        $this->manufacturerId = $manufacturerId;
         $this->manufacturerName = $manufacturerName;
     }
 }
@@ -118,8 +118,8 @@ class PartWasManufacturedEvent
 
     public function __construct($partId, $manufacturerId, $manufacturerName)
     {
-        $this->partId           = $partId;
-        $this->manufacturerId   = $manufacturerId;
+        $this->partId = $partId;
+        $this->manufacturerId = $manufacturerId;
         $this->manufacturerName = $manufacturerName;
     }
 }
@@ -131,7 +131,7 @@ class RenameManufacturerForPartCommand
 
     public function __construct($partId, $manufacturerName)
     {
-        $this->partId           = $partId;
+        $this->partId = $partId;
         $this->manufacturerName = $manufacturerName;
     }
 }
@@ -143,7 +143,7 @@ class PartManufacturerWasRenamedEvent
 
     public function __construct($partId, $manufacturerName)
     {
-        $this->partId           = $partId;
+        $this->partId = $partId;
         $this->manufacturerName = $manufacturerName;
     }
 }

@@ -24,7 +24,7 @@ class BlacklistConcurrencyConflictResolverTest extends ConcurrencyConflictResolv
     /** @test */
     public function independent_events_do_not_conflict()
     {
-        $event      = $this->createDomainMessage(1, 0, new Event());
+        $event = $this->createDomainMessage(1, 0, new Event());
         $otherEvent = $this->createDomainMessage(1, 0, new OtherEvent());
         $this->conflictResolver->registerConflictingEvents(Event::class, Event::class);
         $this->assertTrue($this->conflictResolver->conflictsWith($event, $event));

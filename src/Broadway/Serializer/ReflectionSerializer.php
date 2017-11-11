@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Broadway\Serializer;
 
 use Assert\Assertion as Assert;
@@ -21,7 +23,7 @@ use ReflectionProperty;
 class ReflectionSerializer implements Serializer
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function serialize($object): array
     {
@@ -81,13 +83,13 @@ class ReflectionSerializer implements Serializer
         }
 
         return [
-            'class'   => get_class($object),
-            'payload' => $data
+            'class' => get_class($object),
+            'payload' => $data,
         ];
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function deserialize(array $serializedObject)
     {
@@ -141,7 +143,7 @@ class ReflectionSerializer implements Serializer
 
         foreach ($serializedObject['payload'] as $name => $value) {
             $matchedProperty = $this->findProperty($properties, $name);
-            if ($matchedProperty === null) {
+            if (null === $matchedProperty) {
                 throw new SerializationException(sprintf(
                     'Property \'%s\' not found for object \'%s\'',
                     $name,
@@ -161,7 +163,7 @@ class ReflectionSerializer implements Serializer
 
     /**
      * @param ReflectionProperty[] $properties
-     * @param string $name
+     * @param string               $name
      *
      * @return null|ReflectionProperty
      */

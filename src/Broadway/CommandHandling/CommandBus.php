@@ -19,14 +19,14 @@ namespace Broadway\CommandHandling;
 interface CommandBus
 {
     /**
-     * Dispatches the command $command to the proper CommandHandler
+     * Dispatches the command $command to the proper CommandHandler.
      *
      * @param mixed $command
      */
     public function dispatch($command);
 
     /**
-     * Subscribes the command handler to this CommandBus
+     * Subscribes the command handler to this CommandBus.
      */
     public function subscribe(CommandHandler $handler);
 }

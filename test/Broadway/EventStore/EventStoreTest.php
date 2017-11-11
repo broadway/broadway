@@ -52,7 +52,7 @@ abstract class EventStoreTest extends TestCase
      */
     public function it_appends_to_an_already_existing_stream($id)
     {
-        $dateTime          = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
+        $dateTime = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
         $domainEventStream = new DomainEventStream([
             $this->createDomainMessage($id, 0, $dateTime),
             $this->createDomainMessage($id, 1, $dateTime),
@@ -63,7 +63,6 @@ abstract class EventStoreTest extends TestCase
             $this->createDomainMessage($id, 3, $dateTime),
             $this->createDomainMessage($id, 4, $dateTime),
             $this->createDomainMessage($id, 5, $dateTime),
-
         ]);
 
         $this->eventStore->append($id, $appendedEventStream);
@@ -128,7 +127,7 @@ abstract class EventStoreTest extends TestCase
      */
     public function it_loads_events_starting_from_a_given_playhead($id)
     {
-        $dateTime          = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
+        $dateTime = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
         $domainEventStream = new DomainEventStream([
             $this->createDomainMessage($id, 0, $dateTime),
             $this->createDomainMessage($id, 1, $dateTime),
@@ -192,7 +191,7 @@ class Event implements Serializable
 {
     public static function deserialize(array $data)
     {
-        return new Event();
+        return new self();
     }
 
     public function serialize(): array
@@ -204,6 +203,7 @@ class Event implements Serializable
 class StringIdentity
 {
     private $id;
+
     public function __construct($id)
     {
         $this->id = $id;
@@ -218,6 +218,7 @@ class StringIdentity
 class IdentityThatCannotBeConvertedToAString
 {
     private $id;
+
     public function __construct($id)
     {
         $this->id = $id;

@@ -128,13 +128,13 @@ class SimpleCommandBusTestHandler implements CommandHandler
 
     public function __construct($commandBus, $dispatchableCommand)
     {
-        $this->commandBus          = $commandBus;
+        $this->commandBus = $commandBus;
         $this->dispatchableCommand = $dispatchableCommand;
     }
 
     public function handle($command)
     {
-        if (! $this->handled) {
+        if (!$this->handled) {
             $this->commandBus->dispatch($this->dispatchableCommand);
             $this->handled = true;
         }

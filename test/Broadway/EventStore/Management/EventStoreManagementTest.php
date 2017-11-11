@@ -36,7 +36,7 @@ abstract class EventStoreManagementTest extends TestCase
 
     protected function setUp()
     {
-        $this->now        = DateTime::now();
+        $this->now = DateTime::now();
         $this->eventStore = $this->createEventStore();
         $this->createAndInsertEventFixtures();
         $this->eventVisitor = new RecordingEventVisitor();
@@ -198,13 +198,13 @@ abstract class EventStoreManagementTest extends TestCase
         $eventsByAggregateTypeAndId = [];
         foreach ($events as $event) {
             $type = $event->getType();
-            $id   = $event->getId();
+            $id = $event->getId();
 
-            if (! array_key_exists($type, $eventsByAggregateTypeAndId)) {
+            if (!array_key_exists($type, $eventsByAggregateTypeAndId)) {
                 $eventsByAggregateTypeAndId[$type] = [];
             }
 
-            if (! array_key_exists($id, $eventsByAggregateTypeAndId[$type])) {
+            if (!array_key_exists($id, $eventsByAggregateTypeAndId[$type])) {
                 $eventsByAggregateTypeAndId[$type][$id] = [];
             }
 
@@ -258,6 +258,7 @@ class Start extends Event
 class Middle extends Event
 {
     public $position;
+
     public function __construct($position)
     {
         $this->position = $position;

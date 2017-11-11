@@ -22,7 +22,7 @@ namespace Broadway\Auditing;
 final class NullByteCommandSerializer implements CommandSerializer
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function serialize($command): array
     {

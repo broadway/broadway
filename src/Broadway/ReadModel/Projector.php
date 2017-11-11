@@ -22,14 +22,14 @@ use Broadway\EventHandling\EventListener;
 abstract class Projector implements EventListener
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function handle(DomainMessage $domainMessage)
     {
-        $event  = $domainMessage->getPayload();
+        $event = $domainMessage->getPayload();
         $method = $this->getHandleMethod($event);
 
-        if (! method_exists($this, $method)) {
+        if (!method_exists($this, $method)) {
             return;
         }
 
@@ -40,6 +40,6 @@ abstract class Projector implements EventListener
     {
         $classParts = explode('\\', get_class($event));
 
-        return 'apply' . end($classParts);
+        return 'apply'.end($classParts);
     }
 }

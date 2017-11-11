@@ -37,7 +37,7 @@ final class EventDispatchingCommandBus implements CommandBus
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function dispatch($command)
     {
@@ -55,7 +55,7 @@ final class EventDispatchingCommandBus implements CommandBus
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function subscribe(CommandHandler $handler)
     {

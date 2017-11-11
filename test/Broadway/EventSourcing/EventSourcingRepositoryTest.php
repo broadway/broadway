@@ -52,16 +52,16 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
         // make sure events exist in the event store
         $id = 'y0l0';
         $this->eventStore->append($id, new DomainEventStream([
-            DomainMessage::recordNow(42, 0, new Metadata([]), new DidEvent())
+            DomainMessage::recordNow(42, 0, new Metadata([]), new DidEvent()),
         ]));
 
         $repository = $this->repositoryWithStaticAggregateFactory();
-        $aggregate  = $repository->load('y0l0');
+        $aggregate = $repository->load('y0l0');
         $this->assertTrue($aggregate->constructorWasCalled);
         $this->assertEquals($aggregate->instantiatedThrough, 'instantiateForReconstitution');
 
         $repository = $this->repositoryWithStaticAggregateFactory('justAnotherInstantiation');
-        $aggregate  = $repository->load('y0l0');
+        $aggregate = $repository->load('y0l0');
         $this->assertTrue($aggregate->constructorWasCalled);
         $this->assertEquals($aggregate->instantiatedThrough, 'justAnotherInstantiation');
     }
@@ -74,7 +74,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
         // make sure events exist in the event store
         $id = 'y0l0';
         $this->eventStore->append($id, new DomainEventStream([
-            DomainMessage::recordNow(42, 0, new Metadata([]), new DidEvent())
+            DomainMessage::recordNow(42, 0, new Metadata([]), new DidEvent()),
         ]));
 
         $this->expectException(InvalidArgumentException::class);
@@ -124,7 +124,7 @@ class TestEventSourcedAggregateWithStaticConstructor extends EventSourcedAggrega
     private function __construct($instantiatedThrough)
     {
         $this->constructorWasCalled = true;
-        $this->instantiatedThrough  = $instantiatedThrough;
+        $this->instantiatedThrough = $instantiatedThrough;
     }
 
     public function getAggregateRootId(): string
@@ -134,12 +134,12 @@ class TestEventSourcedAggregateWithStaticConstructor extends EventSourcedAggrega
 
     public static function instantiateForReconstitution()
     {
-        return new TestEventSourcedAggregateWithStaticConstructor(__FUNCTION__);
+        return new self(__FUNCTION__);
     }
 
     public static function justAnotherInstantiation()
     {
-        return new TestEventSourcedAggregateWithStaticConstructor(__FUNCTION__);
+        return new self(__FUNCTION__);
     }
 }
 

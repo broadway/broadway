@@ -8,9 +8,6 @@ use Broadway\Domain\DomainEventStream;
 use Broadway\EventSourcing\EventSourcedAggregateRoot;
 use Broadway\TestCase;
 
-/**
- *
- */
 final class ReflectionAggregateFactoryTest extends TestCase
 {
     /**
@@ -68,7 +65,7 @@ final class TestAggregateWithPrivateConstructor extends EventSourcedAggregateRoo
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getAggregateRootId(): string
     {
@@ -79,7 +76,7 @@ final class TestAggregateWithPrivateConstructor extends EventSourcedAggregateRoo
 final class TestAggregateWithPublicConstructor extends EventSourcedAggregateRoot
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getAggregateRootId(): string
     {

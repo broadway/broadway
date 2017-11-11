@@ -28,9 +28,9 @@ class RepositoryTestReadModel implements SerializableReadModel
      */
     public function __construct($id, string $name, $foo, array $array)
     {
-        $this->id    = (string) $id;
-        $this->name  = $name;
-        $this->foo   = $foo;
+        $this->id = (string) $id;
+        $this->name = $name;
+        $this->foo = $foo;
         $this->array = $array;
     }
 

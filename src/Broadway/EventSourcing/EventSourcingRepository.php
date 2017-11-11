@@ -50,15 +50,15 @@ class EventSourcingRepository implements Repository
     ) {
         $this->assertExtendsEventSourcedAggregateRoot($aggregateClass);
 
-        $this->eventStore            = $eventStore;
-        $this->eventBus              = $eventBus;
-        $this->aggregateClass        = $aggregateClass;
-        $this->aggregateFactory      = $aggregateFactory;
+        $this->eventStore = $eventStore;
+        $this->eventBus = $eventBus;
+        $this->aggregateClass = $aggregateClass;
+        $this->aggregateFactory = $aggregateFactory;
         $this->eventStreamDecorators = $eventStreamDecorators;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load($id): AggregateRoot
     {
@@ -72,7 +72,7 @@ class EventSourcingRepository implements Repository
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function save(AggregateRoot $aggregate)
     {
@@ -80,14 +80,14 @@ class EventSourcingRepository implements Repository
         Assert::isInstanceOf($aggregate, $this->aggregateClass);
 
         $domainEventStream = $aggregate->getUncommittedEvents();
-        $eventStream       = $this->decorateForWrite($aggregate, $domainEventStream);
+        $eventStream = $this->decorateForWrite($aggregate, $domainEventStream);
         $this->eventStore->append($aggregate->getAggregateRootId(), $eventStream);
         $this->eventBus->publish($eventStream);
     }
 
     private function decorateForWrite(AggregateRoot $aggregate, DomainEventStream $eventStream): DomainEventStream
     {
-        $aggregateType       = $this->getType();
+        $aggregateType = $this->getType();
         $aggregateIdentifier = $aggregate->getAggregateRootId();
 
         foreach ($this->eventStreamDecorators as $eventStreamDecorator) {

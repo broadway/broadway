@@ -42,10 +42,10 @@ class Scenario
         TraceableEventStore $eventStore,
         CommandHandler $commandHandler
     ) {
-        $this->testCase       = $testCase;
-        $this->eventStore     = $eventStore;
+        $this->testCase = $testCase;
+        $this->eventStore = $eventStore;
         $this->commandHandler = $commandHandler;
-        $this->aggregateId    = '1';
+        $this->aggregateId = '1';
     }
 
     /**
@@ -67,14 +67,14 @@ class Scenario
      */
     public function given(array $events = null): Scenario
     {
-        if ($events === null) {
+        if (null === $events) {
             return $this;
         }
 
         $messages = [];
         $playhead = -1;
         foreach ($events as $event) {
-            $playhead++;
+            ++$playhead;
             $messages[] = DomainMessage::recordNow($this->aggregateId, $playhead, new Metadata([]), $event);
         }
 

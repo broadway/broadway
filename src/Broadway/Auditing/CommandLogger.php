@@ -28,7 +28,7 @@ final class CommandLogger
 
     public function __construct(LoggerInterface $logger, CommandSerializer $commandSerializer)
     {
-        $this->logger            = $logger;
+        $this->logger = $logger;
         $this->commandSerializer = $commandSerializer;
     }
 
@@ -38,8 +38,8 @@ final class CommandLogger
     public function onCommandHandlingSuccess($command)
     {
         $messageData = [
-            'status'  => 'success',
-            'command' => $this->getCommandData($command)
+            'status' => 'success',
+            'command' => $this->getCommandData($command),
         ];
 
         $this->logger->info(json_encode($messageData));
@@ -52,15 +52,15 @@ final class CommandLogger
     public function onCommandHandlingFailure($command, Exception $exception)
     {
         $messageData = [
-            'status'    => 'failure',
-            'command'   => $this->getCommandData($command),
+            'status' => 'failure',
+            'command' => $this->getCommandData($command),
             'exception' => [
                 'message' => $exception->getMessage(),
-                'file'    => $exception->getFile(),
-                'class'   => get_class($exception),
-                'line'    => $exception->getLine(),
-                'code'    => $exception->getCode()
-            ]
+                'file' => $exception->getFile(),
+                'class' => get_class($exception),
+                'line' => $exception->getLine(),
+                'code' => $exception->getCode(),
+            ],
         ];
 
         $this->logger->info(json_encode($messageData));
@@ -70,7 +70,7 @@ final class CommandLogger
     {
         return [
             'class' => get_class($command),
-            'data'  => $this->commandSerializer->serialize($command),
+            'data' => $this->commandSerializer->serialize($command),
         ];
     }
 }

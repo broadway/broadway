@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../bootstrap.php';
+require_once __DIR__.'/../bootstrap.php';
 
 class SerializeMe implements Broadway\Serializer\Serializable
 {
@@ -15,13 +15,13 @@ class SerializeMe implements Broadway\Serializer\Serializable
 
     public static function deserialize(array $data)
     {
-        return new SerializeMe($data['message']);
+        return new self($data['message']);
     }
 
     public function serialize()
     {
         return [
-            'message' => $this->message
+            'message' => $this->message,
         ];
     }
 }
