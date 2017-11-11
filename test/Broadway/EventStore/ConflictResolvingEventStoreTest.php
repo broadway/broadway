@@ -14,7 +14,7 @@ class ConflictResolvingEventStoreTest extends EventStoreTest
     /** @var ConcurrencyConflictResolver|\PHPUnit_Framework_MockObject_MockObject */
     protected $concurrencyResolver;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->concurrencyResolver = $this->prophesize(ConcurrencyConflictResolver::class);
         $this->concurrencyResolver

@@ -28,7 +28,7 @@ final class Criteria
      *
      * @return Criteria
      */
-    public function withAggregateRootTypes(array $aggregateRootTypes): Criteria
+    public function withAggregateRootTypes(array $aggregateRootTypes): self
     {
         $instance = clone $this;
         $instance->aggregateRootTypes = $aggregateRootTypes;
@@ -43,7 +43,7 @@ final class Criteria
      *
      * @return Criteria
      */
-    public function withAggregateRootIds(array $aggregateRootIds): Criteria
+    public function withAggregateRootIds(array $aggregateRootIds): self
     {
         $instance = clone $this;
         $instance->aggregateRootIds = $aggregateRootIds;
@@ -58,7 +58,7 @@ final class Criteria
      *
      * @return Criteria
      */
-    public function withEventTypes(array $eventTypes): Criteria
+    public function withEventTypes(array $eventTypes): self
     {
         $instance = clone $this;
         $instance->eventTypes = $eventTypes;
@@ -101,7 +101,7 @@ final class Criteria
      *
      * @return Criteria
      */
-    public static function create(): Criteria
+    public static function create(): self
     {
         return new static();
     }

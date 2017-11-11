@@ -115,7 +115,7 @@ final class DomainMessage
      *
      * @return DomainMessage
      */
-    public static function recordNow($id, int $playhead, Metadata $metadata, $payload)
+    public static function recordNow($id, int $playhead, Metadata $metadata, $payload): self
     {
         return new self($id, $playhead, $metadata, $payload, DateTime::now());
     }
@@ -127,7 +127,7 @@ final class DomainMessage
      *
      * @return DomainMessage
      */
-    public function andMetadata(Metadata $metadata): DomainMessage
+    public function andMetadata(Metadata $metadata): self
     {
         $newMetadata = $this->metadata->merge($metadata);
 

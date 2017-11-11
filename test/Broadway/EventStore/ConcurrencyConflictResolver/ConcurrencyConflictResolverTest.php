@@ -7,8 +7,9 @@ namespace Broadway\EventStore\ConcurrencyConflictResolver;
 use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
+use Broadway\TestCase;
 
-abstract class ConcurrencyConflictResolverTest extends \PHPUnit_Framework_TestCase
+abstract class ConcurrencyConflictResolverTest extends TestCase
 {
     protected function createDomainMessage($id, $playhead, $event)
     {

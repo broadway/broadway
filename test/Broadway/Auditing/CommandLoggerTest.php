@@ -17,12 +17,27 @@ use Broadway\TestCase;
 
 class CommandLoggerTest extends TestCase
 {
+    /**
+     * @var TraceableLogger
+     */
     private $logger;
+
+    /**
+     * @var Command
+     */
     private $command;
+
+    /**
+     * @var CommandLogger
+     */
     private $commandAuditLogger;
+
+    /**
+     * @var CommandSerializer
+     */
     private $commandSerializer;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->logger = new TraceableLogger();
 

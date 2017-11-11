@@ -9,7 +9,7 @@ class BlacklistConcurrencyConflictResolverTest extends ConcurrencyConflictResolv
     /** @var BlacklistConcurrencyConflictResolver */
     private $conflictResolver;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->conflictResolver = new BlacklistConcurrencyConflictResolver();
     }

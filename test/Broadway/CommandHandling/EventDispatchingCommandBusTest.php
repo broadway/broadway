@@ -13,29 +13,41 @@ declare(strict_types=1);
 
 namespace Broadway\CommandHandling;
 
+use Broadway\EventDispatcher\EventDispatcher;
 use Broadway\TestCase;
 
 class EventDispatchingCommandBusTest extends TestCase
 {
+    /**
+     * @var CommandBus|\PHPUnit_Framework_MockObject_MockObject
+     */
     private $baseCommandBus;
+
+    /**
+     * @var Command
+     */
     private $command;
+
+    /**
+     * @var EventDispatcher|\PHPUnit_Framework_MockObject_MockObject
+     */
     private $eventDispatcher;
+
+    /**
+     * @var EventDispatchingCommandBus
+     */
     private $eventDispatchingCommandBus;
+
+    /**
+     * @var CommandHandler|\PHPUnit_Framework_MockObject_MockObject
+     */
     private $subscriber;
 
-    public function setUp()
+    protected function setUp()
     {
-        $this->eventDispatcher = $this->getMockBuilder('Broadway\EventDispatcher\EventDispatcher')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->baseCommandBus = $this->getMockBuilder('Broadway\CommandHandling\CommandBus')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->subscriber = $this->getMockBuilder('Broadway\CommandHandling\CommandHandler')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->eventDispatcher = $this->createMock(EventDispatcher::class);
+        $this->baseCommandBus = $this->createMock(CommandBus::class);
+        $this->subscriber = $this->createMock(CommandHandler::class);
 
         $this->command = new Command();
 
@@ -56,7 +68,6 @@ class EventDispatchingCommandBusTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Broadway\CommandHandling\MyException
      */
     public function it_dispatches_the_failure_event_and_forwards_the_exception()
     {
@@ -72,6 +83,8 @@ class EventDispatchingCommandBusTest extends TestCase
             ->method('dispatch')
             ->with($this->command)
             ->will($this->throwException($exception));
+
+        $this->expectException(MyException::class);
 
         $this->eventDispatchingCommandBus->dispatch($this->command);
     }

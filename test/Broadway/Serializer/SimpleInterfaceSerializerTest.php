@@ -13,48 +13,59 @@ declare(strict_types=1);
 
 namespace Broadway\Serializer;
 
+use Assert\InvalidArgumentException;
 use Broadway\TestCase;
 
 class SimpleInterfaceSerializerTest extends TestCase
 {
+    /**
+     * @var SimpleInterfaceSerializer
+     */
     private $serializer;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->serializer = new SimpleInterfaceSerializer();
     }
 
     /**
      * @test
-     * @expectedException \Broadway\Serializer\SerializationException
-     * @expectedExceptionMessage Object 'stdClass' does not implement Broadway\Serializer\Serializable
      */
     public function it_throws_an_exception_if_an_object_does_not_implement_Serializable()
     {
+        $this->expectException(SerializationException::class);
+        $this->expectExceptionMessage(sprintf(
+            'Object \'%s\' does not implement %s',
+            \stdClass::class,
+            Serializable::class
+        ));
+
         $this->serializer->serialize(new \stdClass());
     }
 
     /**
      * @test
-     * @expectedException \Assert\InvalidArgumentException
-     * @expectedExceptionMessage Key 'class' should be set
      *
      * @todo custom exception
      */
     public function it_throws_an_exception_if_class_not_set_in_data()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Key \'class\' should be set');
+
         $this->serializer->deserialize([]);
     }
 
     /**
      * @test
-     * @expectedException \Assert\InvalidArgumentException
-     * @expectedExceptionMessage Key 'payload' should be set
      *
      * @todo custom exception
      */
     public function it_throws_an_exception_if_payload_not_set_in_data()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Key \'payload\' should be set');
+
         $this->serializer->deserialize(['class' => 'SomeClass']);
     }
 

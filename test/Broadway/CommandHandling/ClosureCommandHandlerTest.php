@@ -41,7 +41,9 @@ class ClosureCommandHandlerTest extends TestCase
     public function it_throws_when_handling_a_non_object_command()
     {
         $commandHandler = new ClosureCommandHandler();
-        $this->setExpectedException(CommandNotAnObjectException::class);
+
+        $this->expectException(CommandNotAnObjectException::class);
+
         $commandHandler->handle('foo');
     }
 
@@ -51,7 +53,8 @@ class ClosureCommandHandlerTest extends TestCase
     public function it_throws_when_adding_a_closure_without_an_object_argument()
     {
         $commandHandler = new ClosureCommandHandler();
-        $this->setExpectedException(ClosureParameterNotAnObjectException::class);
+        $this->expectException(ClosureParameterNotAnObjectException::class);
+
         $commandHandler->add(function ($params = null) { });
     }
 }

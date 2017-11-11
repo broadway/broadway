@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Broadway\EventSourcing;
 
+use Assert\InvalidArgumentException;
 use Broadway\Domain\AggregateRoot;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
@@ -26,6 +27,7 @@ use Broadway\EventStore\EventStore;
 use Broadway\EventStore\InMemoryEventStore;
 use Broadway\EventStore\TraceableEventStore;
 use Broadway\ReadModel\Projector;
+use Broadway\Repository\AggregateNotFoundException;
 use Broadway\TestCase;
 use RuntimeException;
 
@@ -43,7 +45,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
     /** @var EventSourcingRepository */
     protected $repository;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->eventStore = new TraceableEventStore(new InMemoryEventStore());
         $this->eventStore->trace();
@@ -59,11 +61,12 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Assert\InvalidArgumentException
      * @dataProvider objectsNotOfConfiguredClass
      */
     public function it_throws_an_exception_when_adding_an_aggregate_that_is_not_of_the_configured_class($aggregate)
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $this->repository->save($aggregate);
     }
 
@@ -111,10 +114,11 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Broadway\Repository\AggregateNotFoundException
      */
     public function it_throws_an_exception_if_aggregate_was_not_found()
     {
+        $this->expectException(AggregateNotFoundException::class);
+
         $this->repository->load('does-not-exist');
     }
 

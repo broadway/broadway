@@ -15,7 +15,7 @@ namespace Broadway\EventStore;
 
 class InMemoryEventStoreTest extends EventStoreTest
 {
-    public function setUp()
+    protected function setUp()
     {
         $this->eventStore = new InMemoryEventStore();
     }

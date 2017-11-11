@@ -17,9 +17,11 @@ use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
+use Broadway\EventStore\Exception\DuplicatePlayheadException;
 use Broadway\Serializer\Serializable;
 use Broadway\TestCase;
 use Broadway\UuidGenerator\Rfc4122\Version4Generator;
+use PHPUnit\Framework\Error\Error;
 
 abstract class EventStoreTest extends TestCase
 {
@@ -79,21 +81,23 @@ abstract class EventStoreTest extends TestCase
     /**
      * @test
      * @dataProvider idDataProvider
-     * @expectedException \Broadway\EventStore\EventStreamNotFoundException
      */
     public function it_throws_an_exception_when_requesting_the_stream_of_a_non_existing_aggregate($id)
     {
+        $this->expectException(EventStreamNotFoundException::class);
+
         $this->eventStore->load($id);
     }
 
     /**
      * @test
      * @dataProvider idDataProvider
-     * @expectedException \Broadway\EventStore\Exception\DuplicatePlayheadException
      */
     public function it_throws_an_exception_when_appending_a_duplicate_playhead($id)
     {
         $eventStream = new DomainEventStream([$this->createDomainMessage(42, 0)]);
+
+        $this->expectException(DuplicatePlayheadException::class);
 
         $this->eventStore->append(42, $eventStream);
         $this->eventStore->append(42, $eventStream);
@@ -101,14 +105,18 @@ abstract class EventStoreTest extends TestCase
 
     /**
      * @test
-     * @expectedException \PHPUnit_Framework_Error
-     * @expectedExceptionMessage Object of class Broadway\EventStore\IdentityThatCannotBeConvertedToAString could not be converted to string
      */
     public function it_throws_an_exception_when_an_id_cannot_be_converted_to_a_string()
     {
         $id = new IdentityThatCannotBeConvertedToAString(
             'Yolntbyaac' //You only live nine times because you are a cat
         );
+
+        $this->expectException(Error::class);
+        $this->expectExceptionMessage(sprintf(
+            'Object of class %s could not be converted to string',
+            IdentityThatCannotBeConvertedToAString::class
+        ));
 
         $this->eventStore->append($id, new DomainEventStream([]));
     }

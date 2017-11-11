@@ -17,11 +17,22 @@ use Broadway\TestCase;
 
 class EventDispatcherTest extends TestCase
 {
+    /**
+     * @var CallableEventDispatcher
+     */
     private $dispatcher;
+
+    /**
+     * @var TracableEventListener
+     */
     private $listener1;
+
+    /**
+     * @var TracableEventListener
+     */
     private $listener2;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->dispatcher = new CallableEventDispatcher();
         $this->listener1 = new TracableEventListener();

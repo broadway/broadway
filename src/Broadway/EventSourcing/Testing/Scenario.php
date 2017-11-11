@@ -56,7 +56,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function withAggregateId(string $aggregateId): Scenario
+    public function withAggregateId(string $aggregateId): self
     {
         $this->aggregateId = $aggregateId;
 
@@ -68,7 +68,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function given(array $givens = null): Scenario
+    public function given(array $givens = null): self
     {
         if (null === $givens) {
             return $this;
@@ -95,7 +95,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function when(callable $when): Scenario
+    public function when(callable $when): self
     {
         if (!is_callable($when)) {
             return $this;
@@ -117,7 +117,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function then(array $thens): Scenario
+    public function then(array $thens): self
     {
         $this->testCase->assertEquals($thens, $this->getEvents());
 

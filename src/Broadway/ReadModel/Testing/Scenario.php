@@ -59,7 +59,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function withAggregateId(string $aggregateId): Scenario
+    public function withAggregateId(string $aggregateId): self
     {
         $this->aggregateId = $aggregateId;
 
@@ -69,7 +69,7 @@ class Scenario
     /**
      * @return Scenario
      */
-    public function withDateTimeGenerator(callable $dateTimeGenerator): Scenario
+    public function withDateTimeGenerator(callable $dateTimeGenerator): self
     {
         $this->dateTimeGenerator = $dateTimeGenerator;
 
@@ -81,7 +81,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function given(array $events = []): Scenario
+    public function given(array $events = []): self
     {
         foreach ($events as $given) {
             $this->projector->handle($this->createDomainMessageForEvent($given));
@@ -95,7 +95,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function when($event, DateTime $occurredOn = null): Scenario
+    public function when($event, DateTime $occurredOn = null): self
     {
         $this->projector->handle($this->createDomainMessageForEvent($event, $occurredOn));
 
@@ -107,7 +107,7 @@ class Scenario
      *
      * @return Scenario
      */
-    public function then(array $expectedData): Scenario
+    public function then(array $expectedData): self
     {
         $this->testCase->assertEquals($expectedData, $this->repository->findAll());
 

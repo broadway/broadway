@@ -20,9 +20,12 @@ use Broadway\TestCase;
 
 class SimpleEventBusTest extends TestCase
 {
+    /**
+     * @var SimpleEventBus
+     */
     private $eventBus;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->eventBus = new SimpleEventBus();
     }
@@ -141,9 +144,9 @@ class SimpleEventBusTest extends TestCase
         $this->eventBus->publish($domainEventStream2);
     }
 
-    private function createEventListenerMock()
+    private function createEventListenerMock(): \PHPUnit_Framework_MockObject_MockObject
     {
-        return $this->getMockBuilder('Broadway\EventHandling\EventListener')->getMock();
+        return $this->createMock(EventListener::class);
     }
 
     private function createDomainMessage($payload)

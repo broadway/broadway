@@ -17,9 +17,12 @@ use Broadway\TestCase;
 
 class SimpleCommandBusTest extends TestCase
 {
+    /**
+     * @var SimpleCommandBus
+     */
     private $commandBus;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->commandBus = new SimpleCommandBus();
     }
@@ -44,7 +47,7 @@ class SimpleCommandBusTest extends TestCase
         $command1 = ['foo' => 'bar'];
         $command2 = ['foo' => 'bas'];
 
-        $commandHandler = $this->getMockBuilder('Broadway\CommandHandling\SimpleCommandHandler')->getMock();
+        $commandHandler = $this->createMock(CommandHandler::class);
 
         $commandHandler
             ->expects($this->at(0))
@@ -69,8 +72,8 @@ class SimpleCommandBusTest extends TestCase
         $command1 = ['foo' => 'bar'];
         $command2 = ['foo' => 'bas'];
 
-        $commandHandler = $this->getMockBuilder('Broadway\CommandHandling\SimpleCommandHandler')->getMock();
-        $simpleHandler = $this->getMockBuilder('Broadway\CommandHandling\SimpleCommandHandler')->getMock();
+        $commandHandler = $this->createMock(CommandHandler::class);
+        $simpleHandler = $this->createMock(CommandHandler::class);
 
         $commandHandler
             ->expects($this->at(0))
@@ -100,9 +103,9 @@ class SimpleCommandBusTest extends TestCase
         $this->commandBus->dispatch($command2);
     }
 
-    private function createCommandHandlerMock($expectedCommand)
+    private function createCommandHandlerMock(array $expectedCommand): \PHPUnit_Framework_MockObject_MockObject
     {
-        $mock = $this->getMockBuilder('Broadway\CommandHandling\SimpleCommandHandler')->getMock();
+        $mock = $this->createMock(CommandHandler::class);
 
         $mock
             ->expects($this->once())
