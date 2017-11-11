@@ -73,7 +73,7 @@ class SimpleCommandBusTest extends TestCase
         $command2 = ['foo' => 'bas'];
 
         $commandHandler = $this->createMock(CommandHandler::class);
-        $simpleHandler  = $this->createMock(CommandHandler::class);
+        $simpleHandler = $this->createMock(CommandHandler::class);
 
         $commandHandler
             ->expects($this->at(0))

@@ -34,7 +34,7 @@ final class DateTime
     /**
      * @return DateTime
      */
-    public static function now(): DateTime
+    public static function now(): self
     {
         return new self(
             DateTimeImmutable::createFromFormat(
@@ -58,7 +58,7 @@ final class DateTime
      *
      * @return DateTime
      */
-    public static function fromString($dateTimeString): DateTime
+    public static function fromString($dateTimeString): self
     {
         return new self(new DateTimeImmutable($dateTimeString));
     }
@@ -86,7 +86,7 @@ final class DateTime
      *
      * @return DateTime
      */
-    public function add(string $intervalSpec): DateTime
+    public function add(string $intervalSpec): self
     {
         $dateTime = $this->dateTime->add(new DateInterval($intervalSpec));
 
@@ -98,7 +98,7 @@ final class DateTime
      *
      * @return DateTime
      */
-    public function sub(string $intervalSpec): DateTime
+    public function sub(string $intervalSpec): self
     {
         $dateTime = $this->dateTime->sub(new DateInterval($intervalSpec));
 
@@ -110,7 +110,7 @@ final class DateTime
      *
      * @return DateInterval
      */
-    public function diff(DateTime $dateTime): DateInterval
+    public function diff(self $dateTime): DateInterval
     {
         return $this->dateTime->diff($dateTime->dateTime);
     }
@@ -118,7 +118,7 @@ final class DateTime
     /**
      * @return DateTime
      */
-    public function toBeginningOfWeek(): DateTime
+    public function toBeginningOfWeek(): self
     {
         return new self(new DateTimeImmutable($this->dateTime->format('o-\WW-1'), new DateTimeZone('UTC')));
     }

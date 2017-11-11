@@ -39,7 +39,7 @@ final class Metadata implements Serializable
      *
      * @return Metadata
      */
-    public static function kv($key, $value)
+    public static function kv($key, $value): self
     {
         return new self([$key => $value]);
     }
@@ -51,7 +51,7 @@ final class Metadata implements Serializable
      *
      * @return Metadata a new instance
      */
-    public function merge(Metadata $otherMetadata): Metadata
+    public function merge(Metadata $otherMetadata): self
     {
         return new self(array_merge($this->values, $otherMetadata->values));
     }
@@ -91,7 +91,7 @@ final class Metadata implements Serializable
      *
      * @return Metadata
      */
-    public static function deserialize(array $data)
+    public static function deserialize(array $data): self
     {
         return new self($data);
     }

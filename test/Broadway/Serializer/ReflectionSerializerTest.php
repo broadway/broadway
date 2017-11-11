@@ -30,6 +30,7 @@ class ReflectionSerializerTest extends TestCase
 
     /**
      * @test
+     *
      * @todo custom exception
      */
     public function it_throws_an_exception_if_class_not_set_in_data()
@@ -42,6 +43,7 @@ class ReflectionSerializerTest extends TestCase
 
     /**
      * @test
+     *
      * @todo custom exception
      */
     public function it_throws_an_exception_if_payload_not_set_in_data()

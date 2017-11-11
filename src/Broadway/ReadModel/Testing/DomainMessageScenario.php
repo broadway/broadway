@@ -50,7 +50,7 @@ final class DomainMessageScenario
      *
      * @return DomainMessageScenario
      */
-    public function given(array $domainMessages = []): DomainMessageScenario
+    public function given(array $domainMessages = []): self
     {
         Assertion::allIsInstanceOf($domainMessages, DomainMessage::class);
 
@@ -66,7 +66,7 @@ final class DomainMessageScenario
      *
      * @return DomainMessageScenario
      */
-    public function when(DomainMessage $domainMessage): DomainMessageScenario
+    public function when(DomainMessage $domainMessage): self
     {
         $this->projector->handle($domainMessage);
 
@@ -78,7 +78,7 @@ final class DomainMessageScenario
      *
      * @return DomainMessageScenario
      */
-    public function then(array $expectedData): DomainMessageScenario
+    public function then(array $expectedData): self
     {
         $this->testCase->assertEquals($expectedData, $this->repository->findAll());
 

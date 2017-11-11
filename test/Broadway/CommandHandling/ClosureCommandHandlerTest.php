@@ -55,7 +55,7 @@ class ClosureCommandHandlerTest extends TestCase
         $commandHandler = new ClosureCommandHandler();
         $this->expectException(ClosureParameterNotAnObjectException::class);
 
-        $commandHandler->add(function($params = null) { });
+        $commandHandler->add(function ($params = null) { });
     }
 }
 
