@@ -114,7 +114,7 @@ class Scenario
         return $this;
     }
 
-    private function createDomainMessageForEvent($event, DateTime $occurredOn = null)
+    private function createDomainMessageForEvent($event, DateTime $occurredOn = null): DomainMessage
     {
         ++$this->playhead;
 

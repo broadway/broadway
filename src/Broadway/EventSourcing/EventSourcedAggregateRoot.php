@@ -118,9 +118,6 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
         return 'apply'.end($classParts);
     }
 
-    /**
-     * @return int
-     */
     public function getPlayhead(): int
     {
         return $this->playhead;

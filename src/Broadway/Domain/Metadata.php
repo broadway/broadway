@@ -73,7 +73,7 @@ final class Metadata implements Serializable
      *
      * @return mixed
      */
-    public function get($key)
+    public function get(string $key)
     {
         return $this->values[$key] ?? null;
     }
