@@ -37,9 +37,9 @@ abstract class SerializableReadModelTestCase extends TestCase
     public function serializing_and_deserializing_yields_the_same_object()
     {
         $serializer = new SimpleInterfaceSerializer();
-        $readModel  = $this->createSerializableReadModel();
+        $readModel = $this->createSerializableReadModel();
 
-        $serialized   = $serializer->serialize($readModel);
+        $serialized = $serializer->serialize($readModel);
         $deserialized = $serializer->deserialize($serialized);
 
         $this->assertEquals($readModel, $deserialized);

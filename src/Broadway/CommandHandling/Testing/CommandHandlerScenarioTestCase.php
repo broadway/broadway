@@ -41,8 +41,8 @@ abstract class CommandHandlerScenarioTestCase extends TestCase
      */
     protected function createScenario(): Scenario
     {
-        $eventStore     = new TraceableEventStore(new InMemoryEventStore());
-        $eventBus       = new SimpleEventBus();
+        $eventStore = new TraceableEventStore(new InMemoryEventStore());
+        $eventBus = new SimpleEventBus();
         $commandHandler = $this->createCommandHandler($eventStore, $eventBus);
 
         return new Scenario($this, $eventStore, $commandHandler);

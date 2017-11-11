@@ -18,11 +18,11 @@ use Broadway\Domain\DomainMessage;
 final class Criteria
 {
     private $aggregateRootTypes = [];
-    private $aggregateRootIds   = [];
-    private $eventTypes         = [];
+    private $aggregateRootIds = [];
+    private $eventTypes = [];
 
     /**
-     * Create a new criteria with the specified aggregate root types
+     * Create a new criteria with the specified aggregate root types.
      *
      * @param array $aggregateRootTypes
      *
@@ -30,14 +30,14 @@ final class Criteria
      */
     public function withAggregateRootTypes(array $aggregateRootTypes): Criteria
     {
-        $instance                     = clone($this);
+        $instance = clone $this;
         $instance->aggregateRootTypes = $aggregateRootTypes;
 
         return $instance;
     }
 
     /**
-     * Create a new criteria with the specified aggregate root IDs
+     * Create a new criteria with the specified aggregate root IDs.
      *
      * @param array $aggregateRootIds
      *
@@ -45,14 +45,14 @@ final class Criteria
      */
     public function withAggregateRootIds(array $aggregateRootIds): Criteria
     {
-        $instance                   = clone($this);
+        $instance = clone $this;
         $instance->aggregateRootIds = $aggregateRootIds;
 
         return $instance;
     }
 
     /**
-     * Create a new criteria with the specified event types
+     * Create a new criteria with the specified event types.
      *
      * @param array $eventTypes
      *
@@ -60,14 +60,14 @@ final class Criteria
      */
     public function withEventTypes(array $eventTypes): Criteria
     {
-        $instance             = clone($this);
+        $instance = clone $this;
         $instance->eventTypes = $eventTypes;
 
         return $instance;
     }
 
     /**
-     * Get the aggregate root types for the criteria
+     * Get the aggregate root types for the criteria.
      *
      * @return string[]
      */
@@ -77,7 +77,7 @@ final class Criteria
     }
 
     /**
-     * Get the aggregate root IDs for the criteria
+     * Get the aggregate root IDs for the criteria.
      *
      * @return array
      */
@@ -87,7 +87,7 @@ final class Criteria
     }
 
     /**
-     * Get the event types for the criteria
+     * Get the event types for the criteria.
      *
      * @return array
      */
@@ -97,7 +97,7 @@ final class Criteria
     }
 
     /**
-     * Create a new criteria
+     * Create a new criteria.
      *
      * @return Criteria
      */
@@ -107,7 +107,7 @@ final class Criteria
     }
 
     /**
-     * Determine if a domain message is matched by this criteria
+     * Determine if a domain message is matched by this criteria.
      *
      * @param DomainMessage $domainMessage
      *
@@ -121,11 +121,11 @@ final class Criteria
             );
         }
 
-        if ($this->aggregateRootIds && ! in_array($domainMessage->getId(), $this->aggregateRootIds)) {
+        if ($this->aggregateRootIds && !in_array($domainMessage->getId(), $this->aggregateRootIds)) {
             return false;
         }
 
-        if ($this->eventTypes && ! in_array($domainMessage->getType(), $this->eventTypes)) {
+        if ($this->eventTypes && !in_array($domainMessage->getType(), $this->eventTypes)) {
             return false;
         }
 

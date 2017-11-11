@@ -19,11 +19,11 @@ namespace Broadway\CommandHandling;
 final class SimpleCommandBus implements CommandBus
 {
     private $commandHandlers = [];
-    private $queue           = [];
-    private $isDispatching   = false;
+    private $queue = [];
+    private $isDispatching = false;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function subscribe(CommandHandler $handler)
     {
@@ -31,13 +31,13 @@ final class SimpleCommandBus implements CommandBus
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function dispatch($command)
     {
         $this->queue[] = $command;
 
-        if (! $this->isDispatching) {
+        if (!$this->isDispatching) {
             $this->isDispatching = true;
 
             try {

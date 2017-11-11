@@ -45,10 +45,10 @@ class Scenario
      */
     public function __construct(PHPUnit_Framework_TestCase $testCase, AggregateFactory $factory, string $aggregateRootClass)
     {
-        $this->testCase           = $testCase;
-        $this->factory            = $factory;
+        $this->testCase = $testCase;
+        $this->factory = $factory;
         $this->aggregateRootClass = $aggregateRootClass;
-        $this->aggregateId        = '1';
+        $this->aggregateId = '1';
     }
 
     /**
@@ -70,14 +70,14 @@ class Scenario
      */
     public function given(array $givens = null): Scenario
     {
-        if ($givens === null) {
+        if (null === $givens) {
             return $this;
         }
 
         $messages = [];
         $playhead = -1;
         foreach ($givens as $event) {
-            $playhead++;
+            ++$playhead;
             $messages[] = DomainMessage::recordNow(
                 $this->aggregateId, $playhead, new Metadata([]), $event
             );
@@ -97,11 +97,11 @@ class Scenario
      */
     public function when(callable $when): Scenario
     {
-        if (! is_callable($when)) {
+        if (!is_callable($when)) {
             return $this;
         }
 
-        if ($this->aggregateRootInstance === null) {
+        if (null === $this->aggregateRootInstance) {
             $this->aggregateRootInstance = $when($this->aggregateRootInstance);
 
             $this->testCase->assertInstanceOf($this->aggregateRootClass, $this->aggregateRootInstance);

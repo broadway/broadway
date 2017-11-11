@@ -26,7 +26,7 @@ class SimpleInterfaceSerializerTest extends TestCase
 
     /**
      * @test
-     * @expectedException Broadway\Serializer\SerializationException
+     * @expectedException \Broadway\Serializer\SerializationException
      * @expectedExceptionMessage Object 'stdClass' does not implement Broadway\Serializer\Serializable
      */
     public function it_throws_an_exception_if_an_object_does_not_implement_Serializable()
@@ -36,7 +36,7 @@ class SimpleInterfaceSerializerTest extends TestCase
 
     /**
      * @test
-     * @expectedException Assert\InvalidArgumentException
+     * @expectedException \Assert\InvalidArgumentException
      * @expectedExceptionMessage Key 'class' should be set
      *
      * @todo custom exception
@@ -48,8 +48,9 @@ class SimpleInterfaceSerializerTest extends TestCase
 
     /**
      * @test
-     * @expectedException Assert\InvalidArgumentException
+     * @expectedException \Assert\InvalidArgumentException
      * @expectedExceptionMessage Key 'payload' should be set
+     *
      * @todo custom exception
      */
     public function it_throws_an_exception_if_payload_not_set_in_data()
@@ -65,8 +66,8 @@ class SimpleInterfaceSerializerTest extends TestCase
         $object = new TestSerializable('bar');
 
         $this->assertEquals([
-            'class'   => 'Broadway\Serializer\TestSerializable',
-            'payload' => ['foo' => 'bar']
+            'class' => 'Broadway\Serializer\TestSerializable',
+            'payload' => ['foo' => 'bar'],
         ], $this->serializer->serialize($object));
     }
 
@@ -87,7 +88,7 @@ class SimpleInterfaceSerializerTest extends TestCase
     {
         $object = new TestSerializable('bar');
 
-        $serialized   = $this->serializer->serialize($object);
+        $serialized = $this->serializer->serialize($object);
         $deserialized = $this->serializer->deserialize($serialized);
 
         $this->assertEquals($object, $deserialized);
@@ -104,7 +105,7 @@ class TestSerializable implements Serializable
     }
 
     /**
-     * @return this
+     * @return $this
      */
     public static function deserialize(array $data)
     {

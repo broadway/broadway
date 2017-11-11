@@ -36,7 +36,7 @@ final class DateTime
      */
     public static function now(): DateTime
     {
-        return new DateTime(
+        return new self(
             DateTimeImmutable::createFromFormat(
                 'U.u',
                 sprintf('%.6F', microtime(true)),
@@ -60,11 +60,11 @@ final class DateTime
      */
     public static function fromString($dateTimeString): DateTime
     {
-        return new DateTime(new DateTimeImmutable($dateTimeString));
+        return new self(new DateTimeImmutable($dateTimeString));
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function equals(DateTime $dateTime): bool
     {
@@ -120,7 +120,7 @@ final class DateTime
      */
     public function toBeginningOfWeek(): DateTime
     {
-        return new DateTime(new DateTimeImmutable($this->dateTime->format('o-\WW-1'), new DateTimeZone('UTC')));
+        return new self(new DateTimeImmutable($this->dateTime->format('o-\WW-1'), new DateTimeZone('UTC')));
     }
 
     /**

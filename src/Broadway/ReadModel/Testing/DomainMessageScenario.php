@@ -40,9 +40,9 @@ final class DomainMessageScenario
         Repository $repository,
         EventListener $projector
     ) {
-        $this->testCase   = $testCase;
+        $this->testCase = $testCase;
         $this->repository = $repository;
-        $this->projector  = $projector;
+        $this->projector = $projector;
     }
 
     /**

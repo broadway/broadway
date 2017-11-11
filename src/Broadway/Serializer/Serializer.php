@@ -23,7 +23,6 @@ interface Serializer
      * @throws SerializationException
      *
      * @return array
-     *
      */
     public function serialize($object): array;
 
@@ -33,7 +32,6 @@ interface Serializer
      * @throws SerializationException
      *
      * @return mixed
-     *
      */
     public function deserialize(array $serializedObject);
 }

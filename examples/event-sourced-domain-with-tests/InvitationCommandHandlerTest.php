@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/Invites.php';
+require_once __DIR__.'/Invites.php';
 
 /**
  * We drive the tests of our aggregate root through the command handler.
@@ -75,7 +75,7 @@ class InvitationCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
 
     /**
      * @test
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      * @expectedExceptionMessage Already accepted.
      */
     public function an_accepted_invite_cannot_be_declined()
@@ -118,7 +118,7 @@ class InvitationCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
 
     /**
      * @test
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      * @expectedExceptionMessage Already declined.
      */
     public function a_declined_invite_cannot_be_accepted()

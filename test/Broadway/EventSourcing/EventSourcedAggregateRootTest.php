@@ -33,7 +33,7 @@ class EventSourcedAggregateRootTest extends TestCase
         $i = 0;
         foreach ($eventStream as $domainMessage) {
             $this->assertEquals($i, $domainMessage->getPlayhead());
-            $i++;
+            ++$i;
         }
         $this->assertEquals(2, $i);
     }
@@ -70,7 +70,7 @@ class EventSourcedAggregateRootTest extends TestCase
         $messages = [];
         $playhead = -1;
         foreach ($events as $event) {
-            $playhead++;
+            ++$playhead;
             $messages[] = DomainMessage::recordNow(1, $playhead, new Metadata([]), $event);
         }
 

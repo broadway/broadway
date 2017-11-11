@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../bootstrap.php';
+require_once __DIR__.'/../bootstrap.php';
 
 /**
  * Invitation aggregate root.
@@ -21,7 +21,7 @@ class Invitation extends Broadway\EventSourcing\EventSourcedAggregateRoot
      */
     public static function invite($invitationId, $name)
     {
-        $invitation = new Invitation();
+        $invitation = new self();
 
         // After instantiation of the object we apply the "InvitedEvent".
         $invitation->apply(new InvitedEvent($invitationId, $name));
@@ -32,7 +32,7 @@ class Invitation extends Broadway\EventSourcing\EventSourcedAggregateRoot
     /**
      * Every aggregate root will expose its id.
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getAggregateRootId()
     {
@@ -125,6 +125,7 @@ class InvitationRepository extends Broadway\EventSourcing\EventSourcingRepositor
 abstract class InvitationCommand
 {
     public $invitationId;
+
     public function __construct($invitationId)
     {
         $this->invitationId = $invitationId;
@@ -133,6 +134,7 @@ abstract class InvitationCommand
 abstract class InvitationEvent
 {
     public $invitationId;
+
     public function __construct($invitationId)
     {
         $this->invitationId = $invitationId;
@@ -143,6 +145,7 @@ abstract class InvitationEvent
 class InviteCommand extends InvitationCommand
 {
     public $name;
+
     public function __construct($invitationId, $name)
     {
         parent::__construct($invitationId);
@@ -154,6 +157,7 @@ class InviteCommand extends InvitationCommand
 class InvitedEvent extends InvitationEvent
 {
     public $name;
+
     public function __construct($invitationId, $name)
     {
         parent::__construct($invitationId);

@@ -25,7 +25,7 @@ class ProjectorTest extends TestCase
     public function it_passes_the_event_and_domain_message()
     {
         $testProjector = new TestProjector();
-        $testEvent     = new TestEvent();
+        $testEvent = new TestEvent();
 
         $this->assertFalse($testProjector->isCalled());
 

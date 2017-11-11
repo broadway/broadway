@@ -23,7 +23,7 @@ class InMemoryRepositoryFactoryTest extends TestCase
     public function it_creates_an_in_memory_repository()
     {
         $repository = new InMemoryRepository();
-        $factory    = new InMemoryRepositoryFactory();
+        $factory = new InMemoryRepositoryFactory();
 
         $this->assertEquals($repository, $factory->create('test', 'class'));
     }

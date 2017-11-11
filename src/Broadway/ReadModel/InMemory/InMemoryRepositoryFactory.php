@@ -22,7 +22,7 @@ use Broadway\ReadModel\RepositoryFactory;
 final class InMemoryRepositoryFactory implements RepositoryFactory
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function create(string $name, string $class): Repository
     {

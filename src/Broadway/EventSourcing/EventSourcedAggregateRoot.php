@@ -27,7 +27,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
      * @var array
      */
     private $uncommittedEvents = [];
-    private $playhead          = -1; // 0-based playhead allows events[0] to contain playhead 0
+    private $playhead = -1; // 0-based playhead allows events[0] to contain playhead 0
 
     /**
      * Applies an event. The event is added to the AggregateRoot's list of uncommitted events.
@@ -38,7 +38,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     {
         $this->handleRecursively($event);
 
-        $this->playhead++;
+        ++$this->playhead;
         $this->uncommittedEvents[] = DomainMessage::recordNow(
             $this->getAggregateRootId(),
             $this->playhead,
@@ -48,7 +48,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUncommittedEvents(): DomainEventStream
     {
@@ -65,7 +65,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     public function initializeState(DomainEventStream $stream)
     {
         foreach ($stream as $message) {
-            $this->playhead++;
+            ++$this->playhead;
             $this->handleRecursively($message->getPayload());
         }
     }
@@ -79,7 +79,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     {
         $method = $this->getApplyMethod($event);
 
-        if (! method_exists($this, $method)) {
+        if (!method_exists($this, $method)) {
             return;
         }
 
@@ -87,7 +87,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function handleRecursively($event)
     {
@@ -100,7 +100,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     }
 
     /**
-     * Returns all child entities
+     * Returns all child entities.
      *
      * Override this method if your aggregate root contains child entities.
      *
@@ -115,7 +115,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     {
         $classParts = explode('\\', get_class($event));
 
-        return 'apply' . end($classParts);
+        return 'apply'.end($classParts);
     }
 
     /**

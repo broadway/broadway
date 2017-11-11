@@ -11,7 +11,7 @@ use Broadway\EventSourcing\EventSourcedAggregateRoot;
 /**
  * Creates aggregates by passing a DomainEventStream to the given public static method
  * which is itself responsible for returning an instance of itself.
- * E.g. (\Vendor\AggregateRoot::instantiateForReconstitution())->initializeState($domainEventStream);
+ * E.g. (\Vendor\AggregateRoot::instantiateForReconstitution())->initializeState($domainEventStream);.
  */
 final class NamedConstructorAggregateFactory implements AggregateFactory
 {
@@ -26,7 +26,7 @@ final class NamedConstructorAggregateFactory implements AggregateFactory
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function create(string $aggregateClass, DomainEventStream $domainEventStream): EventSourcedAggregateRoot
     {
@@ -37,7 +37,7 @@ final class NamedConstructorAggregateFactory implements AggregateFactory
             sprintf('NamedConstructorAggregateFactory expected %s to exist', $methodCall)
         );
 
-        $aggregate  = call_user_func($methodCall);
+        $aggregate = call_user_func($methodCall);
 
         Assert::isInstanceOf($aggregate, $aggregateClass);
 

@@ -24,8 +24,8 @@ class EventDispatcherTest extends TestCase
     public function setUp()
     {
         $this->dispatcher = new CallableEventDispatcher();
-        $this->listener1  = new TracableEventListener();
-        $this->listener2  = new TracableEventListener();
+        $this->listener1 = new TracableEventListener();
+        $this->listener2 = new TracableEventListener();
 
         $this->assertFalse($this->listener1->isCalled());
         $this->assertFalse($this->listener2->isCalled());

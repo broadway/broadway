@@ -22,11 +22,11 @@ use Broadway\CommandHandling\CommandHandler;
 final class TraceableCommandBus implements CommandBus
 {
     private $commandHandlers = [];
-    private $commands        = [];
-    private $record          = false;
+    private $commands = [];
+    private $record = false;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function subscribe(CommandHandler $handler)
     {
@@ -34,11 +34,11 @@ final class TraceableCommandBus implements CommandBus
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function dispatch($command)
     {
-        if (! $this->record) {
+        if (!$this->record) {
             return;
         }
 

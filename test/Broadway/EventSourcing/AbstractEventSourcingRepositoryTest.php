@@ -97,7 +97,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
     public function it_loads_an_aggregate()
     {
         $this->eventStore->append(42, new DomainEventStream([
-            DomainMessage::recordNow(42, 0, new Metadata([]), new DidNumberEvent(1337))
+            DomainMessage::recordNow(42, 0, new Metadata([]), new DidNumberEvent(1337)),
         ]));
 
         $aggregate = $this->repository->load(42);
@@ -146,7 +146,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
         $lastCall = $this->eventStreamDecorator->getLastCall();
 
         $this->assertEquals($aggregate->getAggregateRootId(), $lastCall['aggregateIdentifier']);
-        $this->assertEquals('\\' . get_class($aggregate), $lastCall['aggregateType']);
+        $this->assertEquals('\\'.get_class($aggregate), $lastCall['aggregateType']);
 
         $events = iterator_to_array($lastCall['eventStream']);
         $this->assertCount(1, $events);
@@ -175,7 +175,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
         $repository->save($aggregate);
 
         $metadata = $projector->getMetadata();
-        $data     = $metadata->serialize();
+        $data = $metadata->serialize();
 
         $this->assertArrayHasKey('decoration_test', $data);
         $this->assertEquals('I am a decorated test', $data['decoration_test']);
@@ -249,7 +249,7 @@ class TraceableEventstoreDecorator implements EventStreamDecorator
 
     public function getLastCall()
     {
-        if (! $this->isCalled()) {
+        if (!$this->isCalled()) {
             throw new RuntimeException('was never called');
         }
 

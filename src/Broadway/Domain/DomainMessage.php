@@ -52,10 +52,10 @@ final class DomainMessage
      */
     public function __construct($id, int $playhead, Metadata $metadata, $payload, DateTime $recordedOn)
     {
-        $this->id         = (string) $id;
-        $this->playhead   = $playhead;
-        $this->metadata   = $metadata;
-        $this->payload    = $payload;
+        $this->id = (string) $id;
+        $this->playhead = $playhead;
+        $this->metadata = $metadata;
+        $this->payload = $payload;
         $this->recordedOn = $recordedOn;
     }
 
@@ -117,7 +117,7 @@ final class DomainMessage
      */
     public static function recordNow($id, int $playhead, Metadata $metadata, $payload)
     {
-        return new DomainMessage($id, $playhead, $metadata, $payload, DateTime::now());
+        return new self($id, $playhead, $metadata, $payload, DateTime::now());
     }
 
     /**
@@ -131,6 +131,6 @@ final class DomainMessage
     {
         $newMetadata = $this->metadata->merge($metadata);
 
-        return new DomainMessage($this->id, $this->playhead, $newMetadata, $this->payload, $this->recordedOn);
+        return new self($this->id, $this->playhead, $newMetadata, $this->payload, $this->recordedOn);
     }
 }

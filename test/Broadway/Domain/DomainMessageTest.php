@@ -22,20 +22,20 @@ class DomainMessageTest extends TestCase
      */
     public function it_has_getters()
     {
-        $id       = 'Hi thur';
-        $payload  = new SomeEvent();
+        $id = 'Hi thur';
+        $payload = new SomeEvent();
         $playhead = 15;
         $metadata = new Metadata(['meta']);
-        $type     = 'Broadway.Domain.SomeEvent';
+        $type = 'Broadway.Domain.SomeEvent';
 
         $domainMessage = DomainMessage::recordNow($id, $playhead, $metadata, $payload);
 
-        $this->assertEquals($id,       $domainMessage->getId());
-        $this->assertEquals($payload,  $domainMessage->getPayload());
+        $this->assertEquals($id, $domainMessage->getId());
+        $this->assertEquals($payload, $domainMessage->getPayload());
         $this->assertEquals($playhead, $domainMessage->getPlayhead());
         $this->assertEquals($metadata, $domainMessage->getMetadata());
         $this->assertEquals($metadata, $domainMessage->getMetadata());
-        $this->assertEquals($type,     $domainMessage->getType());
+        $this->assertEquals($type, $domainMessage->getType());
     }
 
     /**

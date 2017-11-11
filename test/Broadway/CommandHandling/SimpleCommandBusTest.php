@@ -70,7 +70,7 @@ class SimpleCommandBusTest extends TestCase
         $command2 = ['foo' => 'bas'];
 
         $commandHandler = $this->getMockBuilder('Broadway\CommandHandling\SimpleCommandHandler')->getMock();
-        $simpleHandler  = $this->getMockBuilder('Broadway\CommandHandling\SimpleCommandHandler')->getMock();
+        $simpleHandler = $this->getMockBuilder('Broadway\CommandHandling\SimpleCommandHandler')->getMock();
 
         $commandHandler
             ->expects($this->at(0))
@@ -121,13 +121,13 @@ class SimpleCommandBusTestHandler implements CommandHandler
 
     public function __construct($commandBus, $dispatchableCommand)
     {
-        $this->commandBus          = $commandBus;
+        $this->commandBus = $commandBus;
         $this->dispatchableCommand = $dispatchableCommand;
     }
 
     public function handle($command)
     {
-        if (! $this->handled) {
+        if (!$this->handled) {
             $this->commandBus->dispatch($this->dispatchableCommand);
             $this->handled = true;
         }

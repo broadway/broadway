@@ -35,7 +35,6 @@ interface Repository
      * @throws AggregateNotFoundException
      *
      * @return AggregateRoot
-     *
      */
     public function load($id): AggregateRoot;
 }

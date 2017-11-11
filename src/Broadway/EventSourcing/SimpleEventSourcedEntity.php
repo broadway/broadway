@@ -24,7 +24,7 @@ abstract class SimpleEventSourcedEntity implements EventSourcedEntity
     private $aggregateRoot;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function handleRecursively($event)
     {
@@ -37,7 +37,7 @@ abstract class SimpleEventSourcedEntity implements EventSourcedEntity
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function registerAggregateRoot(EventSourcedAggregateRoot $aggregateRoot)
     {
@@ -62,7 +62,7 @@ abstract class SimpleEventSourcedEntity implements EventSourcedEntity
     {
         $method = $this->getApplyMethod($event);
 
-        if (! method_exists($this, $method)) {
+        if (!method_exists($this, $method)) {
             return;
         }
 
@@ -70,7 +70,7 @@ abstract class SimpleEventSourcedEntity implements EventSourcedEntity
     }
 
     /**
-     * Returns all child entities
+     * Returns all child entities.
      *
      * @return EventSourcedEntity[]
      */
@@ -83,6 +83,6 @@ abstract class SimpleEventSourcedEntity implements EventSourcedEntity
     {
         $classParts = explode('\\', get_class($event));
 
-        return 'apply' . end($classParts);
+        return 'apply'.end($classParts);
     }
 }

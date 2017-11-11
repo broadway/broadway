@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../bootstrap.php';
+require_once __DIR__.'/../bootstrap.php';
 
 /*
  * Some setup and helpers. Real example below. ;)
@@ -42,14 +42,14 @@ class ExampleFailureCommand extends BaseCommand
 }
 
 // Setup the system to handle commands
-$commandHandler   = new ExampleCommandHandler();
-$eventDispatcher  = new Broadway\EventDispatcher\CallableEventDispatcher();
+$commandHandler = new ExampleCommandHandler();
+$eventDispatcher = new Broadway\EventDispatcher\CallableEventDispatcher();
 $simpleCommandBus = new Broadway\CommandHandling\SimpleCommandBus();
-$commandBus       = new Broadway\CommandHandling\EventDispatchingCommandBus($simpleCommandBus, $eventDispatcher);
+$commandBus = new Broadway\CommandHandling\EventDispatchingCommandBus($simpleCommandBus, $eventDispatcher);
 $commandBus->subscribe($commandHandler);
 
 // Dependencies of auditing logger
-$logger            = new StdoutLogger();
+$logger = new StdoutLogger();
 $commandSerializer = new Broadway\Auditing\NullByteCommandSerializer();
 
 /*

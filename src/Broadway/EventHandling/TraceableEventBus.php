@@ -23,7 +23,7 @@ final class TraceableEventBus implements EventBus
 {
     private $eventBus;
     private $recorded = [];
-    private $tracing  = false;
+    private $tracing = false;
 
     public function __construct(EventBus $eventBus)
     {
@@ -31,7 +31,7 @@ final class TraceableEventBus implements EventBus
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function subscribe(EventListener $eventListener)
     {
@@ -39,13 +39,13 @@ final class TraceableEventBus implements EventBus
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function publish(DomainEventStream $domainMessages)
     {
         $this->eventBus->publish($domainMessages);
 
-        if (! $this->tracing) {
+        if (!$this->tracing) {
             return;
         }
 
