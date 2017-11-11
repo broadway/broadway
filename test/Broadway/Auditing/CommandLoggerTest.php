@@ -18,7 +18,7 @@ use Broadway\TestCase;
 class CommandLoggerTest extends TestCase
 {
     /**
-     * @var LoggerInterface
+     * @var TraceableLogger
      */
     private $logger;
 
@@ -33,7 +33,7 @@ class CommandLoggerTest extends TestCase
     private $commandAuditLogger;
 
     /**
-     * @var CommandSerializer|\PHPUnit_Framework_MockObject_MockObject
+     * @var CommandSerializer
      */
     private $commandSerializer;
 

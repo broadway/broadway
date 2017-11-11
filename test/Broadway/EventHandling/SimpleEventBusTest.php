@@ -144,10 +144,7 @@ class SimpleEventBusTest extends TestCase
         $this->eventBus->publish($domainEventStream2);
     }
 
-    /**
-     * @return EventListener|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private function createEventListenerMock()
+    private function createEventListenerMock(): \PHPUnit_Framework_MockObject_MockObject
     {
         return $this->createMock(EventListener::class);
     }

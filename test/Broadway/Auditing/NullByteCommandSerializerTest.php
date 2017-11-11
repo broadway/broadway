@@ -18,7 +18,7 @@ use Broadway\TestCase;
 class NullByteCommandSerializerTest extends TestCase
 {
     /**
-     * @var CommandSerializer
+     * @var NullByteCommandSerializer
      */
     private $commandSerializer;
 

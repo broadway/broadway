@@ -103,11 +103,7 @@ class SimpleCommandBusTest extends TestCase
         $this->commandBus->dispatch($command2);
     }
 
-    /**
-     * @param $expectedCommand
-     * @return SimpleCommandHandler|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private function createCommandHandlerMock($expectedCommand)
+    private function createCommandHandlerMock(array $expectedCommand): \PHPUnit_Framework_MockObject_MockObject
     {
         $mock = $this->createMock(CommandHandler::class);
 
