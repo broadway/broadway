@@ -66,7 +66,7 @@ final class DateTime
     /**
      * @return bool
      */
-    public function equals(DateTime $dateTime): bool
+    public function equals(self $dateTime): bool
     {
         return $this->toString() === $dateTime->toString();
     }
@@ -76,7 +76,7 @@ final class DateTime
      *
      * @return bool
      */
-    public function comesAfter(DateTime $dateTime): bool
+    public function comesAfter(self $dateTime): bool
     {
         return $this->dateTime > $dateTime->dateTime;
     }

@@ -51,7 +51,7 @@ final class Metadata implements Serializable
      *
      * @return Metadata a new instance
      */
-    public function merge(Metadata $otherMetadata): self
+    public function merge(self $otherMetadata): self
     {
         return new self(array_merge($this->values, $otherMetadata->values));
     }
