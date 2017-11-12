@@ -167,7 +167,7 @@ class ReflectionSerializer implements Serializer
      *
      * @return null|ReflectionProperty
      */
-    private function findProperty(array $properties, $name)
+    private function findProperty(array $properties, string $name)
     {
         foreach ($properties as $property) {
             if ($property->getName() === $name) {

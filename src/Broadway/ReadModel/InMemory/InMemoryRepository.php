@@ -31,7 +31,7 @@ final class InMemoryRepository implements Repository, Transferable
      */
     public function save(Identifiable $model)
     {
-        $this->data[(string) $model->getId()] = $model;
+        $this->data[$model->getId()] = $model;
     }
 
     /**

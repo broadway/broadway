@@ -58,7 +58,7 @@ final class DateTime
      *
      * @return DateTime
      */
-    public static function fromString($dateTimeString): self
+    public static function fromString(string $dateTimeString): self
     {
         return new self(new DateTimeImmutable($dateTimeString));
     }

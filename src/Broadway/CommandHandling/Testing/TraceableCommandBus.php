@@ -45,15 +45,12 @@ final class TraceableCommandBus implements CommandBus
         $this->commands[] = $command;
     }
 
-    /**
-     * @return array
-     */
     public function getRecordedCommands(): array
     {
         return $this->commands;
     }
 
-    public function record()
+    public function record(): bool
     {
         return $this->record = true;
     }
