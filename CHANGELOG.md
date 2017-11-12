@@ -1,5 +1,20 @@
 # Changelog
 
+## v2.0.x
+
+#### BC breaks
+
+* [4e6fe27](http://github.com/broadway/broadway/commit/4e6fe27eb4c35d67fc5a2cffccfca62000f9f929) Finalized concrete classes (Nikita Konstantinov)
+* [5c3cc30](http://github.com/broadway/broadway/commit/5c3cc30a03ef92358745cb9bdfcae46c554195b4) required PHP 7 (othillo)
+
+#### Other changes
+
+* [f74c855](http://github.com/broadway/broadway/commit/f74c85589b9ad096a2e8bbab917fca773898cd13) Added a closure command handler (Francesco Trucchia)
+* [b21c245](http://github.com/broadway/broadway/commit/b21c245f4788c62df4fa5200e2f313481521a589) Provide access to Metadata values (Reen Lokum)
+* [05e88ce](http://github.com/broadway/broadway/commit/05e88ce83837bea224b65df70f9ebceebd39ed90) Moved to Symfony coding standards (Reen Lokum)
+* [df69c8d](http://github.com/broadway/broadway/commit/df69c8d1996fcb9786635ef7bfadb4873c9be3cd) Added reflection serializer (Alexander Bachmann)
+* [8ee2fd2](http://github.com/broadway/broadway/commit/8ee2fd2ebb2adcb144f9f8160e106f3b18498036) required PHPUnit 6 (Alexander Bachmann)
+
 ## v1.0.x
 
 #### BC breaks
