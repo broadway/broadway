@@ -15,7 +15,7 @@ namespace Broadway\Serializer\Testing;
 
 use Broadway\Serializer\Serializable;
 use Broadway\Serializer\SimpleInterfaceSerializer;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Helper to test if events implement the Serializable contract.

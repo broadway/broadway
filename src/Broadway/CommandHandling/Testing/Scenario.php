@@ -18,7 +18,7 @@ use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventStore\TraceableEventStore;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Helper testing scenario to test command handlers.
@@ -38,7 +38,7 @@ class Scenario
     private $aggregateId;
 
     public function __construct(
-        PHPUnit_Framework_TestCase $testCase,
+        TestCase $testCase,
         TraceableEventStore $eventStore,
         CommandHandler $commandHandler
     ) {
