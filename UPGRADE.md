@@ -1,3 +1,14 @@
+# Upgrade to 2.0
+
+## Concrete classes are made final.
+
+As it is no longer possible to extend these classes it is necessary to use composition for code reuse.
+
+## PHP 7
+
+Many interfaces have updated method signatures because of added (return) type hints. When implementing
+these interfaces the method signatures must adhere to the parent's signatures.
+
 # Upgrade to 1.0
 
 ## Symfony bundle, DBAL event store, Elasticsearch read models and saga are moved to separate repositories.
