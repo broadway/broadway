@@ -53,6 +53,11 @@
             "Broadway\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-0": {
+            "Broadway\\": "test/"
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "2.0.x-dev"
