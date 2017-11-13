@@ -39,6 +39,9 @@ abstract class SimpleCommandHandler implements CommandHandler
         $this->$method($command);
     }
 
+    /**
+     * @param mixed $command
+     */
     private function getHandleMethod($command): string
     {
         if (!is_object($command)) {

@@ -66,6 +66,9 @@ final class CommandLogger
         $this->logger->info(json_encode($messageData));
     }
 
+    /**
+     * @param mixed $command
+     */
     private function getCommandData($command): array
     {
         return [

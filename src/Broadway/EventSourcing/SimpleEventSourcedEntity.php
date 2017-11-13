@@ -48,6 +48,9 @@ abstract class SimpleEventSourcedEntity implements EventSourcedEntity
         $this->aggregateRoot = $aggregateRoot;
     }
 
+    /**
+     * @param mixed $event
+     */
     protected function apply($event)
     {
         $this->aggregateRoot->apply($event);
@@ -79,6 +82,9 @@ abstract class SimpleEventSourcedEntity implements EventSourcedEntity
         return [];
     }
 
+    /**
+     * @param mixed $event
+     */
     private function getApplyMethod($event): string
     {
         $classParts = explode('\\', get_class($event));

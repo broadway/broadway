@@ -87,7 +87,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed $event
      */
     protected function handleRecursively($event)
     {
@@ -111,6 +111,9 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
         return [];
     }
 
+    /**
+     * @param mixed $event
+     */
     private function getApplyMethod($event): string
     {
         $classParts = explode('\\', get_class($event));

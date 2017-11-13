@@ -36,6 +36,9 @@ abstract class Projector implements EventListener
         $this->$method($event, $domainMessage);
     }
 
+    /**
+     * @param mixed $event
+     */
     private function getHandleMethod($event): string
     {
         $classParts = explode('\\', get_class($event));

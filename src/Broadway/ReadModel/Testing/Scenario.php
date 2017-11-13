@@ -114,7 +114,11 @@ class Scenario
         return $this;
     }
 
-    private function createDomainMessageForEvent($event, DateTime $occurredOn = null): DomainMessage
+    /**
+     * @param mixed $event
+     * @param ?DateTime $occurredOn
+     */
+    private function createDomainMessageForEvent($event, ?DateTime $occurredOn): DomainMessage
     {
         ++$this->playhead;
 
