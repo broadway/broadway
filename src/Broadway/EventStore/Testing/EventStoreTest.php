@@ -96,12 +96,12 @@ abstract class EventStoreTest extends TestCase
      */
     public function it_throws_an_exception_when_appending_a_duplicate_playhead($id)
     {
-        $eventStream = new DomainEventStream([$this->createDomainMessage(42, 0)]);
+        $eventStream = new DomainEventStream([$this->createDomainMessage($id, 0)]);
 
         $this->expectException(DuplicatePlayheadException::class);
 
-        $this->eventStore->append(42, $eventStream);
-        $this->eventStore->append(42, $eventStream);
+        $this->eventStore->append($id, $eventStream);
+        $this->eventStore->append($id, $eventStream);
     }
 
     /**
