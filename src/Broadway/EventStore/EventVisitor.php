@@ -17,5 +17,5 @@ use Broadway\Domain\DomainMessage;
 
 interface EventVisitor
 {
-    public function doWithEvent(DomainMessage $domainMessage);
+    public function doWithEvent(DomainMessage $domainMessage): void;
 }

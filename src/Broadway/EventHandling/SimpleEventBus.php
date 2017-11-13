@@ -27,7 +27,7 @@ final class SimpleEventBus implements EventBus
     /**
      * {@inheritdoc}
      */
-    public function subscribe(EventListener $eventListener)
+    public function subscribe(EventListener $eventListener): void
     {
         $this->eventListeners[] = $eventListener;
     }
@@ -35,7 +35,7 @@ final class SimpleEventBus implements EventBus
     /**
      * {@inheritdoc}
      */
-    public function publish(DomainEventStream $domainMessages)
+    public function publish(DomainEventStream $domainMessages): void
     {
         foreach ($domainMessages as $domainMessage) {
             $this->queue[] = $domainMessage;

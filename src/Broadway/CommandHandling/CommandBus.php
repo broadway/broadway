@@ -23,10 +23,10 @@ interface CommandBus
      *
      * @param mixed $command
      */
-    public function dispatch($command);
+    public function dispatch($command): void;
 
     /**
      * Subscribes the command handler to this CommandBus.
      */
-    public function subscribe(CommandHandler $handler);
+    public function subscribe(CommandHandler $handler): void;
 }

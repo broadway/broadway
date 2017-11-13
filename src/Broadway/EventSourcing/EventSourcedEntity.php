@@ -23,7 +23,7 @@ interface EventSourcedEntity
      *
      * @param $event
      */
-    public function handleRecursively($event);
+    public function handleRecursively($event): void;
 
     /**
      * Registers aggregateRoot as this EventSourcedEntity's aggregate root.
@@ -32,5 +32,5 @@ interface EventSourcedEntity
      *
      * @throws AggregateRootAlreadyRegisteredException
      */
-    public function registerAggregateRoot(EventSourcedAggregateRoot $aggregateRoot);
+    public function registerAggregateRoot(EventSourcedAggregateRoot $aggregateRoot): void;
 }

@@ -23,5 +23,5 @@ interface EventListener
     /**
      * @param DomainMessage $domainMessage
      */
-    public function handle(DomainMessage $domainMessage);
+    public function handle(DomainMessage $domainMessage): void;
 }

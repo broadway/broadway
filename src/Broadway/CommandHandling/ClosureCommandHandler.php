@@ -29,7 +29,7 @@ class ClosureCommandHandler implements CommandHandler
     /**
      * @param \Closure $handler
      */
-    public function add(\Closure $handler)
+    public function add(\Closure $handler): void
     {
         $reflection = new \ReflectionFunction($handler);
         $reflectionParams = $reflection->getParameters();
@@ -46,7 +46,7 @@ class ClosureCommandHandler implements CommandHandler
     /**
      * @param mixed $command
      */
-    public function handle($command)
+    public function handle($command): void
     {
         if (!is_object($command)) {
             throw new CommandNotAnObjectException();

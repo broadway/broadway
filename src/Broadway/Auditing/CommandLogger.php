@@ -35,7 +35,7 @@ final class CommandLogger
     /**
      * @param mixed $command Command that was executed successfully
      */
-    public function onCommandHandlingSuccess($command)
+    public function onCommandHandlingSuccess($command): void
     {
         $messageData = [
             'status' => 'success',
@@ -49,7 +49,7 @@ final class CommandLogger
      * @param mixed     $command   Command that errored
      * @param Exception $exception Exception that occured during the execution of the command
      */
-    public function onCommandHandlingFailure($command, Exception $exception)
+    public function onCommandHandlingFailure($command, Exception $exception): void
     {
         $messageData = [
             'status' => 'failure',

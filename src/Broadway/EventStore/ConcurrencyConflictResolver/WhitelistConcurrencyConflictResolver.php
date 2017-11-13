@@ -24,7 +24,7 @@ final class WhitelistConcurrencyConflictResolver implements ConcurrencyConflictR
      * @param string $eventClass1
      * @param string $eventClass2
      */
-    public function registerIndependentEvents(string $eventClass1, string $eventClass2)
+    public function registerIndependentEvents(string $eventClass1, string $eventClass2): void
     {
         Assert::classExists($eventClass1, $eventClass1.' is not a class');
         Assert::classExists($eventClass2, $eventClass2.' is not a class');

@@ -41,7 +41,7 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
     /**
      * {@inheritdoc}
      */
-    public function append($id, DomainEventStream $uncommittedEvents)
+    public function append($id, DomainEventStream $uncommittedEvents): void
     {
         try {
             $this->eventStore->append($id, $uncommittedEvents);

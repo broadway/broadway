@@ -24,7 +24,7 @@ abstract class Projector implements EventListener
     /**
      * {@inheritdoc}
      */
-    public function handle(DomainMessage $domainMessage)
+    public function handle(DomainMessage $domainMessage): void
     {
         $event = $domainMessage->getPayload();
         $method = $this->getHandleMethod($event);

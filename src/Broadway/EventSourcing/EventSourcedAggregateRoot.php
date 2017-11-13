@@ -34,7 +34,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
      *
      * @param $event
      */
-    public function apply($event)
+    public function apply($event): void
     {
         $this->handleRecursively($event);
 
@@ -62,7 +62,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     /**
      * Initializes the aggregate using the given "history" of events.
      */
-    public function initializeState(DomainEventStream $stream)
+    public function initializeState(DomainEventStream $stream): void
     {
         foreach ($stream as $message) {
             ++$this->playhead;
@@ -75,7 +75,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
      *
      * @param $event
      */
-    protected function handle($event)
+    protected function handle($event): void
     {
         $method = $this->getApplyMethod($event);
 
@@ -89,7 +89,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     /**
      * @param mixed $event
      */
-    protected function handleRecursively($event)
+    protected function handleRecursively($event): void
     {
         $this->handle($event);
 

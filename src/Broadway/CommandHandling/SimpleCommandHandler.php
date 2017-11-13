@@ -28,7 +28,7 @@ abstract class SimpleCommandHandler implements CommandHandler
     /**
      * {@inheritdoc}
      */
-    public function handle($command)
+    public function handle($command): void
     {
         $method = $this->getHandleMethod($command);
 

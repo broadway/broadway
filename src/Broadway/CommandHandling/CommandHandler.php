@@ -21,5 +21,5 @@ interface CommandHandler
     /**
      * @param mixed $command
      */
-    public function handle($command);
+    public function handle($command): void;
 }

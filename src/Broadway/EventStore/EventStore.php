@@ -42,5 +42,5 @@ interface EventStore
      *
      * @throws DuplicatePlayheadException
      */
-    public function append($id, DomainEventStream $eventStream);
+    public function append($id, DomainEventStream $eventStream): void;
 }

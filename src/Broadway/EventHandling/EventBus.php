@@ -25,12 +25,12 @@ interface EventBus
      *
      * @param EventListener $eventListener
      */
-    public function subscribe(EventListener $eventListener);
+    public function subscribe(EventListener $eventListener): void;
 
     /**
      * Publishes the events from the domain event stream to the listeners.
      *
      * @param DomainEventStream $domainMessages
      */
-    public function publish(DomainEventStream $domainMessages);
+    public function publish(DomainEventStream $domainMessages): void;
 }

@@ -18,7 +18,7 @@ namespace Broadway\ReadModel;
  */
 interface Repository
 {
-    public function save(Identifiable $data);
+    public function save(Identifiable $data): void;
 
     /**
      * @param mixed $id
@@ -40,5 +40,5 @@ interface Repository
     /**
      * @param mixed $id
      */
-    public function remove($id);
+    public function remove($id): void;
 }

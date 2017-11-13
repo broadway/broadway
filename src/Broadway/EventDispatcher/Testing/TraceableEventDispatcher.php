@@ -19,12 +19,12 @@ final class TraceableEventDispatcher implements EventDispatcher
 {
     private $dispatchedEvents = [];
 
-    public function dispatch(string $eventName, array $arguments)
+    public function dispatch(string $eventName, array $arguments): void
     {
         $this->dispatchedEvents[] = ['event' => $eventName, 'arguments' => $arguments];
     }
 
-    public function addListener(string $eventName, callable $callable)
+    public function addListener(string $eventName, callable $callable): void
     {
         return;
     }

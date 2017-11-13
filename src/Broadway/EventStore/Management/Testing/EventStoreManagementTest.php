@@ -224,7 +224,7 @@ class RecordingEventVisitor implements EventVisitor
      */
     private $visitedEvents;
 
-    public function doWithEvent(DomainMessage $domainMessage)
+    public function doWithEvent(DomainMessage $domainMessage): void
     {
         $this->visitedEvents[] = $domainMessage;
     }
