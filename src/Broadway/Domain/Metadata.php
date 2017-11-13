@@ -51,6 +51,8 @@ final class Metadata implements Serializable
 
     /**
      * Returns an array with all metadata.
+     *
+     * @return mixed[]
      */
     public function all(): array
     {

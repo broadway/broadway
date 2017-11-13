@@ -47,7 +47,7 @@ final class TraceableEventStore implements EventStore
     }
 
     /**
-     * @return array Appended events
+     * @return mixed[] Appended events
      */
     public function getEvents(): array
     {

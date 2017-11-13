@@ -29,6 +29,9 @@ final class TraceableEventDispatcher implements EventDispatcher
         return;
     }
 
+    /**
+     * @return mixed[]
+     */
     public function getDispatchedEvents(): array
     {
         return $this->dispatchedEvents;

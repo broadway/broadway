@@ -24,13 +24,7 @@ final class Criteria
     /**
      * Create a new criteria with the specified aggregate root types.
      *
-<<<<<<< HEAD
-     * @param array $aggregateRootTypes
-     *
-     * @return Criteria
-=======
      * @param string[] $aggregateRootTypes
->>>>>>> bbf981b... removed superfluous docblocks
      */
     public function withAggregateRootTypes(array $aggregateRootTypes): self
     {
@@ -42,6 +36,8 @@ final class Criteria
 
     /**
      * Create a new criteria with the specified aggregate root IDs.
+     *
+     * @param mixed[] $aggregateRootIds
      */
     public function withAggregateRootIds(array $aggregateRootIds): self
     {
@@ -77,7 +73,7 @@ final class Criteria
     /**
      * Get the aggregate root IDs for the criteria.
      *
-     * @return array
+     * @return mixed[]
      */
     public function getAggregateRootIds(): array
     {
@@ -87,7 +83,7 @@ final class Criteria
     /**
      * Get the event types for the criteria.
      *
-     * @return array
+     * @return mixed[]
      */
     public function getEventTypes(): array
     {

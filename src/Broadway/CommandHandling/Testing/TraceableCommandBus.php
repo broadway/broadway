@@ -45,6 +45,9 @@ final class TraceableCommandBus implements CommandBus
         $this->commands[] = $command;
     }
 
+    /**
+     * @return mixed[]
+     */
     public function getRecordedCommands(): array
     {
         return $this->commands;

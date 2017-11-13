@@ -25,7 +25,7 @@ final class MetadataEnrichingEventStreamDecorator implements EventStreamDecorato
     private $metadataEnrichers;
 
     /**
-     * @param array $metadataEnrichers
+     * @param MetadataEnricher[]
      */
     public function __construct(array $metadataEnrichers = [])
     {

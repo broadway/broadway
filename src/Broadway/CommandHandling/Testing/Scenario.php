@@ -89,7 +89,7 @@ class Scenario
     }
 
     /**
-     * @param array $events
+     * @param mixed[] $events
      */
     public function then(array $events): self
     {

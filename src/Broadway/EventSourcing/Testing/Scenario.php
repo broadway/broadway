@@ -53,6 +53,9 @@ class Scenario
         return $this;
     }
 
+    /**
+     * @param mixed[] $givens
+     */
     public function given(?array $givens): self
     {
         if (null === $givens) {
@@ -92,6 +95,9 @@ class Scenario
         return $this;
     }
 
+    /**
+     * @param mixed[] $thens
+     */
     public function then(array $thens): self
     {
         $this->testCase->assertEquals($thens, $this->getEvents());
@@ -100,7 +106,7 @@ class Scenario
     }
 
     /**
-     * @return array Payloads of the recorded events
+     * @return mixed[] Payloads of the recorded events
      */
     private function getEvents(): array
     {

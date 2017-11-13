@@ -59,7 +59,7 @@ abstract class SimpleEventSourcedEntity implements EventSourcedEntity
     /**
      * Handles event if capable.
      *
-     * @param $event
+     * @param mixed $event
      */
     protected function handle($event): void
     {

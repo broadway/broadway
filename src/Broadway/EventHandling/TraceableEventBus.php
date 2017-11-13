@@ -55,7 +55,7 @@ final class TraceableEventBus implements EventBus
     }
 
     /**
-     * @return array Payloads of the recorded events
+     * @return mixed[] Payloads of the recorded events
      */
     public function getEvents(): array
     {
