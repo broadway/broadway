@@ -22,10 +22,8 @@ interface Repository
 
     /**
      * @param mixed $id
-     *
-     * @return Identifiable|null
      */
-    public function find($id);
+    public function find($id): ?Identifiable;
 
     /**
      * @param array $fields

@@ -37,7 +37,7 @@ final class InMemoryRepository implements Repository, Transferable
     /**
      * {@inheritdoc}
      */
-    public function find($id)
+    public function find($id): ?Identifiable
     {
         $id = (string) $id;
         if (isset($this->data[$id])) {
