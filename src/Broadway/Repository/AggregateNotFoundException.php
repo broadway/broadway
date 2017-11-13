@@ -24,8 +24,6 @@ final class AggregateNotFoundException extends RuntimeException
     /**
      * @param mixed     $id
      * @param Exception $previous
-     *
-     * @return AggregateNotFoundException
      */
     public static function create($id, Exception $previous = null): self
     {

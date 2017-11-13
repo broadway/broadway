@@ -38,11 +38,6 @@ class Scenario
     private $aggregateRootInstance;
     private $aggregateId;
 
-    /**
-     * @param TestCase         $testCase
-     * @param AggregateFactory $factory
-     * @param string           $aggregateRootClass
-     */
     public function __construct(TestCase $testCase, AggregateFactory $factory, string $aggregateRootClass)
     {
         $this->testCase = $testCase;
@@ -51,11 +46,6 @@ class Scenario
         $this->aggregateId = '1';
     }
 
-    /**
-     * @param string $aggregateId
-     *
-     * @return Scenario
-     */
     public function withAggregateId(string $aggregateId): self
     {
         $this->aggregateId = $aggregateId;
@@ -63,12 +53,7 @@ class Scenario
         return $this;
     }
 
-    /**
-     * @param array $givens
-     *
-     * @return Scenario
-     */
-    public function given(array $givens = null): self
+    public function given(?array $givens): self
     {
         if (null === $givens) {
             return $this;
@@ -90,11 +75,6 @@ class Scenario
         return $this;
     }
 
-    /**
-     * @param callable $when
-     *
-     * @return Scenario
-     */
     public function when(callable $when): self
     {
         if (!is_callable($when)) {
@@ -112,11 +92,6 @@ class Scenario
         return $this;
     }
 
-    /**
-     * @param array $thens
-     *
-     * @return Scenario
-     */
     public function then(array $thens): self
     {
         $this->testCase->assertEquals($thens, $this->getEvents());

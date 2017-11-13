@@ -21,14 +21,12 @@ interface EventSourcedEntity
     /**
      * Recursively handles $event.
      *
-     * @param $event
+     * @param mixed $event
      */
     public function handleRecursively($event): void;
 
     /**
      * Registers aggregateRoot as this EventSourcedEntity's aggregate root.
-     *
-     * @param EventSourcedAggregateRoot $aggregateRoot
      *
      * @throws AggregateRootAlreadyRegisteredException
      */

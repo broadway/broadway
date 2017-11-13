@@ -26,9 +26,6 @@ class ClosureCommandHandler implements CommandHandler
      */
     private $handlers = [];
 
-    /**
-     * @param \Closure $handler
-     */
     public function add(\Closure $handler): void
     {
         $reflection = new \ReflectionFunction($handler);

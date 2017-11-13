@@ -48,11 +48,6 @@ class Scenario
         $this->aggregateId = '1';
     }
 
-    /**
-     * @param string $aggregateId
-     *
-     * @return Scenario
-     */
     public function withAggregateId(string $aggregateId): self
     {
         $this->aggregateId = $aggregateId;
@@ -61,11 +56,9 @@ class Scenario
     }
 
     /**
-     * @param array $events
-     *
-     * @return Scenario
+     * @param mixed[] $events
      */
-    public function given(array $events = null): self
+    public function given(?array $events): self
     {
         if (null === $events) {
             return $this;
@@ -85,8 +78,6 @@ class Scenario
 
     /**
      * @param mixed $command
-     *
-     * @return Scenario
      */
     public function when($command): self
     {
@@ -99,8 +90,6 @@ class Scenario
 
     /**
      * @param array $events
-     *
-     * @return Scenario
      */
     public function then(array $events): self
     {

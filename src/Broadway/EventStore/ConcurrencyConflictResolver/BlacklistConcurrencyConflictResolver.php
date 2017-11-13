@@ -20,10 +20,6 @@ final class BlacklistConcurrencyConflictResolver implements ConcurrencyConflictR
 {
     private $conflictingEvents = [];
 
-    /**
-     * @param string $eventClass1
-     * @param string $eventClass2
-     */
     public function registerConflictingEvents(string $eventClass1, string $eventClass2): void
     {
         Assert::classExists($eventClass1, $eventClass1.' is not a class');

@@ -112,8 +112,6 @@ final class DomainMessage
      * @param int      $playhead
      * @param Metadata $metadata
      * @param mixed    $payload
-     *
-     * @return DomainMessage
      */
     public static function recordNow($id, int $playhead, Metadata $metadata, $payload): self
     {
@@ -124,8 +122,6 @@ final class DomainMessage
      * Creates a new DomainMessage with all things equal, except metadata.
      *
      * @param Metadata $metadata Metadata to add
-     *
-     * @return DomainMessage
      */
     public function andMetadata(Metadata $metadata): self
     {

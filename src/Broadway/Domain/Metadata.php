@@ -35,8 +35,6 @@ final class Metadata implements Serializable
      *
      * @param mixed $key
      * @param mixed $value
-     *
-     * @return Metadata
      */
     public static function kv($key, $value): self
     {
@@ -45,10 +43,6 @@ final class Metadata implements Serializable
 
     /**
      * Merges the values of this and the other instance.
-     *
-     * @param Metadata $otherMetadata
-     *
-     * @return Metadata a new instance
      */
     public function merge(self $otherMetadata): self
     {
@@ -57,8 +51,6 @@ final class Metadata implements Serializable
 
     /**
      * Returns an array with all metadata.
-     *
-     * @return array
      */
     public function all(): array
     {
@@ -67,8 +59,6 @@ final class Metadata implements Serializable
 
     /**
      * Get a specific metadata value based on key.
-     *
-     * @param string $key
      *
      * @return mixed
      */
