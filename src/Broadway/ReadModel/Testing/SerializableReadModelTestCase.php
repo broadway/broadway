@@ -16,7 +16,7 @@ namespace Broadway\ReadModel\Testing;
 use Broadway\ReadModel\SerializableReadModel;
 use Broadway\Serializer\Serializable;
 use Broadway\Serializer\SimpleInterfaceSerializer;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Base test case that can be used to test a serializable read model.

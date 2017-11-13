@@ -17,7 +17,7 @@ use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventSourcing\AggregateFactory\AggregateFactory;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Helper testing scenario to test command event sourced aggregate roots.
@@ -39,11 +39,11 @@ class Scenario
     private $aggregateId;
 
     /**
-     * @param PHPUnit_Framework_TestCase $testCase
-     * @param AggregateFactory           $factory
-     * @param string                     $aggregateRootClass
+     * @param TestCase         $testCase
+     * @param AggregateFactory $factory
+     * @param string           $aggregateRootClass
      */
-    public function __construct(PHPUnit_Framework_TestCase $testCase, AggregateFactory $factory, string $aggregateRootClass)
+    public function __construct(TestCase $testCase, AggregateFactory $factory, string $aggregateRootClass)
     {
         $this->testCase = $testCase;
         $this->factory = $factory;

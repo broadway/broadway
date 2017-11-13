@@ -15,7 +15,7 @@ namespace Broadway\ReadModel\Testing;
 
 use Broadway\ReadModel\InMemory\InMemoryRepository;
 use Broadway\ReadModel\Projector;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Base test case that can be used to set up a projector scenario.

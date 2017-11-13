@@ -18,7 +18,7 @@ use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventHandling\EventListener;
 use Broadway\ReadModel\Repository;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Helper testing scenario to test projects.
@@ -40,7 +40,7 @@ class Scenario
     private $dateTimeGenerator;
 
     public function __construct(
-        PHPUnit_Framework_TestCase $testCase,
+        TestCase $testCase,
         Repository $repository,
         EventListener $projector
     ) {
