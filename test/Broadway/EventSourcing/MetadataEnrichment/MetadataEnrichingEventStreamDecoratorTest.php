@@ -16,7 +16,7 @@ namespace Broadway\EventSourcing\MetadataEnrichment;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
-use Broadway\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class MetadataEnrichingEventStreamDecoratorTest extends TestCase
 {

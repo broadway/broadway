@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Broadway\Serializer;
 
 use Assert\InvalidArgumentException;
-use Broadway\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class SimpleInterfaceSerializerTest extends TestCase
 {

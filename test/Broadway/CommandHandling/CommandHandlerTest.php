@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Broadway\CommandHandling;
 
 use Broadway\CommandHandling\Exception\CommandNotAnObjectException;
-use Broadway\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class CommandHandlerTest extends TestCase
 {

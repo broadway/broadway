@@ -20,7 +20,7 @@ use Broadway\Domain\Metadata;
 use Broadway\EventStore\EventStore;
 use Broadway\EventStore\EventVisitor;
 use Broadway\Serializer\Serializable;
-use Broadway\TestCase;
+use PHPUnit\Framework\TestCase;
 
 abstract class EventStoreManagementTest extends TestCase
 {

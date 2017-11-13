@@ -15,7 +15,7 @@ namespace Broadway\Processor;
 
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
-use Broadway\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ProcessorTest extends TestCase
 {

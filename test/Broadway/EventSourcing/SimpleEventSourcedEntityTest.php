@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Broadway\EventSourcing;
 
-use Broadway\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class SimpleEventSourcedEntityTest extends TestCase
 {

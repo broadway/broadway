@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Broadway\ReadModel\InMemory;
 
-use Broadway\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class InMemoryRepositoryFactoryTest extends TestCase
 {

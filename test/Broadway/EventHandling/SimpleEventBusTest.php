@@ -16,7 +16,7 @@ namespace Broadway\EventHandling;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
-use Broadway\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class SimpleEventBusTest extends TestCase
 {

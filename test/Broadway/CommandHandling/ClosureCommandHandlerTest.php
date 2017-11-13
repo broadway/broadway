@@ -15,7 +15,7 @@ namespace Broadway\CommandHandling;
 
 use Broadway\CommandHandling\Exception\ClosureParameterNotAnObjectException;
 use Broadway\CommandHandling\Exception\CommandNotAnObjectException;
-use Broadway\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ClosureCommandHandlerTest extends TestCase
 {

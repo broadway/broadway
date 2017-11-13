@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Broadway\Domain;
 
-use Broadway\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class DomainMessageTest extends TestCase
 {

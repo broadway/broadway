@@ -6,7 +6,7 @@ namespace Broadway\EventSourcing\AggregateFactory;
 
 use Broadway\Domain\DomainEventStream;
 use Broadway\EventSourcing\EventSourcedAggregateRoot;
-use Broadway\TestCase;
+use PHPUnit\Framework\TestCase;
 
 final class ReflectionAggregateFactoryTest extends TestCase
 {
