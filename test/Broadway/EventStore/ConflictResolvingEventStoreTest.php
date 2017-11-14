@@ -7,6 +7,7 @@ namespace Broadway\EventStore;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\ConcurrencyConflictResolver\ConcurrencyConflictResolver;
+use Broadway\EventStore\Testing\EventStoreTest;
 use Prophecy\Argument;
 
 class ConflictResolvingEventStoreTest extends EventStoreTest

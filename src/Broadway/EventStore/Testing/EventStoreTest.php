@@ -11,17 +11,18 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore;
+namespace Broadway\EventStore\Testing;
 
 use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
+use Broadway\EventStore\EventStreamNotFoundException;
 use Broadway\EventStore\Exception\DuplicatePlayheadException;
 use Broadway\Serializer\Serializable;
-use PHPUnit\Framework\TestCase;
 use Broadway\UuidGenerator\Rfc4122\Version4Generator;
 use PHPUnit\Framework\Error\Error;
+use PHPUnit\Framework\TestCase;
 
 abstract class EventStoreTest extends TestCase
 {
@@ -95,12 +96,12 @@ abstract class EventStoreTest extends TestCase
      */
     public function it_throws_an_exception_when_appending_a_duplicate_playhead($id)
     {
-        $eventStream = new DomainEventStream([$this->createDomainMessage(42, 0)]);
+        $eventStream = new DomainEventStream([$this->createDomainMessage($id, 0)]);
 
         $this->expectException(DuplicatePlayheadException::class);
 
-        $this->eventStore->append(42, $eventStream);
-        $this->eventStore->append(42, $eventStream);
+        $this->eventStore->append($id, $eventStream);
+        $this->eventStore->append($id, $eventStream);
     }
 
     /**
