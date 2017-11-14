@@ -28,7 +28,7 @@ use Broadway\EventStore\InMemoryEventStore;
 use Broadway\EventStore\TraceableEventStore;
 use Broadway\ReadModel\Projector;
 use Broadway\Repository\AggregateNotFoundException;
-use Broadway\TestCase;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 abstract class AbstractEventSourcingRepositoryTest extends TestCase

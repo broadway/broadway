@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Broadway\CommandHandling;
 
-use Broadway\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class SimpleCommandBusTest extends TestCase
 {

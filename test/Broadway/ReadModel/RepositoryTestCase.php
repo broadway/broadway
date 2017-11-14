@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Broadway\ReadModel;
 
-use Broadway\TestCase;
+use PHPUnit\Framework\TestCase;
 
 abstract class RepositoryTestCase extends TestCase
 {

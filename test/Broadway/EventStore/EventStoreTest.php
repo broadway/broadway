@@ -19,7 +19,7 @@ use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventStore\Exception\DuplicatePlayheadException;
 use Broadway\Serializer\Serializable;
-use Broadway\TestCase;
+use PHPUnit\Framework\TestCase;
 use Broadway\UuidGenerator\Rfc4122\Version4Generator;
 use PHPUnit\Framework\Error\Error;
 

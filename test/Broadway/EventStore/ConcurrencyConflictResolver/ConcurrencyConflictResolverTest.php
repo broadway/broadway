@@ -7,7 +7,7 @@ namespace Broadway\EventStore\ConcurrencyConflictResolver;
 use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
-use Broadway\TestCase;
+use PHPUnit\Framework\TestCase;
 
 abstract class ConcurrencyConflictResolverTest extends TestCase
 {
