@@ -14,6 +14,7 @@
 * [b21c245](http://github.com/broadway/broadway/commit/b21c245f4788c62df4fa5200e2f313481521a589) Provide access to Metadata values (Reen Lokum)
 * [05e88ce](http://github.com/broadway/broadway/commit/05e88ce83837bea224b65df70f9ebceebd39ed90) Moved to Symfony coding standards (Reen Lokum)
 * [df69c8d](http://github.com/broadway/broadway/commit/df69c8d1996fcb9786635ef7bfadb4873c9be3cd) Added reflection serializer (Alexander Bachmann)
+* [8486286](http://github.com/broadway/broadway/commit/848628664e61faaced00bc41926989c63c76e8e7) moved RepositoryTestCase, EventStoreTest, EventStoreManagementTest to Testing namespace (Robin van der Vleuten)
 
 ## v1.0.x
 
