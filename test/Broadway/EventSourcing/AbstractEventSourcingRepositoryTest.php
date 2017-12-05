@@ -190,16 +190,6 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
      * @return EventSourcedAggregateRoot
      */
     abstract protected function createAggregate();
-
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    private function stripLeadingSlash(string $value): string
-    {
-        return ($value[0] === '\\') ? substr($value, 1) : $value;
-    }
 }
 
 class DidNumberEvent
