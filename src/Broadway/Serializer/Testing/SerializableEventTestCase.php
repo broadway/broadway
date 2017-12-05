@@ -39,6 +39,8 @@ abstract class SerializableEventTestCase extends TestCase
         $event = $this->createEvent();
 
         $serialized = $serializer->serialize($event);
+        $serialized['payload'] = json_decode(json_encode($serialized['payload']), true);
+
         $deserialized = $serializer->deserialize($serialized);
 
         $this->assertEquals($event, $deserialized);
