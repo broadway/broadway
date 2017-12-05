@@ -87,7 +87,7 @@ class EventSourcingRepository implements Repository
 
     private function decorateForWrite(AggregateRoot $aggregate, DomainEventStream $eventStream): DomainEventStream
     {
-        $aggregateType = $this->aggregateClass;
+        $aggregateType = get_class($aggregate);
         $aggregateIdentifier = $aggregate->getAggregateRootId();
 
         foreach ($this->eventStreamDecorators as $eventStreamDecorator) {

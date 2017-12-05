@@ -150,7 +150,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
         $lastCall = $this->eventStreamDecorator->getLastCall();
 
         $this->assertEquals($aggregate->getAggregateRootId(), $lastCall['aggregateIdentifier']);
-        $this->assertInstanceOf($lastCall['aggregateType'], $aggregate);
+        $this->assertEquals(get_class($aggregate), $lastCall['aggregateType']);
 
         $events = iterator_to_array($lastCall['eventStream']);
         $this->assertCount(1, $events);
