@@ -11,8 +11,6 @@ together to provide a full CQRS\ES experience.
 
 [![Build Status](https://travis-ci.org/broadway/broadway.svg?branch=master)](https://travis-ci.org/broadway/broadway)
 
-Feel free to join #qandidate on freenode with questions and remarks!
-
 ## About
 
 Read the blog post about this repository at:
@@ -23,6 +21,11 @@ Read the blog post about this repository at:
 ```
 $ composer require broadway/broadway
 ```
+
+## Documentation
+You can find detailed documentation of the Broadway bundle on [broadway.github.io/broadway](https://broadway.github.io/broadway/).
+
+Feel free to join #qandidate on freenode with questions and remarks!
 
 ## Examples
 
