@@ -131,6 +131,6 @@ class Scenario
     {
         return array_map(function (DomainMessage $message) {
             return $message->getPayload();
-        }, $this->aggregateRootInstance->getUncommittedEvents());
+        }, iterator_to_array($this->aggregateRootInstance->getUncommittedEvents()));
     }
 }

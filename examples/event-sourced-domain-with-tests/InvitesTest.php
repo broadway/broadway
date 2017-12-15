@@ -13,7 +13,7 @@ require_once __DIR__.'/Invites.php';
  * - Third, the outcome is asserted. This can either be 1) some events are
  *   recorded, or 2) an exception is thrown.
  */
-class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTestCase
+class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTestCase
 {
     private $generator;
 
@@ -23,7 +23,7 @@ class InvitationTest extends Broadway\EventSourcing\Testing\AggregateRootScenari
         $this->generator = new Broadway\UuidGenerator\Rfc4122\Version4Generator();
     }
 
-    protected function getAggregateRootClass()
+    protected function getAggregateRootClass():string
     {
         return Invitation::class;
     }

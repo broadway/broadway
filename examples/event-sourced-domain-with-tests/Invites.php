@@ -34,7 +34,7 @@ class Invitation extends Broadway\EventSourcing\EventSourcedAggregateRoot
      *
      * {@inheritdoc}
      */
-    public function getAggregateRootId()
+    public function getAggregateRootId() : string
     {
         return $this->invitationId;
     }
