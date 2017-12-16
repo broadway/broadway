@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Broadway\CommandHandling\CommandHandler;
+
 require_once __DIR__.'/Parts.php';
 
 /**
@@ -24,7 +26,7 @@ class PartsCommandHandlerTest extends Broadway\CommandHandling\Testing\CommandHa
         $this->generator = new Broadway\UuidGenerator\Rfc4122\Version4Generator();
     }
 
-    protected function createCommandHandler(Broadway\EventStore\EventStore $eventStore, Broadway\EventHandling\EventBus $eventBus)
+    protected function createCommandHandler(Broadway\EventStore\EventStore $eventStore, Broadway\EventHandling\EventBus $eventBus): CommandHandler
     {
         $repository = new PartRepository($eventStore, $eventBus);
 

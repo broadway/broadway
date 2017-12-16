@@ -30,7 +30,7 @@ class Part extends Broadway\EventSourcing\EventSourcedAggregateRoot
      *
      * @return string
      */
-    public function getAggregateRootId()
+    public function getAggregateRootId(): string
     {
         return $this->partId;
     }
@@ -55,7 +55,7 @@ class Part extends Broadway\EventSourcing\EventSourcedAggregateRoot
         );
     }
 
-    protected function getChildEntities()
+    protected function getChildEntities(): array
     {
         // Since the aggregate root always handles the events first we can rely
         // on $this->manufacturer being set by the time the child entities are

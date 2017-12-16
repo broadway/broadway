@@ -15,6 +15,9 @@
     <testsuite name="Broadway Test Suite">
       <directory>./test/</directory>
     </testsuite>
+    <testsuite name="Broadway Example Test Suite">
+      <directory>./examples/</directory>
+    </testsuite>
   </testsuites>
   <filter>
     <whitelist>

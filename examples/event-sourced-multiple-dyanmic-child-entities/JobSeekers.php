@@ -30,7 +30,7 @@ class JobSeeker extends Broadway\EventSourcing\EventSourcedAggregateRoot
      *
      * @return string
      */
-    public function getAggregateRootId()
+    public function getAggregateRootId(): string
     {
         return $this->jobSeekerId;
     }
@@ -77,7 +77,7 @@ class JobSeeker extends Broadway\EventSourcing\EventSourcedAggregateRoot
         unset($this->jobs[$event->jobId]);
     }
 
-    protected function getChildEntities()
+    protected function getChildEntities(): array
     {
         return $this->jobs;
     }
