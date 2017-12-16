@@ -23,7 +23,7 @@ class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTe
         $this->generator = new Broadway\UuidGenerator\Rfc4122\Version4Generator();
     }
 
-    protected function getAggregateRootClass():string
+    protected function getAggregateRootClass() : string
     {
         return Invitation::class;
     }
