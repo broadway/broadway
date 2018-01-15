@@ -26,6 +26,7 @@ install:
 script:
   - vendor/bin/phpunit --exclude-group=none
   - vendor/bin/php-cs-fixer fix --config=".php_cs" --dry-run --no-interaction --allow-risky=yes --diff --verbose
+  - vendor/bin/docheader check {src,test,examples}
 
 branches:
   only:
