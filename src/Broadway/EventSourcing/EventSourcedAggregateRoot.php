@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Broadway\EventSourcing;
 
 use Broadway\Domain\AggregateRoot as AggregateRootInterface;
+use Broadway\Domain\DistinctEntityEvent;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
@@ -77,6 +78,13 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
      */
     protected function handle($event)
     {
+	    $A = $event instanceof DistinctEvent;
+	    $B = $this instanceof DistinctEventSourcedEntity;
+
+	    if ($A && $B && $event->getDistinctEntityId() !== $this->getEntityId())  {
+		    return;
+	    }
+
         $method = $this->getApplyMethod($event);
 
         if (!method_exists($this, $method)) {
