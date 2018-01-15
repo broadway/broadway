@@ -15,5 +15,5 @@ namespace Broadway\EventSourcing;
 
 abstract class DistinctEventSourcedEntity extends SimpleEventSourcedEntity
 {
-	abstract public function getEntityId(): string;
+    abstract public function getEntityId(): string;
 }

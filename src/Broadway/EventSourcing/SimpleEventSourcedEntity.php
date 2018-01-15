@@ -62,12 +62,12 @@ abstract class SimpleEventSourcedEntity implements EventSourcedEntity
     {
         $method = $this->getApplyMethod($event);
 
-	    $A = $event instanceof DistinctEvent;
-	    $B = $this instanceof DistinctEventSourcedEntity;
+        $A = $event instanceof DistinctEvent;
+        $B = $this instanceof DistinctEventSourcedEntity;
 
-	    if ($A && $B && $event->getDistinctEntityId() !== $this->getEntityId())  {
-		    return;
-	    }
+        if ($A && $B && $event->getDistinctEntityId() !== $this->getEntityId()) {
+            return;
+        }
 
         if (!method_exists($this, $method)) {
             return;

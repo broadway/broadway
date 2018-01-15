@@ -15,5 +15,5 @@ namespace Broadway\Domain;
 
 interface DistinctEntityEvent
 {
-	public function getDistinctEntityId(): string;
+    public function getDistinctEntityId(): string;
 }
