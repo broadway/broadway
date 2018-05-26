@@ -1,6 +1,6 @@
 # Integrations
 
-- The broadway project ships with a [bundle] to use with a Symfony application.
+- There is a [bundle] available to use with your Symfony application.
 
 - A [Laravel package] is also available to allow the use of Broadway inside a Laravel application.
 
