@@ -189,6 +189,22 @@ abstract class RepositoryTestCase extends TestCase
         $this->assertEquals([], $this->repository->findAll());
     }
 
+    /**
+     * @test
+     */
+    public function it_returns_all_read_models()
+    {
+        $model1 = $this->createReadModel('1', 'othillo', 'bar');
+        $model2 = $this->createReadModel('2', 'asm89', 'baz');
+        $model3 = $this->createReadModel('3', 'edelprino', 'baz');
+
+        $this->repository->save($model1);
+        $this->repository->save($model2);
+        $this->repository->save($model3);
+
+        $this->assertEquals([$model1, $model2, $model3], $this->repository->findAll());
+    }
+
     private function createReadModel($id, $name, $foo, array $array = [])
     {
         return new RepositoryTestReadModel($id, $name, $foo, $array);
