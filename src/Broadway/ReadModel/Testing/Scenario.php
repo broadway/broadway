@@ -95,7 +95,7 @@ class Scenario
     }
 
     /**
-     * @param mixed $event
+     * @param mixed     $event
      * @param ?DateTime $occurredOn
      */
     private function createDomainMessageForEvent($event, ?DateTime $occurredOn): DomainMessage
