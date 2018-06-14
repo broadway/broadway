@@ -26,7 +26,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
 {
     protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, array $eventStreamDecorators)
     {
-        return new EventSourcingRepository($eventStore, $eventBus, '\Broadway\EventSourcing\TestEventSourcedAggregate', new PublicConstructorAggregateFactory(), $eventStreamDecorators);
+        return new EventSourcingRepository($eventStore, $eventBus, TestEventSourcedAggregate::class, new PublicConstructorAggregateFactory(), $eventStreamDecorators);
     }
 
     protected function createAggregate()
@@ -41,7 +41,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new EventSourcingRepository($this->eventStore, $this->eventBus, 'stdClass', new PublicConstructorAggregateFactory());
+        new EventSourcingRepository($this->eventStore, $this->eventBus, stdClass::class, new PublicConstructorAggregateFactory());
     }
 
     /**
@@ -94,7 +94,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
         return new EventSourcingRepository(
             $this->eventStore,
             $this->eventBus,
-            '\Broadway\EventSourcing\TestEventSourcedAggregateWithStaticConstructor',
+            TestEventSourcedAggregateWithStaticConstructor::class,
             $staticFactory,
             []
         );

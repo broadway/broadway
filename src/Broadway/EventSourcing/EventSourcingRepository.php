@@ -87,7 +87,7 @@ class EventSourcingRepository implements Repository
 
     private function decorateForWrite(AggregateRoot $aggregate, DomainEventStream $eventStream): DomainEventStream
     {
-        $aggregateType = $this->getType();
+        $aggregateType = get_class($aggregate);
         $aggregateIdentifier = $aggregate->getAggregateRootId();
 
         foreach ($this->eventStreamDecorators as $eventStreamDecorator) {
@@ -104,10 +104,5 @@ class EventSourcingRepository implements Repository
             EventSourcedAggregateRoot::class,
             sprintf("Class '%s' is not an EventSourcedAggregateRoot.", $class)
         );
-    }
-
-    private function getType(): string
-    {
-        return $this->aggregateClass;
     }
 }
