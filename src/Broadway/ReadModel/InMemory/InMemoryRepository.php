@@ -29,7 +29,7 @@ final class InMemoryRepository implements Repository, Transferable
     /**
      * {@inheritdoc}
      */
-    public function save(Identifiable $model)
+    public function save(Identifiable $model): void
     {
         $this->data[$model->getId()] = $model;
     }
@@ -37,7 +37,7 @@ final class InMemoryRepository implements Repository, Transferable
     /**
      * {@inheritdoc}
      */
-    public function find($id)
+    public function find($id): ?Identifiable
     {
         $id = (string) $id;
         if (isset($this->data[$id])) {
@@ -84,7 +84,7 @@ final class InMemoryRepository implements Repository, Transferable
     /**
      * {@inheritdoc}
      */
-    public function transferTo(Repository $otherRepository)
+    public function transferTo(Repository $otherRepository): void
     {
         foreach ($this->data as $model) {
             $otherRepository->save($model);
@@ -94,7 +94,7 @@ final class InMemoryRepository implements Repository, Transferable
     /**
      * {@inheritdoc}
      */
-    public function remove($id)
+    public function remove($id): void
     {
         unset($this->data[(string) $id]);
     }

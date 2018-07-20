@@ -26,12 +26,6 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
     /** @var ConcurrencyConflictResolver */
     private $conflictResolver;
 
-    /**
-     * ConcurrencyConflictResolvingEventStore constructor.
-     *
-     * @param EventStore                  $eventStore
-     * @param ConcurrencyConflictResolver $conflictResolver
-     */
     public function __construct(EventStore $eventStore, ConcurrencyConflictResolver $conflictResolver)
     {
         $this->eventStore = $eventStore;
@@ -41,7 +35,7 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
     /**
      * {@inheritdoc}
      */
-    public function append($id, DomainEventStream $uncommittedEvents)
+    public function append($id, DomainEventStream $uncommittedEvents): void
     {
         try {
             $this->eventStore->append($id, $uncommittedEvents);
@@ -90,9 +84,6 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
         return $this->eventStore->loadFromPlayhead($id, $playhead);
     }
 
-    /**
-     * @return int
-     */
     private function getCurrentPlayhead(DomainEventStream $committedEvents): int
     {
         $events = iterator_to_array($committedEvents);

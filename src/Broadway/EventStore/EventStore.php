@@ -23,16 +23,12 @@ interface EventStore
 {
     /**
      * @param mixed $id
-     *
-     * @return DomainEventStream
      */
     public function load($id): DomainEventStream;
 
     /**
      * @param mixed $id
      * @param int   $playhead
-     *
-     * @return DomainEventStream
      */
     public function loadFromPlayhead($id, int $playhead): DomainEventStream;
 
@@ -42,5 +38,5 @@ interface EventStore
      *
      * @throws DuplicatePlayheadException
      */
-    public function append($id, DomainEventStream $eventStream);
+    public function append($id, DomainEventStream $eventStream): void;
 }

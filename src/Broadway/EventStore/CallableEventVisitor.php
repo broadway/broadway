@@ -27,7 +27,7 @@ final class CallableEventVisitor implements EventVisitor
         $this->callable = $callable;
     }
 
-    public function doWithEvent(DomainMessage $domainMessage)
+    public function doWithEvent(DomainMessage $domainMessage): void
     {
         call_user_func($this->callable, $domainMessage);
     }

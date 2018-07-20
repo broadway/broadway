@@ -25,7 +25,7 @@ final class SimpleCommandBus implements CommandBus
     /**
      * {@inheritdoc}
      */
-    public function subscribe(CommandHandler $handler)
+    public function subscribe(CommandHandler $handler): void
     {
         $this->commandHandlers[] = $handler;
     }
@@ -33,7 +33,7 @@ final class SimpleCommandBus implements CommandBus
     /**
      * {@inheritdoc}
      */
-    public function dispatch($command)
+    public function dispatch($command): void
     {
         $this->queue[] = $command;
 

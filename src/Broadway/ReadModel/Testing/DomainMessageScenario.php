@@ -47,8 +47,6 @@ final class DomainMessageScenario
 
     /**
      * @param DomainMessage[] $domainMessages
-     *
-     * @return DomainMessageScenario
      */
     public function given(array $domainMessages = []): self
     {
@@ -61,11 +59,6 @@ final class DomainMessageScenario
         return $this;
     }
 
-    /**
-     * @param DomainMessage $domainMessage
-     *
-     * @return DomainMessageScenario
-     */
     public function when(DomainMessage $domainMessage): self
     {
         $this->projector->handle($domainMessage);
@@ -73,11 +66,6 @@ final class DomainMessageScenario
         return $this;
     }
 
-    /**
-     * @param array $expectedData
-     *
-     * @return DomainMessageScenario
-     */
     public function then(array $expectedData): self
     {
         $this->testCase->assertEquals($expectedData, $this->repository->findAll());

@@ -32,9 +32,9 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     /**
      * Applies an event. The event is added to the AggregateRoot's list of uncommitted events.
      *
-     * @param $event
+     * @param mixed $event
      */
-    public function apply($event)
+    public function apply($event): void
     {
         $this->handleRecursively($event);
 
@@ -62,7 +62,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     /**
      * Initializes the aggregate using the given "history" of events.
      */
-    public function initializeState(DomainEventStream $stream)
+    public function initializeState(DomainEventStream $stream): void
     {
         foreach ($stream as $message) {
             ++$this->playhead;
@@ -73,9 +73,9 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     /**
      * Handles event if capable.
      *
-     * @param $event
+     * @param mixed $event
      */
-    protected function handle($event)
+    protected function handle($event): void
     {
         $method = $this->getApplyMethod($event);
 
@@ -87,9 +87,9 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed $event
      */
-    protected function handleRecursively($event)
+    protected function handleRecursively($event): void
     {
         $this->handle($event);
 
@@ -111,6 +111,9 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
         return [];
     }
 
+    /**
+     * @param mixed $event
+     */
     private function getApplyMethod($event): string
     {
         $classParts = explode('\\', get_class($event));

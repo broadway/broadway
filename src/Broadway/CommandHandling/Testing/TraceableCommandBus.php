@@ -28,7 +28,7 @@ final class TraceableCommandBus implements CommandBus
     /**
      * {@inheritdoc}
      */
-    public function subscribe(CommandHandler $handler)
+    public function subscribe(CommandHandler $handler): void
     {
         $this->commandHandlers[] = $handler;
     }
@@ -36,7 +36,7 @@ final class TraceableCommandBus implements CommandBus
     /**
      * {@inheritdoc}
      */
-    public function dispatch($command)
+    public function dispatch($command): void
     {
         if (!$this->record) {
             return;
@@ -45,6 +45,9 @@ final class TraceableCommandBus implements CommandBus
         $this->commands[] = $command;
     }
 
+    /**
+     * @return mixed[]
+     */
     public function getRecordedCommands(): array
     {
         return $this->commands;

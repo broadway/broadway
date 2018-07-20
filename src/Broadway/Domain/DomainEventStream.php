@@ -24,7 +24,7 @@ final class DomainEventStream implements IteratorAggregate
     private $events;
 
     /**
-     * @param array $events
+     * @param mixed[] $events
      */
     public function __construct(array $events)
     {

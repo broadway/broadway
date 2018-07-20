@@ -29,7 +29,7 @@ final class NamedConstructorAggregateFactory implements AggregateFactory
      */
     private $staticConstructorMethod;
 
-    public function __construct($staticConstructorMethod = 'instantiateForReconstitution')
+    public function __construct(string $staticConstructorMethod = 'instantiateForReconstitution')
     {
         $this->staticConstructorMethod = $staticConstructorMethod;
     }

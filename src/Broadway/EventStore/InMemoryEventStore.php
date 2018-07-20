@@ -68,7 +68,7 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
     /**
      * {@inheritdoc}
      */
-    public function append($id, DomainEventStream $eventStream)
+    public function append($id, DomainEventStream $eventStream): void
     {
         $id = (string) $id;
 
@@ -90,7 +90,7 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
      * @param DomainMessage[]   $events
      * @param DomainEventStream $eventsToAppend
      */
-    private function assertStream(array $events, DomainEventStream $eventsToAppend)
+    private function assertStream(array $events, DomainEventStream $eventsToAppend): void
     {
         /** @var DomainMessage $event */
         foreach ($eventsToAppend as $event) {
@@ -102,7 +102,7 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
         }
     }
 
-    public function visitEvents(Criteria $criteria, EventVisitor $eventVisitor)
+    public function visitEvents(Criteria $criteria, EventVisitor $eventVisitor): void
     {
         foreach ($this->events as $id => $events) {
             foreach ($events as $event) {

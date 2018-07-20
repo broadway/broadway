@@ -18,14 +18,12 @@ namespace Broadway\ReadModel;
  */
 interface Repository
 {
-    public function save(Identifiable $data);
+    public function save(Identifiable $data): void;
 
     /**
      * @param mixed $id
-     *
-     * @return Identifiable|null
      */
-    public function find($id);
+    public function find($id): ?Identifiable;
 
     /**
      * @param array $fields
@@ -42,5 +40,5 @@ interface Repository
     /**
      * @param mixed $id
      */
-    public function remove($id);
+    public function remove($id): void;
 }

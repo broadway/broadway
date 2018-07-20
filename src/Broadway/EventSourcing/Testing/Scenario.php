@@ -38,11 +38,6 @@ class Scenario
     private $aggregateRootInstance;
     private $aggregateId;
 
-    /**
-     * @param TestCase         $testCase
-     * @param AggregateFactory $factory
-     * @param string           $aggregateRootClass
-     */
     public function __construct(TestCase $testCase, AggregateFactory $factory, string $aggregateRootClass)
     {
         $this->testCase = $testCase;
@@ -51,11 +46,6 @@ class Scenario
         $this->aggregateId = '1';
     }
 
-    /**
-     * @param string $aggregateId
-     *
-     * @return Scenario
-     */
     public function withAggregateId(string $aggregateId): self
     {
         $this->aggregateId = $aggregateId;
@@ -64,11 +54,9 @@ class Scenario
     }
 
     /**
-     * @param array $givens
-     *
-     * @return Scenario
+     * @param mixed[] $givens
      */
-    public function given(array $givens = null): self
+    public function given(?array $givens): self
     {
         if (null === $givens) {
             return $this;
@@ -90,11 +78,6 @@ class Scenario
         return $this;
     }
 
-    /**
-     * @param callable $when
-     *
-     * @return Scenario
-     */
     public function when(callable $when): self
     {
         if (!is_callable($when)) {
@@ -113,9 +96,7 @@ class Scenario
     }
 
     /**
-     * @param array $thens
-     *
-     * @return Scenario
+     * @param mixed[] $thens
      */
     public function then(array $thens): self
     {
@@ -125,7 +106,7 @@ class Scenario
     }
 
     /**
-     * @return array Payloads of the recorded events
+     * @return mixed[] Payloads of the recorded events
      */
     private function getEvents(): array
     {

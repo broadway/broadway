@@ -24,7 +24,7 @@ abstract class Processor implements EventListener
     /**
      * {@inheritdoc}
      */
-    public function handle(DomainMessage $domainMessage)
+    public function handle(DomainMessage $domainMessage): void
     {
         $event = $domainMessage->getPayload();
         $method = $this->getHandleMethod($event);
@@ -36,6 +36,9 @@ abstract class Processor implements EventListener
         $this->$method($event, $domainMessage);
     }
 
+    /**
+     * @param mixed $event
+     */
     private function getHandleMethod($event): string
     {
         $classParts = explode('\\', get_class($event));

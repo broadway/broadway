@@ -74,7 +74,7 @@ class EventSourcingRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function save(AggregateRoot $aggregate)
+    public function save(AggregateRoot $aggregate): void
     {
         // maybe we can get generics one day.... ;)
         Assert::isInstanceOf($aggregate, $this->aggregateClass);
@@ -97,7 +97,7 @@ class EventSourcingRepository implements Repository
         return $eventStream;
     }
 
-    private function assertExtendsEventSourcedAggregateRoot(string $class)
+    private function assertExtendsEventSourcedAggregateRoot(string $class): void
     {
         Assert::subclassOf(
             $class,

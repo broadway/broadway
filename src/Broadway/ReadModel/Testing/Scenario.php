@@ -54,11 +54,6 @@ class Scenario
         };
     }
 
-    /**
-     * @param string $aggregateId
-     *
-     * @return Scenario
-     */
     public function withAggregateId(string $aggregateId): self
     {
         $this->aggregateId = $aggregateId;
@@ -66,9 +61,6 @@ class Scenario
         return $this;
     }
 
-    /**
-     * @return Scenario
-     */
     public function withDateTimeGenerator(callable $dateTimeGenerator): self
     {
         $this->dateTimeGenerator = $dateTimeGenerator;
@@ -76,11 +68,6 @@ class Scenario
         return $this;
     }
 
-    /**
-     * @param array $events
-     *
-     * @return Scenario
-     */
     public function given(array $events = []): self
     {
         foreach ($events as $given) {
@@ -92,8 +79,6 @@ class Scenario
 
     /**
      * @param mixed $event
-     *
-     * @return Scenario
      */
     public function when($event, DateTime $occurredOn = null): self
     {
@@ -102,11 +87,6 @@ class Scenario
         return $this;
     }
 
-    /**
-     * @param array $expectedData
-     *
-     * @return Scenario
-     */
     public function then(array $expectedData): self
     {
         $this->testCase->assertEquals($expectedData, $this->repository->findAll());
@@ -114,7 +94,11 @@ class Scenario
         return $this;
     }
 
-    private function createDomainMessageForEvent($event, DateTime $occurredOn = null): DomainMessage
+    /**
+     * @param mixed     $event
+     * @param ?DateTime $occurredOn
+     */
+    private function createDomainMessageForEvent($event, ?DateTime $occurredOn): DomainMessage
     {
         ++$this->playhead;
 

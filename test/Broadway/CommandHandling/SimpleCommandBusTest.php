@@ -128,7 +128,7 @@ class SimpleCommandBusTestHandler implements CommandHandler
         $this->dispatchableCommand = $dispatchableCommand;
     }
 
-    public function handle($command)
+    public function handle($command): void
     {
         if (!$this->handled) {
             $this->commandBus->dispatch($this->dispatchableCommand);

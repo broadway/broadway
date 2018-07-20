@@ -177,7 +177,7 @@ class SimpleEventBusTestListener implements EventListener
         $this->publishableStream = $publishableStream;
     }
 
-    public function handle(DomainMessage $domainMessage)
+    public function handle(DomainMessage $domainMessage): void
     {
         if (!$this->handled) {
             $this->eventBus->publish($this->publishableStream);

@@ -33,7 +33,7 @@ final class TraceableEventStore implements EventStore
     /**
      * {@inheritdoc}
      */
-    public function append($id, DomainEventStream $eventStream)
+    public function append($id, DomainEventStream $eventStream): void
     {
         $this->eventStore->append($id, $eventStream);
 
@@ -47,7 +47,7 @@ final class TraceableEventStore implements EventStore
     }
 
     /**
-     * @return array Appended events
+     * @return mixed[] Appended events
      */
     public function getEvents(): array
     {
@@ -78,7 +78,7 @@ final class TraceableEventStore implements EventStore
     /**
      * Start tracing.
      */
-    public function trace()
+    public function trace(): void
     {
         $this->tracing = true;
     }
@@ -86,7 +86,7 @@ final class TraceableEventStore implements EventStore
     /**
      * Clear any previously recorded events.
      */
-    public function clearEvents()
+    public function clearEvents(): void
     {
         $this->recorded = [];
     }
