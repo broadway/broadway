@@ -103,6 +103,46 @@ class SimpleCommandBusTest extends TestCase
         $this->commandBus->dispatch($command2);
     }
 
+    /**
+     * @test
+     */
+    public function it_should_still_handle_commands_after_throwable()
+    {
+        $command1 = ['foo' => 'bar'];
+        $command2 = ['foo' => 'bas'];
+
+        $commandHandler = $this->createMock(CommandHandler::class);
+        $simpleHandler = $this->createMock(CommandHandler::class);
+
+        $commandHandler
+            ->expects($this->at(0))
+            ->method('handle')
+            ->with($command1)
+            ->will($this->throwException(new \Error('I failed.')));
+
+        $commandHandler
+            ->expects($this->at(0))
+            ->method('handle')
+            ->with($command2);
+
+        $simpleHandler
+            ->expects($this->once())
+            ->method('handle')
+            ->with($command2);
+
+        $this->commandBus->subscribe($commandHandler);
+        $this->commandBus->subscribe($simpleHandler);
+
+        try {
+            $this->commandBus->dispatch($command1);
+        } catch (\Throwable $e) {
+            $this->assertEquals('I failed.', $e->getMessage());
+        }
+
+        $this->commandBus->dispatch($command2);
+    }
+
+
     private function createCommandHandlerMock(array $expectedCommand): \PHPUnit_Framework_MockObject_MockObject
     {
         $mock = $this->createMock(CommandHandler::class);

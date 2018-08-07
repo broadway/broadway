@@ -51,6 +51,9 @@ final class SimpleCommandBus implements CommandBus
             } catch (\Exception $e) {
                 $this->isDispatching = false;
                 throw $e;
+            } catch (\Throwable $e) {
+                $this->isDispatching = false;
+                throw $e;
             }
         }
     }
