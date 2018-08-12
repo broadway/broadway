@@ -28,12 +28,12 @@ abstract class SimpleEventSourcedEntity implements EventSourcedEntity
      */
     public function handleRecursively($event): void
     {
-        $this->handle($event);
-
         foreach ($this->getChildEntities() as $entity) {
             $entity->registerAggregateRoot($this->aggregateRoot);
             $entity->handleRecursively($event);
         }
+
+        $this->handle($event);
     }
 
     /**

@@ -91,12 +91,12 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
      */
     protected function handleRecursively($event): void
     {
-        $this->handle($event);
-
         foreach ($this->getChildEntities() as $entity) {
             $entity->registerAggregateRoot($this);
             $entity->handleRecursively($event);
         }
+
+        $this->handle($event);
     }
 
     /**
