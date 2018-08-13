@@ -66,11 +66,7 @@ class Part extends Broadway\EventSourcing\EventSourcedAggregateRoot
 
     protected function getChildEntities(): array
     {
-        // Since the aggregate root always handles the events first we can rely
-        // on $this->manufacturer being set by the time the child entities are
-        // requested *provided* PartWasManufacturedEvent is the first event in
-        // the event stream.
-        return [$this->manufacturer];
+        return ($this->manufacturer !== null )  ? [$this->manufacturer] : []; 
     }
 }
 
