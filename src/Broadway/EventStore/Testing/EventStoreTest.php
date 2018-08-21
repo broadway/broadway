@@ -17,8 +17,12 @@ use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
+use Broadway\EventHandling\EventListener;
+use Broadway\EventHandling\SimpleEventBus;
+use Broadway\EventStore\EventStore;
 use Broadway\EventStore\EventStreamNotFoundException;
 use Broadway\EventStore\Exception\DuplicatePlayheadException;
+use Broadway\EventStore\InMemoryEventStore;
 use Broadway\Serializer\Serializable;
 use Broadway\UuidGenerator\Rfc4122\Version4Generator;
 use PHPUnit\Framework\Error\Error;
@@ -162,6 +166,65 @@ abstract class EventStoreTest extends TestCase
         );
     }
 
+    /**
+     * @test
+     *
+     * @dataProvider idDataProvider
+     */
+    public function it_return_a_list_of_events_limited_by_start_and_end($id)
+    {
+        $dateTime = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
+
+        $domainEventStream = new DomainEventStream([
+            $this->createDomainMessage($id, 0, $dateTime),
+            $this->createDomainMessage($id, 1, $dateTime),
+            $this->createDomainMessage($id, 2, $dateTime),
+            $this->createDomainMessage($id, 3, $dateTime),
+        ]);
+
+        $this->eventStore->append($id, $domainEventStream);
+
+        $expected = new DomainEventStream([
+            $this->createDomainMessage($id, 1, $dateTime),
+            $this->createDomainMessage($id, 2, $dateTime),
+        ]);
+
+        $this->assertEquals($expected, $this->eventStore->loadFromPlayheadToPlayhead($id, 1, 2));
+    }
+
+
+    /**
+     * @test
+     *
+     * @dataProvider idDataProvider
+     */
+    public function it_should_be_able_to_replay_events($id)
+    {
+        $dateTime = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
+
+        $domainEventStream = new DomainEventStream([
+            $this->createDomainMessage($id, 0, $dateTime),
+            $this->createDomainMessage($id, 1, $dateTime),
+            $this->createDomainMessage($id, 2, $dateTime),
+            $this->createDomainMessage($id, 3, $dateTime),
+        ]);
+
+        $evenCollectorListener = new EventCollectorListener();
+        $eventBus = new SimpleEventBus();
+        $eventBus->subscribe($evenCollectorListener);
+        $eventStore =  new InMemoryEventStore($eventBus);
+
+        $eventStore->append($id, $domainEventStream);
+        $eventStore->replay($id, 1, 2);
+
+        $expected = new DomainEventStream([
+            $this->createDomainMessage($id, 1, $dateTime),
+            $this->createDomainMessage($id, 2, $dateTime),
+        ]);
+
+        $this->assertEquals($expected->getIterator()->getArrayCopy(), $evenCollectorListener->events);
+    }
+
     public function idDataProvider()
     {
         return [
@@ -223,5 +286,16 @@ class IdentityThatCannotBeConvertedToAString
     public function __construct($id)
     {
         $this->id = $id;
+    }
+}
+
+class EventCollectorListener implements EventListener
+{
+    /** @var DomainMessage[] */
+    public $events = [];
+
+    public function handle(DomainMessage $domainMessage): void
+    {
+        $this->events[] = $domainMessage;
     }
 }
