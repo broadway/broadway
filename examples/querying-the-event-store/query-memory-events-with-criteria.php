@@ -47,14 +47,12 @@ $logger->info('Accepted invites', $acceptedEventsReadModel);
 // For more complex cases you would need more complex queries.
 // The Criteria will only deal with simple use cases.
 // If you need more complex queries you could do something like this
-// Note: the example is with the InMemoryStore, but you can use the same idea with complex SQL queries for example: 
-// SELECT a.uuid FROM events a LEFT JOIN events b ON a.uuid = b.uuid AND b.type IN ('AcceptedEvent', 'DeclinedEvent') WHERE a.`type` = 'InvitedEvent' AND b.uuid IS NULL;
 
 $staleInvites = [];
 foreach ($allMessages as $domainMessage) {
     switch ($domainMessage->getType()) {
         case 'InvitedEvent':
-            $staleInvites[(string) $domainMessage->getId()] = true;
+            $staleInvites[(string) $domainMessage->getId()] = $domainMessage;
             break;
         case 'AcceptedEvent':
         case 'DeclinedEvent':
@@ -63,4 +61,10 @@ foreach ($allMessages as $domainMessage) {
     }
 }
 
-$logger->info('Stale invites', $staleInvites);
+$logger->info('Stale invites', array_keys($staleInvites));
+
+foreach (array_keys($staleInvites) as $inviteId) {
+    $invite = $store->load($inviteId);
+    // Example: if we would want to expire invites that haven't been accepted or declined yet
+    // $invite->expire();
+}
