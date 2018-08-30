@@ -58,6 +58,7 @@ class Part extends Broadway\EventSourcing\EventSourcedAggregateRoot
         // the child entity is instantiated and returned by getChildEntities()
         // it can emit and apply events itself.
         $this->manufacturer = new Manufacturer(
+            $this,
             $event->partId,
             $event->manufacturerId,
             $event->manufacturerName
@@ -76,8 +77,9 @@ class Manufacturer extends Broadway\EventSourcing\SimpleEventSourcedEntity
     private $manufacturerId;
     private $manufacturerName;
 
-    public function __construct($partId, $manufacturerId, $manufacturerName)
+    public function __construct(Broadway\EventSourcing\EventSourcedAggregateRoot $aggregateRoot, $partId, $manufacturerId, $manufacturerName)
     {
+        parent::__construct($aggregateRoot);
         $this->partId = $partId;
         $this->manufacturerId = $manufacturerId;
         $this->manufacturerName = $manufacturerName;

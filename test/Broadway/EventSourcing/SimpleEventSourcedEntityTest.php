@@ -23,12 +23,13 @@ class SimpleEventSourcedEntityTest extends TestCase
     public function it_handles_events_recursively()
     {
         $aggregateRoot = new Aggregate();
-        $child = new Entity();
+        $child = new Entity($aggregateRoot);
 
         $aggregateRoot->addChildEntity($child);
 
         $mock = $this->getMockBuilder('Broadway\EventSourcing\Entity')
             ->setMethods(['handleRecursively'])
+            ->setConstructorArgs([$aggregateRoot])
             ->getMock();
 
         $mock->expects($this->once())
@@ -51,8 +52,8 @@ class SimpleEventSourcedEntityTest extends TestCase
         $aggregateRoot->expects($this->once())
             ->method('apply');
 
-        $child = new Entity();
-        $grandChild = new Entity();
+        $child = new Entity($aggregateRoot);
+        $grandChild = new Entity($aggregateRoot);
 
         $aggregateRoot->addChildEntity($child);
 
@@ -60,25 +61,6 @@ class SimpleEventSourcedEntityTest extends TestCase
         $aggregateRoot->doHandleRecursively();  // Initialize tree structure
 
         $grandChild->doApply();
-    }
-
-    /**
-     * @test
-     */
-    public function it_can_only_have_one_root()
-    {
-        $root1 = new Aggregate();
-        $root2 = new Aggregate();
-
-        $entity = new Entity();
-
-        $root1->addChildEntity($entity);
-        $root2->addChildEntity($entity);
-
-        $this->expectException(AggregateRootAlreadyRegisteredException::class);
-
-        $root1->doHandleRecursively();
-        $root2->doHandleRecursively();
     }
 }
 

@@ -73,6 +73,7 @@ class JobSeeker extends Broadway\EventSourcing\EventSourcedAggregateRoot
     public function applyJobWasAddedToJobSeekerEvent(JobWasAddedToJobSeekerEvent $event)
     {
         $this->jobs[$event->jobId] = new Job(
+            $this,
             $event->jobSeekerId,
             $event->jobId,
             $event->title,
@@ -99,8 +100,9 @@ class Job extends Broadway\EventSourcing\SimpleEventSourcedEntity
     private $title;
     private $description;
 
-    public function __construct($jobSeekerId, $jobId, $title, $description)
+    public function __construct(Broadway\EventSourcing\EventSourcedAggregateRoot $aggregateRoot, $jobSeekerId, $jobId, $title, $description)
     {
+        parent::__construct($aggregateRoot);
         $this->jobSeekerId = $jobSeekerId;
         $this->jobId = $jobId;
         $this->title = $title;
