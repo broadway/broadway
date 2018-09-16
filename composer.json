@@ -49,13 +49,13 @@
         "broadway/broadway-bundle": "Symfony bundle for broadway/broadway"
     },
     "autoload": {
-        "psr-0": {
-            "Broadway\\": "src/"
+        "psr-4": {
+            "Broadway\\": "src/Broadway/"
         }
     },
     "autoload-dev": {
-        "psr-0": {
-            "Broadway\\": "test/"
+        "psr-4": {
+            "Broadway\\": "test/Broadway/"
         }
     },
     "extra": {
