@@ -11,6 +11,8 @@
 
 declare(strict_types=1);
 
+use Broadway\Serializer\Serializable;
+
 require_once __DIR__.'/../bootstrap.php';
 
 /**
@@ -140,13 +142,23 @@ abstract class InvitationCommand
         $this->invitationId = $invitationId;
     }
 }
-abstract class InvitationEvent
+abstract class InvitationEvent implements Serializable
 {
     public $invitationId;
 
     public function __construct($invitationId)
     {
         $this->invitationId = $invitationId;
+    }
+
+    public function serialize(): array
+    {
+        return ['invitationId' => $this->invitationId];
+    }
+
+    public static function deserialize(array $eventData)
+    {
+        return new static($eventData['invitationId']);
     }
 }
 
@@ -172,6 +184,22 @@ class InvitedEvent extends InvitationEvent
         parent::__construct($invitationId);
 
         $this->name = $name;
+    }
+
+    public function serialize(): array
+    {
+        return [
+            'invitationId' => $this->invitationId,
+            'name' => $this->name,
+        ];
+    }
+
+    public static function deserialize(array $eventData)
+    {
+        $event = new static($eventData['invitationId']);
+        $event->name = $eventData['name'];
+
+        return $event;
     }
 }
 

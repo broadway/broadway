@@ -24,6 +24,6 @@ class StdoutLogger extends Psr\Log\AbstractLogger
 {
     public function log($level, $message, array $context = [])
     {
-        echo sprintf("[%s] %s\n", $level, $message);
+        echo sprintf("[%s] %s - %s\n", $level, $message, json_encode($context));
     }
 }
