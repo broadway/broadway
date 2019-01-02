@@ -71,7 +71,7 @@ class Scenario
     public function given(array $events = []): self
     {
         foreach ($events as $given) {
-            $this->projector->handle($this->createDomainMessageForEvent($given));
+            $this->projector->handle($this->createDomainMessageForEvent($given, null));
         }
 
         return $this;
