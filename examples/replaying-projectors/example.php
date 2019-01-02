@@ -41,11 +41,10 @@ $eventStore->append($aggregateId, $domainEventStream);
 $secondAggregateId = 'do_not_replay_this_one';
 
 $domainEventStream = new DomainEventStream([
-    DomainMessage::recordNow($secondAggregateId, 0, new Metadata(), new SimpleEvent())
+    DomainMessage::recordNow($secondAggregateId, 0, new Metadata(), new SimpleEvent()),
 ]);
 
 $eventStore->append($secondAggregateId, $domainEventStream);
-
 
 // Now, we define a Replayer class. This example allows the replaying of a
 // single aggregate, and passes the events to a EventListener.

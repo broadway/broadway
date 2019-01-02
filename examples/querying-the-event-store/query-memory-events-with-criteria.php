@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Broadway\Domain\DomainEventStream;
@@ -6,7 +7,7 @@ use Broadway\EventStore\InMemoryEventStore;
 use Broadway\EventStore\Management\Criteria;
 use Broadway\EventStore\CallableEventVisitor;
 
-require __DIR__ . '/../event-sourced-domain-with-tests/Invites.php';
+require __DIR__.'/../event-sourced-domain-with-tests/Invites.php';
 
 $logger = new StdoutLogger();
 $store = new InMemoryEventStore();
@@ -42,7 +43,6 @@ $store->visitEvents($acceptedInvitesCriteria, new CallableEventVisitor(function 
 }));
 
 $logger->info('Accepted invites', $acceptedEventsReadModel);
-
 
 // For more complex cases you would need more complex queries.
 // The Criteria will only deal with simple use cases.
