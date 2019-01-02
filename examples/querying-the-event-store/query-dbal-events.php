@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of the broadway/broadway package.
+ *
+ * (c) Qandidate.com <opensource@qandidate.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 use Broadway\Domain\DateTime;
@@ -7,10 +17,11 @@ use Broadway\EventStore\Dbal\DBALEventStore;
 use Broadway\Serializer\SimpleInterfaceSerializer;
 use Doctrine\DBAL\DriverManager;
 
-require __DIR__ . '/query-memory-events-with-criteria.php';
+require __DIR__.'/query-memory-events-with-criteria.php';
 
-if (! class_exists(DBALEventStore::class)) {
+if (!class_exists(DBALEventStore::class)) {
     $logger->error('The query-dbal-events example is only runnable when you have DBALEventStore available');
+
     return 1;
 }
 
@@ -56,5 +67,5 @@ while ($row = $stmt->fetch()) {
 }
 
 foreach ($staleInvites as $inviteMessage) {
-    $logger->info('Stale invite (from sql via domainmessage): ' . $inviteMessage->getId());
+    $logger->info('Stale invite (from sql via domainmessage): '.$inviteMessage->getId());
 }
