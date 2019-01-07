@@ -41,9 +41,9 @@ class ReflectionSerializer implements Serializer
             return $this->serializeObjectRecursively($value);
         } elseif (is_array($value)) {
             return $this->serializeArrayRecursively($value);
-        } else {
-            return $value;
         }
+
+        return $value;
     }
 
     /**
@@ -107,9 +107,9 @@ class ReflectionSerializer implements Serializer
             return $this->deserializeObjectRecursively($value);
         } elseif (is_array($value)) {
             return $this->deserializeArrayRecursively($value);
-        } else {
-            return $value;
         }
+
+        return $value;
     }
 
     /**
