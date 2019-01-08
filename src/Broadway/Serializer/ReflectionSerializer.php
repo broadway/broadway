@@ -27,6 +27,10 @@ class ReflectionSerializer implements Serializer
      */
     public function serialize($object): array
     {
+        if (!is_object($object) || $object instanceof \stdClass) {
+            throw new \InvalidArgumentException('Given argument is not serializable.');
+        }
+
         return $this->serializeObjectRecursively($object);
     }
 

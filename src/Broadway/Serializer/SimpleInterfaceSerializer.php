@@ -26,10 +26,16 @@ final class SimpleInterfaceSerializer implements Serializer
     public function serialize($object): array
     {
         if (!$object instanceof Serializable) {
-            throw new SerializationException(sprintf(
-                'Object \'%s\' does not implement Broadway\Serializer\Serializable',
-                get_class($object)
-            ));
+            if (is_object($object)) {
+                throw new SerializationException(sprintf(
+                    'Object \'%s\' does not implement Broadway\Serializer\Serializable',
+                    get_class($object)
+                ));
+            } else {
+                throw new SerializationException(
+                    'Given argument is not an object.'
+                );
+            }
         }
 
         return [
