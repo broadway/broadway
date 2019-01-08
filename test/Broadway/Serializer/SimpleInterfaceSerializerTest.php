@@ -141,6 +141,7 @@ class SimpleInterfaceSerializerTest extends TestCase
             'string' => ['impossible'],
             'array' => [[]],
             'object' => [(object)[]],
+            'bad array' => [['class' => 'foo', 'payload' => 'bar']],
         ];
     }
 }
