@@ -142,6 +142,17 @@ class ReflectionSerializerTest extends TestCase
         $this->assertEquals($object, $deserialized);
     }
 
+    /**
+     * @test
+     * @dataProvider serializable_test_data
+     */
+    public function it_fails_to_serialize($data)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $this->serializer->serialize($data);
+    }
+
     public function serializable_test_data()
     {
         return [
