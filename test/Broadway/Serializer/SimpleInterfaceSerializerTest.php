@@ -104,6 +104,34 @@ class SimpleInterfaceSerializerTest extends TestCase
 
         $this->assertEquals($object, $deserialized);
     }
+
+    /**
+     * @test
+     * @dataProvider serializable_test_data
+     */
+    public function it_serializes($data)
+    {
+        $object = new TestSerializable($data);
+
+        $serialized = $this->serializer->serialize($object);
+
+        $deserialized = $this->serializer->deserialize($serialized);
+
+        $this->assertInstanceOf(TestSerializable::class, $deserialized);
+        $this->assertEquals($object, $deserialized);
+    }
+
+    public function serializable_test_data()
+    {
+        return [
+            'null' => [null],
+            'integer' => [0],
+            'float' => [3.14],
+            'string' => ['impossible'],
+            'array' => [[]],
+            'object' => [(object)[]],
+        ];
+    }
 }
 
 class TestSerializable implements Serializable
