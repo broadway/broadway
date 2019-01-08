@@ -53,7 +53,7 @@ class SimpleInterfaceSerializerTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Key \'class\' should be set');
 
-        $this->serializer->deserialize([]);
+        $this->serializer->deserialize(['payload' => []]);
     }
 
     /**
