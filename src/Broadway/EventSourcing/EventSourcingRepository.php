@@ -35,10 +35,6 @@ class EventSourcingRepository implements Repository
     private $aggregateFactory;
 
     /**
-     * @param EventStore             $eventStore
-     * @param EventBus               $eventBus
-     * @param string                 $aggregateClass
-     * @param AggregateFactory       $aggregateFactory
      * @param EventStreamDecorator[] $eventStreamDecorators
      */
     public function __construct(

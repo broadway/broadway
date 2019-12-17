@@ -26,8 +26,6 @@ interface Repository
     public function find($id): ?Identifiable;
 
     /**
-     * @param array $fields
-     *
      * @return Identifiable[]
      */
     public function findBy(array $fields): array;

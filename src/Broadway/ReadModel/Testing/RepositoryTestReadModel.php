@@ -23,10 +23,8 @@ class RepositoryTestReadModel implements SerializableReadModel
     private $array;
 
     /**
-     * @param mixed  $id
-     * @param string $name
-     * @param mixed  $foo
-     * @param array  $array
+     * @param mixed $id
+     * @param mixed $foo
      */
     public function __construct($id, string $name, $foo, array $array)
     {

@@ -25,8 +25,7 @@ final class DuplicatePlayheadException extends EventStoreException
     private $eventStream;
 
     /**
-     * @param DomainEventStream $eventStream
-     * @param Exception         $previous
+     * @param Exception $previous
      */
     public function __construct(DomainEventStream $eventStream, $previous = null)
     {
@@ -35,9 +34,6 @@ final class DuplicatePlayheadException extends EventStoreException
         $this->eventStream = $eventStream;
     }
 
-    /**
-     * @return DomainEventStream
-     */
     public function getEventStream(): DomainEventStream
     {
         return $this->eventStream;

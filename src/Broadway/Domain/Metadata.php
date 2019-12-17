@@ -22,9 +22,6 @@ final class Metadata implements Serializable
 {
     private $values = [];
 
-    /**
-     * @param array $values
-     */
     public function __construct(array $values = [])
     {
         $this->values = $values;
@@ -78,8 +75,6 @@ final class Metadata implements Serializable
     }
 
     /**
-     * @param array $data
-     *
      * @return Metadata
      */
     public static function deserialize(array $data): self

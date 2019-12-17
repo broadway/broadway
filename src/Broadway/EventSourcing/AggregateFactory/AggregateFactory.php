@@ -19,10 +19,7 @@ use Broadway\EventSourcing\EventSourcedAggregateRoot;
 interface AggregateFactory
 {
     /**
-     * @param string            $aggregateClass    the FQCN of the Aggregate to create
-     * @param DomainEventStream $domainEventStream
-     *
-     * @return EventSourcedAggregateRoot
+     * @param string $aggregateClass the FQCN of the Aggregate to create
      */
     public function create(string $aggregateClass, DomainEventStream $domainEventStream): EventSourcedAggregateRoot;
 }

@@ -26,10 +26,7 @@ final class SimpleInterfaceSerializer implements Serializer
     public function serialize($object): array
     {
         if (!$object instanceof Serializable) {
-            throw new SerializationException(sprintf(
-                'Object \'%s\' does not implement Broadway\Serializer\Serializable',
-                get_class($object)
-            ));
+            throw new SerializationException(sprintf('Object \'%s\' does not implement Broadway\Serializer\Serializable', get_class($object)));
         }
 
         return [
@@ -47,12 +44,7 @@ final class SimpleInterfaceSerializer implements Serializer
         Assert::keyExists($serializedObject, 'payload', "Key 'payload' should be set.");
 
         if (!in_array(Serializable::class, class_implements($serializedObject['class']))) {
-            throw new SerializationException(
-                sprintf(
-                    'Class \'%s\' does not implement Broadway\Serializer\Serializable',
-                    $serializedObject['class']
-                )
-            );
+            throw new SerializationException(sprintf('Class \'%s\' does not implement Broadway\Serializer\Serializable', $serializedObject['class']));
         }
 
         return $serializedObject['class']::deserialize($serializedObject['payload']);
