@@ -17,6 +17,7 @@ use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
+use Broadway\EventStore\EventStore;
 use Broadway\EventStore\EventStreamNotFoundException;
 use Broadway\EventStore\Exception\DuplicatePlayheadException;
 use Broadway\Serializer\Serializable;
@@ -113,7 +114,12 @@ abstract class EventStoreTest extends TestCase
             'Yolntbyaac' //You only live nine times because you are a cat
         );
 
-        $this->expectException(Error::class);
+        if (version_compare(phpversion(), '7.4.0', '>=')) {
+            $this->expectException(\Error::class);
+        } else {
+            $this->expectException(Error::class);
+        }
+
         $this->expectExceptionMessage(sprintf(
             'Object of class %s could not be converted to string',
             IdentityThatCannotBeConvertedToAString::class

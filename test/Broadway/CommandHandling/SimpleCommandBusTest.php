@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Broadway\CommandHandling;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class SimpleCommandBusTest extends TestCase
@@ -22,7 +23,7 @@ class SimpleCommandBusTest extends TestCase
      */
     private $commandBus;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->commandBus = new SimpleCommandBus();
     }
@@ -103,7 +104,7 @@ class SimpleCommandBusTest extends TestCase
         $this->commandBus->dispatch($command2);
     }
 
-    private function createCommandHandlerMock(array $expectedCommand): \PHPUnit_Framework_MockObject_MockObject
+    private function createCommandHandlerMock(array $expectedCommand): MockObject
     {
         $mock = $this->createMock(CommandHandler::class);
 

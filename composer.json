@@ -36,7 +36,7 @@
     ],
     "require-dev": {
         "monolog/monolog": "~1.8",
-        "phpunit/phpunit": "^6.0",
+        "phpunit/phpunit": "^6.0||^7.0||^8.0",
         "ramsey/uuid": "^3.0",
         "friendsofphp/php-cs-fixer": "^2.1",
         "malukenho/docheader": "^0.1.7"
