@@ -31,7 +31,7 @@ abstract class CommandHandlerScenarioTestCase extends TestCase
      */
     protected $scenario;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->scenario = $this->createScenario();
     }
