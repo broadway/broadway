@@ -15,6 +15,7 @@ namespace Broadway\CommandHandling;
 
 use Broadway\EventDispatcher\EventDispatcher;
 use PHPUnit\Framework\TestCase;
+use Exception;
 
 class EventDispatchingCommandBusTest extends TestCase
 {
@@ -117,8 +118,6 @@ class EventDispatchingCommandBusTest extends TestCase
 class Command
 {
 }
-
-use Exception;
 
 class MyException extends Exception
 {
