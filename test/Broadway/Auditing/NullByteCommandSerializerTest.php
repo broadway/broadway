@@ -27,7 +27,7 @@ class NullByteCommandSerializerTest extends TestCase
      */
     private $command;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->commandSerializer = new NullByteCommandSerializer();
         $this->command = new MyCommand();

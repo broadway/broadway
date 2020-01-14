@@ -17,7 +17,7 @@ use Broadway\EventStore\Testing\EventStoreTest;
 
 class InMemoryEventStoreTest extends EventStoreTest
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->eventStore = new InMemoryEventStore();
     }

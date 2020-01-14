@@ -45,7 +45,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
     /** @var EventSourcingRepository */
     protected $repository;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->eventStore = new TraceableEventStore(new InMemoryEventStore());
         $this->eventStore->trace();

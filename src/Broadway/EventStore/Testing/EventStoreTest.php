@@ -113,7 +113,12 @@ abstract class EventStoreTest extends TestCase
             'Yolntbyaac' //You only live nine times because you are a cat
         );
 
-        $this->expectException(Error::class);
+        if (PHP_VERSION_ID > 70400) {
+            $this->expectException(\Throwable::class);
+        } else {
+            $this->expectException(Error::class);
+        }
+
         $this->expectExceptionMessage(sprintf(
             'Object of class %s could not be converted to string',
             IdentityThatCannotBeConvertedToAString::class
