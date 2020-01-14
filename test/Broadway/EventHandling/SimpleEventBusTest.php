@@ -16,6 +16,7 @@ namespace Broadway\EventHandling;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class SimpleEventBusTest extends TestCase
@@ -144,7 +145,7 @@ class SimpleEventBusTest extends TestCase
         $this->eventBus->publish($domainEventStream2);
     }
 
-    private function createEventListenerMock(): \PHPUnit_Framework_MockObject_MockObject
+    private function createEventListenerMock(): MockObject
     {
         return $this->createMock(EventListener::class);
     }

@@ -15,12 +15,13 @@ namespace Broadway\CommandHandling;
 
 use Broadway\EventDispatcher\EventDispatcher;
 use Exception;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class EventDispatchingCommandBusTest extends TestCase
 {
     /**
-     * @var CommandBus|\PHPUnit_Framework_MockObject_MockObject
+     * @var CommandBus|MockObject
      */
     private $baseCommandBus;
 
@@ -30,7 +31,7 @@ class EventDispatchingCommandBusTest extends TestCase
     private $command;
 
     /**
-     * @var EventDispatcher|\PHPUnit_Framework_MockObject_MockObject
+     * @var EventDispatcher|MockObject
      */
     private $eventDispatcher;
 
@@ -40,7 +41,7 @@ class EventDispatchingCommandBusTest extends TestCase
     private $eventDispatchingCommandBus;
 
     /**
-     * @var CommandHandler|\PHPUnit_Framework_MockObject_MockObject
+     * @var CommandHandler|MockObject
      */
     private $subscriber;
 
