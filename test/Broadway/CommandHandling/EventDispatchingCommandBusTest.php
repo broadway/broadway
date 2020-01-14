@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Broadway\CommandHandling;
 
 use Broadway\EventDispatcher\EventDispatcher;
-use PHPUnit\Framework\TestCase;
 use Exception;
+use PHPUnit\Framework\TestCase;
 
 class EventDispatchingCommandBusTest extends TestCase
 {
