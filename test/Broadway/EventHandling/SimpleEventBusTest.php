@@ -25,7 +25,7 @@ class SimpleEventBusTest extends TestCase
      */
     private $eventBus;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->eventBus = new SimpleEventBus();
     }
