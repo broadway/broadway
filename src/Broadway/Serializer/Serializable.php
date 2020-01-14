@@ -23,8 +23,5 @@ interface Serializable
      */
     public static function deserialize(array $data);
 
-    /**
-     * @return array
-     */
     public function serialize(): array;
 }

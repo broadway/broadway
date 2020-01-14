@@ -29,7 +29,7 @@ class JobSeekersCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
 {
     private $generator;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->generator = new Broadway\UuidGenerator\Rfc4122\Version4Generator();

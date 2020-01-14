@@ -29,7 +29,7 @@ class PartsCommandHandlerTest extends Broadway\CommandHandling\Testing\CommandHa
 {
     private $generator;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->generator = new Broadway\UuidGenerator\Rfc4122\Version4Generator();
