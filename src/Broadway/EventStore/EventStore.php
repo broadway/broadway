@@ -28,13 +28,11 @@ interface EventStore
 
     /**
      * @param mixed $id
-     * @param int   $playhead
      */
     public function loadFromPlayhead($id, int $playhead): DomainEventStream;
 
     /**
-     * @param mixed             $id
-     * @param DomainEventStream $eventStream
+     * @param mixed $id
      *
      * @throws DuplicatePlayheadException
      */

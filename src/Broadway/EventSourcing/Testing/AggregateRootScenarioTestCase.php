@@ -32,9 +32,6 @@ abstract class AggregateRootScenarioTestCase extends TestCase
         $this->scenario = $this->createScenario();
     }
 
-    /**
-     * @return Scenario
-     */
     protected function createScenario(): Scenario
     {
         $aggregateRootClass = $this->getAggregateRootClass();

@@ -36,8 +36,6 @@ class Part extends Broadway\EventSourcing\EventSourcedAggregateRoot
 
     /**
      * Every aggregate root will expose its id.
-     *
-     * @return string
      */
     public function getAggregateRootId(): string
     {
