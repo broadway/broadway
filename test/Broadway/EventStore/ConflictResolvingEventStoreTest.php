@@ -18,10 +18,11 @@ use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\ConcurrencyConflictResolver\ConcurrencyConflictResolver;
 use Broadway\EventStore\Testing\EventStoreTest;
 use Prophecy\Argument;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class ConflictResolvingEventStoreTest extends EventStoreTest
 {
-    /** @var ConcurrencyConflictResolver|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ConcurrencyConflictResolver|MockObject */
     protected $concurrencyResolver;
 
     protected function setUp(): void
