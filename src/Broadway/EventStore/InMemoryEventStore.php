@@ -15,6 +15,7 @@ namespace Broadway\EventStore;
 
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
+use Broadway\EventHandling\EventBus;
 use Broadway\EventStore\Exception\DuplicatePlayheadException;
 use Broadway\EventStore\Management\Criteria;
 use Broadway\EventStore\Management\EventStoreManagement;
@@ -27,6 +28,14 @@ use Broadway\EventStore\Management\EventStoreManagement;
 final class InMemoryEventStore implements EventStore, EventStoreManagement
 {
     private $events = [];
+
+    /** @var EventBus|null */
+    private $eventBus;
+
+    public function __construct(?EventBus $eventBus = null)
+    {
+        $this->eventBus = $eventBus;
+    }
 
     /**
      * {@inheritdoc}
@@ -64,7 +73,25 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
             )
         );
     }
+    public function loadFromPlayheadToPlayhead($id, int $fromPlayhead, int $toPlayhead): DomainEventStream
+    {
+        $id = (string) $id;
 
+        if (!isset($this->events[$id])) {
+            return new DomainEventStream([]);
+        }
+
+        return new DomainEventStream(
+            array_values(
+                array_filter(
+                    $this->events[$id],
+                    function ($event) use ($fromPlayhead, $toPlayhead) {
+                        return $fromPlayhead <= $event->getPlayhead() && $toPlayhead >= $event->getPlayhead();
+                    }
+                )
+            )
+        );
+    }
     /**
      * {@inheritdoc}
      */
@@ -112,6 +139,15 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
 
                 $eventVisitor->doWithEvent($event);
             }
+        }
+    }
+
+    public function replay($id, int $fromPlayhead, ?int $toPlayhead = null): void
+    {
+        $eventStream = $this->loadFromPlayheadToPlayhead($id, $fromPlayhead, $toPlayhead);
+
+        if ($this->eventBus) {
+            $this->eventBus->publish($eventStream);
         }
     }
 }
