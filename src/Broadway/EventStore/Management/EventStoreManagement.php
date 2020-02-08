@@ -18,4 +18,9 @@ use Broadway\EventStore\EventVisitor;
 interface EventStoreManagement
 {
     public function visitEvents(Criteria $criteria, EventVisitor $eventVisitor): void;
+
+    /**
+     * @param $id
+     */
+    public function replay($id, int $fromPlayhead, ?int $toPlayhead = null): void;
 }

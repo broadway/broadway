@@ -1,5 +1,5 @@
 {
-    "name": "broadway/broadway",
+    "name": "household/broadway",
     "description": "Infrastructure and testing helpers for creating CQRS and event sourced applications.",
     "keywords": ["cqrs", "event sourcing", "domain-driven design", "ddd"],
     "license": "MIT",

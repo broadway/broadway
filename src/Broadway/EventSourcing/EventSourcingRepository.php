@@ -36,6 +36,8 @@ class EventSourcingRepository implements Repository
 
     /**
      * @param EventStreamDecorator[] $eventStreamDecorators
+     *
+     * @throws \Assert\AssertionFailedException
      */
     public function __construct(
         EventStore $eventStore,
@@ -69,6 +71,8 @@ class EventSourcingRepository implements Repository
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Assert\AssertionFailedException
      */
     public function save(AggregateRoot $aggregate): void
     {
@@ -79,6 +83,19 @@ class EventSourcingRepository implements Repository
         $eventStream = $this->decorateForWrite($aggregate, $domainEventStream);
         $this->eventStore->append($aggregate->getAggregateRootId(), $eventStream);
         $this->eventBus->publish($eventStream);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function replay($id, int $fromPlayhead, ?int $toPlayhead = null): void
+    {
+        $domainEventStream = $toPlayhead
+            ? $this->eventStore->loadFromPlayheadToPlayhead($id, $fromPlayhead, $toPlayhead)
+            : $this->eventStore->loadFromPlayhead($id, $fromPlayhead)
+        ;
+
+        $this->eventBus->publish($domainEventStream);
     }
 
     private function decorateForWrite(AggregateRoot $aggregate, DomainEventStream $eventStream): DomainEventStream
@@ -93,6 +110,9 @@ class EventSourcingRepository implements Repository
         return $eventStream;
     }
 
+    /**
+     * @throws \Assert\AssertionFailedException
+     */
     private function assertExtendsEventSourcedAggregateRoot(string $class): void
     {
         Assert::subclassOf(
