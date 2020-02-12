@@ -87,8 +87,7 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
     }
 
     /**
-     * @param DomainMessage[]   $events
-     * @param DomainEventStream $eventsToAppend
+     * @param DomainMessage[] $events
      */
     private function assertStream(array $events, DomainEventStream $eventsToAppend): void
     {

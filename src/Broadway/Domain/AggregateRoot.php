@@ -18,13 +18,7 @@ namespace Broadway\Domain;
  */
 interface AggregateRoot
 {
-    /**
-     * @return DomainEventStream
-     */
     public function getUncommittedEvents(): DomainEventStream;
 
-    /**
-     * @return string
-     */
     public function getAggregateRootId(): string;
 }

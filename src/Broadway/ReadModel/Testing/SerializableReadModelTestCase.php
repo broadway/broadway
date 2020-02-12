@@ -45,8 +45,5 @@ abstract class SerializableReadModelTestCase extends TestCase
         $this->assertEquals($readModel, $deserialized);
     }
 
-    /**
-     * @return SerializableReadModel
-     */
     abstract protected function createSerializableReadModel(): SerializableReadModel;
 }

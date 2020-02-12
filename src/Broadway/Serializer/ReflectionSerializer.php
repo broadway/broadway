@@ -46,11 +46,6 @@ class ReflectionSerializer implements Serializer
         return $value;
     }
 
-    /**
-     * @param array $array
-     *
-     * @return array
-     */
     private function serializeArrayRecursively(array $array): array
     {
         $data = [];
@@ -63,8 +58,6 @@ class ReflectionSerializer implements Serializer
 
     /**
      * @param object $object
-     *
-     * @return array
      */
     private function serializeObjectRecursively($object): array
     {
@@ -112,11 +105,6 @@ class ReflectionSerializer implements Serializer
         return $value;
     }
 
-    /**
-     * @param array $array
-     *
-     * @return array
-     */
     private function deserializeArrayRecursively(array $array): array
     {
         $data = [];
@@ -144,11 +132,7 @@ class ReflectionSerializer implements Serializer
         foreach ($serializedObject['payload'] as $name => $value) {
             $matchedProperty = $this->findProperty($properties, $name);
             if (null === $matchedProperty) {
-                throw new SerializationException(sprintf(
-                    'Property \'%s\' not found for object \'%s\'',
-                    $name,
-                    $serializedObject['class']
-                ));
+                throw new SerializationException(sprintf('Property \'%s\' not found for object \'%s\'', $name, $serializedObject['class']));
             }
 
             $value = $this->deserializeValue($value);

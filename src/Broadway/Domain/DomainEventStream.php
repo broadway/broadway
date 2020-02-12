@@ -31,9 +31,6 @@ final class DomainEventStream implements IteratorAggregate
         $this->events = $events;
     }
 
-    /**
-     * @return ArrayIterator
-     */
     public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->events);
