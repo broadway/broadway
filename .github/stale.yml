@@ -1,0 +1,4 @@
+# see https://probot.github.io/apps/stale/
+
+# inherit settings from https://github.com/broadway/coding-standard/blob/master/.github/stale.yml
+_extends: coding-standard
