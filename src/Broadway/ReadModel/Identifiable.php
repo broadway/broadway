@@ -18,8 +18,5 @@ namespace Broadway\ReadModel;
  */
 interface Identifiable
 {
-    /**
-     * @return string
-     */
     public function getId(): string;
 }

@@ -12,9 +12,9 @@
 declare(strict_types=1);
 
 use Broadway\Domain\DomainEventStream;
+use Broadway\EventStore\CallableEventVisitor;
 use Broadway\EventStore\InMemoryEventStore;
 use Broadway\EventStore\Management\Criteria;
-use Broadway\EventStore\CallableEventVisitor;
 
 require __DIR__.'/../event-sourced-domain-with-tests/Invites.php';
 

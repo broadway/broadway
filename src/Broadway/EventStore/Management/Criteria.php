@@ -100,17 +100,11 @@ final class Criteria
 
     /**
      * Determine if a domain message is matched by this criteria.
-     *
-     * @param DomainMessage $domainMessage
-     *
-     * @return bool
      */
     public function isMatchedBy(DomainMessage $domainMessage): bool
     {
         if ($this->aggregateRootTypes) {
-            throw new CriteriaNotSupportedException(
-                'Cannot match criteria based on aggregate root types.'
-            );
+            throw new CriteriaNotSupportedException('Cannot match criteria based on aggregate root types.');
         }
 
         if ($this->aggregateRootIds && !in_array($domainMessage->getId(), $this->aggregateRootIds)) {

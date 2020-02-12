@@ -18,11 +18,5 @@ namespace Broadway\ReadModel;
  */
 interface RepositoryFactory
 {
-    /**
-     * @param string $name
-     * @param string $class
-     *
-     * @return Repository
-     */
     public function create(string $name, string $class): Repository;
 }

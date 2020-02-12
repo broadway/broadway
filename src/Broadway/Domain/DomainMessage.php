@@ -44,11 +44,8 @@ final class DomainMessage
     private $recordedOn;
 
     /**
-     * @param mixed    $id
-     * @param int      $playhead
-     * @param Metadata $metadata
-     * @param mixed    $payload
-     * @param DateTime $recordedOn
+     * @param mixed $id
+     * @param mixed $payload
      */
     public function __construct($id, int $playhead, Metadata $metadata, $payload, DateTime $recordedOn)
     {
@@ -59,25 +56,16 @@ final class DomainMessage
         $this->recordedOn = $recordedOn;
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
     public function getPlayhead(): int
     {
         return $this->playhead;
     }
 
-    /**
-     * @return Metadata
-     */
     public function getMetadata(): Metadata
     {
         return $this->metadata;
@@ -91,27 +79,19 @@ final class DomainMessage
         return $this->payload;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getRecordedOn(): DateTime
     {
         return $this->recordedOn;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return strtr(get_class($this->payload), '\\', '.');
     }
 
     /**
-     * @param mixed    $id
-     * @param int      $playhead
-     * @param Metadata $metadata
-     * @param mixed    $payload
+     * @param mixed $id
+     * @param mixed $payload
      */
     public static function recordNow($id, int $playhead, Metadata $metadata, $payload): self
     {

@@ -20,8 +20,5 @@ use Broadway\Domain\Metadata;
  */
 interface MetadataEnricher
 {
-    /**
-     * @return Metadata
-     */
     public function enrich(Metadata $metadata): Metadata;
 }
