@@ -205,7 +205,7 @@ abstract class RepositoryTestCase extends TestCase
         $this->assertEquals([$model1, $model2, $model3], $this->repository->findAll());
     }
 
-    private function createReadModel($id, $name, $foo, array $array = [])
+    protected function createReadModel($id, $name, $foo, array $array = [])
     {
         return new RepositoryTestReadModel($id, $name, $foo, $array);
     }
