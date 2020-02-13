@@ -44,7 +44,7 @@ class InMemoryRepositoryTest extends RepositoryTestCase
         $this->assertEquals($targetRepository->findAll(), $repository->findAll());
     }
 
-    private function createReadModel($id, $name, $foo, array $array = []): RepositoryTestReadModel
+    protected function createReadModel($id, $name, $foo, array $array = []): RepositoryTestReadModel
     {
         return new RepositoryTestReadModel($id, $name, $foo, $array);
     }
