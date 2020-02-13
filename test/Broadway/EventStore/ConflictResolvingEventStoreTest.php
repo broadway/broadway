@@ -17,14 +17,15 @@ use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\ConcurrencyConflictResolver\ConcurrencyConflictResolver;
 use Broadway\EventStore\Testing\EventStoreTest;
+use PHPUnit\Framework\MockObject\MockObject;
 use Prophecy\Argument;
 
 class ConflictResolvingEventStoreTest extends EventStoreTest
 {
-    /** @var ConcurrencyConflictResolver|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ConcurrencyConflictResolver|MockObject */
     protected $concurrencyResolver;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->concurrencyResolver = $this->prophesize(ConcurrencyConflictResolver::class);
         $this->concurrencyResolver

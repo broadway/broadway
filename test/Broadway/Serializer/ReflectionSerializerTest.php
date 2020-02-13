@@ -23,7 +23,7 @@ class ReflectionSerializerTest extends TestCase
      */
     private $serializer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->serializer = new ReflectionSerializer();
     }

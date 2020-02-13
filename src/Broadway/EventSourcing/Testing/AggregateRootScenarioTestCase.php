@@ -27,7 +27,7 @@ abstract class AggregateRootScenarioTestCase extends TestCase
      */
     protected $scenario;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->scenario = $this->createScenario();
     }
