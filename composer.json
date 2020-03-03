@@ -39,7 +39,8 @@
         "phpunit/phpunit": "^8.0",
         "ramsey/uuid": "^3.0",
         "friendsofphp/php-cs-fixer": "^2.1",
-        "malukenho/docheader": "^0.1.7"
+        "malukenho/docheader": "^0.1.7",
+        "broadway/coding-standard": "~0.1"
     },
     "suggest": {
         "psr/log-implementation": "Implementation for PSR3, LoggerInterface",

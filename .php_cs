@@ -1,11 +1,14 @@
 <?php
 
-$finder = PhpCsFixer\Finder::create()
-    ->in(__DIR__);
+$config = require 'vendor/broadway/coding-standard/.php_cs.dist';
 
-return PhpCsFixer\Config::create()
-    ->setRules([
-        '@Symfony' => true,
-        'declare_strict_types' => true,
-    ])
-    ->setFinder($finder);
+$config->setFinder(
+    \PhpCsFixer\Finder::create()
+        ->in([
+            __DIR__ . '/src',
+            __DIR__ . '/test',
+            __DIR__ . '/examples',
+        ])
+);
+
+return $config;
