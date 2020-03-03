@@ -44,3 +44,4 @@ Marijn for giving us access to his in-house developed CQRS framework.
 ## License
 
 MIT, see LICENSE.
+[![Build Status](https://travis-ci.org/broadway/broadway.svg?branch=master)](https://travis-ci.org/broadway/broadway)
