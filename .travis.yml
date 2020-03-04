@@ -16,16 +16,9 @@ before_install:
     - echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini || return 0
 
 install:
-    - travis_retry composer self-update
-    - travis_retry composer install
-    - composer info -i
+    - make dependencies
 
 script:
-  - vendor/bin/phpunit --exclude-group=none
-  - vendor/bin/php-cs-fixer fix --config=".php_cs" --dry-run --no-interaction --allow-risky=yes --diff --verbose
-  - vendor/bin/docheader check {src,test,examples}
-
-branches:
-  only:
-      - master
-      - develop
+  - make test
+  - make qa
+  - make changelog
