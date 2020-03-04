@@ -16,9 +16,10 @@ before_install:
     - echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini || return 0
 
 install:
-    - make dependencies
+  - make dependencies
 
 script:
   - make test
   - make qa
+  - make license
   - make changelog
