@@ -23,6 +23,10 @@ phpstan:
 changelog:
 	git log $$(git describe --abbrev=0 --tags)...HEAD --no-merges --pretty=format:"* [%h](http://github.com/${TRAVIS_REPO_SLUG}/commit/%H) %s (%cN)"
 
+.PHONY: license
+license:
+	vendor/bin/docheader check --no-interaction --ansi -vvv {src,test,examples}
+
 # Based on https://suva.sh/posts/well-documented-makefiles/
 help:  ## Display this help
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n\nTargets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
