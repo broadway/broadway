@@ -220,7 +220,7 @@ abstract class EventStoreManagementTest extends TestCase
 class RecordingEventVisitor implements EventVisitor
 {
     /**
-     * @var DomainMessage
+     * @var DomainMessage[]
      */
     private $visitedEvents;
 
