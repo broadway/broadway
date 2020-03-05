@@ -41,7 +41,6 @@ abstract class EventStoreManagementTest extends TestCase
         $this->now = DateTime::now();
         $this->eventStore = $this->createEventStore();
         $this->createAndInsertEventFixtures();
-        $this->eventVisitor = new RecordingEventVisitor();
     }
 
     protected function visitEvents(Criteria $criteria = null)
@@ -244,7 +243,7 @@ class Event implements Serializable
 {
     public static function deserialize(array $data)
     {
-        return new static();
+        return new self();
     }
 
     public function serialize(): array
@@ -268,7 +267,7 @@ class Middle extends Event
 
     public static function deserialize(array $data)
     {
-        return new static($data['position']);
+        return new self($data['position']);
     }
 
     public function serialize(): array
