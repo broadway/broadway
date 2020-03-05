@@ -21,6 +21,7 @@ use Broadway\EventStore\EventStore;
 use Broadway\EventStore\EventVisitor;
 use Broadway\EventStore\Management\Criteria;
 use Broadway\EventStore\Management\CriteriaNotSupportedException;
+use Broadway\EventStore\Management\EventStoreManagement;
 use Broadway\Serializer\Serializable;
 use PHPUnit\Framework\TestCase;
 

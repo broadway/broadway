@@ -17,6 +17,7 @@ use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
+use Broadway\EventStore\EventStore;
 use Broadway\EventStore\EventStreamNotFoundException;
 use Broadway\EventStore\Exception\DuplicatePlayheadException;
 use Broadway\Serializer\Serializable;
@@ -26,7 +27,9 @@ use PHPUnit\Framework\TestCase;
 
 abstract class EventStoreTest extends TestCase
 {
-    /** @var EventStore */
+    /**
+     * @varEventStore
+     */
     protected $eventStore;
 
     /**
