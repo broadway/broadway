@@ -38,7 +38,8 @@
         "monolog/monolog": "~1.8",
         "phpunit/phpunit": "^8.0",
         "ramsey/uuid": "^3.0",
-        "broadway/coding-standard": "~0.1"
+        "broadway/coding-standard": "~0.1",
+        "phpstan/phpstan": "@stable"
     },
     "suggest": {
         "psr/log-implementation": "Implementation for PSR3, LoggerInterface",
