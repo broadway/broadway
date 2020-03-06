@@ -115,7 +115,7 @@ abstract class EventStoreTest extends TestCase
             'Yolntbyaac' //You only live nine times because you are a cat
         );
 
-        if (PHP_VERSION_ID > 70400) {
+        if (PHP_VERSION_ID >= 70400) {
             $this->expectException(\Throwable::class);
         } else {
             $this->expectException(Error::class);
