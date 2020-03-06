@@ -42,7 +42,6 @@ abstract class EventStoreManagementTest extends TestCase
         $this->now = DateTime::now();
         $this->eventStore = $this->createEventStore();
         $this->createAndInsertEventFixtures();
-        $this->eventVisitor = new RecordingEventVisitor();
     }
 
     protected function visitEvents(Criteria $criteria = null)
