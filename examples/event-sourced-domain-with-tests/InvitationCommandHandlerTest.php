@@ -86,11 +86,12 @@ class InvitationCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
 
     /**
      * @test
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Already accepted.
      */
     public function an_accepted_invite_cannot_be_declined()
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Already accepted');
+
         $id = $this->generator->generate();
 
         $this->scenario
@@ -129,11 +130,12 @@ class InvitationCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
 
     /**
      * @test
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Already declined.
      */
     public function a_declined_invite_cannot_be_accepted()
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Already declined');
+
         $id = $this->generator->generate();
 
         $this->scenario
