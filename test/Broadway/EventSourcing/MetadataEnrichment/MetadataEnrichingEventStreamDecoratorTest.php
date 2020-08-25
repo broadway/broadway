@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Broadway\EventSourcing\MetadataEnrichment;
 
-use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\EagerDomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use PHPUnit\Framework\TestCase;
@@ -93,7 +93,7 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
         $m1 = DomainMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
         $m2 = DomainMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
 
-        return new DomainEventStream([$m1, $m2]);
+        return new EagerDomainEventStream([$m1, $m2]);
     }
 }
 

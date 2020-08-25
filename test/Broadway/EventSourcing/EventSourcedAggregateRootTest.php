@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Broadway\EventSourcing;
 
-use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\EagerDomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use PHPUnit\Framework\TestCase;
@@ -74,7 +74,7 @@ class EventSourcedAggregateRootTest extends TestCase
             $messages[] = DomainMessage::recordNow(1, $playhead, new Metadata([]), $event);
         }
 
-        return new DomainEventStream($messages);
+        return new EagerDomainEventStream($messages);
     }
 }
 

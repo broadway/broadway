@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Broadway\EventSourcing\MetadataEnrichment;
 
 use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\EagerDomainEventStream;
 use Broadway\Domain\Metadata;
 use Broadway\EventSourcing\EventStreamDecorator;
 
@@ -58,6 +59,6 @@ final class MetadataEnrichingEventStreamDecorator implements EventStreamDecorato
             $messages[] = $message->andMetadata($metadata);
         }
 
-        return new DomainEventStream($messages);
+        return new EagerDomainEventStream($messages);
     }
 }

@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Broadway\EventSourcing\Testing;
 
-use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\EagerDomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventSourcing\AggregateFactory\AggregateFactory;
@@ -84,7 +84,7 @@ class Scenario
         }
 
         $this->aggregateRootInstance = $this->factory->create(
-            $this->aggregateRootClass, new DomainEventStream($messages)
+            $this->aggregateRootClass, new EagerDomainEventStream($messages)
         );
 
         return $this;

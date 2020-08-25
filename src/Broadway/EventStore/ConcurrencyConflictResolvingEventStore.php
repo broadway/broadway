@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Broadway\EventStore;
 
 use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\EagerDomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\ConcurrencyConflictResolver\ConcurrencyConflictResolver;
 use Broadway\EventStore\Exception\DuplicatePlayheadException;
@@ -61,7 +62,7 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
                     $uncommittedEvent->getRecordedOn());
             }
 
-            $this->append($id, new DomainEventStream($conflictResolvedEvents));
+            $this->append($id, new EagerDomainEventStream($conflictResolvedEvents));
         }
     }
 

@@ -16,6 +16,7 @@ namespace Broadway\EventSourcing;
 use Assert\InvalidArgumentException;
 use Broadway\Domain\AggregateRoot;
 use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\EagerDomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventHandling\SimpleEventBus;
@@ -99,7 +100,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
      */
     public function it_loads_an_aggregate()
     {
-        $this->eventStore->append(42, new DomainEventStream([
+        $this->eventStore->append(42, new EagerDomainEventStream([
             DomainMessage::recordNow(42, 0, new Metadata([]), new DidNumberEvent(1337)),
         ]));
 
@@ -223,7 +224,7 @@ class TestAggregate implements AggregateRoot
 
     public function getUncommittedEvents(): DomainEventStream
     {
-        return new DomainEventStream([]);
+        return new EagerDomainEventStream([]);
     }
 }
 

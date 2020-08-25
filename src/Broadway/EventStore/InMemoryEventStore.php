@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Broadway\EventStore;
 
 use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\EagerDomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\Exception\DuplicatePlayheadException;
 use Broadway\EventStore\Management\Criteria;
@@ -36,7 +37,7 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
         $id = (string) $id;
 
         if (isset($this->events[$id])) {
-            return new DomainEventStream($this->events[$id]);
+            return new EagerDomainEventStream($this->events[$id]);
         }
 
         throw new EventStreamNotFoundException(sprintf('EventStream not found for aggregate with id %s', $id));
@@ -50,10 +51,10 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
         $id = (string) $id;
 
         if (!isset($this->events[$id])) {
-            return new DomainEventStream([]);
+            return new EagerDomainEventStream([]);
         }
 
-        return new DomainEventStream(
+        return new EagerDomainEventStream(
             array_values(
                 array_filter(
                     $this->events[$id],

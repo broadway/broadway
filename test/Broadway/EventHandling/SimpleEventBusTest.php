@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Broadway\EventHandling;
 
-use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\EagerDomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use PHPUnit\Framework\TestCase;
@@ -45,7 +45,7 @@ class SimpleEventBusTest extends TestCase
 
         $this->eventBus->subscribe($eventListener);
 
-        $this->eventBus->publish(new DomainEventStream([$domainMessage]));
+        $this->eventBus->publish(new EagerDomainEventStream([$domainMessage]));
     }
 
     /**
@@ -56,7 +56,7 @@ class SimpleEventBusTest extends TestCase
         $domainMessage1 = $this->createDomainMessage([]);
         $domainMessage2 = $this->createDomainMessage([]);
 
-        $domainEventStream = new DomainEventStream([$domainMessage1, $domainMessage2]);
+        $domainEventStream = new EagerDomainEventStream([$domainMessage1, $domainMessage2]);
 
         $eventListener1 = $this->createEventListenerMock();
         $eventListener1
@@ -91,9 +91,9 @@ class SimpleEventBusTest extends TestCase
         $domainMessage1 = $this->createDomainMessage(['foo' => 'bar']);
         $domainMessage2 = $this->createDomainMessage(['foo' => 'bas']);
 
-        $domainEventStream = new DomainEventStream([$domainMessage1]);
+        $domainEventStream = new EagerDomainEventStream([$domainMessage1]);
 
-        $eventListener1 = new SimpleEventBusTestListener($this->eventBus, new DomainEventStream([$domainMessage2]));
+        $eventListener1 = new SimpleEventBusTestListener($this->eventBus, new EagerDomainEventStream([$domainMessage2]));
 
         $eventListener2 = $this->createEventListenerMock();
         $eventListener2
@@ -118,8 +118,8 @@ class SimpleEventBusTest extends TestCase
         $domainMessage1 = $this->createDomainMessage(['foo' => 'bar']);
         $domainMessage2 = $this->createDomainMessage(['foo' => 'bas']);
 
-        $domainEventStream1 = new DomainEventStream([$domainMessage1]);
-        $domainEventStream2 = new DomainEventStream([$domainMessage2]);
+        $domainEventStream1 = new EagerDomainEventStream([$domainMessage1]);
+        $domainEventStream2 = new EagerDomainEventStream([$domainMessage2]);
 
         $eventListener = $this->createEventListenerMock();
         $eventListener

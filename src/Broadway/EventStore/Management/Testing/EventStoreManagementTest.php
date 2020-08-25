@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Broadway\EventStore\Management\Testing;
 
 use Broadway\Domain\DateTime;
-use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\EagerDomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventStore\EventStore;
@@ -127,7 +127,7 @@ abstract class EventStoreManagementTest extends TestCase
     private function createAndInsertEventFixtures()
     {
         foreach ($this->getEventFixtures() as $domainMessage) {
-            $this->eventStore->append($domainMessage->getId(), new DomainEventStream([$domainMessage]));
+            $this->eventStore->append($domainMessage->getId(), new EagerDomainEventStream([$domainMessage]));
         }
     }
 

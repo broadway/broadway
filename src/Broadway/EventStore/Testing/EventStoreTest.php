@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Broadway\EventStore\Testing;
 
 use Broadway\Domain\DateTime;
-use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\EagerDomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventStore\EventStreamNotFoundException;
@@ -35,7 +35,7 @@ abstract class EventStoreTest extends TestCase
      */
     public function it_creates_a_new_entry_when_id_is_new($id)
     {
-        $domainEventStream = new DomainEventStream([
+        $domainEventStream = new EagerDomainEventStream([
             $this->createDomainMessage($id, 0),
             $this->createDomainMessage($id, 1),
             $this->createDomainMessage($id, 2),
@@ -54,13 +54,13 @@ abstract class EventStoreTest extends TestCase
     public function it_appends_to_an_already_existing_stream($id)
     {
         $dateTime = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
-        $domainEventStream = new DomainEventStream([
+        $domainEventStream = new EagerDomainEventStream([
             $this->createDomainMessage($id, 0, $dateTime),
             $this->createDomainMessage($id, 1, $dateTime),
             $this->createDomainMessage($id, 2, $dateTime),
         ]);
         $this->eventStore->append($id, $domainEventStream);
-        $appendedEventStream = new DomainEventStream([
+        $appendedEventStream = new EagerDomainEventStream([
             $this->createDomainMessage($id, 3, $dateTime),
             $this->createDomainMessage($id, 4, $dateTime),
             $this->createDomainMessage($id, 5, $dateTime),
@@ -68,7 +68,7 @@ abstract class EventStoreTest extends TestCase
 
         $this->eventStore->append($id, $appendedEventStream);
 
-        $expected = new DomainEventStream([
+        $expected = new EagerDomainEventStream([
             $this->createDomainMessage($id, 0, $dateTime),
             $this->createDomainMessage($id, 1, $dateTime),
             $this->createDomainMessage($id, 2, $dateTime),
@@ -96,7 +96,7 @@ abstract class EventStoreTest extends TestCase
      */
     public function it_throws_an_exception_when_appending_a_duplicate_playhead($id)
     {
-        $eventStream = new DomainEventStream([$this->createDomainMessage($id, 0)]);
+        $eventStream = new EagerDomainEventStream([$this->createDomainMessage($id, 0)]);
 
         $this->expectException(DuplicatePlayheadException::class);
 
@@ -119,7 +119,7 @@ abstract class EventStoreTest extends TestCase
             IdentityThatCannotBeConvertedToAString::class
         ));
 
-        $this->eventStore->append($id, new DomainEventStream([]));
+        $this->eventStore->append($id, new EagerDomainEventStream([]));
     }
 
     /**
@@ -129,7 +129,7 @@ abstract class EventStoreTest extends TestCase
     public function it_loads_events_starting_from_a_given_playhead($id)
     {
         $dateTime = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
-        $domainEventStream = new DomainEventStream([
+        $domainEventStream = new EagerDomainEventStream([
             $this->createDomainMessage($id, 0, $dateTime),
             $this->createDomainMessage($id, 1, $dateTime),
             $this->createDomainMessage($id, 2, $dateTime),
@@ -138,7 +138,7 @@ abstract class EventStoreTest extends TestCase
 
         $this->eventStore->append($id, $domainEventStream);
 
-        $expected = new DomainEventStream([
+        $expected = new EagerDomainEventStream([
             $this->createDomainMessage($id, 2, $dateTime),
             $this->createDomainMessage($id, 3, $dateTime),
         ]);
@@ -152,12 +152,12 @@ abstract class EventStoreTest extends TestCase
      */
     public function it_returns_empty_event_stream_when_no_events_are_committed_since_given_playhead($id)
     {
-        $this->eventStore->append($id, new DomainEventStream([
+        $this->eventStore->append($id, new EagerDomainEventStream([
             $this->createDomainMessage($id, 0),
         ]));
 
         $this->assertEquals(
-            new DomainEventStream([]),
+            new EagerDomainEventStream([]),
             $this->eventStore->loadFromPlayhead($id, 1)
         );
     }

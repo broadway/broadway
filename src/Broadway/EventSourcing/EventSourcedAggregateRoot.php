@@ -16,6 +16,7 @@ namespace Broadway\EventSourcing;
 use Broadway\Domain\AggregateRoot as AggregateRootInterface;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
+use Broadway\Domain\EagerDomainEventStream;
 use Broadway\Domain\Metadata;
 
 /**
@@ -52,7 +53,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRootInterface
      */
     public function getUncommittedEvents(): DomainEventStream
     {
-        $stream = new DomainEventStream($this->uncommittedEvents);
+        $stream = new EagerDomainEventStream($this->uncommittedEvents);
 
         $this->uncommittedEvents = [];
 

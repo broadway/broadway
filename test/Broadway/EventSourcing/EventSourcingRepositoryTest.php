@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Broadway\EventSourcing;
 
 use Assert\InvalidArgumentException;
-use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\EagerDomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventHandling\TraceableEventBus;
@@ -51,7 +51,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
     {
         // make sure events exist in the event store
         $id = 'y0l0';
-        $this->eventStore->append($id, new DomainEventStream([
+        $this->eventStore->append($id, new EagerDomainEventStream([
             DomainMessage::recordNow(42, 0, new Metadata([]), new DidEvent()),
         ]));
 
@@ -73,7 +73,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
     {
         // make sure events exist in the event store
         $id = 'y0l0';
-        $this->eventStore->append($id, new DomainEventStream([
+        $this->eventStore->append($id, new EagerDomainEventStream([
             DomainMessage::recordNow(42, 0, new Metadata([]), new DidEvent()),
         ]));
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Broadway\EventSourcing\AggregateFactory;
 
-use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\EagerDomainEventStream;
 use Broadway\EventSourcing\EventSourcedAggregateRoot;
 use PHPUnit\Framework\TestCase;
 
@@ -27,7 +27,7 @@ final class ReflectionAggregateFactoryTest extends TestCase
     {
         $aggregate = $this->factory->create(
             TestAggregateWithPrivateConstructor::class,
-            new DomainEventStream([])
+            new EagerDomainEventStream([])
         );
 
         $this->assertInstanceOf(TestAggregateWithPrivateConstructor::class, $aggregate);
@@ -40,7 +40,7 @@ final class ReflectionAggregateFactoryTest extends TestCase
     {
         $aggregate = $this->factory->create(
             TestAggregateWithPublicConstructor::class,
-            new DomainEventStream([])
+            new EagerDomainEventStream([])
         );
 
         $this->assertInstanceOf(TestAggregateWithPublicConstructor::class, $aggregate);
@@ -54,7 +54,7 @@ final class ReflectionAggregateFactoryTest extends TestCase
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage(sprintf('Impossible to initialize "%s"', \stdClass::class));
 
-        $this->factory->create(\stdClass::class, new DomainEventStream([]));
+        $this->factory->create(\stdClass::class, new EagerDomainEventStream([]));
     }
 }
 

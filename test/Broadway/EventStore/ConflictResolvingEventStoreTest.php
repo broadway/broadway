@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Broadway\EventStore;
 
-use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\EagerDomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\ConcurrencyConflictResolver\ConcurrencyConflictResolver;
 use Broadway\EventStore\Testing\EventStoreTest;
@@ -34,9 +34,9 @@ class ConflictResolvingEventStoreTest extends EventStoreTest
             ->willReturn(false);
 
         $domainMessage = $this->createDomainMessage(1, 0);
-        $baseStream = new DomainEventStream([$domainMessage]);
+        $baseStream = new EagerDomainEventStream([$domainMessage]);
         $this->eventStore->append(1, $baseStream);
-        $appendedEventStream = new DomainEventStream([$domainMessage]);
+        $appendedEventStream = new EagerDomainEventStream([$domainMessage]);
 
         $this->eventStore->append(1, $appendedEventStream);
 

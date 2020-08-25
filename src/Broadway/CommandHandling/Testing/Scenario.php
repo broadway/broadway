@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Broadway\CommandHandling\Testing;
 
 use Broadway\CommandHandling\CommandHandler;
-use Broadway\Domain\DomainEventStream;
+use Broadway\Domain\EagerDomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventStore\TraceableEventStore;
@@ -78,7 +78,7 @@ class Scenario
             $messages[] = DomainMessage::recordNow($this->aggregateId, $playhead, new Metadata([]), $event);
         }
 
-        $this->eventStore->append($this->aggregateId, new DomainEventStream($messages));
+        $this->eventStore->append($this->aggregateId, new EagerDomainEventStream($messages));
 
         return $this;
     }
