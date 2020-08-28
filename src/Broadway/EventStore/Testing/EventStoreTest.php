@@ -21,7 +21,7 @@ use Broadway\EventStore\EventStreamNotFoundException;
 use Broadway\EventStore\Exception\DuplicatePlayheadException;
 use Broadway\Serializer\Serializable;
 use Broadway\UuidGenerator\Rfc4122\Version4Generator;
-use PHPUnit\Framework\Error\Error;
+use Error;
 use PHPUnit\Framework\TestCase;
 
 abstract class EventStoreTest extends TestCase
