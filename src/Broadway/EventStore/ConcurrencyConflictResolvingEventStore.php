@@ -40,7 +40,9 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
         try {
             $this->eventStore->append($id, $uncommittedEvents);
         } catch (DuplicatePlayheadException $e) {
-            $committedEvents = $this->eventStore->load($id);
+            $uncommittedPlayhead = $this->getStartingPlayhead($uncommittedEvents);
+
+            $committedEvents = $this->eventStore->loadFromPlayhead($id, $uncommittedPlayhead);
             $conflictingEvents = $this->getConflictingEvents($uncommittedEvents, $committedEvents);
 
             $conflictResolvedEvents = [];
@@ -90,6 +92,16 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
         /** @var DomainMessage $lastEvent */
         $lastEvent = end($events);
         $playhead = $lastEvent->getPlayhead();
+
+        return $playhead;
+    }
+
+    private function getStartingPlayhead(DomainEventStream $uncommittedEvents): int
+    {
+        $events = iterator_to_array($uncommittedEvents);
+        /** @var DomainMessage $firstEvent */
+        $firstEvent = current($events);
+        $playhead = $firstEvent->getPlayhead();
 
         return $playhead;
     }
