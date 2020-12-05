@@ -37,7 +37,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
     /**
      * @test
      */
-    public function it_throws_an_exception_when_instantiated_with_a_class_that_is_not_an_EventSourcedAggregateRoot()
+    public function it_throws_an_exception_when_instantiated_with_a_class_that_is_not_an_event_sourced_aggregate_root()
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -47,7 +47,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
     /**
      * @test
      */
-    public function it_can_use_an_alternative_AggregateFactory_to_create_the_Aggregate()
+    public function it_can_use_an_alternative_aggregate_factory_to_create_the_aggregate()
     {
         // make sure events exist in the event store
         $id = 'y0l0';

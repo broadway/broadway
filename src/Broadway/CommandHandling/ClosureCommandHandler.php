@@ -15,6 +15,7 @@ namespace Broadway\CommandHandling;
 
 use Broadway\CommandHandling\Exception\ClosureParameterNotAnObjectException;
 use Broadway\CommandHandling\Exception\CommandNotAnObjectException;
+use ReflectionClass;
 
 /**
  * Using this class command handlers can be registered with closures.
@@ -31,13 +32,22 @@ class ClosureCommandHandler implements CommandHandler
         $reflection = new \ReflectionFunction($handler);
         $reflectionParams = $reflection->getParameters();
 
-        if (!isset($reflectionParams[0]) || !$reflectionParams[0]->getClass()) {
+        $reflectionType = $reflectionParams[0]->getType();
+
+        $name = null;
+        if ($reflectionType instanceof \ReflectionNamedType) {
+            /** @var \ReflectionNamedType $reflectionNamed */
+            $reflectionNamed = $reflectionParams[0]->getType();
+            if (!$reflectionNamed->isBuiltin()) {
+                $name = new ReflectionClass($reflectionNamed->getName());
+            }
+        }
+
+        if (!isset($reflectionParams[0]) || !$name) {
             throw new ClosureParameterNotAnObjectException();
         }
 
-        $index = $reflectionParams[0]->getClass()->getName();
-
-        $this->handlers[$index] = $handler;
+        $this->handlers[$name->getName()] = $handler;
     }
 
     /**

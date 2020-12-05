@@ -73,7 +73,7 @@ class DateTimeTest extends TestCase
      * @test
      * @dataProvider provideDateDiffs
      */
-    public function it_diffs_2_dates($date1, $date2, $expectedDiff)
+    public function it_diffs2_dates($date1, $date2, $expectedDiff)
     {
         $diff = DateTime::fromString($date1)->diff(DateTime::fromString($date2));
 
@@ -85,7 +85,7 @@ class DateTimeTest extends TestCase
     /**
      * @test
      */
-    public function it_compares_2_dates()
+    public function it_compares2_dates()
     {
         $this->assertTrue(DateTime::fromString('2014-01-01T01:01:01.123456+0000')->equals(DateTime::fromString('2014-01-01T01:01:01.123456+0000')));  // exact the same
         $this->assertTrue(DateTime::fromString('2014-01-01T01:01:01.123456+02:00')->equals(DateTime::fromString('2014-01-01T01:01:01.123456+0200'))); // different TimeZone format
