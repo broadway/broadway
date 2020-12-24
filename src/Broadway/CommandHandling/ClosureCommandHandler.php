@@ -43,7 +43,7 @@ class ClosureCommandHandler implements CommandHandler
             }
         }
 
-        if (!isset($reflectionParams[0]) || !$name) {
+        if (!$name) {
             throw new ClosureParameterNotAnObjectException();
         }
 
