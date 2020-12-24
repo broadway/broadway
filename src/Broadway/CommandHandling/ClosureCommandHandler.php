@@ -32,6 +32,10 @@ class ClosureCommandHandler implements CommandHandler
         $reflection = new \ReflectionFunction($handler);
         $reflectionParams = $reflection->getParameters();
 
+        if (0 === $reflection->getNumberOfParameters()) {
+            throw new ClosureParameterNotAnObjectException();
+        }
+
         $reflectionType = $reflectionParams[0]->getType();
 
         $name = null;
