@@ -37,6 +37,10 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
      */
     public function append($id, DomainEventStream $uncommittedEvents): void
     {
+        if (empty(iterator_to_array($uncommittedEvents))) {
+            return;
+        }
+
         try {
             $this->eventStore->append($id, $uncommittedEvents);
         } catch (DuplicatePlayheadException $e) {
