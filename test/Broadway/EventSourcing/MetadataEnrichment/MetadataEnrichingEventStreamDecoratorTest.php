@@ -23,7 +23,7 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
     /**
      * @test
      */
-    public function it_returns_the_original_eventStream_if_no_enrichers_are_registered()
+    public function it_returns_the_original_event_stream_if_no_enrichers_are_registered()
     {
         $decorator = new MetadataEnrichingEventStreamDecorator();
 

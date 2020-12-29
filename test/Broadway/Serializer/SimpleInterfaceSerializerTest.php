@@ -31,7 +31,7 @@ class SimpleInterfaceSerializerTest extends TestCase
     /**
      * @test
      */
-    public function it_throws_an_exception_if_an_object_does_not_implement_Serializable()
+    public function it_throws_an_exception_if_an_object_does_not_implement_serializable()
     {
         $this->expectException(SerializationException::class);
         $this->expectExceptionMessage(sprintf(
@@ -72,7 +72,7 @@ class SimpleInterfaceSerializerTest extends TestCase
     /**
      * @test
      */
-    public function it_serializes_objects_implementing_Serializable()
+    public function it_serializes_objects_implementing_serializable()
     {
         $object = new TestSerializable('bar');
 
@@ -85,7 +85,7 @@ class SimpleInterfaceSerializerTest extends TestCase
     /**
      * @test
      */
-    public function it_deserializes_classes_implementing_Serializable()
+    public function it_deserializes_classes_implementing_serializable()
     {
         $data = ['class' => 'Broadway\Serializer\TestSerializable', 'payload' => ['foo' => 'bar']];
 

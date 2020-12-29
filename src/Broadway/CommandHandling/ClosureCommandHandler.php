@@ -29,15 +29,16 @@ class ClosureCommandHandler implements CommandHandler
     public function add(\Closure $handler): void
     {
         $reflection = new \ReflectionFunction($handler);
-        $reflectionParams = $reflection->getParameters();
-
-        if (!isset($reflectionParams[0]) || !$reflectionParams[0]->getClass()) {
+        if (0 === $reflection->getNumberOfParameters()) {
             throw new ClosureParameterNotAnObjectException();
         }
 
-        $index = $reflectionParams[0]->getClass()->getName();
-
-        $this->handlers[$index] = $handler;
+        $reflectionType = $reflection->getParameters()[0]->getType();
+        if ($reflectionType instanceof \ReflectionNamedType && !$reflectionType->isBuiltin()) {
+            $this->handlers[$reflectionType->getName()] = $handler;
+        } else {
+            throw new ClosureParameterNotAnObjectException();
+        }
     }
 
     /**

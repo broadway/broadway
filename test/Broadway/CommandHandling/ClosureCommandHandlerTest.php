@@ -57,6 +57,17 @@ class ClosureCommandHandlerTest extends TestCase
 
         $commandHandler->add(function ($params = null) { });
     }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_adding_a_closure_without_an_object_argument_and_no_params()
+    {
+        $commandHandler = new ClosureCommandHandler();
+        $this->expectException(ClosureParameterNotAnObjectException::class);
+
+        $commandHandler->add(function () { });
+    }
 }
 
 class ClosureCommandHandlerTestCommand
