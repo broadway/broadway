@@ -15,7 +15,6 @@ namespace Broadway\CommandHandling;
 
 use Broadway\CommandHandling\Exception\ClosureParameterNotAnObjectException;
 use Broadway\CommandHandling\Exception\CommandNotAnObjectException;
-use ReflectionClass;
 
 /**
  * Using this class command handlers can be registered with closures.
