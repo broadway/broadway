@@ -37,6 +37,8 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
      */
     public function append($id, DomainEventStream $uncommittedEvents): void
     {
+        $id = (string)$id;
+
         if (empty(iterator_to_array($uncommittedEvents))) {
             return;
         }
