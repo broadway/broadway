@@ -13,4 +13,4 @@ The [`examples/`][examples] directory at the root of the project contains a
 runnable event handling example (`event-handling`). The code you find there
 contains comments with what is happening.
 
-[examples]: ../../../examples/
+[examples]: ../../examples/

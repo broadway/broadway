@@ -16,4 +16,4 @@ The [`examples/`][examples] directory at the root of the project contains a
 runnable auditing (`auditing`). The code you find there contains comments with
 what is happening.
 
-[examples]: ../../../examples/
+[examples]: ../../examples/
