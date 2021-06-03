@@ -24,8 +24,8 @@ use Exception;
  */
 final class EventDispatchingCommandBus implements CommandBus
 {
-    const EVENT_COMMAND_SUCCESS = 'broadway.command_handling.command_success';
-    const EVENT_COMMAND_FAILURE = 'broadway.command_handling.command_failure';
+    public const EVENT_COMMAND_SUCCESS = 'broadway.command_handling.command_success';
+    public const EVENT_COMMAND_FAILURE = 'broadway.command_handling.command_failure';
 
     private $commandBus;
     private $dispatcher;

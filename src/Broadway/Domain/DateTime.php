@@ -22,7 +22,7 @@ use DateTimeZone;
  */
 final class DateTime
 {
-    const FORMAT_STRING = 'Y-m-d\TH:i:s.uP';
+    public const FORMAT_STRING = 'Y-m-d\TH:i:s.uP';
 
     private $dateTime;
 
