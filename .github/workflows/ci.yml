@@ -1,0 +1,70 @@
+name: "CI"
+
+on:
+  pull_request:
+    branches:
+      - "master"
+  push:
+    branches:
+      - "master"
+  schedule:
+    - cron: "37 13 * * 1"
+
+jobs:
+  tests:
+    name: "Run tests"
+    runs-on: "ubuntu-20.04"
+    strategy:
+      matrix:
+        php-version:
+          - "7.3"
+          - "7.4"
+          - "8.0"
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          coverage: "none"
+        env:
+          fail-fast: true
+      - name: "Validate composer.json and composer.lock"
+        run: "composer validate --strict --no-interaction --ansi"
+      - name: "Install dependencies with Composer"
+        uses: "ramsey/composer-install@v1"
+      - name: "Run tests"
+        run: "make test"
+
+  coding-standards:
+    name: "Coding standards"
+    runs-on: "ubuntu-20.04"
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.0"
+          coverage: "none"
+      - name: "Install dependencies with Composer"
+        uses: "ramsey/composer-install@v1"
+      - name: "Check coding standards"
+        run: "make php-cs-fixer-ci"
+
+  static-analysis:
+    name: "Static analysis"
+    runs-on: "ubuntu-20.04"
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.0"
+          coverage: "none"
+      - name: "Install dependencies with Composer"
+        uses: "ramsey/composer-install@v1"
+      - name: "Run PHPStan"
+        run: "make phpstan"
