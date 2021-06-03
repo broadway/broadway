@@ -11,8 +11,4 @@ $config->setFinder(
         ])
 );
 
-$config->setRules([
-	'php_unit_method_casing' => ['case' => 'snake_case']
-]);
-
 return $config;

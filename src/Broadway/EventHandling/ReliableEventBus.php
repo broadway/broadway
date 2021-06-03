@@ -58,7 +58,7 @@ class ReliableEventBus implements EventBus
                 $eventListener->handle($domainMessage);
             } catch (\Throwable $exception) {
                 $this->logger->error(sprintf('[Event LISTENER]: %s, failed with message %s', get_class($eventListener), $exception->getMessage()), [
-                    'exception' => $exception
+                    'exception' => $exception,
                 ]);
             }
         }
