@@ -36,7 +36,7 @@
     ],
     "require-dev": {
         "monolog/monolog": "~2.0",
-        "phpunit/phpunit": "^8.0",
+        "phpunit/phpunit": "^9.5",
         "ramsey/uuid": "^4.0",
         "broadway/coding-standard": "^1.2",
         "phpstan/phpstan": "@stable"
