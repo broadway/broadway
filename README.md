@@ -6,7 +6,7 @@ CQRS and event sourced applications. Broadway tries hard to not get in your
 way. The project contains several loosely coupled components that can be used
 together to provide a full CQRS\ES experience.
 
-[![Build Status](https://travis-ci.org/broadway/broadway.svg?branch=master)](https://travis-ci.org/broadway/broadway)
+![build status](https://github.com/broadway/broadway/actions/workflows/ci.yml/badge.svg)
 
 ## About
 
