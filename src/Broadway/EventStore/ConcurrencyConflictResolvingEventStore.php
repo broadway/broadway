@@ -38,33 +38,41 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
         try {
             $this->eventStore->append($id, $uncommittedEvents);
         } catch (DuplicatePlayheadException $e) {
-            $uncommittedPlayhead = $this->getStartingPlayhead($uncommittedEvents);
+            try {
+                $uncommittedPlayhead = $this->getStartingPlayhead($uncommittedEvents);
 
-            $committedEvents = $this->eventStore->loadFromPlayhead($id, $uncommittedPlayhead);
-            $conflictingEvents = $this->getConflictingEvents($uncommittedEvents, $committedEvents);
+                $committedEvents = $this->eventStore->loadFromPlayhead($id, $uncommittedPlayhead);
+                $conflictingEvents = $this->getConflictingEvents($uncommittedEvents, $committedEvents);
 
-            $conflictResolvedEvents = [];
-            $playhead = $this->getCurrentPlayhead($committedEvents);
+                $conflictResolvedEvents = [];
+                $playhead = $this->getCurrentPlayhead($committedEvents);
 
-            /** @var DomainMessage $uncommittedEvent */
-            foreach ($uncommittedEvents as $uncommittedEvent) {
-                foreach ($conflictingEvents as $conflictingEvent) {
-                    if ($this->conflictResolver->conflictsWith($conflictingEvent, $uncommittedEvent)) {
-                        throw $e;
+                /** @var DomainMessage $uncommittedEvent */
+                foreach ($uncommittedEvents as $uncommittedEvent) {
+                    foreach ($conflictingEvents as $conflictingEvent) {
+                        if ($this->conflictResolver->conflictsWith($conflictingEvent, $uncommittedEvent)) {
+                            throw $e;
+                        }
                     }
+
+                    ++$playhead;
+
+                    $conflictResolvedEvents[] = new DomainMessage(
+                        $id,
+                        $playhead,
+                        $uncommittedEvent->getMetadata(),
+                        $uncommittedEvent->getPayload(),
+                        $uncommittedEvent->getRecordedOn());
                 }
 
-                ++$playhead;
+                $this->append($id, new EagerDomainEventStream($conflictResolvedEvents));
+            } catch (\Throwable $e) {
+                $loggedEvents = array_map(function(DomainMessage $domainMessage) {
+                    return $domainMessage->getId().': '.$domainMessage->getType();
+                }, iterator_to_array($uncommittedEvents));
 
-                $conflictResolvedEvents[] = new DomainMessage(
-                    $id,
-                    $playhead,
-                    $uncommittedEvent->getMetadata(),
-                    $uncommittedEvent->getPayload(),
-                    $uncommittedEvent->getRecordedOn());
+                throw new \Exception('Error on concurrency conflicting resolve event store. '.implode(' - ', $loggedEvents));
             }
-
-            $this->append($id, new EagerDomainEventStream($conflictResolvedEvents));
         }
     }
 
