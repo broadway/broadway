@@ -8,7 +8,7 @@ use Broadway\EventStore\EventVisitor;
 use Broadway\EventStore\Management\Criteria;
 use Broadway\EventStore\Management\EventStoreManagement;
 
-abstract class Replayer
+final class Replayer
 {
     private $eventStore;
     private $eventVisitor;
