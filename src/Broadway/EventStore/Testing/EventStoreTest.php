@@ -153,6 +153,20 @@ abstract class EventStoreTest extends TestCase
         $this->assertEquals($expected, $this->eventStore->loadFromPlayhead($id, 2));
     }
 
+    /** @test */
+    public function empty_set_of_events_can_be_added(): void
+    {
+        $domainMessage = $this->createDomainMessage(1, 0);
+        $baseStream = new DomainEventStream([$domainMessage]);
+        $this->eventStore->append(1, $baseStream);
+        $appendedEventStream = new DomainEventStream([]);
+
+        $this->eventStore->append(1, $appendedEventStream);
+
+        $events = $this->eventStore->load(1);
+        $this->assertCount(1, $events);
+    }
+
     /**
      * @test
      * @dataProvider idDataProvider
