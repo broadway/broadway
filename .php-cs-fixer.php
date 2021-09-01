@@ -1,6 +1,6 @@
 <?php
 
-$config = require 'vendor/broadway/coding-standard/.php_cs.dist';
+$config = require 'vendor/broadway/coding-standard/.php-cs-fixer.dist.php';
 
 $config->setFinder(
     \PhpCsFixer\Finder::create()

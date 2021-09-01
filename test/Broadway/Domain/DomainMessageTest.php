@@ -41,7 +41,7 @@ class DomainMessageTest extends TestCase
     /**
      * @test
      */
-    public function it_returns_a_new_instance_with_more_metadata_on_andMetadata()
+    public function it_returns_a_new_instance_with_more_metadata_on_and_metadata()
     {
         $domainMessage = DomainMessage::recordNow('id', 42, new Metadata(), 'payload');
 
@@ -51,7 +51,7 @@ class DomainMessageTest extends TestCase
     /**
      * @test
      */
-    public function it_keeps_all_data_the_same_expect_metadata_on_andMetadata()
+    public function it_keeps_all_data_the_same_expect_metadata_on_and_metadata()
     {
         $domainMessage = DomainMessage::recordNow('id', 42, new Metadata(), 'payload');
 
@@ -68,7 +68,7 @@ class DomainMessageTest extends TestCase
     /**
      * @test
      */
-    public function it_merges_the_metadata_instances_on_andMetadata()
+    public function it_merges_the_metadata_instances_on_and_metadata()
     {
         $domainMessage = DomainMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
 
