@@ -43,10 +43,10 @@
     },
     "suggest": {
         "psr/log-implementation": "Implementation for PSR3, LoggerInterface",
-        "broadway/event-store-dbal": "Event store implementation using doctrine/dbal",
+        "micro-module/event-store-dbal": "Event store implementation using doctrine/dbal",
         "broadway/read-model-elasticsearch": "Elasticsearch read model implementation",
-        "broadway/broadway-saga": "Saga component for Broadway",
-        "broadway/broadway-bundle": "Symfony bundle for broadway/broadway"
+        "micro-module/broadway-saga": "Saga component for Broadway",
+        "micro-module/broadway-bundle": "Symfony bundle for broadway/broadway"
     },
     "autoload": {
         "psr-4": {
