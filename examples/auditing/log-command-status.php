@@ -16,7 +16,7 @@ require_once __DIR__.'/../bootstrap.php';
 /*
  * Some setup and helpers. Real example below. ;)
  */
-class ExampleCommandHandler extends Broadway\CommandHandling\SimpleCommandHandler
+class ExampleCommandHandler extends MicroModule\Broadway\CommandHandling\SimpleCommandHandler
 {
     public function handleExampleCommand(ExampleCommand $command)
     {
@@ -52,21 +52,21 @@ class ExampleFailureCommand extends BaseCommand
 
 // Setup the system to handle commands
 $commandHandler = new ExampleCommandHandler();
-$eventDispatcher = new Broadway\EventDispatcher\CallableEventDispatcher();
-$simpleCommandBus = new Broadway\CommandHandling\SimpleCommandBus();
-$commandBus = new Broadway\CommandHandling\EventDispatchingCommandBus($simpleCommandBus, $eventDispatcher);
+$eventDispatcher = new MicroModule\Broadway\EventDispatcher\CallableEventDispatcher();
+$simpleCommandBus = new MicroModule\Broadway\CommandHandling\SimpleCommandBus();
+$commandBus = new MicroModule\Broadway\CommandHandling\EventDispatchingCommandBus($simpleCommandBus, $eventDispatcher);
 $commandBus->subscribe($commandHandler);
 
 // Dependencies of auditing logger
 $logger = new StdoutLogger();
-$commandSerializer = new Broadway\Auditing\NullByteCommandSerializer();
+$commandSerializer = new MicroModule\Broadway\Auditing\NullByteCommandSerializer();
 
 /*
  * The actual example!
  */
 
 // setup the command logger
-$commandAuditLogger = new Broadway\Auditing\CommandLogger($logger, $commandSerializer);
+$commandAuditLogger = new MicroModule\Broadway\Auditing\CommandLogger($logger, $commandSerializer);
 
 // register the command logger with the event dispatcher of the command bus
 $eventDispatcher->addListener('broadway.command_handling.command_success', [$commandAuditLogger, 'onCommandHandlingSuccess']);

@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore;
+namespace MicroModule\Broadway\EventStore;
 
-use Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\DomainMessage;
 
 interface EventVisitor
 {

@@ -16,7 +16,7 @@ require_once __DIR__.'/../bootstrap.php';
 /**
  * A command handler that only handles ExampleCommand commands.
  */
-class ExampleCommandHandler extends Broadway\CommandHandling\SimpleCommandHandler
+class ExampleCommandHandler extends MicroModule\Broadway\CommandHandling\SimpleCommandHandler
 {
     /**
      * Method handling ExampleCommand commands.
@@ -52,7 +52,7 @@ class ExampleCommand
 $commandHandler = new ExampleCommandHandler();
 
 // Create a command bus and subscribe the command handler at the command bus
-$commandBus = new Broadway\CommandHandling\SimpleCommandBus();
+$commandBus = new MicroModule\Broadway\CommandHandling\SimpleCommandBus();
 $commandBus->subscribe($commandHandler);
 
 // Create and dispatch the command!

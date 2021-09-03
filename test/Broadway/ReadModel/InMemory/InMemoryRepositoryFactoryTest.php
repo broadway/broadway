@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\ReadModel\InMemory;
+namespace MicroModule\Broadway\ReadModel\InMemory;
 
 use PHPUnit\Framework\TestCase;
 

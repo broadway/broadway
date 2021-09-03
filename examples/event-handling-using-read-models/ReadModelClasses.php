@@ -16,7 +16,7 @@ require_once __DIR__.'/../bootstrap.php';
 // We reuse the Invites aggregate and events
 require_once __DIR__.'/../event-sourced-domain-with-tests/Invites.php';
 
-use Broadway\ReadModel\Repository;
+use MicroModule\Broadway\ReadModel\Repository;
 
 /*
  * A Projector is an EventListener and can be registered with the EventBus.
@@ -34,7 +34,7 @@ use Broadway\ReadModel\Repository;
  * want. InvitationStatusCountProjector shows a simple example of what is
  * possible.
  */
-class InvitationStatusProjector extends Broadway\ReadModel\Projector
+class InvitationStatusProjector extends MicroModule\Broadway\ReadModel\Projector
 {
     private $repository;
 
@@ -83,7 +83,7 @@ class InvitationStatusProjector extends Broadway\ReadModel\Projector
  * are not using this Repository, there is no need to implement Identifiable
  * (nor SerializableReadModel).
  */
-class InvitationStatusReadModel implements Broadway\ReadModel\SerializableReadModel
+class InvitationStatusReadModel implements MicroModule\Broadway\ReadModel\SerializableReadModel
 {
     private $invitationId;
     private $isOpen = true;
@@ -170,7 +170,7 @@ class InvitationStatusReadModel implements Broadway\ReadModel\SerializableReadMo
  * The example keeps track of the counts in memory. In a real application some
  * form of storage should be used.
  */
-class InvitationStatusCountProjector extends Broadway\ReadModel\Projector
+class InvitationStatusCountProjector extends MicroModule\Broadway\ReadModel\Projector
 {
     private $repository;
 

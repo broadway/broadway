@@ -16,7 +16,7 @@ require_once __DIR__.'/../bootstrap.php';
 /**
  * JobSeeker aggregate root.
  */
-class JobSeeker extends Broadway\EventSourcing\EventSourcedAggregateRoot
+class JobSeeker extends MicroModule\Broadway\EventSourcing\EventSourcedAggregateRoot
 {
     private $jobSeekerId;
     private $jobs = [];
@@ -90,7 +90,7 @@ class JobSeeker extends Broadway\EventSourcing\EventSourcedAggregateRoot
     }
 }
 
-class Job extends Broadway\EventSourcing\SimpleEventSourcedEntity
+class Job extends MicroModule\Broadway\EventSourcing\SimpleEventSourcedEntity
 {
     private $jobSeekerId;
     private $jobId;
@@ -245,11 +245,11 @@ class AccidentallyAddedJobWasRemovedFromJobSeekerEvent
 /**
  * A repository that will only store and retrieve JobSeeker aggregate roots.
  */
-class JobSeekerRepository extends Broadway\EventSourcing\EventSourcingRepository
+class JobSeekerRepository extends MicroModule\Broadway\EventSourcing\EventSourcingRepository
 {
-    public function __construct(Broadway\EventStore\EventStore $eventStore, Broadway\EventHandling\EventBus $eventBus)
+    public function __construct(MicroModule\Broadway\EventStore\EventStore $eventStore, MicroModule\Broadway\EventHandling\EventBus $eventBus)
     {
-        parent::__construct($eventStore, $eventBus, 'JobSeeker', new Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory());
+        parent::__construct($eventStore, $eventBus, 'JobSeeker', new MicroModule\Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory());
     }
 }
 
@@ -257,7 +257,7 @@ class JobSeekerRepository extends Broadway\EventSourcing\EventSourcingRepository
  * A command handler will be registered with the command bus and handle the
  * commands that are dispatched.
  */
-class JobSeekerCommandHandler extends Broadway\CommandHandling\SimpleCommandHandler
+class JobSeekerCommandHandler extends MicroModule\Broadway\CommandHandling\SimpleCommandHandler
 {
     private $repository;
 

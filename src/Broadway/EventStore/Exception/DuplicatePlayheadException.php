@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore\Exception;
+namespace MicroModule\Broadway\EventStore\Exception;
 
-use Broadway\Domain\DomainEventStream;
-use Broadway\EventStore\EventStoreException;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\EventStore\EventStoreException;
 use Exception;
 
 final class DuplicatePlayheadException extends EventStoreException

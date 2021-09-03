@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Processor;
+namespace MicroModule\Broadway\Processor;
 
-use Broadway\Domain\DomainMessage;
-use Broadway\Domain\Metadata;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\Metadata;
 use PHPUnit\Framework\TestCase;
 
 class ProcessorTest extends TestCase

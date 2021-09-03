@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\ReadModel;
+namespace MicroModule\Broadway\ReadModel;
 
 /**
  * Represent a repository that can transfer its data to another repository.

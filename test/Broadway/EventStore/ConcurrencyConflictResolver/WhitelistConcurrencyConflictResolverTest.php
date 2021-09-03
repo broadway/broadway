@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore\ConcurrencyConflictResolver;
+namespace MicroModule\Broadway\EventStore\ConcurrencyConflictResolver;
 
 class WhitelistConcurrencyConflictResolverTest extends ConcurrencyConflictResolverTest
 {

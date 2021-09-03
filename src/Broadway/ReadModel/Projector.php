@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Broadway\ReadModel;
+namespace MicroModule\Broadway\ReadModel;
 
-use Broadway\Domain\DomainMessage;
-use Broadway\EventHandling\EventListener;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\EventHandling\EventListener;
 
 /**
  * Handles events and projects to a read model.

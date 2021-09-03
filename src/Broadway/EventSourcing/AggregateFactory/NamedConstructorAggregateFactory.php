@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventSourcing\AggregateFactory;
+namespace MicroModule\Broadway\EventSourcing\AggregateFactory;
 
 use Assert\Assertion as Assert;
-use Broadway\Domain\DomainEventStream;
-use Broadway\EventSourcing\EventSourcedAggregateRoot;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\EventSourcing\EventSourcedAggregateRoot;
 
 /**
  * Creates aggregates by passing a DomainEventStream to the given public static method

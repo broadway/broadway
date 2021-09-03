@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Serializer;
+namespace MicroModule\Broadway\Serializer;
 
 use Assert\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -77,7 +77,7 @@ class SimpleInterfaceSerializerTest extends TestCase
         $object = new TestSerializable('bar');
 
         $this->assertEquals([
-            'class' => 'Broadway\Serializer\TestSerializable',
+            'class' => 'MicroModule\Broadway\Serializer\TestSerializable',
             'payload' => ['foo' => 'bar'],
         ], $this->serializer->serialize($object));
     }
@@ -87,7 +87,7 @@ class SimpleInterfaceSerializerTest extends TestCase
      */
     public function it_deserializes_classes_implementing_serializable()
     {
-        $data = ['class' => 'Broadway\Serializer\TestSerializable', 'payload' => ['foo' => 'bar']];
+        $data = ['class' => 'MicroModule\Broadway\Serializer\TestSerializable', 'payload' => ['foo' => 'bar']];
 
         $this->assertEquals(new TestSerializable('bar'), $this->serializer->deserialize($data));
     }

@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore;
+namespace MicroModule\Broadway\EventStore;
 
 /**
  * Wraps exceptions thrown by the in-memory event store.

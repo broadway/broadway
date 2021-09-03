@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Broadway\ReadModel;
+namespace MicroModule\Broadway\ReadModel;
 
-use Broadway\Domain\DomainMessage;
-use Broadway\Domain\Metadata;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\Metadata;
 use PHPUnit\Framework\TestCase;
 
 class ProjectorTest extends TestCase

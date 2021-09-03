@@ -11,16 +11,16 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventSourcing;
+namespace MicroModule\Broadway\EventSourcing;
 
 use Assert\InvalidArgumentException;
-use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainMessage;
-use Broadway\Domain\Metadata;
-use Broadway\EventHandling\TraceableEventBus;
-use Broadway\EventSourcing\AggregateFactory\NamedConstructorAggregateFactory;
-use Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
-use Broadway\EventStore\TraceableEventStore;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\Metadata;
+use MicroModule\Broadway\EventHandling\TraceableEventBus;
+use MicroModule\Broadway\EventSourcing\AggregateFactory\NamedConstructorAggregateFactory;
+use MicroModule\Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
+use MicroModule\Broadway\EventStore\TraceableEventStore;
 
 class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
 {

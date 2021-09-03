@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventHandling;
+namespace MicroModule\Broadway\EventHandling;
 
-use Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\DomainEventStream;
 
 /**
  * Simple synchronous publishing of events.

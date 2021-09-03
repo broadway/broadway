@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Auditing;
+namespace MicroModule\Broadway\Auditing;
 
 /**
  * Serializes commands to an array of scalars.

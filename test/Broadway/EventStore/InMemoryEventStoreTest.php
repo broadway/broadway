@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore;
+namespace MicroModule\Broadway\EventStore;
 
-use Broadway\EventStore\Testing\EventStoreTest;
+use MicroModule\Broadway\EventStore\Testing\EventStoreTest;
 
 class InMemoryEventStoreTest extends EventStoreTest
 {

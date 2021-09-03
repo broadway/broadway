@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventSourcing;
+namespace MicroModule\Broadway\EventSourcing;
 
-use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainMessage;
-use Broadway\Domain\Metadata;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\Metadata;
 use PHPUnit\Framework\TestCase;
 
 class EventSourcedAggregateRootTest extends TestCase

@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  php:
+    container_name: ${MICROVO_COMPOSE_PROJECT_NAME}_php
+    user: 1000:1000
+    build:
+      context: .docker/php8.0-dev
+    volumes:
+      - ~/.composer/cache/:/.composer_cache/:rw
+      - .:/app:rw
+    working_dir: /app

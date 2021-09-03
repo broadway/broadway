@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore\Management;
+namespace MicroModule\Broadway\EventStore\Management;
 
-use Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\DomainMessage;
 
 final class Criteria
 {

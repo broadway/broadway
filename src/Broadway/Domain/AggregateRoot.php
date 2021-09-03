@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Domain;
+namespace MicroModule\Broadway\Domain;
 
 /**
  * Represents entities that are an aggregate root.

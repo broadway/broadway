@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Serializer;
+namespace MicroModule\Broadway\Serializer;
 
 use RuntimeException;
 

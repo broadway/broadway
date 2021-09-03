@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore\Exception;
+namespace MicroModule\Broadway\EventStore\Exception;
 
 /**
  * Class InvalidIdentifierException.

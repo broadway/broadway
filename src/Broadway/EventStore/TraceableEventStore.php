@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore;
+namespace MicroModule\Broadway\EventStore;
 
-use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\DomainMessage;
 
 /**
  * Event store that is able to record all appended events.

@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Processor;
+namespace MicroModule\Broadway\Processor;
 
-use Broadway\Domain\DomainMessage;
-use Broadway\EventHandling\EventListener;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\EventHandling\EventListener;
 
 /**
  * Base class for event stream processors.

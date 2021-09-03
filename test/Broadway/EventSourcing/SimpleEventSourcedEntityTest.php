@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventSourcing;
+namespace MicroModule\Broadway\EventSourcing;
 
 use PHPUnit\Framework\TestCase;
 
@@ -27,7 +27,7 @@ class SimpleEventSourcedEntityTest extends TestCase
 
         $aggregateRoot->addChildEntity($child);
 
-        $mock = $this->getMockBuilder('Broadway\EventSourcing\Entity')
+        $mock = $this->getMockBuilder('MicroModule\Broadway\EventSourcing\Entity')
             ->setMethods(['handleRecursively'])
             ->getMock();
 
@@ -44,7 +44,7 @@ class SimpleEventSourcedEntityTest extends TestCase
      */
     public function it_applies_events_to_aggregate_root()
     {
-        $aggregateRoot = $this->getMockBuilder('Broadway\EventSourcing\Aggregate')
+        $aggregateRoot = $this->getMockBuilder('MicroModule\Broadway\EventSourcing\Aggregate')
             ->setMethods(['apply'])
             ->getMock();
 

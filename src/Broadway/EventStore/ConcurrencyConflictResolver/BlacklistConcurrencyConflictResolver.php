@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore\ConcurrencyConflictResolver;
+namespace MicroModule\Broadway\EventStore\ConcurrencyConflictResolver;
 
-use Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\DomainMessage;
 use Webmozart\Assert\Assert;
 
 final class BlacklistConcurrencyConflictResolver implements ConcurrencyConflictResolver

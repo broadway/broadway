@@ -11,13 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore;
+namespace MicroModule\Broadway\EventStore;
 
-use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainMessage;
-use Broadway\EventStore\Exception\DuplicatePlayheadException;
-use Broadway\EventStore\Management\Criteria;
-use Broadway\EventStore\Management\EventStoreManagement;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\EventStore\Exception\DuplicatePlayheadException;
+use MicroModule\Broadway\EventStore\Management\Criteria;
+use MicroModule\Broadway\EventStore\Management\EventStoreManagement;
 
 /**
  * In-memory implementation of an event store.

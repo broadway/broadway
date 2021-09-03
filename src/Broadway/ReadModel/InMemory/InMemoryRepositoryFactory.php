@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Broadway\ReadModel\InMemory;
+namespace MicroModule\Broadway\ReadModel\InMemory;
 
-use Broadway\ReadModel\Repository;
-use Broadway\ReadModel\RepositoryFactory;
+use MicroModule\Broadway\ReadModel\Repository;
+use MicroModule\Broadway\ReadModel\RepositoryFactory;
 
 /**
  * Creates in-memory repositories.

@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Repository;
+namespace MicroModule\Broadway\Repository;
 
-use Broadway\Domain\AggregateRoot;
+use MicroModule\Broadway\Domain\AggregateRoot;
 
 /**
  * Repository for aggregate roots.

@@ -11,8 +11,8 @@
 
 declare(strict_types=1);
 
-use Broadway\Serializer\Serializable;
-use Broadway\Serializer\Testing\SerializableEventTestCase;
+use MicroModule\Broadway\Serializer\Serializable;
+use MicroModule\Broadway\Serializer\Testing\SerializableEventTestCase;
 
 class SerializableEventTest extends SerializableEventTestCase
 {

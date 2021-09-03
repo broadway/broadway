@@ -13,17 +13,17 @@ declare(strict_types=1);
 
 require_once __DIR__.'/ReadModelClasses.php';
 
-$invitationStatusProjector = new InvitationStatusProjector(new Broadway\ReadModel\InMemory\InMemoryRepository());
+$invitationStatusProjector = new InvitationStatusProjector(new MicroModule\Broadway\ReadModel\InMemory\InMemoryRepository());
 $invitationStatusCountProjector = new InvitationStatusCountProjector(new CounterRepository());
 
-$eventStore = new Broadway\EventStore\InMemoryEventStore();
+$eventStore = new MicroModule\Broadway\EventStore\InMemoryEventStore();
 
 // We subscribe the projectors to the event bus
-$eventBus = new Broadway\EventHandling\SimpleEventBus();
+$eventBus = new MicroModule\Broadway\EventHandling\SimpleEventBus();
 $eventBus->subscribe($invitationStatusProjector);
 $eventBus->subscribe($invitationStatusCountProjector);
 
-$commandBus = new Broadway\CommandHandling\SimpleCommandBus();
+$commandBus = new MicroModule\Broadway\CommandHandling\SimpleCommandBus();
 // The InvitationRepository gets both the event store and event bus. When
 // saving an aggregate, events are persisted in the event store, and all
 // subscribers to the event bus get notified.

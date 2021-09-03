@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Auditing;
+namespace MicroModule\Broadway\Auditing;
 
 use PHPUnit\Framework\TestCase;
 
@@ -45,7 +45,7 @@ class NullByteCommandSerializerTest extends TestCase
         $expected = [
             'public' => 'public',
             '-*-protected' => 'protected',
-            '-Broadway\\Auditing\\MyCommand-private' => 'private',
+            '-MicroModule\\Broadway\\Auditing\\MyCommand-private' => 'private',
         ];
 
         $this->assertEquals($expected, $serializedCommand);

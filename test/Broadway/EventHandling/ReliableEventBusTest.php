@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Vonq\Webshop\Tests\Broadway\EventHandling;
 
-use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainMessage;
-use Broadway\Domain\Metadata;
-use Broadway\EventHandling\EventListener;
-use Broadway\EventHandling\ReliableEventBus;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\Metadata;
+use MicroModule\Broadway\EventHandling\EventListener;
+use MicroModule\Broadway\EventHandling\ReliableEventBus;
 use Exception;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;

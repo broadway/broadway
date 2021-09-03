@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Broadway\ReadModel\Testing;
+namespace MicroModule\Broadway\ReadModel\Testing;
 
-use Broadway\ReadModel\InMemory\InMemoryRepository;
-use Broadway\ReadModel\Projector;
+use MicroModule\Broadway\ReadModel\InMemory\InMemoryRepository;
+use MicroModule\Broadway\ReadModel\Projector;
 use PHPUnit\Framework\TestCase;
 
 /**

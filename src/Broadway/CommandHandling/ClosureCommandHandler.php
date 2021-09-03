@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Broadway\CommandHandling;
+namespace MicroModule\Broadway\CommandHandling;
 
-use Broadway\CommandHandling\Exception\ClosureParameterNotAnObjectException;
-use Broadway\CommandHandling\Exception\CommandNotAnObjectException;
+use MicroModule\Broadway\CommandHandling\Exception\ClosureParameterNotAnObjectException;
+use MicroModule\Broadway\CommandHandling\Exception\CommandNotAnObjectException;
 
 /**
  * Using this class command handlers can be registered with closures.

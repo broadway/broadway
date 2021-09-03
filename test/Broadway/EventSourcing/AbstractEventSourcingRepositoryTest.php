@@ -11,23 +11,23 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventSourcing;
+namespace MicroModule\Broadway\EventSourcing;
 
 use Assert\InvalidArgumentException;
-use Broadway\Domain\AggregateRoot;
-use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainMessage;
-use Broadway\Domain\Metadata;
-use Broadway\EventHandling\SimpleEventBus;
-use Broadway\EventHandling\TraceableEventBus;
-use Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
-use Broadway\EventSourcing\MetadataEnrichment\MetadataEnricher;
-use Broadway\EventSourcing\MetadataEnrichment\MetadataEnrichingEventStreamDecorator;
-use Broadway\EventStore\EventStore;
-use Broadway\EventStore\InMemoryEventStore;
-use Broadway\EventStore\TraceableEventStore;
-use Broadway\ReadModel\Projector;
-use Broadway\Repository\AggregateNotFoundException;
+use MicroModule\Broadway\Domain\AggregateRoot;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\Metadata;
+use MicroModule\Broadway\EventHandling\SimpleEventBus;
+use MicroModule\Broadway\EventHandling\TraceableEventBus;
+use MicroModule\Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
+use MicroModule\Broadway\EventSourcing\MetadataEnrichment\MetadataEnricher;
+use MicroModule\Broadway\EventSourcing\MetadataEnrichment\MetadataEnrichingEventStreamDecorator;
+use MicroModule\Broadway\EventStore\EventStore;
+use MicroModule\Broadway\EventStore\InMemoryEventStore;
+use MicroModule\Broadway\EventStore\TraceableEventStore;
+use MicroModule\Broadway\ReadModel\Projector;
+use MicroModule\Broadway\Repository\AggregateNotFoundException;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 

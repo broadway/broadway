@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Broadway\ReadModel\InMemory;
+namespace MicroModule\Broadway\ReadModel\InMemory;
 
-use Broadway\ReadModel\Identifiable;
-use Broadway\ReadModel\Repository;
-use Broadway\ReadModel\Transferable;
+use MicroModule\Broadway\ReadModel\Identifiable;
+use MicroModule\Broadway\ReadModel\Repository;
+use MicroModule\Broadway\ReadModel\Transferable;
 
 /**
  * In-memory implementation of a read model repository.

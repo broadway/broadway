@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Broadway\CommandHandling;
+namespace MicroModule\Broadway\CommandHandling;
 
-use Broadway\CommandHandling\Exception\CommandNotAnObjectException;
+use MicroModule\Broadway\CommandHandling\Exception\CommandNotAnObjectException;
 use PHPUnit\Framework\TestCase;
 
 class CommandHandlerTest extends TestCase

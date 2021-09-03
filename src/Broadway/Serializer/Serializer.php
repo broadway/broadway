@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Serializer;
+namespace MicroModule\Broadway\Serializer;
 
 /**
  * Interface for classes that can serialize arbitrary objects into arrays with

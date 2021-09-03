@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Broadway\CommandHandling;
+namespace MicroModule\Broadway\CommandHandling;
 
-use Broadway\EventDispatcher\EventDispatcher;
+use MicroModule\Broadway\EventDispatcher\EventDispatcher;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

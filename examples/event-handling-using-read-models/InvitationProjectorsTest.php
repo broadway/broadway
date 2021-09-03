@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 require_once __DIR__.'/ReadModelClasses.php';
 
-class InvitationStatusProjectorTest extends Broadway\ReadModel\Testing\ProjectorScenarioTestCase
+class InvitationStatusProjectorTest extends MicroModule\Broadway\ReadModel\Testing\ProjectorScenarioTestCase
 {
     /**
      * The createProjector function allows you to inject more dependencies into your projector.
      */
-    protected function createProjector(Broadway\ReadModel\InMemory\InMemoryRepository $repository): Broadway\ReadModel\Projector
+    protected function createProjector(MicroModule\Broadway\ReadModel\InMemory\InMemoryRepository $repository): Broadway\ReadModel\Projector
     {
         $this->repository = $repository;
 
@@ -116,10 +116,10 @@ class InvitationStatusCountProjectorTest extends PHPUnit\Framework\TestCase
         $this->assertEquals($projector->exposeStatusCounts(), $expectedCounters);
     }
 
-    private function createDomainMessageForEvent(InvitationEvent $event, $playhead): Broadway\Domain\DomainMessage
+    private function createDomainMessageForEvent(InvitationEvent $event, $playhead): MicroModule\Broadway\Domain\DomainMessage
     {
-        $occurredOn = Broadway\Domain\DateTime::now();
+        $occurredOn = MicroModule\Broadway\Domain\DateTime::now();
 
-        return new Broadway\Domain\DomainMessage($event->invitationId, $playhead, new Broadway\Domain\Metadata([]), $event, $occurredOn);
+        return new MicroModule\Broadway\Domain\DomainMessage($event->invitationId, $playhead, new MicroModule\Broadway\Domain\Metadata([]), $event, $occurredOn);
     }
 }

@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventSourcing\AggregateFactory;
+namespace MicroModule\Broadway\EventSourcing\AggregateFactory;
 
-use Broadway\Domain\DomainEventStream;
-use Broadway\EventSourcing\EventSourcedAggregateRoot;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\EventSourcing\EventSourcedAggregateRoot;
 
 interface AggregateFactory
 {
