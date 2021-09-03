@@ -1,3 +1,35 @@
-/vendor/
+var/
+vendor/
+
+###> PhpStorm project profile ###
+.idea/
+###< PhpStorm project profile ###
+
+###> phpunit/phpunit ###
+phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> friendsofphp/php-cs-fixer ###
+.php_cs.cache
+###< friendsofphp/php-cs-fixer ###
+
+###> squizlabs/php_codesniffer ###
+.phpcs-cache
+phpcs.xml
+###< squizlabs/php_codesniffer ###
+
+###> sensiolabs-de/deptrac ###
+.deptrac.cache
+###< sensiolabs-de/deptrac ###
+
+# Build data
+build/
+
+###> Phpunit ###
+bin/.phpunit
+###< Phpunit ###
+
+
 composer.lock
 .php-cs-fixer.cache
