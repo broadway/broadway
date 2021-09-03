@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-use Broadway\CommandHandling\CommandHandler;
+use MicroModule\Broadway\CommandHandling\CommandHandler;
 
 require_once __DIR__.'/Parts.php';
 
@@ -25,7 +25,7 @@ require_once __DIR__.'/Parts.php';
  * - Third, the outcome is asserted. This can either be 1) some events are
  *   recorded, or 2) an exception is thrown.
  */
-class PartsCommandHandlerTest extends Broadway\CommandHandling\Testing\CommandHandlerScenarioTestCase
+class PartsCommandHandlerTest extends MicroModule\Broadway\CommandHandling\Testing\CommandHandlerScenarioTestCase
 {
     private $generator;
 
@@ -35,7 +35,7 @@ class PartsCommandHandlerTest extends Broadway\CommandHandling\Testing\CommandHa
         $this->generator = new Broadway\UuidGenerator\Rfc4122\Version4Generator();
     }
 
-    protected function createCommandHandler(Broadway\EventStore\EventStore $eventStore, Broadway\EventHandling\EventBus $eventBus): CommandHandler
+    protected function createCommandHandler(MicroModule\Broadway\EventStore\EventStore $eventStore, MicroModule\Broadway\EventHandling\EventBus $eventBus): CommandHandler
     {
         $repository = new PartRepository($eventStore, $eventBus);
 

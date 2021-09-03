@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Serializer;
+namespace MicroModule\Broadway\Serializer;
 
 use Assert\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -66,12 +66,12 @@ class ReflectionSerializerTest extends TestCase
         );
 
         $this->assertEquals([
-            'class' => 'Broadway\Serializer\TestReflectable',
+            'class' => 'MicroModule\Broadway\Serializer\TestReflectable',
             'payload' => [
                 'simpleValue' => 33,
                 'arrayOfObjects' => [
                     [
-                        'class' => 'Broadway\Serializer\TestReflectableObject',
+                        'class' => 'MicroModule\Broadway\Serializer\TestReflectableObject',
                         'payload' => [
                             'simpleArray' => ['A', 1, 1.0],
                             'value' => 11,
@@ -79,7 +79,7 @@ class ReflectionSerializerTest extends TestCase
                     ],
                 ],
                 'object' => [
-                    'class' => 'Broadway\Serializer\TestReflectableObject',
+                    'class' => 'MicroModule\Broadway\Serializer\TestReflectableObject',
                     'payload' => [
                         'simpleArray' => ['B', 2, 2.0],
                         'value' => 22,
@@ -95,12 +95,12 @@ class ReflectionSerializerTest extends TestCase
     public function it_deserializes_array()
     {
         $data = [
-            'class' => 'Broadway\Serializer\TestReflectable',
+            'class' => 'MicroModule\Broadway\Serializer\TestReflectable',
             'payload' => [
                 'simpleValue' => 33,
                 'arrayOfObjects' => [
                     [
-                        'class' => 'Broadway\Serializer\TestReflectableObject',
+                        'class' => 'MicroModule\Broadway\Serializer\TestReflectableObject',
                         'payload' => [
                             'simpleArray' => ['A', 1, 1.0],
                             'value' => 11,
@@ -108,7 +108,7 @@ class ReflectionSerializerTest extends TestCase
                     ],
                 ],
                 'object' => [
-                    'class' => 'Broadway\Serializer\TestReflectableObject',
+                    'class' => 'MicroModule\Broadway\Serializer\TestReflectableObject',
                     'payload' => [
                         'simpleArray' => ['B', 2, 2.0],
                         'value' => 22,

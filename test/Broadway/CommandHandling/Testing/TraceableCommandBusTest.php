@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\CommandHandling\Testing;
+namespace MicroModule\Broadway\CommandHandling\Testing;
 
 use PHPUnit\Framework\TestCase;
 

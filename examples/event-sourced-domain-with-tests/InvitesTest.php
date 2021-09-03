@@ -22,7 +22,7 @@ require_once __DIR__.'/Invites.php';
  * - Third, the outcome is asserted. This can either be 1) some events are
  *   recorded, or 2) an exception is thrown.
  */
-class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTestCase
+class InvitesTest extends MicroModule\Broadway\EventSourcing\Testing\AggregateRootScenarioTestCase
 {
     private $generator;
 

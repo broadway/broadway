@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Broadway\ReadModel;
+namespace MicroModule\Broadway\ReadModel;
 
-use Broadway\Serializer\Serializable;
+use MicroModule\Broadway\Serializer\Serializable;
 
 /**
  * Represents a serializable read model.

@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Domain;
+namespace MicroModule\Broadway\Domain;
 
-use Broadway\Serializer\Serializable;
+use MicroModule\Broadway\Serializer\Serializable;
 
 /**
  * Metadata adding extra information to the DomainMessage.

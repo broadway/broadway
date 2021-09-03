@@ -36,7 +36,7 @@ class SerializeMe implements Broadway\Serializer\Serializable
 }
 
 // Setup the simple serializer
-$serializer = new Broadway\Serializer\SimpleInterfaceSerializer();
+$serializer = new MicroModule\Broadway\Serializer\SimpleInterfaceSerializer();
 
 // Create something to serialize
 $serializeMe = new SerializeMe("Hi, i'm serialized?");

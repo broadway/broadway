@@ -11,13 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Broadway\CommandHandling\Testing;
+namespace MicroModule\Broadway\CommandHandling\Testing;
 
-use Broadway\CommandHandling\CommandHandler;
-use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainMessage;
-use Broadway\Domain\Metadata;
-use Broadway\EventStore\TraceableEventStore;
+use MicroModule\Broadway\CommandHandling\CommandHandler;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\Metadata;
+use MicroModule\Broadway\EventStore\TraceableEventStore;
 use PHPUnit\Framework\TestCase;
 
 /**

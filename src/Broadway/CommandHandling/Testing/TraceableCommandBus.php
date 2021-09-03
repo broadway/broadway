@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Broadway\CommandHandling\Testing;
+namespace MicroModule\Broadway\CommandHandling\Testing;
 
-use Broadway\CommandHandling\CommandBus;
-use Broadway\CommandHandling\CommandHandler;
+use MicroModule\Broadway\CommandHandling\CommandBus;
+use MicroModule\Broadway\CommandHandling\CommandHandler;
 
 /**
  * Command bus that is able to record all dispatched commands.

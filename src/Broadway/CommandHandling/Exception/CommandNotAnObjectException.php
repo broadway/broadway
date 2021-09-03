@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\CommandHandling\Exception;
+namespace MicroModule\Broadway\CommandHandling\Exception;
 
 use InvalidArgumentException;
 

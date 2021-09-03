@@ -11,23 +11,20 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventSourcing;
+namespace MicroModule\Broadway\EventSourcing;
 
-use Broadway\Domain\AggregateRoot as AggregateRootInterface;
-use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainMessage;
-use Broadway\Domain\Metadata;
+use MicroModule\Broadway\Domain\AggregateRoot as AggregateRootInterface;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\Metadata;
 
 /**
  * Convenience base class for event sourced aggregate roots.
  */
 abstract class EventSourcedAggregateRoot implements AggregateRootInterface
 {
-    /**
-     * @var array
-     */
-    private $uncommittedEvents = [];
-    private $playhead = -1; // 0-based playhead allows events[0] to contain playhead 0
+    private array $uncommittedEvents = [];
+    private int $playhead = -1; // 0-based playhead allows events[0] to contain playhead 0
 
     /**
      * Applies an event. The event is added to the AggregateRoot's list of uncommitted events.

@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore;
+namespace MicroModule\Broadway\EventStore;
 
 /**
  * Exception thrown if an event stream is not found.

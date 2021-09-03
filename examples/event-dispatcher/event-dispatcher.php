@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 require_once __DIR__.'/../bootstrap.php';
 
-$eventDispatcher = new Broadway\EventDispatcher\CallableEventDispatcher();
+$eventDispatcher = new MicroModule\Broadway\EventDispatcher\CallableEventDispatcher();
 
 // You can register any callable
 $eventDispatcher->addListener('my_event', function ($arg1, $arg2) {

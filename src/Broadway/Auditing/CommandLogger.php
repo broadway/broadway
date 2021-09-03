@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Auditing;
+namespace MicroModule\Broadway\Auditing;
 
 use Exception;
 use Psr\Log\LoggerInterface;

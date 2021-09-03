@@ -11,17 +11,17 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventSourcing;
+namespace MicroModule\Broadway\EventSourcing;
 
 use Assert\Assertion as Assert;
-use Broadway\Domain\AggregateRoot;
-use Broadway\Domain\DomainEventStream;
-use Broadway\EventHandling\EventBus;
-use Broadway\EventSourcing\AggregateFactory\AggregateFactory;
-use Broadway\EventStore\EventStore;
-use Broadway\EventStore\EventStreamNotFoundException;
-use Broadway\Repository\AggregateNotFoundException;
-use Broadway\Repository\Repository;
+use MicroModule\Broadway\Domain\AggregateRoot;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\EventHandling\EventBus;
+use MicroModule\Broadway\EventSourcing\AggregateFactory\AggregateFactory;
+use MicroModule\Broadway\EventStore\EventStore;
+use MicroModule\Broadway\EventStore\EventStreamNotFoundException;
+use MicroModule\Broadway\Repository\AggregateNotFoundException;
+use MicroModule\Broadway\Repository\Repository;
 
 /**
  * Naive initial implementation of an event sourced aggregate repository.

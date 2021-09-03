@@ -16,7 +16,7 @@ require_once __DIR__.'/../bootstrap.php';
 /**
  * Part aggregate root.
  */
-class Part extends Broadway\EventSourcing\EventSourcedAggregateRoot
+class Part extends MicroModule\Broadway\EventSourcing\EventSourcedAggregateRoot
 {
     private $partId;
     private $manufacturer;
@@ -72,7 +72,7 @@ class Part extends Broadway\EventSourcing\EventSourcedAggregateRoot
     }
 }
 
-class Manufacturer extends Broadway\EventSourcing\SimpleEventSourcedEntity
+class Manufacturer extends MicroModule\Broadway\EventSourcing\SimpleEventSourcedEntity
 {
     private $partId;
     private $manufacturerId;
@@ -158,11 +158,11 @@ class PartManufacturerWasRenamedEvent
 /**
  * A repository that will only store and retrieve Part aggregate roots.
  */
-class PartRepository extends Broadway\EventSourcing\EventSourcingRepository
+class PartRepository extends MicroModule\Broadway\EventSourcing\EventSourcingRepository
 {
-    public function __construct(Broadway\EventStore\EventStore $eventStore, Broadway\EventHandling\EventBus $eventBus)
+    public function __construct(MicroModule\Broadway\EventStore\EventStore $eventStore, MicroModule\Broadway\EventHandling\EventBus $eventBus)
     {
-        parent::__construct($eventStore, $eventBus, 'Part', new Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory());
+        parent::__construct($eventStore, $eventBus, 'Part', new MicroModule\Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory());
     }
 }
 
@@ -170,11 +170,11 @@ class PartRepository extends Broadway\EventSourcing\EventSourcingRepository
  * A command handler will be registered with the command bus and handle the
  * commands that are dispatched.
  */
-class PartCommandHandler extends Broadway\CommandHandling\SimpleCommandHandler
+class PartCommandHandler extends MicroModule\Broadway\CommandHandling\SimpleCommandHandler
 {
     private $repository;
 
-    public function __construct(Broadway\EventSourcing\EventSourcingRepository $repository)
+    public function __construct(MicroModule\Broadway\EventSourcing\EventSourcingRepository $repository)
     {
         $this->repository = $repository;
     }

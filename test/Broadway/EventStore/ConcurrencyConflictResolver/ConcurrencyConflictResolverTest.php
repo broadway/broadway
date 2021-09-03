@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore\ConcurrencyConflictResolver;
+namespace MicroModule\Broadway\EventStore\ConcurrencyConflictResolver;
 
-use Broadway\Domain\DateTime;
-use Broadway\Domain\DomainMessage;
-use Broadway\Domain\Metadata;
+use MicroModule\Broadway\Domain\DateTime;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\Metadata;
 use PHPUnit\Framework\TestCase;
 
 abstract class ConcurrencyConflictResolverTest extends TestCase

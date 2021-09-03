@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore\Management;
+namespace MicroModule\Broadway\EventStore\Management;
 
 /**
  * Criteria not supported by implementation.

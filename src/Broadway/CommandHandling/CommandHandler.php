@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\CommandHandling;
+namespace MicroModule\Broadway\CommandHandling;
 
 /**
  * Handles dispatched commands.

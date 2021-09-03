@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Replaying;
+namespace MicroModule\Broadway\Replaying;
 
-use Broadway\EventStore\EventVisitor;
-use Broadway\EventStore\Management\Criteria;
-use Broadway\EventStore\Management\EventStoreManagement;
+use MicroModule\Broadway\EventStore\EventVisitor;
+use MicroModule\Broadway\EventStore\Management\Criteria;
+use MicroModule\Broadway\EventStore\Management\EventStoreManagement;
 
 final class Replayer
 {

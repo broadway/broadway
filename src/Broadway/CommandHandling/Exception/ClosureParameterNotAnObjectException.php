@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Broadway\CommandHandling\Exception;
+namespace MicroModule\Broadway\CommandHandling\Exception;
 
 use InvalidArgumentException;
 

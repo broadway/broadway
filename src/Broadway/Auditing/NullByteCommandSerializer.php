@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Auditing;
+namespace MicroModule\Broadway\Auditing;
 
 /**
  * Command serializer that uses php hacks to get the data from a command.

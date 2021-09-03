@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Broadway\ReadModel\Testing;
+namespace MicroModule\Broadway\ReadModel\Testing;
 
-use Broadway\ReadModel\SerializableReadModel;
-use Broadway\Serializer\Serializable;
-use Broadway\Serializer\SimpleInterfaceSerializer;
+use MicroModule\Broadway\ReadModel\SerializableReadModel;
+use MicroModule\Broadway\Serializer\Serializable;
+use MicroModule\Broadway\Serializer\SimpleInterfaceSerializer;
 use PHPUnit\Framework\TestCase;
 
 /**

@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventSourcing\MetadataEnrichment;
+namespace MicroModule\Broadway\EventSourcing\MetadataEnrichment;
 
-use Broadway\Domain\Metadata;
+use MicroModule\Broadway\Domain\Metadata;
 
 /**
  * Adds extra metadata to already existing metadata.

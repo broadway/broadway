@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Broadway\ReadModel\Testing;
+namespace MicroModule\Broadway\ReadModel\Testing;
 
 use Assert\Assertion;
-use Broadway\Domain\DomainMessage;
-use Broadway\EventHandling\EventListener;
-use Broadway\ReadModel\Repository;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\EventHandling\EventListener;
+use MicroModule\Broadway\ReadModel\Repository;
 use PHPUnit\Framework\TestCase;
 
 /**

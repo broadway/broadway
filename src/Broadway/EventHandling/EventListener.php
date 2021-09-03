@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventHandling;
+namespace MicroModule\Broadway\EventHandling;
 
-use Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\DomainMessage;
 
 /**
  * Handles dispatched events.

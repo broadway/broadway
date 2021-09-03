@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventDispatcher\Testing;
+namespace MicroModule\Broadway\EventDispatcher\Testing;
 
-use Broadway\EventDispatcher\EventDispatcher;
+use MicroModule\Broadway\EventDispatcher\EventDispatcher;
 
 final class TraceableEventDispatcher implements EventDispatcher
 {

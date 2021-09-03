@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventSourcing;
+namespace MicroModule\Broadway\EventSourcing;
 
-use Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\DomainEventStream;
 
 /**
  * Interface implemented by event stream decorators.

@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-use Broadway\Domain\DateTime;
-use Broadway\Domain\DomainMessage;
-use Broadway\EventStore\Dbal\DBALEventStore;
-use Broadway\Serializer\SimpleInterfaceSerializer;
+use MicroModule\Broadway\Domain\DateTime;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\EventStore\Dbal\DBALEventStore;
+use MicroModule\Broadway\Serializer\SimpleInterfaceSerializer;
 use Doctrine\DBAL\DriverManager;
 
 require __DIR__.'/query-memory-events-with-criteria.php';

@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventDispatcher;
+namespace MicroModule\Broadway\EventDispatcher;
 
 use PHPUnit\Framework\TestCase;
 

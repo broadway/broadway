@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventHandling;
+namespace MicroModule\Broadway\EventHandling;
 
-use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\DomainMessage;
 use Psr\Log\LoggerInterface;
 
 class ReliableEventBus implements EventBus

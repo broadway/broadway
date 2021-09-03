@@ -13,14 +13,14 @@ declare(strict_types=1);
 
 require_once __DIR__.'/../bootstrap.php';
 
-use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainMessage;
-use Broadway\Domain\Metadata;
-use Broadway\EventHandling\EventListener;
-use Broadway\EventStore\EventVisitor;
-use Broadway\EventStore\InMemoryEventStore;
-use Broadway\EventStore\Management\Criteria;
-use Broadway\EventStore\Management\EventStoreManagement;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\Metadata;
+use MicroModule\Broadway\EventHandling\EventListener;
+use MicroModule\Broadway\EventStore\EventVisitor;
+use MicroModule\Broadway\EventStore\InMemoryEventStore;
+use MicroModule\Broadway\EventStore\Management\Criteria;
+use MicroModule\Broadway\EventStore\Management\EventStoreManagement;
 
 $eventStore = new InMemoryEventStore();
 

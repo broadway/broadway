@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Domain;
+namespace MicroModule\Broadway\Domain;
 
 use PHPUnit\Framework\TestCase;
 
@@ -26,7 +26,7 @@ class DomainMessageTest extends TestCase
         $payload = new SomeEvent();
         $playhead = 15;
         $metadata = new Metadata(['meta']);
-        $type = 'Broadway.Domain.SomeEvent';
+        $type = 'MicroModule.Broadway.Domain.SomeEvent';
 
         $domainMessage = DomainMessage::recordNow($id, $playhead, $metadata, $payload);
 

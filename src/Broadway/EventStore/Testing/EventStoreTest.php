@@ -11,15 +11,15 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore\Testing;
+namespace MicroModule\Broadway\EventStore\Testing;
 
-use Broadway\Domain\DateTime;
-use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainMessage;
-use Broadway\Domain\Metadata;
-use Broadway\EventStore\EventStreamNotFoundException;
-use Broadway\EventStore\Exception\DuplicatePlayheadException;
-use Broadway\Serializer\Serializable;
+use MicroModule\Broadway\Domain\DateTime;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\Metadata;
+use MicroModule\Broadway\EventStore\EventStreamNotFoundException;
+use MicroModule\Broadway\EventStore\Exception\DuplicatePlayheadException;
+use MicroModule\Broadway\Serializer\Serializable;
 use Broadway\UuidGenerator\Rfc4122\Version4Generator;
 use PHPUnit\Framework\Error\Error;
 use PHPUnit\Framework\TestCase;

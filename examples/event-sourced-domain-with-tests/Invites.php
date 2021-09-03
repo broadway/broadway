@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-use Broadway\Serializer\Serializable;
+use MicroModule\Broadway\Serializer\Serializable;
 
 require_once __DIR__.'/../bootstrap.php';
 
@@ -21,7 +21,7 @@ require_once __DIR__.'/../bootstrap.php';
  * The aggregate root will guard that the invitation can only be accepted OR
  * declined, but not both.
  */
-class Invitation extends Broadway\EventSourcing\EventSourcedAggregateRoot
+class Invitation extends MicroModule\Broadway\EventSourcing\EventSourcedAggregateRoot
 {
     private $accepted = false;
     private $declined = false;
@@ -114,11 +114,11 @@ class Invitation extends Broadway\EventSourcing\EventSourcedAggregateRoot
  *
  * This repository uses the base class provided by the EventSourcing component.
  */
-class InvitationRepository extends Broadway\EventSourcing\EventSourcingRepository
+class InvitationRepository extends MicroModule\Broadway\EventSourcing\EventSourcingRepository
 {
-    public function __construct(Broadway\EventStore\EventStore $eventStore, Broadway\EventHandling\EventBus $eventBus)
+    public function __construct(MicroModule\Broadway\EventStore\EventStore $eventStore, MicroModule\Broadway\EventHandling\EventBus $eventBus)
     {
-        parent::__construct($eventStore, $eventBus, 'Invitation', new Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory());
+        parent::__construct($eventStore, $eventBus, 'Invitation', new MicroModule\Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory());
     }
 }
 
@@ -225,11 +225,11 @@ class DeclinedEvent extends InvitationEvent
  * In the end a command handler listens for commands and translates commands to
  * method calls on the actual aggregate roots.
  */
-class InvitationCommandHandler extends Broadway\CommandHandling\SimpleCommandHandler
+class InvitationCommandHandler extends MicroModule\Broadway\CommandHandling\SimpleCommandHandler
 {
     private $repository;
 
-    public function __construct(Broadway\EventSourcing\EventSourcingRepository $repository)
+    public function __construct(MicroModule\Broadway\EventSourcing\EventSourcingRepository $repository)
     {
         $this->repository = $repository;
     }

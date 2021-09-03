@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Repository;
+namespace MicroModule\Broadway\Repository;
 
 use Exception;
 use RuntimeException;

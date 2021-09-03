@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Broadway\ReadModel\InMemory;
+namespace MicroModule\Broadway\ReadModel\InMemory;
 
-use Broadway\ReadModel\Repository;
-use Broadway\ReadModel\Testing\RepositoryTestCase;
-use Broadway\ReadModel\Testing\RepositoryTestReadModel;
+use MicroModule\Broadway\ReadModel\Repository;
+use MicroModule\Broadway\ReadModel\Testing\RepositoryTestCase;
+use MicroModule\Broadway\ReadModel\Testing\RepositoryTestReadModel;
 
 class InMemoryRepositoryTest extends RepositoryTestCase
 {

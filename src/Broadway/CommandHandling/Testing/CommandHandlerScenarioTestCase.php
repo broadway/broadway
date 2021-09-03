@@ -11,14 +11,14 @@
 
 declare(strict_types=1);
 
-namespace Broadway\CommandHandling\Testing;
+namespace MicroModule\Broadway\CommandHandling\Testing;
 
-use Broadway\CommandHandling\CommandHandler;
-use Broadway\EventHandling\EventBus;
-use Broadway\EventHandling\SimpleEventBus;
-use Broadway\EventStore\EventStore;
-use Broadway\EventStore\InMemoryEventStore;
-use Broadway\EventStore\TraceableEventStore;
+use MicroModule\Broadway\CommandHandling\CommandHandler;
+use MicroModule\Broadway\EventHandling\EventBus;
+use MicroModule\Broadway\EventHandling\SimpleEventBus;
+use MicroModule\Broadway\EventStore\EventStore;
+use MicroModule\Broadway\EventStore\InMemoryEventStore;
+use MicroModule\Broadway\EventStore\TraceableEventStore;
 use PHPUnit\Framework\TestCase;
 
 /**

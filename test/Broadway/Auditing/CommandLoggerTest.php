@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Auditing;
+namespace MicroModule\Broadway\Auditing;
 
 use PHPUnit\Framework\TestCase;
 
@@ -61,7 +61,7 @@ class CommandLoggerTest extends TestCase
         $this->commandAuditLogger->onCommandHandlingSuccess($this->command);
 
         $this->assertCount(1, $this->logger->info);
-        $this->assertEquals('{"status":"success","command":{"class":"Broadway\\\\Auditing\\\\Command","data":{"all":"the data"}}}', $this->logger->info[0]);
+        $this->assertEquals('{"status":"success","command":{"class":"MicroModule\\\\Broadway\\\\Auditing\\\\Command","data":{"all":"the data"}}}', $this->logger->info[0]);
     }
 
     /**
@@ -82,7 +82,7 @@ class CommandLoggerTest extends TestCase
         $this->assertEquals('failure', $loggedData['status']);
         $this->assertArrayHasKey('command', $loggedData);
         $this->assertArrayHasKey('class', $loggedData['command']);
-        $this->assertEquals('Broadway\Auditing\Command', $loggedData['command']['class']);
+        $this->assertEquals('MicroModule\Broadway\Auditing\Command', $loggedData['command']['class']);
         $this->assertArrayHasKey('data', $loggedData['command']);
         $this->assertEquals(['all' => 'the data'], $loggedData['command']['data']);
 
@@ -94,7 +94,7 @@ class CommandLoggerTest extends TestCase
         $this->assertArrayHasKey('code', $loggedData['exception']);
 
         $this->assertEquals('Yolo', $loggedData['exception']['message']);
-        $this->assertEquals('Broadway\Auditing\MyException', $loggedData['exception']['class']);
+        $this->assertEquals('MicroModule\Broadway\Auditing\MyException', $loggedData['exception']['class']);
         $this->assertStringEndsWith('test/Broadway/Auditing/CommandLoggerTest.php', $loggedData['exception']['file']);
     }
 }

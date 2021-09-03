@@ -11,18 +11,18 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore\Management\Testing;
+namespace MicroModule\Broadway\EventStore\Management\Testing;
 
-use Broadway\Domain\DateTime;
-use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainMessage;
-use Broadway\Domain\Metadata;
-use Broadway\EventStore\EventStore;
-use Broadway\EventStore\EventVisitor;
-use Broadway\EventStore\Management\Criteria;
-use Broadway\EventStore\Management\CriteriaNotSupportedException;
-use Broadway\EventStore\Management\EventStoreManagement;
-use Broadway\Serializer\Serializable;
+use MicroModule\Broadway\Domain\DateTime;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\Metadata;
+use MicroModule\Broadway\EventStore\EventStore;
+use MicroModule\Broadway\EventStore\EventVisitor;
+use MicroModule\Broadway\EventStore\Management\Criteria;
+use MicroModule\Broadway\EventStore\Management\CriteriaNotSupportedException;
+use MicroModule\Broadway\EventStore\Management\EventStoreManagement;
+use MicroModule\Broadway\Serializer\Serializable;
 use PHPUnit\Framework\TestCase;
 
 abstract class EventStoreManagementTest extends TestCase

@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventSourcing\Testing;
+namespace MicroModule\Broadway\EventSourcing\Testing;
 
-use Broadway\EventSourcing\AggregateFactory\AggregateFactory;
-use Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
+use MicroModule\Broadway\EventSourcing\AggregateFactory\AggregateFactory;
+use MicroModule\Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
 use PHPUnit\Framework\TestCase;
 
 /**

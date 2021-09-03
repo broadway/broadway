@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore\Management;
+namespace MicroModule\Broadway\EventStore\Management;
 
-use Broadway\EventStore\InMemoryEventStore;
-use Broadway\EventStore\Management\Testing\EventStoreManagementTest;
+use MicroModule\Broadway\EventStore\InMemoryEventStore;
+use MicroModule\Broadway\EventStore\Management\Testing\EventStoreManagementTest;
 
 class InMemoryEventStoreManagementTest extends EventStoreManagementTest
 {

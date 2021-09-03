@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-use Broadway\Domain\DomainEventStream;
-use Broadway\EventStore\CallableEventVisitor;
-use Broadway\EventStore\InMemoryEventStore;
-use Broadway\EventStore\Management\Criteria;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\EventStore\CallableEventVisitor;
+use MicroModule\Broadway\EventStore\InMemoryEventStore;
+use MicroModule\Broadway\EventStore\Management\Criteria;
 
 require __DIR__.'/../event-sourced-domain-with-tests/Invites.php';
 

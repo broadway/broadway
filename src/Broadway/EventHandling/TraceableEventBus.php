@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventHandling;
+namespace MicroModule\Broadway\EventHandling;
 
-use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\DomainMessage;
 
 /**
  * Event bus that is able to record all dispatched events.

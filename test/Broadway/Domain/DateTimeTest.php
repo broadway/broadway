@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Broadway\Domain;
+namespace MicroModule\Broadway\Domain;
 
 use PHPUnit\Framework\TestCase;
 
@@ -33,7 +33,7 @@ class DateTimeTest extends TestCase
      */
     public function it_creates_now()
     {
-        $this->assertInstanceOf('Broadway\Domain\DateTime', DateTime::now());
+        $this->assertInstanceOf('MicroModule\Broadway\Domain\DateTime', DateTime::now());
     }
 
     /**

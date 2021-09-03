@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventSourcing\MetadataEnrichment;
+namespace MicroModule\Broadway\EventSourcing\MetadataEnrichment;
 
-use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\Metadata;
-use Broadway\EventSourcing\EventStreamDecorator;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\Metadata;
+use MicroModule\Broadway\EventSourcing\EventStreamDecorator;
 
 /**
  * Event stream decorator that adds extra metadata.

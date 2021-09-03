@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Broadway\EventStore;
+namespace MicroModule\Broadway\EventStore;
 
-use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainMessage;
-use Broadway\EventStore\ConcurrencyConflictResolver\ConcurrencyConflictResolver;
-use Broadway\EventStore\Testing\EventStoreTest;
+use MicroModule\Broadway\Domain\DomainEventStream;
+use MicroModule\Broadway\Domain\DomainMessage;
+use MicroModule\Broadway\EventStore\ConcurrencyConflictResolver\ConcurrencyConflictResolver;
+use MicroModule\Broadway\EventStore\Testing\EventStoreTest;
 use PHPUnit\Framework\MockObject\MockObject;
 use Prophecy\Argument;
 
