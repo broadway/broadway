@@ -11,10 +11,10 @@
          bootstrap="vendor/autoload.php"
 >
   <testsuites>
-    <testsuite name="Broadway Test Suite">
+    <testsuite name="broadway">
       <directory>./test/</directory>
     </testsuite>
-    <testsuite name="Broadway Example Test Suite">
+    <testsuite name="example">
       <directory>./examples/</directory>
     </testsuite>
   </testsuites>

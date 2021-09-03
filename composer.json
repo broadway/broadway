@@ -1,66 +1,47 @@
 {
-    "name": "micro-module/broadway",
-    "description": "Infrastructure and testing helpers for creating CQRS and event sourced applications.",
-    "keywords": ["cqrs", "event sourcing", "domain-driven design", "ddd"],
-    "license": "MIT",
-    "require": {
-        "beberlei/assert": "^3.0",
-        "broadway/uuid-generator": "^1.0",
-        "php": "^7.4 || ^8.0"
-    },
-    "authors": [
-      {
-        "name": "Alexander",
-        "email": "iam.asm89@gmail.com"
-      },
-      {
-        "name": "Emil",
-        "email": "emil@broekmeulen.com"
-      },
-      {
-        "name": "Fritsjan",
-        "email": "fritsjan@qandidate.com"
-      },
-      {
-        "name": "othillo",
-        "email": "othillo@othillo.nl"
-      },
-      {
-        "name": "Willem-Jan",
-        "email": "wjzijderveld@gmail.com"
-      },
-      {
-        "name": "Qandidate.com",
-        "homepage": "http://labs.qandidate.com/"
-      }
-    ],
-    "require-dev": {
-        "monolog/monolog": "~2.0",
-        "phpunit/phpunit": "^9.5",
-        "ramsey/uuid": "^4.0",
-        "broadway/coding-standard": "^1.2",
-        "phpstan/phpstan": "@stable"
-    },
-    "suggest": {
-        "psr/log-implementation": "Implementation for PSR3, LoggerInterface",
-        "micro-module/event-store-dbal": "Event store implementation using doctrine/dbal",
-        "broadway/read-model-elasticsearch": "Elasticsearch read model implementation",
-        "micro-module/broadway-saga": "Saga component for Broadway",
-        "micro-module/broadway-bundle": "Symfony bundle for broadway/broadway"
-    },
-    "autoload": {
-        "psr-4": {
-            "Broadway\\": "src/Broadway/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Broadway\\": "test/Broadway/"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "3.0.x-dev"
-        }
+  "name": "micro-module/broadway",
+  "description": "Infrastructure and testing helpers for creating CQRS and event sourced applications.",
+  "keywords": [
+    "cqrs",
+    "event sourcing",
+    "domain-driven design",
+    "ddd"
+  ],
+  "license": "MIT",
+  "require": {
+    "beberlei/assert": "^3.3",
+    "broadway/uuid-generator": "^1.0",
+    "php": "^8.0",
+    "micro-module/snapshotting": "^0.6.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "monolog/monolog": "~2.0",
+    "phpunit/phpunit": "^9.5",
+    "ramsey/uuid": "^4.2",
+    "broadway/coding-standard": "^1.2",
+    "phpstan/phpstan": "^0.12.98"
+  },
+  "suggest": {
+    "psr/log-implementation": "Implementation for PSR3, LoggerInterface",
+    "micro-module/event-store-dbal": "Event store implementation using doctrine/dbal",
+    "broadway/read-model-elasticsearch": "Elasticsearch read model implementation",
+    "micro-module/broadway-saga": "Saga component for Broadway",
+    "micro-module/broadway-bundle": "Symfony bundle for broadway/broadway"
+  },
+  "autoload": {
+    "psr-4": {
+      "Broadway\\": "src/Broadway/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Broadway\\": "test/Broadway/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "3.0.x-dev"
+    }
+  }
 }

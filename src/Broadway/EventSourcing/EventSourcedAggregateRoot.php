@@ -23,11 +23,8 @@ use Broadway\Domain\Metadata;
  */
 abstract class EventSourcedAggregateRoot implements AggregateRootInterface
 {
-    /**
-     * @var array
-     */
-    private $uncommittedEvents = [];
-    private $playhead = -1; // 0-based playhead allows events[0] to contain playhead 0
+    protected array $uncommittedEvents = [];
+    protected int $playhead = -1; // 0-based playhead allows events[0] to contain playhead 0
 
     /**
      * Applies an event. The event is added to the AggregateRoot's list of uncommitted events.
