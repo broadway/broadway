@@ -111,9 +111,7 @@ abstract class EventStoreTest extends TestCase
      */
     public function it_throws_an_exception_when_an_id_cannot_be_converted_to_a_string()
     {
-        $id = new IdentityThatCannotBeConvertedToAString(
-            'Yolntbyaac' //You only live nine times because you are a cat
-        );
+        $id = new IdentityThatCannotBeConvertedToAString();
 
         if (PHP_VERSION_ID >= 70400) {
             $this->expectException(\Throwable::class);
@@ -239,10 +237,4 @@ class StringIdentity
 
 class IdentityThatCannotBeConvertedToAString
 {
-    private $id;
-
-    public function __construct($id)
-    {
-        $this->id = $id;
-    }
 }
