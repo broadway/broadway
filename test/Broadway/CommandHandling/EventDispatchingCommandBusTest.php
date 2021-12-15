@@ -43,7 +43,7 @@ class EventDispatchingCommandBusTest extends TestCase
      */
     private $subscriber;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->eventDispatcher = $this->createMock(EventDispatcher::class);
         $this->baseCommandBus = $this->createMock(CommandBus::class);

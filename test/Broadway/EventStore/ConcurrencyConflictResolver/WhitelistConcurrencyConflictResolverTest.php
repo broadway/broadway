@@ -9,7 +9,7 @@ class WhitelistConcurrencyConflictResolverTest extends ConcurrencyConflictResolv
     /** @var WhitelistConcurrencyConflictResolver */
     private $conflictResolver;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->conflictResolver = new WhitelistConcurrencyConflictResolver();
     }

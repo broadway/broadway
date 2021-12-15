@@ -32,7 +32,7 @@ class EventDispatcherTest extends TestCase
      */
     private $listener2;
 
-    protected function setUp()
+    protected function
     {
         $this->dispatcher = new CallableEventDispatcher();
         $this->listener1 = new TracableEventListener();

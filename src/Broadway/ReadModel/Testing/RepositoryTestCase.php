@@ -23,7 +23,7 @@ abstract class RepositoryTestCase extends TestCase
      */
     protected $repository;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->repository = $this->createRepository();
     }

@@ -17,7 +17,7 @@ class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTe
 {
     private $generator;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->generator = new Broadway\UuidGenerator\Rfc4122\Version4Generator();
