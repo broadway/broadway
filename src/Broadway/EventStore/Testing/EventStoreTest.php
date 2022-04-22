@@ -185,11 +185,11 @@ abstract class EventStoreTest extends TestCase
     {
         return [
             'Simple String' => [
-                'Yolntbyaac', //You only live nine times because you are a cat
+                'Yolntbyaac', // You only live nine times because you are a cat
             ],
             'Identitiy' => [
                 new StringIdentity(
-                    'Yolntbyaac' //You only live nine times because you are a cat
+                    'Yolntbyaac' // You only live nine times because you are a cat
                 ),
             ],
             'Integer' => [
