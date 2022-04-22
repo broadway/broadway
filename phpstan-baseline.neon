@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Property Broadway\\\\CommandHandling\\\\Testing\\\\TraceableCommandBus\\:\\:\\$commandHandlers is never read, only written\\.$#"
+			count: 1
+			path: src/Broadway/CommandHandling/Testing/TraceableCommandBus.php
+
+		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 2
 			path: src/Broadway/EventStore/Management/Testing/EventStoreManagementTest.php
