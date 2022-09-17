@@ -38,6 +38,7 @@ class DateTimeTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideDatesAndIntervals
      */
     public function it_adds_intervals($dateTime, $interval, $expectedDateTime)
@@ -49,6 +50,7 @@ class DateTimeTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideDatesAndIntervals
      */
     public function it_subtracts_intervals($expectedDateTime, $interval, $dateTime)
@@ -71,6 +73,7 @@ class DateTimeTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideDateDiffs
      */
     public function it_diffs2_dates($date1, $date2, $expectedDiff)
@@ -94,6 +97,7 @@ class DateTimeTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideGreaterThanDates
      */
     public function it_returns_if_a_date_is_gt_another_date($date1, $date2, $bool)
@@ -119,6 +123,7 @@ class DateTimeTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideBeginningOfWeek
      */
     public function it_converts_to_the_beginning_of_week($dateTime, $expectedBeginningOfWeek)
