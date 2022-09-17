@@ -17,7 +17,7 @@ php-cs-fixer:
 
 .PHONY: php-cs-fixer-ci
 php-cs-fixer-ci:
-	vendor/bin/php-cs-fixer fix --dry-run --no-interaction --allow-risky=yes --diff --verbose --stop-on-violation
+	vendor/bin/php-cs-fixer fix --no-interaction --allow-risky=yes --diff --verbose
 
 PHONY: phpstan
 phpstan:
