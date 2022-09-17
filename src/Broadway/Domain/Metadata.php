@@ -74,9 +74,6 @@ final class Metadata implements Serializable
         return $this->values;
     }
 
-    /**
-     * @return Metadata
-     */
     public static function deserialize(array $data): self
     {
         return new self($data);

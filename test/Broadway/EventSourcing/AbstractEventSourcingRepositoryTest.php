@@ -61,6 +61,7 @@ abstract class AbstractEventSourcingRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider objectsNotOfConfiguredClass
      */
     public function it_throws_an_exception_when_adding_an_aggregate_that_is_not_of_the_configured_class($aggregate)

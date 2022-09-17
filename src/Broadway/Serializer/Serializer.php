@@ -20,16 +20,16 @@ namespace Broadway\Serializer;
 interface Serializer
 {
     /**
-     * @throws SerializationException
-     *
      * @param mixed $object
+     *
+     * @throws SerializationException
      */
     public function serialize($object): array;
 
     /**
-     * @throws SerializationException
-     *
      * @return mixed
+     *
+     * @throws SerializationException
      */
     public function deserialize(array $serializedObject);
 }

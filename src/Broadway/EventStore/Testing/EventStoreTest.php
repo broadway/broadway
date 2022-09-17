@@ -33,6 +33,7 @@ abstract class EventStoreTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider idDataProvider
      */
     public function it_creates_a_new_entry_when_id_is_new($id)
@@ -51,6 +52,7 @@ abstract class EventStoreTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider idDataProvider
      */
     public function it_appends_to_an_already_existing_stream($id)
@@ -83,6 +85,7 @@ abstract class EventStoreTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider idDataProvider
      */
     public function it_throws_an_exception_when_requesting_the_stream_of_a_non_existing_aggregate($id)
@@ -94,6 +97,7 @@ abstract class EventStoreTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider idDataProvider
      */
     public function it_throws_an_exception_when_appending_a_duplicate_playhead($id)
@@ -129,6 +133,7 @@ abstract class EventStoreTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider idDataProvider
      */
     public function it_loads_events_starting_from_a_given_playhead($id)
@@ -167,6 +172,7 @@ abstract class EventStoreTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider idDataProvider
      */
     public function it_returns_empty_event_stream_when_no_events_are_committed_since_given_playhead($id)
