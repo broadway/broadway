@@ -52,6 +52,16 @@ jobs:
         uses: "ramsey/composer-install@v1"
       - name: "Check coding standards"
         run: "make php-cs-fixer-ci"
+      - name: Create Pull Request
+        if: github.ref == 'refs/heads/master'
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: Apply coding standards
+          branch: php-cs-fixer
+          delete-branch: true
+          title: 'Apply coding standards'
+          draft: false
+          base: master
 
   static-analysis:
     name: "Static analysis"
