@@ -40,7 +40,8 @@
         "ramsey/uuid": "^4.0",
         "broadway/coding-standard": "^1.2",
         "phpstan/phpstan": "^1.0",
-        "psr/log": "^1.1.4"
+        "psr/log": "^1.1.4",
+        "phpspec/prophecy": "^1.15"
     },
     "suggest": {
         "psr/log-implementation": "Implementation for PSR3, LoggerInterface",
