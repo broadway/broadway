@@ -71,7 +71,7 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
                     return $domainMessage->getId().': '.$domainMessage->getType();
                 }, iterator_to_array($uncommittedEvents));
 
-                throw new \Exception('Error on concurrency conflicting resolve event store. '.implode(' - ', $loggedEvents));
+                throw new \Exception('Error on concurrency conflicting resolve event store. '.implode(' - ', $loggedEvents), 0, $e);
             }
         }
     }
