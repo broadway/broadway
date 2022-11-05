@@ -8,7 +8,7 @@ use Broadway\Domain\Metadata;
 use Broadway\EventHandling\SimpleEventBus;
 use Broadway\EventStore\InMemoryEventStore;
 use Broadway\Upcasting\SequentialUpcasterChain;
-use Broadway\Upcasting\UpcastingInMemoryEventStore;
+use Broadway\Upcasting\UpcastingEventStore;
 use Ramsey\Uuid\Uuid;
 
 require_once __DIR__.'/Users.php';
@@ -37,7 +37,7 @@ class UpcastingTest extends PHPUnit\Framework\TestCase
     {
         $userId = Uuid::uuid4()->toString();
 
-        $eventStore = new UpcastingInMemoryEventStore(
+        $eventStore = new UpcastingEventStore(
             new InMemoryEventStore(),
             new SequentialUpcasterChain([
                 new UserCreatedUpcasterV1toV2(),
@@ -49,7 +49,7 @@ class UpcastingTest extends PHPUnit\Framework\TestCase
             $userId,
             0,
             new Metadata([]),
-            new UserCreatedV3($userId, 'matiux', 'xuitam', 36,'Italy')
+            new UserCreatedV3($userId, 'matiux', 'xuitam', 36, 'Italy')
         );
 
         $eventStore->append($userId, new DomainEventStream($events));
@@ -63,15 +63,14 @@ class UpcastingTest extends PHPUnit\Framework\TestCase
         self::assertEquals('Italy', $matiux->country());
     }
 
-
     /**
      * @test
      */
-    public function it_should_upcast_UserCreatedV1_event_to_UserCreatedV3_with_default_values(): void
+    public function it_should_upcast__user_created_v1_event_to__user_created_v3_with_default_values(): void
     {
         $userId = Uuid::uuid4()->toString();
 
-        $eventStore = new UpcastingInMemoryEventStore(
+        $eventStore = new UpcastingEventStore(
             new InMemoryEventStore(),
             new SequentialUpcasterChain([
                 new UserCreatedUpcasterV1toV2(),
@@ -100,11 +99,11 @@ class UpcastingTest extends PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_should_upcast_UserCreatedV1_event_to_UserCreatedV3_passing_by_from_v2_with_default_values(): void
+    public function it_should_upcast__user_created_v1_event_to__user_created_v3_passing_by_from_v2_with_default_values(): void
     {
         $userId = Uuid::uuid4()->toString();
 
-        $eventStore = new UpcastingInMemoryEventStore(
+        $eventStore = new UpcastingEventStore(
             new InMemoryEventStore(),
             new SequentialUpcasterChain([
                 new UserCreatedUpcasterV1toV2(),

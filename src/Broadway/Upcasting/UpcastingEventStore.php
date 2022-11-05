@@ -8,23 +8,21 @@ use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\EventStore;
 use Broadway\EventStore\EventVisitor;
-use Broadway\EventStore\InMemoryEventStore;
 use Broadway\EventStore\Management\Criteria;
 use Broadway\EventStore\Management\EventStoreManagement;
 
-class UpcastingInMemoryEventStore implements EventStore, EventStoreManagement
+final class UpcastingEventStore implements EventStore, EventStoreManagement
 {
     /**
-     * @var InMemoryEventStore
+     * @var EventStore
      */
     private $eventStore;
-
     /**
      * @var UpcasterChain
      */
     private $upcasterChain;
 
-    public function __construct(InMemoryEventStore $eventStore, UpcasterChain $upcasterChain)
+    public function __construct(EventStore $eventStore, UpcasterChain $upcasterChain)
     {
         $this->eventStore = $eventStore;
         $this->upcasterChain = $upcasterChain;
@@ -32,16 +30,8 @@ class UpcastingInMemoryEventStore implements EventStore, EventStoreManagement
 
     public function load($id): DomainEventStream
     {
-       return $this->upcastStream(
-           $this->eventStore->load($id),
-           $id
-       );
-    }
-
-    public function loadFromPlayhead($id, int $playhead): DomainEventStream
-    {
         return $this->upcastStream(
-            $this->eventStore->loadFromPlayhead($id, $playhead),
+            $this->eventStore->load($id),
             $id
         );
     }
@@ -65,6 +55,14 @@ class UpcastingInMemoryEventStore implements EventStore, EventStoreManagement
             $domainMessage->getMetadata(),
             $this->upcasterChain->upcast($domainMessage->getPayload()),
             $domainMessage->getRecordedOn()
+        );
+    }
+
+    public function loadFromPlayhead($id, int $playhead): DomainEventStream
+    {
+        return $this->upcastStream(
+            $this->eventStore->loadFromPlayhead($id, $playhead),
+            $id
         );
     }
 
