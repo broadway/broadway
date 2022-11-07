@@ -14,7 +14,7 @@ use Broadway\EventStore\Management\EventStoreManagement;
 final class UpcastingEventStore implements EventStore, EventStoreManagement
 {
     /**
-     * @var EventStore
+     * @var EventStore&EventStoreManagement
      */
     private $eventStore;
     /**
@@ -22,7 +22,7 @@ final class UpcastingEventStore implements EventStore, EventStoreManagement
      */
     private $upcasterChain;
 
-    public function __construct(EventStore $eventStore, UpcasterChain $upcasterChain)
+    public function __construct($eventStore, UpcasterChain $upcasterChain)
     {
         $this->eventStore = $eventStore;
         $this->upcasterChain = $upcasterChain;
