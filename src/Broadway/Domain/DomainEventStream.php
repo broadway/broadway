@@ -13,13 +13,10 @@ declare(strict_types=1);
 
 namespace Broadway\Domain;
 
-use ArrayIterator;
-use IteratorAggregate;
-
 /**
  * Represents a stream of DomainEventMessages in sequence.
  */
-final class DomainEventStream implements IteratorAggregate
+final class DomainEventStream implements \IteratorAggregate
 {
     private $events;
 
@@ -31,8 +28,8 @@ final class DomainEventStream implements IteratorAggregate
         $this->events = $events;
     }
 
-    public function getIterator(): ArrayIterator
+    public function getIterator(): \ArrayIterator
     {
-        return new ArrayIterator($this->events);
+        return new \ArrayIterator($this->events);
     }
 }

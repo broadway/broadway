@@ -13,11 +13,9 @@ declare(strict_types=1);
 
 namespace Broadway\EventStore\Management;
 
-use RuntimeException;
-
 /**
  * Exceptions thrown by event store implementations.
  */
-abstract class EventStoreManagementException extends RuntimeException
+abstract class EventStoreManagementException extends \RuntimeException
 {
 }
