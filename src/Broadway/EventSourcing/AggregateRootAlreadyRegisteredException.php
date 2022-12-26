@@ -13,11 +13,9 @@ declare(strict_types=1);
 
 namespace Broadway\EventSourcing;
 
-use RuntimeException;
-
 /**
  * Exception thrown when an aggregate root is already registered.
  */
-final class AggregateRootAlreadyRegisteredException extends RuntimeException
+final class AggregateRootAlreadyRegisteredException extends \RuntimeException
 {
 }

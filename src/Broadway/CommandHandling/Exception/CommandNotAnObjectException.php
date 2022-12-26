@@ -13,11 +13,9 @@ declare(strict_types=1);
 
 namespace Broadway\CommandHandling\Exception;
 
-use InvalidArgumentException;
-
 /**
  * Commands should be objects.
  */
-final class CommandNotAnObjectException extends InvalidArgumentException
+final class CommandNotAnObjectException extends \InvalidArgumentException
 {
 }

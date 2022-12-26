@@ -14,18 +14,17 @@ declare(strict_types=1);
 namespace Broadway\Repository;
 
 use Exception;
-use RuntimeException;
 
 /**
  * Exception thrown when an aggregate is not found.
  */
-final class AggregateNotFoundException extends RuntimeException
+final class AggregateNotFoundException extends \RuntimeException
 {
     /**
-     * @param mixed     $id
-     * @param Exception $previous
+     * @param mixed      $id
+     * @param \Exception $previous
      */
-    public static function create($id, Exception $previous = null): self
+    public static function create($id, \Exception $previous = null): self
     {
         return new self(sprintf("Aggregate with id '%s' not found", $id), 0, $previous);
     }

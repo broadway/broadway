@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Broadway\CommandHandling;
 
 use Broadway\EventDispatcher\EventDispatcher;
-use Exception;
 
 /**
  * Command bus decorator that dispatches events.
@@ -44,7 +43,7 @@ final class EventDispatchingCommandBus implements CommandBus
         try {
             $this->commandBus->dispatch($command);
             $this->dispatcher->dispatch(self::EVENT_COMMAND_SUCCESS, ['command' => $command]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->dispatcher->dispatch(
                 self::EVENT_COMMAND_FAILURE,
                 ['command' => $command, 'exception' => $e]
