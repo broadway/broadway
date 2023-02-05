@@ -60,7 +60,7 @@ while ($row = $stmt->fetch()) {
         $row['uuid'],
         (int) $row['playhead'],
         $serializer->deserialize(json_decode($row['metadata'], true)),
-        $serializer->deserialize(json_decode($row['metadata'], true)),
+        $serializer->deserialize(json_decode($row['payload'], true)),
         DateTime::fromString($row['recorded_on'])
     );
     $staleInvites[$row['uuid']] = $domainMessage;
