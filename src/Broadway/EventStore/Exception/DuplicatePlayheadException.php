@@ -15,7 +15,6 @@ namespace Broadway\EventStore\Exception;
 
 use Broadway\Domain\DomainEventStream;
 use Broadway\EventStore\EventStoreException;
-use Exception;
 
 final class DuplicatePlayheadException extends EventStoreException
 {
@@ -25,7 +24,7 @@ final class DuplicatePlayheadException extends EventStoreException
     private $eventStream;
 
     /**
-     * @param Exception $previous
+     * @param \Exception $previous
      */
     public function __construct(DomainEventStream $eventStream, $previous = null)
     {

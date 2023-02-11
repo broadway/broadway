@@ -13,10 +13,6 @@ declare(strict_types=1);
 
 namespace Broadway\Domain;
 
-use DateInterval;
-use DateTimeImmutable;
-use DateTimeZone;
-
 /**
  * Immutable DateTime implementation with some helper methods.
  */
@@ -26,7 +22,7 @@ final class DateTime
 
     private $dateTime;
 
-    private function __construct(DateTimeImmutable $dateTime)
+    private function __construct(\DateTimeImmutable $dateTime)
     {
         $this->dateTime = $dateTime;
     }
@@ -34,10 +30,10 @@ final class DateTime
     public static function now(): self
     {
         return new self(
-            DateTimeImmutable::createFromFormat(
+            \DateTimeImmutable::createFromFormat(
                 'U.u',
                 sprintf('%.6F', microtime(true)),
-                new DateTimeZone('UTC')
+                new \DateTimeZone('UTC')
             )
         );
     }
@@ -49,7 +45,7 @@ final class DateTime
 
     public static function fromString(string $dateTimeString): self
     {
-        return new self(new DateTimeImmutable($dateTimeString));
+        return new self(new \DateTimeImmutable($dateTimeString));
     }
 
     public function equals(self $dateTime): bool
@@ -64,26 +60,26 @@ final class DateTime
 
     public function add(string $intervalSpec): self
     {
-        $dateTime = $this->dateTime->add(new DateInterval($intervalSpec));
+        $dateTime = $this->dateTime->add(new \DateInterval($intervalSpec));
 
         return new self($dateTime);
     }
 
     public function sub(string $intervalSpec): self
     {
-        $dateTime = $this->dateTime->sub(new DateInterval($intervalSpec));
+        $dateTime = $this->dateTime->sub(new \DateInterval($intervalSpec));
 
         return new self($dateTime);
     }
 
-    public function diff(self $dateTime): DateInterval
+    public function diff(self $dateTime): \DateInterval
     {
         return $this->dateTime->diff($dateTime->dateTime);
     }
 
     public function toBeginningOfWeek(): self
     {
-        return new self(new DateTimeImmutable($this->dateTime->format('o-\WW-1'), new DateTimeZone('UTC')));
+        return new self(new \DateTimeImmutable($this->dateTime->format('o-\WW-1'), new \DateTimeZone('UTC')));
     }
 
     public function toYearWeekString(): string
@@ -91,7 +87,7 @@ final class DateTime
         return $this->dateTime->format('oW');
     }
 
-    public function toNative(): DateTimeImmutable
+    public function toNative(): \DateTimeImmutable
     {
         return $this->dateTime;
     }

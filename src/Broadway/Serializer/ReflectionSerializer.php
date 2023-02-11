@@ -14,8 +14,6 @@ declare(strict_types=1);
 namespace Broadway\Serializer;
 
 use Assert\Assertion as Assert;
-use ReflectionClass;
-use ReflectionProperty;
 
 /**
  * Serializer that deeply serializes objects with the help of reflection.
@@ -61,7 +59,7 @@ class ReflectionSerializer implements Serializer
      */
     private function serializeObjectRecursively($object): array
     {
-        $reflection = new ReflectionClass($object);
+        $reflection = new \ReflectionClass($object);
         $properties = $reflection->getProperties();
 
         $data = [];
@@ -125,7 +123,7 @@ class ReflectionSerializer implements Serializer
         Assert::keyExists($serializedObject, 'class', "Key 'class' should be set.");
         Assert::keyExists($serializedObject, 'payload', "Key 'payload' should be set.");
 
-        $reflection = new ReflectionClass($serializedObject['class']);
+        $reflection = new \ReflectionClass($serializedObject['class']);
         $properties = $reflection->getProperties();
         $object = $reflection->newInstanceWithoutConstructor();
 
@@ -146,9 +144,9 @@ class ReflectionSerializer implements Serializer
     }
 
     /**
-     * @param ReflectionProperty[] $properties
+     * @param \ReflectionProperty[] $properties
      */
-    private function findProperty(array $properties, string $name): ?ReflectionProperty
+    private function findProperty(array $properties, string $name): ?\ReflectionProperty
     {
         foreach ($properties as $property) {
             if ($property->getName() === $name) {
