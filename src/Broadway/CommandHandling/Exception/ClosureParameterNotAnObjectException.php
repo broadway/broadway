@@ -13,11 +13,9 @@ declare(strict_types=1);
 
 namespace Broadway\CommandHandling\Exception;
 
-use InvalidArgumentException;
-
 /**
  * Closure parameter should be object.
  */
-class ClosureParameterNotAnObjectException extends InvalidArgumentException
+class ClosureParameterNotAnObjectException extends \InvalidArgumentException
 {
 }

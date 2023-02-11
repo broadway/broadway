@@ -9,7 +9,6 @@ use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventHandling\EventListener;
 use Broadway\EventHandling\ReliableEventBus;
-use Exception;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -51,7 +50,7 @@ class ReliableEventBusTest extends TestCase
         $eventListener1
             ->expects($this->at(0))
             ->method('handle')
-            ->willThrowException(new Exception());
+            ->willThrowException(new \Exception());
 
         $eventListener2 = $this->prophesize(EventListener::class);
         $eventListener2->handle($domainMessage)->shouldBeCalledOnce();

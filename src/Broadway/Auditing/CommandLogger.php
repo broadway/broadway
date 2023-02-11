@@ -46,10 +46,10 @@ final class CommandLogger
     }
 
     /**
-     * @param mixed     $command   Command that errored
-     * @param Exception $exception Exception that occured during the execution of the command
+     * @param mixed      $command   Command that errored
+     * @param \Exception $exception Exception that occured during the execution of the command
      */
-    public function onCommandHandlingFailure($command, Exception $exception): void
+    public function onCommandHandlingFailure($command, \Exception $exception): void
     {
         $messageData = [
             'status' => 'failure',
