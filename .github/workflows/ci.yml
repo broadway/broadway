@@ -38,31 +38,9 @@ jobs:
       - name: "Run tests"
         run: "make test"
 
-  coding-standards:
-    name: "Coding standards"
-    runs-on: "ubuntu-20.04"
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@v2"
-        with:
-          php-version: "8.1"
-          coverage: "none"
-      - name: "Install dependencies with Composer"
-        uses: "ramsey/composer-install@v2"
-      - name: "Check coding standards"
-        run: "make php-cs-fixer-ci"
-      - name: Create Pull Request
-        if: github.ref == 'refs/heads/master'
-        uses: peter-evans/create-pull-request@v5
-        with:
-          commit-message: Apply coding standards
-          branch: php-cs-fixer
-          delete-branch: true
-          title: 'Apply coding standards'
-          draft: false
-          base: master
+  check-coding-standards:
+    name: "Check coding standards"
+    uses: "broadway/github-actions/.github/workflows/check-coding-standards.yml@main"
 
   static-analysis:
     name: "Static analysis"
