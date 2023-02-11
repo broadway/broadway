@@ -40,7 +40,7 @@ jobs:
 
   coding-standards:
     name: "Coding standards"
-    runs-on: "ubuntu-20.04"
+    runs-on: "ubuntu-22.04"
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v3"
@@ -52,17 +52,7 @@ jobs:
       - name: "Install dependencies with Composer"
         uses: "ramsey/composer-install@v2"
       - name: "Check coding standards"
-        run: "make php-cs-fixer-ci"
-      - name: Create Pull Request
-        if: github.ref == 'refs/heads/master'
-        uses: peter-evans/create-pull-request@v4
-        with:
-          commit-message: Apply coding standards
-          branch: php-cs-fixer
-          delete-branch: true
-          title: 'Apply coding standards'
-          draft: false
-          base: master
+        run: "vendor/bin/php-cs-fixer fix --dry-run --no-interaction --ansi --allow-risky=yes --diff --verbose --stop-on-violation"
 
   static-analysis:
     name: "Static analysis"
