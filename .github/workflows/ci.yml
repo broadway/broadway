@@ -38,8 +38,8 @@ jobs:
       - name: "Run tests"
         run: "make test"
 
-  coding-standards:
-    name: "Coding standards"
+  check-coding-standards:
+    name: "Check coding standards"
     runs-on: "ubuntu-22.04"
     steps:
       - name: "Checkout"
@@ -53,6 +53,35 @@ jobs:
         uses: "ramsey/composer-install@v2"
       - name: "Check coding standards"
         run: "vendor/bin/php-cs-fixer fix --dry-run --no-interaction --ansi --allow-risky=yes --diff --verbose --stop-on-violation"
+
+  fix-coding-standards:
+    name: "Fix coding standard violations"
+    runs-on: "ubuntu-22.04"
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.1"
+          coverage: "none"
+      - name: "Install dependencies with Composer"
+        uses: "ramsey/composer-install@v2"
+      - name: "Check coding standards"
+        run: "vendor/bin/php-cs-fixer fix --no-interaction --ansi --allow-risky=yes --diff --verbose"
+      - name: Get branch name
+        id: branch-name
+        uses: tj-actions/branch-names@v6
+      - name: Create Pull Request
+        #if: github.ref == 'refs/heads/master'
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: Apply coding standards
+          branch: ${{ steps.branch-name.outputs.current_branch }}
+          delete-branch: true
+          title: 'Apply coding standards'
+          draft: false
+          base: ${{ steps.branch-name.outputs.default_branch }}
 
   static-analysis:
     name: "Static analysis"
