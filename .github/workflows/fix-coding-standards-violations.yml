@@ -1,0 +1,13 @@
+name: "Fix coding standards violations"
+
+on:
+  push:
+    branches:
+      - "master"
+  schedule:
+    - cron: "37 13 * * 2"
+  workflow_dispatch:
+
+jobs:
+  check-coding-standards:
+    uses: "broadway/github-actions/.github/workflows/fix-coding-standards-violations.yml@main"
