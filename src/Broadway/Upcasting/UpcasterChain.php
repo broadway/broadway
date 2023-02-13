@@ -13,12 +13,9 @@ declare(strict_types=1);
 
 namespace Broadway\Upcasting;
 
+use Broadway\Domain\DomainMessage;
+
 interface UpcasterChain
 {
-    /**
-     * @param mixed $event the original event fetched from event store
-     *
-     * @return mixed the upcasted event
-     */
-    public function upcast($event);
+    public function upcast(DomainMessage $domainMessage): DomainMessage;
 }

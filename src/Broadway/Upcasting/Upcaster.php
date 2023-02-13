@@ -13,21 +13,12 @@ declare(strict_types=1);
 
 namespace Broadway\Upcasting;
 
-/**
- * @template I
- * @template O
- */
+use Broadway\Domain\DomainMessage;
+
+
 interface Upcaster
 {
-    /**
-     * @param I $event the original event fetched from event store
-     */
-    public function supports($event): bool;
+    public function supports(DomainMessage $domainMessage): bool;
 
-    /**
-     * @param I $event the original event fetched from event store
-     *
-     * @return O the upcasted event
-     */
-    public function upcast($event);
+    public function upcast(DomainMessage $domainMessage): DomainMessage;
 }

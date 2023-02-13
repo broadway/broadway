@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Broadway\Domain\DomainMessage;
 use Broadway\Upcasting\Upcaster;
 
 require_once __DIR__.'/UserCreated.php';
@@ -15,21 +16,28 @@ class UserCreatedUpcasterV1toV2 implements Upcaster
     /**
      * @param UserCreated $event
      */
-    public function supports($event): bool
+    public function supports(DomainMessage $domainMessage): bool
     {
-        return $event instanceof UserCreated;
+        return $domainMessage->getPayload() instanceof UserCreated;
     }
 
-    /**
-     * @param UserCreated $event
-     */
-    public function upcast($event): UserCreatedV2
+    public function upcast(DomainMessage $domainMessage): DomainMessage
     {
-        return new UserCreatedV2(
-            $event->userId,
-            $event->name,
+        $payload = $domainMessage->getPayload();
+
+        $upcastedEvent= new UserCreatedV2(
+            $payload->userId,
+            $payload->name,
             'N/A',
             'N/A'
+        );
+
+        return new DomainMessage(
+            $domainMessage->getId(),
+            $domainMessage->getPlayhead(),
+            $domainMessage->getMetadata(),
+            $upcastedEvent,
+            $domainMessage->getRecordedOn()
         );
     }
 }

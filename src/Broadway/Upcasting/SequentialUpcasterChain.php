@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Broadway\Upcasting;
 
+use Broadway\Domain\DomainMessage;
+
 final class SequentialUpcasterChain implements UpcasterChain
 {
     /**
@@ -28,17 +30,14 @@ final class SequentialUpcasterChain implements UpcasterChain
         $this->upcasters = $upcasters;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function upcast($event)
+    public function upcast(DomainMessage $domainMessage): DomainMessage
     {
         foreach ($this->upcasters as $upcaster) {
-            if ($upcaster->supports($event)) {
-                $event = $upcaster->upcast($event);
+            if ($upcaster->supports($domainMessage)) {
+                $domainMessage = $upcaster->upcast($domainMessage);
             }
         }
 
-        return $event;
+        return $domainMessage;
     }
 }

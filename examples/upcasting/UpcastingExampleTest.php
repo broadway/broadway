@@ -18,7 +18,7 @@ require_once __DIR__.'/User.php';
 require_once __DIR__.'/UserCreatedUpcasterV1toV2.php';
 require_once __DIR__.'/UserCreatedUpcasterV2toV3.php';
 
-class UpcastingTest extends PHPUnit\Framework\TestCase
+class UpcastingExampleTest extends PHPUnit\Framework\TestCase
 {
     /**
      * @var SimpleEventBus
@@ -30,9 +30,6 @@ class UpcastingTest extends PHPUnit\Framework\TestCase
         $this->eventBus = new SimpleEventBus();
     }
 
-    /**
-     * @test
-     */
     public function it_should_do_nothing_if_there_are_no_new_versions(): void
     {
         $userId = Uuid::uuid4()->toString();
@@ -65,8 +62,9 @@ class UpcastingTest extends PHPUnit\Framework\TestCase
 
     /**
      * @test
+     * @testdox It should upcast UserCreatedV1 to UserCreateV3 when only v1 stored
      */
-    public function it_should_upcast__user_created_v1_event_to__user_created_v3_with_default_values(): void
+    public function it_should_upcast_user_created_v1_to_user_created_v3_when_only_v1_stored(): void
     {
         $userId = Uuid::uuid4()->toString();
 
@@ -98,8 +96,9 @@ class UpcastingTest extends PHPUnit\Framework\TestCase
 
     /**
      * @test
+     * @testdox It should upcast UserCreatedV1 to UserCreateV3 when v1 and v2 are stored
      */
-    public function it_should_upcast__user_created_v1_event_to__user_created_v3_passing_by_from_v2_with_default_values(): void
+    public function it_should_upcast_user_created_v1_to_user_created_v3_when_v1_and_v2_are_stored(): void
     {
         $userId = Uuid::uuid4()->toString();
 

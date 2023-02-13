@@ -41,21 +41,10 @@ final class UpcastingEventStore implements EventStore, EventStoreManagement
         $upcastedEvents = [];
 
         foreach ($eventStream as $domainMessage) {
-            $upcastedEvents[] = $this->createUpcastedDomainMessage($domainMessage, $id);
+            $upcastedEvents[] = $this->upcasterChain->upcast($domainMessage);
         }
 
         return new DomainEventStream($upcastedEvents);
-    }
-
-    private function createUpcastedDomainMessage(DomainMessage $domainMessage, $id): DomainMessage
-    {
-        return new DomainMessage(
-            $id,
-            $domainMessage->getPlayhead(),
-            $domainMessage->getMetadata(),
-            $this->upcasterChain->upcast($domainMessage->getPayload()),
-            $domainMessage->getRecordedOn()
-        );
     }
 
     public function loadFromPlayhead($id, int $playhead): DomainEventStream
