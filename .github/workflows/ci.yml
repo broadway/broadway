@@ -55,7 +55,7 @@ jobs:
         run: "make php-cs-fixer-ci"
       - name: Create Pull Request
         if: github.ref == 'refs/heads/master'
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v5
         with:
           commit-message: Apply coding standards
           branch: php-cs-fixer
