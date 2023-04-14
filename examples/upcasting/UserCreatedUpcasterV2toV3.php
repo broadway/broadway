@@ -22,7 +22,7 @@ class UserCreatedUpcasterV2toV3 implements Upcaster
     {
         $payload = $domainMessage->getPayload();
 
-        $upcastedEvent= new UserCreatedV3(
+        $upcastedEvent = new UserCreatedV3(
             $payload->userId,
             $payload->name,
             $payload->surname,
@@ -37,7 +37,5 @@ class UserCreatedUpcasterV2toV3 implements Upcaster
             $upcastedEvent,
             $domainMessage->getRecordedOn()
         );
-
-
     }
 }

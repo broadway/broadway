@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Broadway\Upcasting;
 
 use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\EventStore;
 use Broadway\EventStore\EventVisitor;
 use Broadway\EventStore\Management\Criteria;

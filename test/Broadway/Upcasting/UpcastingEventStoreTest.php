@@ -21,18 +21,17 @@ class UpcastingEventStoreTest extends TestCase
 
         $eventStore = new UpcastingEventStore(new InMemoryEventStore(), $upcasterChain);
 
-        $events[] = DomainMessage::recordNow(5,0, new Metadata([]),'Foo');
-        $events[] = DomainMessage::recordNow(5,1, new Metadata([]),'Bar');
+        $events[] = DomainMessage::recordNow(5, 0, new Metadata([]), 'Foo');
+        $events[] = DomainMessage::recordNow(5, 1, new Metadata([]), 'Bar');
 
         $upcasterChain->expects($this->exactly(2))
             ->method('upcast')
             ->willReturnMap([
                 [$events[0], $events[0]],
-                [$events[1], $events[1]]
+                [$events[1], $events[1]],
             ]);
 
         $eventStore->append(1, new DomainEventStream($events));
         $eventStore->load(1);
     }
 }
-

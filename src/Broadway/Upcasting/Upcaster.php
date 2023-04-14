@@ -15,7 +15,6 @@ namespace Broadway\Upcasting;
 
 use Broadway\Domain\DomainMessage;
 
-
 interface Upcaster
 {
     public function supports(DomainMessage $domainMessage): bool;

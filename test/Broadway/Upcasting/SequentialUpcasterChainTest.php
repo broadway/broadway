@@ -18,10 +18,10 @@ class SequentialUpcasterChainTest extends TestCase
     {
         $sequentialUpcasterChain = new SequentialUpcasterChain([
             new SomeEventV1toV2Upcaster(),
-            new SomeEventV2toV3Upcaster()
+            new SomeEventV2toV3Upcaster(),
         ]);
 
-        $domainMessage = new DomainMessage(1,0, new Metadata(), new SomeEvent('matiux'), DateTime::now());
+        $domainMessage = new DomainMessage(1, 0, new Metadata(), new SomeEvent('matiux'), DateTime::now());
 
         $upcastedDomainMessage = $sequentialUpcasterChain->upcast($domainMessage);
 
@@ -78,7 +78,7 @@ class SomeEventV1toV2Upcaster implements Upcaster
     {
         $payload = $domainMessage->getPayload();
 
-        $upcastedEvent= new SomeEventV2(
+        $upcastedEvent = new SomeEventV2(
             $payload->name,
             'N/A'
         );
@@ -93,7 +93,6 @@ class SomeEventV1toV2Upcaster implements Upcaster
     }
 }
 
-
 class SomeEventV2toV3Upcaster implements Upcaster
 {
     public function supports(DomainMessage $domainMessage): bool
@@ -105,7 +104,7 @@ class SomeEventV2toV3Upcaster implements Upcaster
     {
         $payload = $domainMessage->getPayload();
 
-        $upcastedEvent= new SomeEventV3(
+        $upcastedEvent = new SomeEventV3(
             $payload->name,
             $payload->surname,
             0

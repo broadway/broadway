@@ -25,7 +25,7 @@ class UserCreatedUpcasterV1toV2 implements Upcaster
     {
         $payload = $domainMessage->getPayload();
 
-        $upcastedEvent= new UserCreatedV2(
+        $upcastedEvent = new UserCreatedV2(
             $payload->userId,
             $payload->name,
             'N/A',
