@@ -21,9 +21,6 @@ use Broadway\EventHandling\EventListener;
  */
 abstract class Processor implements EventListener
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DomainMessage $domainMessage): void
     {
         $event = $domainMessage->getPayload();
@@ -36,9 +33,6 @@ abstract class Processor implements EventListener
         $this->$method($event, $domainMessage);
     }
 
-    /**
-     * @param mixed $event
-     */
     private function getHandleMethod($event): string
     {
         $classParts = explode('\\', get_class($event));

@@ -26,17 +26,11 @@ final class InMemoryRepository implements Repository, Transferable
 {
     private $data = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function save(Identifiable $model): void
     {
         $this->data[$model->getId()] = $model;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function find($id): ?Identifiable
     {
         $id = (string) $id;
@@ -47,9 +41,6 @@ final class InMemoryRepository implements Repository, Transferable
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findBy(array $fields): array
     {
         if (!$fields) {
@@ -73,17 +64,11 @@ final class InMemoryRepository implements Repository, Transferable
         }));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findAll(): array
     {
         return array_values($this->data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function transferTo(Repository $otherRepository): void
     {
         foreach ($this->data as $model) {
@@ -91,9 +76,6 @@ final class InMemoryRepository implements Repository, Transferable
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function remove($id): void
     {
         unset($this->data[(string) $id]);

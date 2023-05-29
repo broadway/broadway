@@ -114,9 +114,6 @@ class InvitationStatusReadModel implements Broadway\ReadModel\SerializableReadMo
         $this->isAccepted = false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function deserialize(array $data)
     {
         $readModel = new self($data['invitationId']);
@@ -128,9 +125,6 @@ class InvitationStatusReadModel implements Broadway\ReadModel\SerializableReadMo
         return $readModel;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function serialize(): array
     {
         return [
@@ -221,7 +215,7 @@ class InvitationStatusCountProjector extends Broadway\ReadModel\Projector
 
 class CounterRepository
 {
-    private $counters = null;
+    private $counters;
 
     public function storeCounters(Counters $counters): void
     {

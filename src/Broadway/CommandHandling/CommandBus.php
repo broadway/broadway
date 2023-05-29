@@ -20,8 +20,6 @@ interface CommandBus
 {
     /**
      * Dispatches the command $command to the proper CommandHandler.
-     *
-     * @param mixed $command
      */
     public function dispatch($command): void;
 

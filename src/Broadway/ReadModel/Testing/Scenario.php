@@ -77,9 +77,6 @@ class Scenario
         return $this;
     }
 
-    /**
-     * @param mixed $event
-     */
     public function when($event, DateTime $occurredOn = null): self
     {
         $this->projector->handle($this->createDomainMessageForEvent($event, $occurredOn));
@@ -95,7 +92,6 @@ class Scenario
     }
 
     /**
-     * @param mixed     $event
      * @param ?DateTime $occurredOn
      */
     private function createDomainMessageForEvent($event, ?DateTime $occurredOn): DomainMessage

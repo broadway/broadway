@@ -24,17 +24,11 @@ final class SimpleEventBus implements EventBus
     private $queue = [];
     private $isPublishing = false;
 
-    /**
-     * {@inheritdoc}
-     */
     public function subscribe(EventListener $eventListener): void
     {
         $this->eventListeners[] = $eventListener;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function publish(DomainEventStream $domainMessages): void
     {
         foreach ($domainMessages as $domainMessage) {

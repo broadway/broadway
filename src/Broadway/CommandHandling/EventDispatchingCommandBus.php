@@ -35,9 +35,6 @@ final class EventDispatchingCommandBus implements CommandBus
         $this->dispatcher = $dispatcher;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function dispatch($command): void
     {
         try {
@@ -53,9 +50,6 @@ final class EventDispatchingCommandBus implements CommandBus
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function subscribe(CommandHandler $handler): void
     {
         $this->commandBus->subscribe($handler);

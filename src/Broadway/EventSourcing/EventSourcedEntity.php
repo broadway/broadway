@@ -20,8 +20,6 @@ interface EventSourcedEntity
 {
     /**
      * Recursively handles $event.
-     *
-     * @param mixed $event
      */
     public function handleRecursively($event): void;
 

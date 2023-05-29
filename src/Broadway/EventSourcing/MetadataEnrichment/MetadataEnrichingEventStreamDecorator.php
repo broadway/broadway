@@ -37,9 +37,6 @@ final class MetadataEnrichingEventStreamDecorator implements EventStreamDecorato
         $this->metadataEnrichers[] = $enricher;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function decorateForWrite(string $aggregateType, string $aggregateIdentifier, DomainEventStream $eventStream): DomainEventStream
     {
         if (empty($this->metadataEnrichers)) {

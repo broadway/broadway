@@ -28,8 +28,6 @@ interface Repository
     /**
      * Loads an aggregate from the given id.
      *
-     * @param mixed $id
-     *
      * @throws AggregateNotFoundException
      */
     public function load($id): AggregateRoot;

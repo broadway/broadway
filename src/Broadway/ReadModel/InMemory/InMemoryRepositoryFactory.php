@@ -21,9 +21,6 @@ use Broadway\ReadModel\RepositoryFactory;
  */
 final class InMemoryRepositoryFactory implements RepositoryFactory
 {
-    /**
-     * {@inheritdoc}
-     */
     public function create(string $name, string $class): Repository
     {
         return new InMemoryRepository();

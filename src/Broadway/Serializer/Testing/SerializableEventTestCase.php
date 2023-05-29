@@ -44,8 +44,5 @@ abstract class SerializableEventTestCase extends TestCase
         $this->assertEquals($event, $deserialized);
     }
 
-    /**
-     * @return mixed
-     */
     abstract protected function createEvent();
 }

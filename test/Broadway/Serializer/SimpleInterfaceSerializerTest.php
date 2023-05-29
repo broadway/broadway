@@ -123,9 +123,6 @@ class TestSerializable implements Serializable
         return new self($data['foo']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function serialize(): array
     {
         return ['foo' => $this->foo];

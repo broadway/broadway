@@ -20,19 +20,11 @@ use Assert\Assertion as Assert;
  */
 class ReflectionSerializer implements Serializer
 {
-    /**
-     * {@inheritdoc}
-     */
     public function serialize($object): array
     {
         return $this->serializeObjectRecursively($object);
     }
 
-    /**
-     * @param mixed $value
-     *
-     * @return mixed
-     */
     private function serializeValue($value)
     {
         if (is_object($value)) {
@@ -79,19 +71,11 @@ class ReflectionSerializer implements Serializer
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deserialize(array $serializedObject)
     {
         return $this->deserializeObjectRecursively($serializedObject);
     }
 
-    /**
-     * @param mixed $value
-     *
-     * @return mixed
-     */
     private function deserializeValue($value)
     {
         if (is_array($value) && isset($value['class']) && isset($value['payload'])) {

@@ -29,9 +29,6 @@ final class Metadata implements Serializable
 
     /**
      * Helper method to construct an instance containing the key and value.
-     *
-     * @param mixed $key
-     * @param mixed $value
      */
     public static function kv($key, $value): self
     {
@@ -58,17 +55,12 @@ final class Metadata implements Serializable
 
     /**
      * Get a specific metadata value based on key.
-     *
-     * @return mixed
      */
     public function get(string $key)
     {
         return $this->values[$key] ?? null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function serialize(): array
     {
         return $this->values;

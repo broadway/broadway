@@ -30,9 +30,6 @@ final class BlacklistConcurrencyConflictResolver implements ConcurrencyConflictR
         $this->conflictingEvents[$eventClass2][$eventClass1] = true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function conflictsWith(DomainMessage $event1, DomainMessage $event2): bool
     {
         return isset($this->conflictingEvents[get_class($event1->getPayload())][get_class($event2->getPayload())]);

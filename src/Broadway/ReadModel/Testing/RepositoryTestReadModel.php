@@ -22,10 +22,6 @@ class RepositoryTestReadModel implements SerializableReadModel
     private $foo;
     private $array;
 
-    /**
-     * @param mixed $id
-     * @param mixed $foo
-     */
     public function __construct($id, string $name, $foo, array $array)
     {
         $this->id = (string) $id;
@@ -44,9 +40,6 @@ class RepositoryTestReadModel implements SerializableReadModel
         return $this->name;
     }
 
-    /**
-     * @return mixed
-     */
     public function getFoo()
     {
         return $this->foo;

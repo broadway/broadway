@@ -28,9 +28,6 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
 {
     private $events = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function load($id): DomainEventStream
     {
         $id = (string) $id;
@@ -42,9 +39,6 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
         throw new EventStreamNotFoundException(sprintf('EventStream not found for aggregate with id %s', $id));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function loadFromPlayhead($id, int $playhead): DomainEventStream
     {
         $id = (string) $id;
@@ -65,9 +59,6 @@ final class InMemoryEventStore implements EventStore, EventStoreManagement
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function append($id, DomainEventStream $eventStream): void
     {
         $id = (string) $id;
