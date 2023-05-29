@@ -30,17 +30,11 @@ final class TraceableEventBus implements EventBus
         $this->eventBus = $eventBus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function subscribe(EventListener $eventListener): void
     {
         $this->eventBus->subscribe($eventListener);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function publish(DomainEventStream $domainMessages): void
     {
         $this->eventBus->publish($domainMessages);

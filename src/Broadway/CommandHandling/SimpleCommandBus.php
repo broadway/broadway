@@ -22,17 +22,11 @@ final class SimpleCommandBus implements CommandBus
     private $queue = [];
     private $isDispatching = false;
 
-    /**
-     * {@inheritdoc}
-     */
     public function subscribe(CommandHandler $handler): void
     {
         $this->commandHandlers[] = $handler;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function dispatch($command): void
     {
         $this->queue[] = $command;

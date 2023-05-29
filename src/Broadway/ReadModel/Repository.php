@@ -20,9 +20,6 @@ interface Repository
 {
     public function save(Identifiable $data): void;
 
-    /**
-     * @param mixed $id
-     */
     public function find($id): ?Identifiable;
 
     /**
@@ -35,8 +32,5 @@ interface Repository
      */
     public function findAll(): array;
 
-    /**
-     * @param mixed $id
-     */
     public function remove($id): void;
 }

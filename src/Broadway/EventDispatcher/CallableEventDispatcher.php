@@ -20,9 +20,6 @@ final class CallableEventDispatcher implements EventDispatcher
 {
     private $listeners = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function dispatch(string $eventName, array $arguments): void
     {
         if (!isset($this->listeners[$eventName])) {
@@ -34,9 +31,6 @@ final class CallableEventDispatcher implements EventDispatcher
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addListener(string $eventName, callable $callable): void
     {
         if (!isset($this->listeners[$eventName])) {

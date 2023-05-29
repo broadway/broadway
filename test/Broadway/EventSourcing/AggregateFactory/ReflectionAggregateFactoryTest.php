@@ -73,9 +73,6 @@ final class TestAggregateWithPrivateConstructor extends EventSourcedAggregateRoo
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAggregateRootId(): string
     {
         return 'foo42';
@@ -84,9 +81,6 @@ final class TestAggregateWithPrivateConstructor extends EventSourcedAggregateRoo
 
 final class TestAggregateWithPublicConstructor extends EventSourcedAggregateRoot
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getAggregateRootId(): string
     {
         return 'foo42';

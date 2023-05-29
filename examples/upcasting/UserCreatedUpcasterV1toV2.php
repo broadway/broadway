@@ -13,9 +13,6 @@ require_once __DIR__.'/UserCreatedV2.php';
  */
 class UserCreatedUpcasterV1toV2 implements Upcaster
 {
-    /**
-     * @param UserCreated $event
-     */
     public function supports(DomainMessage $domainMessage): bool
     {
         return $domainMessage->getPayload() instanceof UserCreated;

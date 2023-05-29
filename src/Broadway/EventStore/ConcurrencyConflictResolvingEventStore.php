@@ -32,9 +32,6 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
         $this->conflictResolver = $conflictResolver;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function append($id, DomainEventStream $uncommittedEvents): void
     {
         $id = (string) $id;
@@ -76,17 +73,11 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load($id): DomainEventStream
     {
         return $this->eventStore->load($id);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function loadFromPlayhead($id, int $playhead): DomainEventStream
     {
         return $this->eventStore->loadFromPlayhead($id, $playhead);

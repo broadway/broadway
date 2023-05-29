@@ -25,17 +25,11 @@ final class TraceableCommandBus implements CommandBus
     private $commands = [];
     private $record = false;
 
-    /**
-     * {@inheritdoc}
-     */
     public function subscribe(CommandHandler $handler): void
     {
         $this->commandHandlers[] = $handler;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function dispatch($command): void
     {
         if (!$this->record) {

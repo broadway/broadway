@@ -20,9 +20,6 @@ use Assert\Assertion as Assert;
  */
 final class SimpleInterfaceSerializer implements Serializer
 {
-    /**
-     * {@inheritdoc}
-     */
     public function serialize($object): array
     {
         if (!$object instanceof Serializable) {
@@ -35,9 +32,6 @@ final class SimpleInterfaceSerializer implements Serializer
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deserialize(array $serializedObject)
     {
         Assert::keyExists($serializedObject, 'class', "Key 'class' should be set.");

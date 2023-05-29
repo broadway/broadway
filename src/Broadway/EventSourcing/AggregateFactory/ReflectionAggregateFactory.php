@@ -21,9 +21,6 @@ use Broadway\EventSourcing\EventSourcedAggregateRoot;
  */
 final class ReflectionAggregateFactory implements AggregateFactory
 {
-    /**
-     * {@inheritdoc}
-     */
     public function create(string $aggregateClass, DomainEventStream $domainEventStream): EventSourcedAggregateRoot
     {
         $class = new \ReflectionClass($aggregateClass);

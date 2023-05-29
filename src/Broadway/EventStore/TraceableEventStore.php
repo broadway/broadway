@@ -30,9 +30,6 @@ final class TraceableEventStore implements EventStore
         $this->eventStore = $eventStore;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function append($id, DomainEventStream $eventStream): void
     {
         $this->eventStore->append($id, $eventStream);
@@ -59,17 +56,11 @@ final class TraceableEventStore implements EventStore
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load($id): DomainEventStream
     {
         return $this->eventStore->load($id);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function loadFromPlayhead($id, int $playhead): DomainEventStream
     {
         return $this->eventStore->loadFromPlayhead($id, $playhead);

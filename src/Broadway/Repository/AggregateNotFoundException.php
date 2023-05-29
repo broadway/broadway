@@ -21,7 +21,6 @@ use Exception;
 final class AggregateNotFoundException extends \RuntimeException
 {
     /**
-     * @param mixed      $id
      * @param \Exception $previous
      */
     public static function create($id, \Exception $previous = null): self

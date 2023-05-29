@@ -41,9 +41,6 @@ class ClosureCommandHandler implements CommandHandler
         }
     }
 
-    /**
-     * @param mixed $command
-     */
     public function handle($command): void
     {
         if (!is_object($command)) {

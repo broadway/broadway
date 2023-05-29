@@ -23,9 +23,6 @@ use Broadway\EventSourcing\EventSourcedAggregateRoot;
  */
 final class PublicConstructorAggregateFactory implements AggregateFactory
 {
-    /**
-     * {@inheritdoc}
-     */
     public function create(string $aggregateClass, DomainEventStream $domainEventStream): EventSourcedAggregateRoot
     {
         $aggregate = new $aggregateClass();

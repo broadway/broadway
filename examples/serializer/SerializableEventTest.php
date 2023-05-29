@@ -33,17 +33,11 @@ class SerializableInviteEvent implements Serializable
         $this->name = $name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function deserialize(array $data)
     {
         return new self($data['invitationId'], $data['name']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function serialize(): array
     {
         return [

@@ -53,9 +53,6 @@ class EventSourcingRepository implements Repository
         $this->eventStreamDecorators = $eventStreamDecorators;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load($id): AggregateRoot
     {
         try {
@@ -67,9 +64,6 @@ class EventSourcingRepository implements Repository
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function save(AggregateRoot $aggregate): void
     {
         // maybe we can get generics one day.... ;)

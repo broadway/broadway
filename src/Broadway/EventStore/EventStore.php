@@ -21,19 +21,11 @@ use Broadway\EventStore\Exception\DuplicatePlayheadException;
  */
 interface EventStore
 {
-    /**
-     * @param mixed $id
-     */
     public function load($id): DomainEventStream;
 
-    /**
-     * @param mixed $id
-     */
     public function loadFromPlayhead($id, int $playhead): DomainEventStream;
 
     /**
-     * @param mixed $id
-     *
      * @throws DuplicatePlayheadException
      */
     public function append($id, DomainEventStream $eventStream): void;

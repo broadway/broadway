@@ -21,9 +21,6 @@ namespace Broadway\Auditing;
  */
 final class NullByteCommandSerializer implements CommandSerializer
 {
-    /**
-     * {@inheritdoc}
-     */
     public function serialize($command): array
     {
         $serializedCommand = [];

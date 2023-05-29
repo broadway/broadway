@@ -76,9 +76,6 @@ class Scenario
         return $this;
     }
 
-    /**
-     * @param mixed $command
-     */
     public function when($command): self
     {
         $this->eventStore->trace();

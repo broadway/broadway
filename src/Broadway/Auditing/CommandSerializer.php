@@ -20,8 +20,6 @@ interface CommandSerializer
 {
     /**
      * Serializes the command.
-     *
-     * @param mixed $command
      */
     public function serialize($command): array;
 }

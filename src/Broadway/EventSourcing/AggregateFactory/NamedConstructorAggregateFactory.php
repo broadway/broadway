@@ -34,9 +34,6 @@ final class NamedConstructorAggregateFactory implements AggregateFactory
         $this->staticConstructorMethod = $staticConstructorMethod;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(string $aggregateClass, DomainEventStream $domainEventStream): EventSourcedAggregateRoot
     {
         $methodCall = sprintf('%s::%s', $aggregateClass, $this->staticConstructorMethod);
