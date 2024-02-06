@@ -45,7 +45,7 @@ class JobSeeker extends Broadway\EventSourcing\EventSourcedAggregateRoot
     public function heldJob($jobId, $title, $description)
     {
         if (array_key_exists($jobId, $this->jobs)) {
-            throw new \InvalidArgumentException("Job {$jobId} already assigned to this job seeker.");
+            throw new InvalidArgumentException("Job {$jobId} already assigned to this job seeker.");
         }
         $this->apply(new JobWasAddedToJobSeekerEvent($this->jobSeekerId, $jobId, $title, $description));
     }
@@ -58,7 +58,7 @@ class JobSeeker extends Broadway\EventSourcing\EventSourcedAggregateRoot
     public function describeJob($jobId, $title, $description)
     {
         if (!array_key_exists($jobId, $this->jobs)) {
-            throw new \InvalidArgumentException("Job {$jobId} is not assigned to this job seeker.");
+            throw new InvalidArgumentException("Job {$jobId} is not assigned to this job seeker.");
         }
         $this->jobs[$jobId]->describe($title, $description);
     }

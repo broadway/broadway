@@ -207,9 +207,9 @@ abstract class EventStoreTest extends TestCase
         ];
     }
 
-    protected function createDomainMessage($id, int $playhead, DateTime $recordedOn = null)
+    protected function createDomainMessage($id, int $playhead, ?DateTime $recordedOn = null)
     {
-        return new DomainMessage($id, $playhead, new MetaData([]), new Event(), $recordedOn ? $recordedOn : DateTime::now());
+        return new DomainMessage($id, $playhead, new Metadata([]), new Event(), $recordedOn ? $recordedOn : DateTime::now());
     }
 }
 
