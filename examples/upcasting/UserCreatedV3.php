@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-class UserCreatedV3 implements \Broadway\Serializer\Serializable
+class UserCreatedV3 implements Broadway\Serializer\Serializable
 {
     public $userId;
     public $name;

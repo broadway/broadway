@@ -77,7 +77,7 @@ class Scenario
         return $this;
     }
 
-    public function when($event, DateTime $occurredOn = null): self
+    public function when($event, ?DateTime $occurredOn = null): self
     {
         $this->projector->handle($this->createDomainMessageForEvent($event, $occurredOn));
 
