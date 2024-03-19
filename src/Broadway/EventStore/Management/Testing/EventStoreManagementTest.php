@@ -44,7 +44,7 @@ abstract class EventStoreManagementTest extends TestCase
         $this->createAndInsertEventFixtures();
     }
 
-    protected function visitEvents(Criteria $criteria = null)
+    protected function visitEvents(?Criteria $criteria = null)
     {
         $eventVisitor = new RecordingEventVisitor();
 

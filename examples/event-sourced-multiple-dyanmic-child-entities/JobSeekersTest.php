@@ -180,7 +180,7 @@ class JobSeekersCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
      */
     public function it_cannot_add_the_same_job_if_job_is_already_assigned()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Job job-000 already assigned to this job seeker');
 
         $id = $this->generator->generate();
@@ -200,7 +200,7 @@ class JobSeekersCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
      */
     public function it_cannot_describe_a_job_it_knows_nothing_about()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Job job-000 is not assigned to this job seeker');
 
         $id = $this->generator->generate();

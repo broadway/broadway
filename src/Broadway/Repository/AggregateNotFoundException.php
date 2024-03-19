@@ -20,10 +20,7 @@ use Exception;
  */
 final class AggregateNotFoundException extends \RuntimeException
 {
-    /**
-     * @param \Exception $previous
-     */
-    public static function create($id, \Exception $previous = null): self
+    public static function create($id, ?\Exception $previous = null): self
     {
         return new self(sprintf("Aggregate with id '%s' not found", $id), 0, $previous);
     }
