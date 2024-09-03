@@ -42,7 +42,7 @@ class Scenario
     public function __construct(
         TestCase $testCase,
         Repository $repository,
-        EventListener $projector
+        EventListener $projector,
     ) {
         $this->testCase = $testCase;
         $this->repository = $repository;
@@ -91,9 +91,6 @@ class Scenario
         return $this;
     }
 
-    /**
-     * @param ?DateTime $occurredOn
-     */
     private function createDomainMessageForEvent($event, ?DateTime $occurredOn): DomainMessage
     {
         ++$this->playhead;

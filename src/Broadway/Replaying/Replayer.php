@@ -15,7 +15,7 @@ final class Replayer
 
     public function __construct(
         EventStoreManagement $eventStore,
-        EventVisitor $eventVisitor
+        EventVisitor $eventVisitor,
     ) {
         $this->eventStore = $eventStore;
         $this->eventVisitor = $eventVisitor;
