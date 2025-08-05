@@ -18,15 +18,25 @@ use Broadway\EventStore\Exception\DuplicatePlayheadException;
 
 /**
  * Loads and stores events.
+ *
+ * @template T of mixed
  */
 interface EventStore
 {
-    public function load($id): DomainEventStream;
-
-    public function loadFromPlayhead($id, int $playhead): DomainEventStream;
+    /**
+     * @phpstan-param T $id
+     */
+    public function load(mixed $id): DomainEventStream;
 
     /**
+     * @phpstan-param T $id
+     */
+    public function loadFromPlayhead(mixed $id, int $playhead): DomainEventStream;
+
+    /**
+     * @phpstan-param T $id
+     *
      * @throws DuplicatePlayheadException
      */
-    public function append($id, DomainEventStream $eventStream): void;
+    public function append(mixed $id, DomainEventStream $eventStream): void;
 }

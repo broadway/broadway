@@ -14,8 +14,10 @@ declare(strict_types=1);
 namespace Broadway\ReadModel\InMemory;
 
 use Broadway\ReadModel\Repository;
+use Broadway\ReadModel\SerializableReadModel;
 use Broadway\ReadModel\Testing\RepositoryTestCase;
 use Broadway\ReadModel\Testing\RepositoryTestReadModel;
+use PHPUnit\Framework\Attributes\Test;
 
 class InMemoryRepositoryTest extends RepositoryTestCase
 {
@@ -24,10 +26,8 @@ class InMemoryRepositoryTest extends RepositoryTestCase
         return new InMemoryRepository();
     }
 
-    /**
-     * @test
-     */
-    public function it_can_be_transferred_to_another_repository()
+    #[Test]
+    public function it_can_be_transferred_to_another_repository(): void
     {
         $repository = $this->createRepository();
 
@@ -44,7 +44,7 @@ class InMemoryRepositoryTest extends RepositoryTestCase
         $this->assertEquals($targetRepository->findAll(), $repository->findAll());
     }
 
-    protected function createReadModel($id, $name, $foo, array $array = []): RepositoryTestReadModel
+    protected function createReadModel($id, $name, $foo, array $array = []): SerializableReadModel
     {
         return new RepositoryTestReadModel($id, $name, $foo, $array);
     }

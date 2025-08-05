@@ -13,14 +13,13 @@ declare(strict_types=1);
 
 namespace Broadway\ReadModel\InMemory;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class InMemoryRepositoryFactoryTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function it_creates_an_in_memory_repository()
+    #[Test]
+    public function it_creates_an_in_memory_repository(): void
     {
         $repository = new InMemoryRepository();
         $factory = new InMemoryRepositoryFactory();

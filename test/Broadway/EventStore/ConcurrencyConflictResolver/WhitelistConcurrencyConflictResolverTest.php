@@ -13,25 +13,26 @@ declare(strict_types=1);
 
 namespace Broadway\EventStore\ConcurrencyConflictResolver;
 
+use PHPUnit\Framework\Attributes\Test;
+
 class WhitelistConcurrencyConflictResolverTest extends ConcurrencyConflictResolverTest
 {
-    /** @var WhitelistConcurrencyConflictResolver */
-    private $conflictResolver;
+    private WhitelistConcurrencyConflictResolver $conflictResolver;
 
     protected function setUp(): void
     {
         $this->conflictResolver = new WhitelistConcurrencyConflictResolver();
     }
 
-    /** @test */
-    public function events_always_conflict_if_no_independent_events_are_registered()
+    #[Test]
+    public function events_always_conflict_if_no_independent_events_are_registered(): void
     {
         $event = $this->createDomainMessage(1, 0, new Event());
         $this->assertTrue($this->conflictResolver->conflictsWith($event, $event));
     }
 
-    /** @test */
-    public function independent_events_do_not_conflict()
+    #[Test]
+    public function independent_events_do_not_conflict(): void
     {
         $event = $this->createDomainMessage(1, 0, new Event());
         $otherEvent = $this->createDomainMessage(1, 0, new OtherEvent());

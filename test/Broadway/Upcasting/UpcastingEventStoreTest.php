@@ -8,13 +8,12 @@ use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\EventStore\InMemoryEventStore;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class UpcastingEventStoreTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function it_should_call_upcaster_when_event_stream_is_not_empty(): void
     {
         $upcasterChain = $this->createMock(UpcasterChain::class);

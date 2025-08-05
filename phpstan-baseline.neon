@@ -1,4 +1,9 @@
 parameters:
+	level: max
+
+	paths:
+		- src
+
 	ignoreErrors:
 		-
 			message: '#^Call to function is_callable\(\) with callable\(\)\: mixed will always evaluate to true\.$#'

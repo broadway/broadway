@@ -15,24 +15,20 @@ namespace Broadway\EventSourcing\AggregateFactory;
 
 use Broadway\Domain\DomainEventStream;
 use Broadway\EventSourcing\EventSourcedAggregateRoot;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 final class ReflectionAggregateFactoryTest extends TestCase
 {
-    /**
-     * @var ReflectionAggregateFactory
-     */
-    private $factory;
+    private ReflectionAggregateFactory $factory;
 
     protected function setUp(): void
     {
         $this->factory = new ReflectionAggregateFactory();
     }
 
-    /**
-     * @test
-     */
-    public function it_creates_instance_of_aggregate_with_private_constructor()
+    #[Test]
+    public function it_creates_instance_of_aggregate_with_private_constructor(): void
     {
         $aggregate = $this->factory->create(
             TestAggregateWithPrivateConstructor::class,
@@ -42,10 +38,8 @@ final class ReflectionAggregateFactoryTest extends TestCase
         $this->assertInstanceOf(TestAggregateWithPrivateConstructor::class, $aggregate);
     }
 
-    /**
-     * @test
-     */
-    public function it_creates_instance_of_aggregate_with_public_constructor()
+    #[Test]
+    public function it_creates_instance_of_aggregate_with_public_constructor(): void
     {
         $aggregate = $this->factory->create(
             TestAggregateWithPublicConstructor::class,
@@ -55,10 +49,8 @@ final class ReflectionAggregateFactoryTest extends TestCase
         $this->assertInstanceOf(TestAggregateWithPublicConstructor::class, $aggregate);
     }
 
-    /**
-     * @test
-     */
-    public function it_does_not_handle_weird_classes()
+    #[Test]
+    public function it_does_not_handle_weird_classes(): void
     {
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage(sprintf('Impossible to initialize "%s"', \stdClass::class));

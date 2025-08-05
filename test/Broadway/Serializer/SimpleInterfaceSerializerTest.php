@@ -14,24 +14,20 @@ declare(strict_types=1);
 namespace Broadway\Serializer;
 
 use Assert\InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class SimpleInterfaceSerializerTest extends TestCase
 {
-    /**
-     * @var SimpleInterfaceSerializer
-     */
-    private $serializer;
+    private SimpleInterfaceSerializer $serializer;
 
     protected function setUp(): void
     {
         $this->serializer = new SimpleInterfaceSerializer();
     }
 
-    /**
-     * @test
-     */
-    public function it_throws_an_exception_if_an_object_does_not_implement_serializable()
+    #[Test]
+    public function it_throws_an_exception_if_an_object_does_not_implement_serializable(): void
     {
         $this->expectException(SerializationException::class);
         $this->expectExceptionMessage(sprintf(
@@ -43,12 +39,8 @@ class SimpleInterfaceSerializerTest extends TestCase
         $this->serializer->serialize(new \stdClass());
     }
 
-    /**
-     * @test
-     *
-     * @todo custom exception
-     */
-    public function it_throws_an_exception_if_class_not_set_in_data()
+    #[Test]
+    public function it_throws_an_exception_if_class_not_set_in_data(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Key \'class\' should be set');
@@ -56,12 +48,8 @@ class SimpleInterfaceSerializerTest extends TestCase
         $this->serializer->deserialize([]);
     }
 
-    /**
-     * @test
-     *
-     * @todo custom exception
-     */
-    public function it_throws_an_exception_if_payload_not_set_in_data()
+    #[Test]
+    public function it_throws_an_exception_if_payload_not_set_in_data(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Key \'payload\' should be set');
@@ -69,10 +57,8 @@ class SimpleInterfaceSerializerTest extends TestCase
         $this->serializer->deserialize(['class' => 'SomeClass']);
     }
 
-    /**
-     * @test
-     */
-    public function it_serializes_objects_implementing_serializable()
+    #[Test]
+    public function it_serializes_objects_implementing_serializable(): void
     {
         $object = new TestSerializable('bar');
 
@@ -82,20 +68,16 @@ class SimpleInterfaceSerializerTest extends TestCase
         ], $this->serializer->serialize($object));
     }
 
-    /**
-     * @test
-     */
-    public function it_deserializes_classes_implementing_serializable()
+    #[Test]
+    public function it_deserializes_classes_implementing_serializable(): void
     {
         $data = ['class' => 'Broadway\Serializer\TestSerializable', 'payload' => ['foo' => 'bar']];
 
         $this->assertEquals(new TestSerializable('bar'), $this->serializer->deserialize($data));
     }
 
-    /**
-     * @test
-     */
-    public function it_can_deserialize_classes_it_has_serialized()
+    #[Test]
+    public function it_can_deserialize_classes_it_has_serialized(): void
     {
         $object = new TestSerializable('bar');
 
@@ -106,19 +88,13 @@ class SimpleInterfaceSerializerTest extends TestCase
     }
 }
 
-class TestSerializable implements Serializable
+final readonly class TestSerializable implements Serializable
 {
-    private $foo;
-
-    public function __construct($foo)
+    public function __construct(public string $foo)
     {
-        $this->foo = $foo;
     }
 
-    /**
-     * @return $this
-     */
-    public static function deserialize(array $data)
+    public static function deserialize(array $data): self
     {
         return new self($data['foo']);
     }

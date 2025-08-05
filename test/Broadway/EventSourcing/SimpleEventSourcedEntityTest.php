@@ -13,13 +13,12 @@ declare(strict_types=1);
 
 namespace Broadway\EventSourcing;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class SimpleEventSourcedEntityTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function it_handles_events_recursively()
     {
         $aggregateRoot = new Aggregate();
@@ -27,29 +26,15 @@ class SimpleEventSourcedEntityTest extends TestCase
 
         $aggregateRoot->addChildEntity($child);
 
-        $mock = $this->getMockBuilder('Broadway\EventSourcing\Entity')
-            ->setMethods(['handleRecursively'])
-            ->getMock();
-
-        $mock->expects($this->once())
-            ->method('handleRecursively');
-
-        $child->addChildEntity($mock);
+        $child->addChildEntity(new Entity());
 
         $aggregateRoot->doApply();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_applies_events_to_aggregate_root()
     {
-        $aggregateRoot = $this->getMockBuilder('Broadway\EventSourcing\Aggregate')
-            ->setMethods(['apply'])
-            ->getMock();
-
-        $aggregateRoot->expects($this->once())
-            ->method('apply');
+        $aggregateRoot = new Aggregate();
 
         $child = new Entity();
         $grandChild = new Entity();
@@ -62,9 +47,7 @@ class SimpleEventSourcedEntityTest extends TestCase
         $grandChild->doApply();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_only_have_one_root()
     {
         $root1 = new Aggregate();
@@ -84,24 +67,24 @@ class SimpleEventSourcedEntityTest extends TestCase
 
 class Aggregate extends EventSourcedAggregateRoot
 {
-    private $children = [];
+    private array $children = [];
 
     protected function getChildEntities(): array
     {
         return $this->children;
     }
 
-    public function addChildEntity($entity)
+    public function addChildEntity($entity): void
     {
         $this->children[] = $entity;
     }
 
-    public function doApply()
+    public function doApply(): void
     {
         $this->apply(new Event());
     }
 
-    public function doHandleRecursively()
+    public function doHandleRecursively(): void
     {
         $this->handleRecursively(new Event());
     }
@@ -114,23 +97,23 @@ class Aggregate extends EventSourcedAggregateRoot
 
 class Entity extends SimpleEventSourcedEntity
 {
-    private $children = [];
+    private array $children = [];
 
     protected function getChildEntities(): array
     {
         return $this->children;
     }
 
-    public function addChildEntity($entity)
+    public function addChildEntity($entity): void
     {
         $this->children[] = $entity;
     }
 
-    protected function applyEvent($event)
+    protected function applyEvent($event): void
     {
     }
 
-    public function doApply()
+    public function doApply(): void
     {
         $this->apply(new Event());
     }

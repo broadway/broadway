@@ -13,24 +13,20 @@ declare(strict_types=1);
 
 namespace Broadway\CommandHandling\Testing;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class TraceableCommandBusTest extends TestCase
 {
-    /**
-     * @var TraceableCommandBus
-     */
-    private $commandBus;
+    private TraceableCommandBus $commandBus;
 
     protected function setUp(): void
     {
         $this->commandBus = new TraceableCommandBus();
     }
 
-    /**
-     * @test
-     */
-    public function it_records_commands_when_recording_is_activated()
+    #[Test]
+    public function it_records_commands_when_recording_is_activated(): void
     {
         $command1 = ['Not' => 'Recorded'];
         $command2 = ['Hello' => 'There'];

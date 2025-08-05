@@ -25,9 +25,9 @@ require_once __DIR__.'/Parts.php';
  * - Third, the outcome is asserted. This can either be 1) some events are
  *   recorded, or 2) an exception is thrown.
  */
-class PartsCommandHandlerTest extends Broadway\CommandHandling\Testing\CommandHandlerScenarioTestCase
+class PartsTest extends Broadway\CommandHandling\Testing\CommandHandlerScenarioTestCase
 {
-    private $generator;
+    private Broadway\UuidGenerator\Rfc4122\Version4Generator $generator;
 
     protected function setUp(): void
     {
@@ -42,10 +42,8 @@ class PartsCommandHandlerTest extends Broadway\CommandHandling\Testing\CommandHa
         return new PartCommandHandler($repository);
     }
 
-    /**
-     * @test
-     */
-    public function it_can_manufacture()
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_can_manufacture(): void
     {
         $id = $this->generator->generate();
 
@@ -56,10 +54,8 @@ class PartsCommandHandlerTest extends Broadway\CommandHandling\Testing\CommandHa
             ->then([new PartWasManufacturedEvent($id, 'acme', 'Acme, Inc')]);
     }
 
-    /**
-     * @test
-     */
-    public function it_can_rename_manufacturer()
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_can_rename_manufacturer(): void
     {
         $id = $this->generator->generate();
 
@@ -70,10 +66,8 @@ class PartsCommandHandlerTest extends Broadway\CommandHandling\Testing\CommandHa
             ->then([new PartManufacturerWasRenamedEvent($id, 'Acme, Inc.')]);
     }
 
-    /**
-     * @test
-     */
-    public function it_does_not_rename_manufacturer_to_the_same_name()
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_does_not_rename_manufacturer_to_the_same_name(): void
     {
         $id = $this->generator->generate();
 

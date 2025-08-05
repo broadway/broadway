@@ -2,31 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Vonq\Webshop\Tests\Broadway\EventHandling;
+namespace Broadway\EventHandling;
 
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
-use Broadway\EventHandling\EventListener;
-use Broadway\EventHandling\ReliableEventBus;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
 class ReliableEventBusTest extends TestCase
 {
-    /**
-     * @var ReliableEventBus
-     */
-    private $eventBus;
-
-    /** @var LoggerInterface */
-    private $logger;
-
-    /** @var TestHandler */
-    private $testHandler;
+    private ReliableEventBus $eventBus;
+    private LoggerInterface $logger;
+    private TestHandler $testHandler;
 
     protected function setUp(): void
     {
@@ -37,10 +30,8 @@ class ReliableEventBusTest extends TestCase
         $this->eventBus = new ReliableEventBus($this->logger);
     }
 
-    /**
-     * @test
-     */
-    public function it_should_process_the_next_handle_when_a_handler_fails()
+    #[Test]
+    public function it_should_process_the_next_handle_when_a_handler_fails(): void
     {
         $domainMessage = $this->createDomainMessage([]);
 
@@ -48,24 +39,27 @@ class ReliableEventBusTest extends TestCase
 
         $eventListener1 = $this->createEventListenerMock();
         $eventListener1
-            ->expects($this->at(0))
+            ->expects($this->once())
             ->method('handle')
             ->willThrowException(new \Exception());
 
-        $eventListener2 = $this->prophesize(EventListener::class);
-        $eventListener2->handle($domainMessage)->shouldBeCalledOnce();
+        $eventListener2 = $this->createMock(EventListener::class);
+        $eventListener2
+            ->expects($this->once())
+            ->method('handle')
+            ->with($domainMessage)
+        ;
+
 
         $this->eventBus->subscribe($eventListener1);
-        $this->eventBus->subscribe($eventListener2->reveal());
+        $this->eventBus->subscribe($eventListener2);
         $this->eventBus->publish($domainEventStream);
 
         $this->assertTrue($this->testHandler->hasErrorThatContains(sprintf('[Event LISTENER]: %s', get_class($eventListener1))));
     }
 
-    /**
-     * @test
-     */
-    public function it_subscribes_an_event_listener()
+    #[Test]
+    public function it_subscribes_an_event_listener(): void
     {
         $domainMessage = $this->createDomainMessage(['foo' => 'bar']);
 
@@ -80,72 +74,97 @@ class ReliableEventBusTest extends TestCase
         $this->eventBus->publish(new DomainEventStream([$domainMessage]));
     }
 
-    /**
-     * @test
-     */
-    public function it_publishes_events_to_subscribed_event_listeners()
+    #[Test]
+    public function it_publishes_events_to_subscribed_event_listeners(): void
     {
         $domainMessage1 = $this->createDomainMessage([]);
         $domainMessage2 = $this->createDomainMessage([]);
 
         $domainEventStream = new DomainEventStream([$domainMessage1, $domainMessage2]);
 
+        $matcher = $this->exactly(2);
         $eventListener1 = $this->createEventListenerMock();
         $eventListener1
-            ->expects($this->at(0))
+            ->expects($matcher)
             ->method('handle')
-            ->with($domainMessage1);
-        $eventListener1
-            ->expects($this->at(1))
-            ->method('handle')
-            ->with($domainMessage2);
+            ->willReturnCallback(
+                fn (DomainMessage $message) => match ($matcher->numberOfInvocations()) {
+                    1 => $message === $domainMessage1,
+                    2 => $message === $domainMessage2,
+                    default => throw new \Exception('Unexpected message'),
+                }
+            );
 
+        $matcher = $this->exactly(2);
         $eventListener2 = $this->createEventListenerMock();
         $eventListener2
-            ->expects($this->at(0))
+            ->expects($matcher)
             ->method('handle')
-            ->with($domainMessage1);
-        $eventListener2
-            ->expects($this->at(1))
-            ->method('handle')
-            ->with($domainMessage2);
+            ->willReturnCallback(
+                fn (DomainMessage $message) => match ($matcher->numberOfInvocations()) {
+                    1 => $message === $domainMessage1,
+                    2 => $message === $domainMessage2,
+                    default => throw new \Exception('Unexpected message'),
+                }
+            );
 
         $this->eventBus->subscribe($eventListener1);
         $this->eventBus->subscribe($eventListener2);
         $this->eventBus->publish($domainEventStream);
     }
 
-    /**
-     * @test
-     */
-    public function it_does_not_dispatch_new_events_before_all_listeners_have_run()
+    #[Test]
+    public function it_does_not_dispatch_new_events_before_all_listeners_have_run(): void
     {
         $domainMessage1 = $this->createDomainMessage(['foo' => 'bar']);
         $domainMessage2 = $this->createDomainMessage(['foo' => 'bas']);
 
         $domainEventStream = new DomainEventStream([$domainMessage1]);
 
-        $eventListener1 = new SimpleEventBusTestListener($this->eventBus, new DomainEventStream([$domainMessage2]));
+        $eventListener1 = new class(
+            $this->eventBus,
+            new DomainEventStream([$domainMessage2])
+        ) implements EventListener {
+            private(set) bool $handled = false {
+                get => $this->handled;
+                set => $value;
+            }
 
+            public function __construct(
+                public readonly EventBus $eventBus,
+                public readonly DomainEventStream $publishableStream
+            ) {
+            }
+
+            public function handle(DomainMessage $domainMessage): void
+            {
+                if (!$this->handled) {
+                    $this->eventBus->publish($this->publishableStream);
+                    $this->handled = true;
+                }
+            }
+        };
+
+        $matcher = $this->exactly(2);
         $eventListener2 = $this->createEventListenerMock();
         $eventListener2
-            ->expects($this->at(0))
+            ->expects($matcher)
             ->method('handle')
-            ->with($domainMessage1);
-        $eventListener2
-            ->expects($this->at(1))
-            ->method('handle')
-            ->with($domainMessage2);
+            ->willReturnCallback(
+                fn (DomainMessage $message) => match ($matcher->numberOfInvocations()) {
+                    1 => $message === $domainMessage1,
+                    2 => $message === $domainMessage2,
+                    default => throw new \Exception('Unexpected message'),
+                }
+            );
 
         $this->eventBus->subscribe($eventListener1);
         $this->eventBus->subscribe($eventListener2);
         $this->eventBus->publish($domainEventStream);
     }
 
-    /**
-     * @test
-     */
-    public function it_should_still_publish_events_after_exception()
+    #[Test]
+    public function it_should_still_publish_events_after_exception(): void
     {
         $domainMessage1 = $this->createDomainMessage(['foo' => 'bar']);
         $domainMessage2 = $this->createDomainMessage(['foo' => 'bas']);
@@ -153,17 +172,18 @@ class ReliableEventBusTest extends TestCase
         $domainEventStream1 = new DomainEventStream([$domainMessage1]);
         $domainEventStream2 = new DomainEventStream([$domainMessage2]);
 
+        $matcher = $this->exactly(2);
         $eventListener = $this->createEventListenerMock();
         $eventListener
-            ->expects($this->at(0))
+            ->expects($matcher)
             ->method('handle')
-            ->with($domainMessage1)
-            ->will($this->throwException(new \Exception('I failed.')));
-
-        $eventListener
-            ->expects($this->at(1))
-            ->method('handle')
-            ->with($domainMessage2);
+            ->willReturnCallback(
+                fn (DomainMessage $message) => match ($matcher->numberOfInvocations()) {
+                    1 => $message === $domainMessage1,
+                    2 => $message === $domainMessage2,
+                    default => throw new \Exception('Unexpected message'),
+                }
+            );
 
         $this->eventBus->subscribe($eventListener);
 
@@ -171,44 +191,21 @@ class ReliableEventBusTest extends TestCase
         $this->eventBus->publish($domainEventStream2);
     }
 
-    private function createEventListenerMock(): MockObject
+    /**
+     * @phpstan-return MockObject<EventListener>
+     */
+    private function createEventListenerMock(): EventListener
     {
         return $this->createMock(EventListener::class);
     }
 
-    private function createDomainMessage($payload)
+    private function createDomainMessage(array $payload): DomainMessage
     {
-        return DomainMessage::recordNow(1, 1, new Metadata([]), new SimpleEventBusTestEvent($payload));
-    }
-}
+        return DomainMessage::recordNow(1, 1, new Metadata([]), new class($payload) {
+            public function __construct(public array $data)
+            {
 
-class SimpleEventBusTestEvent
-{
-    public $data;
-
-    public function __construct($data)
-    {
-        $this->data = $data;
-    }
-}
-
-class SimpleEventBusTestListener implements EventListener
-{
-    private $eventBus;
-    private $handled = false;
-    private $publishableStream;
-
-    public function __construct($eventBus, $publishableStream)
-    {
-        $this->eventBus = $eventBus;
-        $this->publishableStream = $publishableStream;
-    }
-
-    public function handle(DomainMessage $domainMessage): void
-    {
-        if (!$this->handled) {
-            $this->eventBus->publish($this->publishableStream);
-            $this->handled = true;
-        }
+            }
+        });
     }
 }

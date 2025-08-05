@@ -13,14 +13,13 @@ declare(strict_types=1);
 
 namespace Broadway\Domain;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class MetadataTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function it_contains_values_from_both_instances_after_merge()
+    #[Test]
+    public function it_contains_values_from_both_instances_after_merge(): void
     {
         $m1 = new Metadata(['foo' => 42]);
         $m2 = new Metadata(['bar' => 1337]);
@@ -29,10 +28,8 @@ class MetadataTest extends TestCase
         $this->assertEquals($expected, $m1->merge($m2));
     }
 
-    /**
-     * @test
-     */
-    public function it_overrides_values_with_data_from_other_instance_on_merge()
+    #[Test]
+    public function it_overrides_values_with_data_from_other_instance_on_merge(): void
     {
         $m1 = new Metadata(['foo' => 42]);
         $m2 = new Metadata(['foo' => 1337]);
@@ -41,10 +38,8 @@ class MetadataTest extends TestCase
         $this->assertEquals($expected, $m1->merge($m2));
     }
 
-    /**
-     * @test
-     */
-    public function it_constructs_an_instance_containing_the_key_and_value()
+    #[Test]
+    public function it_constructs_an_instance_containing_the_key_and_value(): void
     {
         $m1 = Metadata::kv('foo', 42);
 
@@ -52,10 +47,8 @@ class MetadataTest extends TestCase
         $this->assertEquals($expected, $m1);
     }
 
-    /**
-     * @test
-     */
-    public function it_returns_all_values()
+    #[Test]
+    public function it_returns_all_values(): void
     {
         $m1 = new Metadata(['foo' => 42, 'bar' => 1337]);
 
@@ -63,20 +56,16 @@ class MetadataTest extends TestCase
         $this->assertEquals($expected, $m1->all());
     }
 
-    /**
-     * @test
-     */
-    public function it_returns_null_when_get_contains_unset_key()
+    #[Test]
+    public function it_returns_null_when_get_contains_unset_key(): void
     {
         $m1 = new Metadata(['foo' => 42]);
 
         $this->assertNull($m1->get('bar'));
     }
 
-    /**
-     * @test
-     */
-    public function it_returns_the_value_of_a_key_with_get()
+    #[Test]
+    public function it_returns_the_value_of_a_key_with_get(): void
     {
         $m1 = new Metadata(['foo' => 42]);
 

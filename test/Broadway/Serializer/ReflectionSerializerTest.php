@@ -14,14 +14,12 @@ declare(strict_types=1);
 namespace Broadway\Serializer;
 
 use Assert\InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class ReflectionSerializerTest extends TestCase
 {
-    /**
-     * @var Serializer
-     */
-    private $serializer;
+    private Serializer $serializer;
 
     protected function setUp(): void
     {
@@ -29,11 +27,10 @@ class ReflectionSerializerTest extends TestCase
     }
 
     /**
-     * @test
-     *
      * @todo custom exception
      */
-    public function it_throws_an_exception_if_class_not_set_in_data()
+    #[Test]
+    public function it_throws_an_exception_if_class_not_set_in_data(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Key \'class\' should be set');
@@ -42,11 +39,10 @@ class ReflectionSerializerTest extends TestCase
     }
 
     /**
-     * @test
-     *
      * @todo custom exception
      */
-    public function it_throws_an_exception_if_payload_not_set_in_data()
+    #[Test]
+    public function it_throws_an_exception_if_payload_not_set_in_data(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Key \'payload\' should be set');
@@ -54,10 +50,8 @@ class ReflectionSerializerTest extends TestCase
         $this->serializer->deserialize(['class' => 'SomeClass']);
     }
 
-    /**
-     * @test
-     */
-    public function it_serializes_objects()
+    #[Test]
+    public function it_serializes_objects(): void
     {
         $object = new TestReflectable(
             [new TestReflectableObject(['A', 1, 1.0], 11)],
@@ -89,10 +83,8 @@ class ReflectionSerializerTest extends TestCase
         ], $this->serializer->serialize($object));
     }
 
-    /**
-     * @test
-     */
-    public function it_deserializes_array()
+    #[Test]
+    public function it_deserializes_array(): void
     {
         $data = [
             'class' => 'Broadway\Serializer\TestReflectable',
@@ -127,28 +119,21 @@ class ReflectionSerializerTest extends TestCase
     }
 }
 
-class TestReflectableObject
+final readonly class TestReflectableObject
 {
-    private $simpleArray;
-    private $value;
-
-    public function __construct(array $simpleArray, $value)
-    {
-        $this->simpleArray = $simpleArray;
-        $this->value = $value;
+    public function __construct(
+        public array $simpleArray,
+        public int $value
+    ) {
     }
 }
 
-class TestReflectable
+final readonly class TestReflectable
 {
-    private $arrayOfObjects;
-    private $object;
-    private $simpleValue;
-
-    public function __construct(array $arrayOfObjects, $object, $simpleValue)
-    {
-        $this->arrayOfObjects = $arrayOfObjects;
-        $this->object = $object;
-        $this->simpleValue = $simpleValue;
+    public function __construct(
+        public array $arrayOfObjects,
+        public object $object,
+        public int $simpleValue
+    ) {
     }
 }
