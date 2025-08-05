@@ -15,13 +15,22 @@ namespace Broadway\Serializer;
 
 /**
  * Contract for objects serializable by the SimpleInterfaceSerializer.
+ *
+ * @template T of object
+ * @phpstan-type SerializableData array<string, mixed>
+ *
  */
 interface Serializable
 {
     /**
-     * @return mixed The object instance
+     * @param SerializableData $data
+     *
+     * @phpstan-return T
      */
-    public static function deserialize(array $data);
+    public static function deserialize(array $data): object;
 
+    /**
+     * @return SerializableData
+     */
     public function serialize(): array;
 }

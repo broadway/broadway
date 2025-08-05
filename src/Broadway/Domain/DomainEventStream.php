@@ -15,19 +15,24 @@ namespace Broadway\Domain;
 
 /**
  * Represents a stream of DomainEventMessages in sequence.
+ *
+ * @template T
+ *
+ * @template-implements \IteratorAggregate<int, T>
  */
-final class DomainEventStream implements \IteratorAggregate
+final readonly class DomainEventStream implements \IteratorAggregate
 {
-    private $events;
 
     /**
-     * @param mixed[] $events
+     * @param array<T> $events
      */
-    public function __construct(array $events)
+    public function __construct(private array $events)
     {
-        $this->events = $events;
     }
 
+    /**
+     * @return \ArrayIterator<int, T>
+     */
     public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->events);

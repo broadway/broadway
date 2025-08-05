@@ -14,35 +14,24 @@ declare(strict_types=1);
 namespace Broadway\CommandHandling;
 
 use Broadway\EventDispatcher\EventDispatcher;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class EventDispatchingCommandBusTest extends TestCase
 {
-    /**
-     * @var CommandBus|MockObject
-     */
-    private $baseCommandBus;
+    /** @phpstan-var MockObject<CommandBus> */
+    private CommandBus $baseCommandBus;
 
-    /**
-     * @var Command
-     */
-    private $command;
+    private Command $command;
 
-    /**
-     * @var EventDispatcher|MockObject
-     */
-    private $eventDispatcher;
+    /** @phpstan-var MockObject<EventDispatcher> */
+    private EventDispatcher $eventDispatcher;
 
-    /**
-     * @var EventDispatchingCommandBus
-     */
-    private $eventDispatchingCommandBus;
+    private EventDispatchingCommandBus $eventDispatchingCommandBus;
 
-    /**
-     * @var CommandHandler|MockObject
-     */
-    private $subscriber;
+    /** @phpstan-var MockObject<CommandHandler> */
+    private CommandHandler $subscriber;
 
     protected function setUp(): void
     {
@@ -55,10 +44,8 @@ class EventDispatchingCommandBusTest extends TestCase
         $this->eventDispatchingCommandBus = new EventDispatchingCommandBus($this->baseCommandBus, $this->eventDispatcher);
     }
 
-    /**
-     * @test
-     */
-    public function it_dispatches_the_success_event()
+    #[Test]
+    public function it_dispatches_the_success_event(): void
     {
         $this->eventDispatcher->expects($this->once())
             ->method('dispatch')
@@ -67,10 +54,8 @@ class EventDispatchingCommandBusTest extends TestCase
         $this->eventDispatchingCommandBus->dispatch($this->command);
     }
 
-    /**
-     * @test
-     */
-    public function it_dispatches_the_failure_event_and_forwards_the_exception()
+    #[Test]
+    public function it_dispatches_the_failure_event_and_forwards_the_exception(): void
     {
         $exception = new MyException();
         $this->eventDispatcher->expects($this->once())
@@ -90,10 +75,8 @@ class EventDispatchingCommandBusTest extends TestCase
         $this->eventDispatchingCommandBus->dispatch($this->command);
     }
 
-    /**
-     * @test
-     */
-    public function it_forwards_the_dispatched_command()
+    #[Test]
+    public function it_forwards_the_dispatched_command(): void
     {
         $this->baseCommandBus->expects($this->once())
             ->method('dispatch')
@@ -102,10 +85,8 @@ class EventDispatchingCommandBusTest extends TestCase
         $this->eventDispatchingCommandBus->dispatch($this->command);
     }
 
-    /**
-     * @test
-     */
-    public function it_forwards_the_subscriber()
+    #[Test]
+    public function it_forwards_the_subscriber(): void
     {
         $this->baseCommandBus->expects($this->once())
             ->method('subscribe')
@@ -115,10 +96,10 @@ class EventDispatchingCommandBusTest extends TestCase
     }
 }
 
-class Command
+final readonly class Command
 {
 }
 
-class MyException extends \Exception
+final class MyException extends \Exception
 {
 }

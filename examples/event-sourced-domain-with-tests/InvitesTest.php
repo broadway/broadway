@@ -24,7 +24,7 @@ require_once __DIR__.'/Invites.php';
  */
 class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTestCase
 {
-    private $generator;
+    private Broadway\UuidGenerator\Rfc4122\Version4Generator $generator;
 
     protected function setUp(): void
     {
@@ -37,10 +37,8 @@ class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTe
         return Invitation::class;
     }
 
-    /**
-     * @test
-     */
-    public function it_can_invite_someone()
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_can_invite_someone(): void
     {
         $id = $this->generator->generate();
 
@@ -51,10 +49,8 @@ class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTe
             ->then([new InvitedEvent($id, 'asm89')]);
     }
 
-    /**
-     * @test
-     */
-    public function new_invites_can_be_accepted()
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function new_invites_can_be_accepted(): void
     {
         $id = $this->generator->generate();
 
@@ -67,10 +63,8 @@ class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTe
             ->then([new AcceptedEvent($id)]);
     }
 
-    /**
-     * @test
-     */
-    public function accepting_an_accepted_invite_yields_no_change()
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function accepting_an_accepted_invite_yields_no_change(): void
     {
         $id = $this->generator->generate();
 
@@ -83,10 +77,8 @@ class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTe
             ->then([]);
     }
 
-    /**
-     * @test
-     */
-    public function an_accepted_invite_cannot_be_declined()
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function an_accepted_invite_cannot_be_declined(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Already accepted');
@@ -101,10 +93,8 @@ class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTe
             });
     }
 
-    /**
-     * @test
-     */
-    public function new_invites_can_be_declined()
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function new_invites_can_be_declined(): void
     {
         $id = $this->generator->generate();
 
@@ -117,10 +107,8 @@ class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTe
             ->then([new DeclinedEvent($id)]);
     }
 
-    /**
-     * @test
-     */
-    public function declining_a_declined_invite_yields_no_change()
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function declining_a_declined_invite_yields_no_change(): void
     {
         $id = $this->generator->generate();
 
@@ -133,10 +121,8 @@ class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTe
             ->then([]);
     }
 
-    /**
-     * @test
-     */
-    public function a_declined_invite_cannot_be_accepted()
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function a_declined_invite_cannot_be_accepted(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Already declined');

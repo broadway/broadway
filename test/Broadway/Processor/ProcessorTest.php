@@ -15,26 +15,25 @@ namespace Broadway\Processor;
 
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class ProcessorTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function it_passes_the_event_and_domain_message()
+    #[Test]
+    public function it_passes_the_event_and_domain_message(): void
     {
         $testProcessor = new TestProcessor();
         $testEvent = new TestEvent();
 
-        $this->assertFalse($testProcessor->isCalled());
+        $this->assertFalse($testProcessor->isCalled);
 
         $testProcessor->handle($this->createDomainMessage($testEvent));
 
-        $this->assertTrue($testProcessor->isCalled());
+        $this->assertTrue($testProcessor->isCalled);
     }
 
-    private function createDomainMessage($event)
+    private function createDomainMessage($event): DomainMessage
     {
         return DomainMessage::recordNow(1, 1, new Metadata([]), $event);
     }
@@ -42,19 +41,17 @@ class ProcessorTest extends TestCase
 
 class TestProcessor extends Processor
 {
-    private $isCalled = false;
+    private(set) bool $isCalled = false {
+        get => $this->isCalled;
+        set  => $value;
+    }
 
-    public function handleTestEvent($event, DomainMessage $domainMessage)
+    public function handleTestEvent($event, DomainMessage $domainMessage): void
     {
         $this->isCalled = true;
     }
-
-    public function isCalled()
-    {
-        return $this->isCalled;
-    }
 }
 
-class TestEvent
+final readonly class TestEvent
 {
 }

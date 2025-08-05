@@ -13,25 +13,21 @@ declare(strict_types=1);
 
 namespace Broadway\CommandHandling;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class SimpleCommandBusTest extends TestCase
 {
-    /**
-     * @var SimpleCommandBus
-     */
-    private $commandBus;
+    private SimpleCommandBus $commandBus;
 
     protected function setUp(): void
     {
         $this->commandBus = new SimpleCommandBus();
     }
 
-    /**
-     * @test
-     */
-    public function it_dispatches_commands_to_subscribed_handlers()
+    #[Test]
+    public function it_dispatches_commands_to_subscribed_handlers(): void
     {
         $command = ['Hi' => 'There'];
 
@@ -40,35 +36,55 @@ class SimpleCommandBusTest extends TestCase
         $this->commandBus->dispatch($command);
     }
 
-    /**
-     * @test
-     */
-    public function it_does_not_handle_new_commands_before_all_commandhandlers_have_run()
+    #[Test]
+    public function it_does_not_handle_new_commands_before_all_commandhandlers_have_run(): void
     {
         $command1 = ['foo' => 'bar'];
         $command2 = ['foo' => 'bas'];
 
         $commandHandler = $this->createMock(CommandHandler::class);
 
+        $matcher = $this->exactly(2);
         $commandHandler
-            ->expects($this->at(0))
+            ->expects($matcher)
             ->method('handle')
-            ->with($command1);
+            ->willReturnCallback(
+                fn (array $data) => match ($matcher->numberOfInvocations()) {
+                    1 => $data === $command1,
+                    2 => $data === $command2,
+                    default => throw new \Exception('Unexpected data'),
+                }
+            );
 
-        $commandHandler
-            ->expects($this->at(1))
-            ->method('handle')
-            ->with($command2);
+        $this->commandBus->subscribe(
+            new class($this->commandBus, $command2) implements CommandHandler
+            {
+                private(set) bool $handled = false {
+                    get => $this->handled;
+                    set => $value;
+                }
 
-        $this->commandBus->subscribe(new SimpleCommandBusTestHandler($this->commandBus, $command2));
+                public function __construct(
+                    public readonly CommandBus $commandBus,
+                    public readonly array $dispatchableCommand
+                ) {
+                }
+
+                public function handle($command): void
+                {
+                    if (!$this->handled) {
+                        $this->commandBus->dispatch($this->dispatchableCommand);
+                        $this->handled = true;
+                    }
+                }
+            }
+        );
         $this->commandBus->subscribe($commandHandler);
         $this->commandBus->dispatch($command1);
     }
 
-    /**
-     * @test
-     */
-    public function it_should_still_handle_commands_after_exception()
+    #[Test]
+    public function it_should_still_handle_commands_after_exception(): void
     {
         $command1 = ['foo' => 'bar'];
         $command2 = ['foo' => 'bas'];
@@ -76,16 +92,24 @@ class SimpleCommandBusTest extends TestCase
         $commandHandler = $this->createMock(CommandHandler::class);
         $simpleHandler = $this->createMock(CommandHandler::class);
 
+        $matcher = $this->exactly(2);
         $commandHandler
-            ->expects($this->at(0))
+            ->expects($matcher)
             ->method('handle')
-            ->with($command1)
-            ->will($this->throwException(new \Exception('I failed.')));
+            ->willReturnCallback(
+                function ($command) use ($matcher, $command1, $command2) {
+                    $this->assertTrue(
+                        match (true) {
+                            $matcher->numberOfInvocations() === 1 => $command === $command1,
+                            $matcher->numberOfInvocations() === 2 => $command === $command2,
+                        }
+                    );
 
-        $commandHandler
-            ->expects($this->at(1))
-            ->method('handle')
-            ->with($command2);
+                    if ($matcher->numberOfInvocations() === 1) {
+                        throw new \Exception('I failed.');
+                    }
+                }
+            );
 
         $simpleHandler
             ->expects($this->once())
@@ -104,7 +128,10 @@ class SimpleCommandBusTest extends TestCase
         $this->commandBus->dispatch($command2);
     }
 
-    private function createCommandHandlerMock(array $expectedCommand): MockObject
+    /**
+     * @phpstan-return MockObject<CommandHandler>
+     */
+    private function createCommandHandlerMock(array $expectedCommand): CommandHandler
     {
         $mock = $this->createMock(CommandHandler::class);
 
@@ -114,26 +141,5 @@ class SimpleCommandBusTest extends TestCase
             ->with($expectedCommand);
 
         return $mock;
-    }
-}
-
-class SimpleCommandBusTestHandler implements CommandHandler
-{
-    private $commandBus;
-    private $handled = false;
-    private $dispatchableCommand;
-
-    public function __construct($commandBus, $dispatchableCommand)
-    {
-        $this->commandBus = $commandBus;
-        $this->dispatchableCommand = $dispatchableCommand;
-    }
-
-    public function handle($command): void
-    {
-        if (!$this->handled) {
-            $this->commandBus->dispatch($this->dispatchableCommand);
-            $this->handled = true;
-        }
     }
 }

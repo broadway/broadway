@@ -36,12 +36,13 @@
     ],
     "require-dev": {
         "monolog/monolog": "~2.0",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^11.5",
         "ramsey/uuid": "^4.0",
         "broadway/coding-standard": "^1.2",
-        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan": "^2.1",
         "psr/log": "^1.1.4",
-        "phpspec/prophecy": "^1.15"
+        "phpspec/prophecy": "^1.15",
+        "phpspec/prophecy-phpunit": "^2.2"
     },
     "suggest": {
         "psr/log-implementation": "Implementation for PSR3, LoggerInterface",

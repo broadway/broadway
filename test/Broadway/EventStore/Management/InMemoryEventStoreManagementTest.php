@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace Broadway\EventStore\Management;
 
+use Broadway\EventStore\EventStore;
 use Broadway\EventStore\InMemoryEventStore;
 use Broadway\EventStore\Management\Testing\EventStoreManagementTest;
 
 class InMemoryEventStoreManagementTest extends EventStoreManagementTest
 {
-    public function createEventStore()
+    public function createEventStore(): EventStore&EventStoreManagement
     {
         return new InMemoryEventStore();
     }

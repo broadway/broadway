@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
 
 abstract class ConcurrencyConflictResolverTest extends TestCase
 {
-    protected function createDomainMessage($id, $playhead, $event)
+    protected function createDomainMessage($id, $playhead, $event): DomainMessage
     {
         return new DomainMessage($id, $playhead, new Metadata([]), $event, DateTime::now());
     }

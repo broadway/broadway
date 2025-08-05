@@ -15,19 +15,13 @@ namespace Broadway\Upcasting;
 
 use Broadway\Domain\DomainMessage;
 
-final class SequentialUpcasterChain implements UpcasterChain
+final readonly class SequentialUpcasterChain implements UpcasterChain
 {
     /**
-     * @var Upcaster[]
+     * @phpstan-param Upcaster[] $upcasters
      */
-    private $upcasters;
-
-    /**
-     * @param Upcaster[] $upcasters
-     */
-    public function __construct(array $upcasters)
+    public function __construct(private array $upcasters)
     {
-        $this->upcasters = $upcasters;
     }
 
     public function upcast(DomainMessage $domainMessage): DomainMessage
