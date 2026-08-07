@@ -11,3 +11,9 @@ parameters:
 			identifier: new.static
 			count: 2
 			path: src/Broadway/EventStore/Management/Testing/EventStoreManagementTest.php
+
+		-
+			message: '#^Comparison operation "\>\=" between int\<80200, 80599\> and 70400 is always true\.$#'
+			identifier: greaterOrEqual.alwaysTrue
+			count: 1
+			path: src/Broadway/EventStore/Testing/EventStoreTest.php

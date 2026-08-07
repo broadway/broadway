@@ -17,6 +17,8 @@ jobs:
     strategy:
       matrix:
         php-version:
+          - "8.2"
+          - "8.2"
           - "8.3"
           - "8.4"
           - "8.5"
@@ -50,7 +52,7 @@ jobs:
       - name: "Install PHP"
         uses: "shivammathur/setup-php@v2"
         with:
-          php-version: "8.4"
+          php-version: "8.5"
           coverage: "none"
       - name: "Install dependencies with Composer"
         uses: "ramsey/composer-install@v4"
