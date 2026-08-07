@@ -108,7 +108,7 @@ final class ConcurrencyConflictResolvingEventStore implements EventStore
      */
     private function getConflictingEvents(
         DomainEventStream $uncommittedEvents,
-        DomainEventStream $committedEvents
+        DomainEventStream $committedEvents,
     ): array {
         $conflictingEvents = [];
 

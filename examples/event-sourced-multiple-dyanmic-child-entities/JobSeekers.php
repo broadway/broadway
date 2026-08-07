@@ -79,7 +79,7 @@ class JobSeeker extends Broadway\EventSourcing\EventSourcedAggregateRoot
     }
 
     public function applyAccidentallyAddedJobWasRemovedFromJobSeekerEvent(
-        AccidentallyAddedJobWasRemovedFromJobSeekerEvent $event
+        AccidentallyAddedJobWasRemovedFromJobSeekerEvent $event,
     ) {
         unset($this->jobs[$event->jobId]);
     }

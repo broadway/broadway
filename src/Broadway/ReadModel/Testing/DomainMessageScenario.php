@@ -38,7 +38,7 @@ final class DomainMessageScenario
     public function __construct(
         TestCase $testCase,
         Repository $repository,
-        EventListener $projector
+        EventListener $projector,
     ) {
         $this->testCase = $testCase;
         $this->repository = $repository;
