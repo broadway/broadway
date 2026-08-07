@@ -42,7 +42,7 @@ class EventSourcingRepository implements Repository
         EventBus $eventBus,
         string $aggregateClass,
         AggregateFactory $aggregateFactory,
-        array $eventStreamDecorators = []
+        array $eventStreamDecorators = [],
     ) {
         $this->assertExtendsEventSourcedAggregateRoot($aggregateClass);
 

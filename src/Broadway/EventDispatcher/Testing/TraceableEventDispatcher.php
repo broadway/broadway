@@ -26,7 +26,6 @@ final class TraceableEventDispatcher implements EventDispatcher
 
     public function addListener(string $eventName, callable $callable): void
     {
-        return;
     }
 
     /**

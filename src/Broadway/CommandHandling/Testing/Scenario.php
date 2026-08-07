@@ -40,7 +40,7 @@ class Scenario
     public function __construct(
         TestCase $testCase,
         TraceableEventStore $eventStore,
-        CommandHandler $commandHandler
+        CommandHandler $commandHandler,
     ) {
         $this->testCase = $testCase;
         $this->eventStore = $eventStore;
