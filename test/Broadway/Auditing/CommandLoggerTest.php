@@ -13,49 +13,39 @@ declare(strict_types=1);
 
 namespace Broadway\Auditing;
 
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\MockBuilder;
 use PHPUnit\Framework\TestCase;
 
 class CommandLoggerTest extends TestCase
 {
-    /**
-     * @var TraceableLogger
-     */
-    private $logger;
+    private TraceableLogger $logger;
 
-    /**
-     * @var Command
-     */
-    private $command;
+    private Command $command;
 
-    /**
-     * @var CommandLogger
-     */
-    private $commandAuditLogger;
+    private CommandLogger $commandAuditLogger;
 
-    /**
-     * @var CommandSerializer
-     */
-    private $commandSerializer;
+    /** @phpstan-var MockBuilder<CommandSerializer> */
+    private CommandSerializer $commandSerializer;
 
     protected function setUp(): void
     {
         $this->logger = new TraceableLogger();
 
-        $this->commandSerializer = $this->prophesize(CommandSerializer::class);
+        $this->commandSerializer = $this->createMock(CommandSerializer::class);
 
         $this->command = new Command();
-        $this->exception = new MyException('Yolo', 5);
 
-        $this->commandAuditLogger = new CommandLogger($this->logger, $this->commandSerializer->reveal());
+        $this->commandAuditLogger = new CommandLogger($this->logger, $this->commandSerializer);
     }
 
-    /**
-     * @test
-     */
-    public function it_logs_the_command_on_success()
+    #[Test]
+    public function it_logs_the_command_on_success(): void
     {
         $this->commandSerializer
-            ->serialize($this->command)
+            ->expects($this->once())
+            ->method('serialize')
+            ->with($this->command)
             ->willReturn(['all' => 'the data']);
 
         $this->commandAuditLogger->onCommandHandlingSuccess($this->command);
@@ -64,16 +54,16 @@ class CommandLoggerTest extends TestCase
         $this->assertEquals('{"status":"success","command":{"class":"Broadway\\\\Auditing\\\\Command","data":{"all":"the data"}}}', $this->logger->info[0]);
     }
 
-    /**
-     * @test
-     */
-    public function it_logs_the_command_on_failure()
+    #[Test]
+    public function it_logs_the_command_on_failure(): void
     {
         $this->commandSerializer
-            ->serialize($this->command)
+            ->expects($this->once())
+            ->method('serialize')
+            ->with($this->command)
             ->willReturn(['all' => 'the data']);
 
-        $this->commandAuditLogger->onCommandHandlingFailure($this->command, $this->exception);
+        $this->commandAuditLogger->onCommandHandlingFailure($this->command, new MyException('Yolo', 5));
 
         $this->assertCount(1, $this->logger->info);
         $loggedData = json_decode($this->logger->info[0], true);
@@ -101,53 +91,53 @@ class CommandLoggerTest extends TestCase
 
 use Psr\Log\LoggerInterface;
 
-class TraceableLogger implements LoggerInterface
+final class TraceableLogger implements LoggerInterface
 {
-    public $info = [];
+    public array $info = [];
 
-    public function emergency($message, array $context = [])
+    public function emergency($message, array $context = []): void
     {
     }
 
-    public function alert($message, array $context = [])
+    public function alert($message, array $context = []): void
     {
     }
 
-    public function critical($message, array $context = [])
+    public function critical($message, array $context = []): void
     {
     }
 
-    public function error($message, array $context = [])
+    public function error($message, array $context = []): void
     {
     }
 
-    public function warning($message, array $context = [])
+    public function warning($message, array $context = []): void
     {
     }
 
-    public function notice($message, array $context = [])
+    public function notice($message, array $context = []): void
     {
     }
 
-    public function info($message, array $context = [])
+    public function info($message, array $context = []): void
     {
         $this->info[] = $message;
     }
 
-    public function debug($message, array $context = [])
+    public function debug($message, array $context = []): void
     {
     }
 
-    public function log($level, $message, array $context = [])
+    public function log($level, $message, array $context = []): void
     {
     }
 }
 
-class Command
+final class Command
 {
-    public $name = 'name';
+    public string $name = 'name';
 }
 
-class MyException extends \Exception
+final class MyException extends \Exception
 {
 }

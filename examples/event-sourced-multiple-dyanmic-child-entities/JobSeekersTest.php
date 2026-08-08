@@ -25,9 +25,9 @@ require_once __DIR__.'/JobSeekers.php';
  * - Third, the outcome is asserted. This can either be 1) some events are
  *   recorded, or 2) an exception is thrown.
  */
-class JobSeekersCommandHandlerTest extends Broadway\CommandHandling\Testing\CommandHandlerScenarioTestCase
+class JobSeekersTest extends Broadway\CommandHandling\Testing\CommandHandlerScenarioTestCase
 {
-    private $generator;
+    private Broadway\UuidGenerator\Rfc4122\Version4Generator $generator;
 
     protected function setUp(): void
     {
@@ -42,10 +42,8 @@ class JobSeekersCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
         return new JobSeekerCommandHandler($repository);
     }
 
-    /**
-     * @test
-     */
-    public function it_can_start_looking_for_work()
+    #[PHPUnit\Framework\Attributes\Test]
+    public function it_can_start_looking_for_work(): void
     {
         $id = $this->generator->generate();
 
@@ -56,10 +54,8 @@ class JobSeekersCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
             ->then([new JobSeekerStartedLookingForWorkEvent($id)]);
     }
 
-    /**
-     * @test
-     */
-    public function it_can_add_a_job()
+    #[PHPUnit\Framework\Attributes\Test]
+    public function it_can_add_a_job(): void
     {
         $id = $this->generator->generate();
 
@@ -70,10 +66,8 @@ class JobSeekersCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
             ->then([new JobWasAddedToJobSeekerEvent($id, 'job-000', 'Title Zero', 'Description for zero.')]);
     }
 
-    /**
-     * @test
-     */
-    public function it_can_describe_a_job()
+    #[PHPUnit\Framework\Attributes\Test]
+    public function it_can_describe_a_job(): void
     {
         $id = $this->generator->generate();
 
@@ -87,10 +81,8 @@ class JobSeekersCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
             ->then([new JobWasDescribedForJobSeekerEvent($id, 'job-000', 'Title Double-Oh-Zero', 'Description for zero.')]);
     }
 
-    /**
-     * @test
-     */
-    public function it_applies_the_describe_event_to_the_correct_job()
+    #[PHPUnit\Framework\Attributes\Test]
+    public function it_applies_the_describe_event_to_the_correct_job(): void
     {
         $id = $this->generator->generate();
 
@@ -149,10 +141,8 @@ class JobSeekersCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
         ;
     }
 
-    /**
-     * @test
-     */
-    public function it_can_remove_an_accidentally_added_job()
+    #[PHPUnit\Framework\Attributes\Test]
+    public function it_can_remove_an_accidentally_added_job(): void
     {
         $id = $this->generator->generate();
 
@@ -175,10 +165,8 @@ class JobSeekersCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
         ;
     }
 
-    /**
-     * @test
-     */
-    public function it_cannot_add_the_same_job_if_job_is_already_assigned()
+    #[PHPUnit\Framework\Attributes\Test]
+    public function it_cannot_add_the_same_job_if_job_is_already_assigned(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Job job-000 already assigned to this job seeker');
@@ -195,10 +183,8 @@ class JobSeekersCommandHandlerTest extends Broadway\CommandHandling\Testing\Comm
             ->then([]);
     }
 
-    /**
-     * @test
-     */
-    public function it_cannot_describe_a_job_it_knows_nothing_about()
+    #[PHPUnit\Framework\Attributes\Test]
+    public function it_cannot_describe_a_job_it_knows_nothing_about(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Job job-000 is not assigned to this job seeker');

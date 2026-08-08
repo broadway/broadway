@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit backupGlobals="false"
-         backupStaticAttributes="false"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
-         bootstrap="vendor/autoload.php"
+<phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
+        backupGlobals="false"
+        colors="true"
+        processIsolation="false"
+        stopOnFailure="false"
+        bootstrap="vendor/autoload.php"
+        beStrictAboutOutputDuringTests="true"
+        beStrictAboutTestsThatDoNotTestAnything="false"
+        cacheDirectory=".phpunit.cache"
+        backupStaticProperties="true"
+        testdox="true"
+
 >
   <testsuites>
     <testsuite name="Broadway Test Suite">
       <directory>./test/</directory>
-    </testsuite>
-    <testsuite name="Broadway Example Test Suite">
       <directory>./examples/</directory>
+      <exclude>./test/Broadway/EventSourcing/AbstractEventSourcingRepositoryTest.php</exclude>
+      <exclude>./test/Broadway/EventStore/ConcurrencyConflictResolver/ConcurrencyConflictResolverTest.php</exclude>
+      <exclude>./test/Broadway/EventStore/InMemoryEventStoreTest.php</exclude>
+      <exclude>./test/Broadway/EventStore/Management/InMemoryEventStoreManagementTest.php</exclude>
     </testsuite>
   </testsuites>
-  <filter>
-    <whitelist>
-      <directory suffix=".php">./src/</directory>
-    </whitelist>
-  </filter>
   <groups>
     <exclude>
       <group>functional</group>

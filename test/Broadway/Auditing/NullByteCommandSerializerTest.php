@@ -13,19 +13,14 @@ declare(strict_types=1);
 
 namespace Broadway\Auditing;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class NullByteCommandSerializerTest extends TestCase
 {
-    /**
-     * @var NullByteCommandSerializer
-     */
-    private $commandSerializer;
+    private NullByteCommandSerializer $commandSerializer;
 
-    /**
-     * @var MyCommand
-     */
-    private $command;
+    private MyCommand $command;
 
     protected function setUp(): void
     {
@@ -33,10 +28,8 @@ class NullByteCommandSerializerTest extends TestCase
         $this->command = new MyCommand();
     }
 
-    /**
-     * @test
-     */
-    public function it_returns_a_json_string()
+    #[Test]
+    public function it_returns_a_json_string(): void
     {
         $serializedCommand = $this->commandSerializer->serialize($this->command);
 
@@ -54,7 +47,10 @@ class NullByteCommandSerializerTest extends TestCase
 
 class MyCommand
 {
-    public $public = 'public';
-    protected $protected = 'protected';
-    private $private = 'private';
+    public function __construct(
+        public string $public = 'public',
+        protected string $protected = 'protected',
+        private string $private = 'private',
+    ) {
+    }
 }

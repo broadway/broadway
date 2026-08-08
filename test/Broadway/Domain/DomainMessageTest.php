@@ -13,14 +13,13 @@ declare(strict_types=1);
 
 namespace Broadway\Domain;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class DomainMessageTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function it_has_getters()
+    #[Test]
+    public function it_has_getters(): void
     {
         $id = 'Hi thur';
         $payload = new SomeEvent();
@@ -34,24 +33,19 @@ class DomainMessageTest extends TestCase
         $this->assertEquals($payload, $domainMessage->getPayload());
         $this->assertEquals($playhead, $domainMessage->getPlayhead());
         $this->assertEquals($metadata, $domainMessage->getMetadata());
-        $this->assertEquals($metadata, $domainMessage->getMetadata());
         $this->assertEquals($type, $domainMessage->getType());
     }
 
-    /**
-     * @test
-     */
-    public function it_returns_a_new_instance_with_more_metadata_on_and_metadata()
+    #[Test]
+    public function it_returns_a_new_instance_with_more_metadata_on_and_metadata(): void
     {
         $domainMessage = DomainMessage::recordNow('id', 42, new Metadata(), 'payload');
 
         $this->assertNotSame($domainMessage, $domainMessage->andMetadata(Metadata::kv('foo', 42)));
     }
 
-    /**
-     * @test
-     */
-    public function it_keeps_all_data_the_same_expect_metadata_on_and_metadata()
+    #[Test]
+    public function it_keeps_all_data_the_same_expect_metadata_on_and_metadata(): void
     {
         $domainMessage = DomainMessage::recordNow('id', 42, new Metadata(), 'payload');
 
@@ -65,10 +59,8 @@ class DomainMessageTest extends TestCase
         $this->assertNotSame($domainMessage->getMetadata(), $newMessage->getMetadata());
     }
 
-    /**
-     * @test
-     */
-    public function it_merges_the_metadata_instances_on_and_metadata()
+    #[Test]
+    public function it_merges_the_metadata_instances_on_and_metadata(): void
     {
         $domainMessage = DomainMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
 
@@ -79,6 +71,6 @@ class DomainMessageTest extends TestCase
     }
 }
 
-class SomeEvent
+final readonly class SomeEvent
 {
 }

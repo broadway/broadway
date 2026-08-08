@@ -17,31 +17,48 @@ use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\EventStore\ConcurrencyConflictResolver\ConcurrencyConflictResolver;
 use Broadway\EventStore\Testing\EventStoreTest;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\MockObject\MockObject;
-use Prophecy\Argument;
 
 class ConflictResolvingEventStoreTest extends EventStoreTest
 {
-    /** @var ConcurrencyConflictResolver|MockObject */
-    protected $concurrencyResolver;
+    protected ConcurrencyConflictResolver $concurrencyResolver;
 
+    /**
+     * @throws Exception
+     */
     protected function setUp(): void
     {
-        $this->concurrencyResolver = $this->prophesize(ConcurrencyConflictResolver::class);
-        $this->concurrencyResolver
-            ->conflictsWith(Argument::type(DomainMessage::class), Argument::type(DomainMessage::class))
+        /** @phpstan-var MockObject<ConcurrencyConflictResolver>  $concurrencyResolver */
+        $concurrencyResolver = $this
+            ->createMock(ConcurrencyConflictResolver::class)
+        ;
+
+        $concurrencyResolver
+            ->method('conflictsWith')
+            ->with(
+                $this->isInstanceOf(DomainMessage::class),
+                $this->isInstanceOf(DomainMessage::class)
+            )
             ->willReturn(true);
 
+        $this->concurrencyResolver = $concurrencyResolver;
+
         $this->eventStore = new ConcurrencyConflictResolvingEventStore(
-            new InMemoryEventStore(), $this->concurrencyResolver->reveal());
+            new InMemoryEventStore(), $this->concurrencyResolver);
     }
 
-    /** @test */
-    public function events_can_be_appended_although_playheads_conflict_if_events_are_independent()
+    #[Test]
+    public function events_can_be_appended_although_playheads_conflict_if_events_are_independent(): void
     {
-        $this->concurrencyResolver
-            ->conflictsWith(Argument::type(DomainMessage::class), Argument::type(DomainMessage::class))
+        $concurrencyResolver = $this->createMock(ConcurrencyConflictResolver::class);
+        $concurrencyResolver
+            ->method('conflictsWith')
             ->willReturn(false);
+
+        $this->eventStore = new ConcurrencyConflictResolvingEventStore(
+            new InMemoryEventStore(), $concurrencyResolver);
 
         $domainMessage = $this->createDomainMessage(1, 0);
         $baseStream = new DomainEventStream([$domainMessage]);

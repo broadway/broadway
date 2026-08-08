@@ -15,18 +15,17 @@ namespace Broadway\CommandHandling;
 
 use Broadway\CommandHandling\Exception\ClosureParameterNotAnObjectException;
 use Broadway\CommandHandling\Exception\CommandNotAnObjectException;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class ClosureCommandHandlerTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function it_delegates_command_to_proper_handle_function()
+    #[Test]
+    public function it_delegates_command_to_proper_handle_function(): void
     {
         $commandHandler = new ClosureCommandHandler();
-        $commandHandler->add(function (ClosureCommandHandlerTestCommand $command) {
-            $command->handle = true;
+        $commandHandler->add(function (ClosureCommandHandlerTestCommand $command): void {
+            $command->setHandled();
         });
 
         $command = new ClosureCommandHandlerTestCommand();
@@ -35,10 +34,8 @@ class ClosureCommandHandlerTest extends TestCase
         $this->assertTrue($command->handle);
     }
 
-    /**
-     * @test
-     */
-    public function it_throws_when_handling_a_non_object_command()
+    #[Test]
+    public function it_throws_when_handling_a_non_object_command(): void
     {
         $commandHandler = new ClosureCommandHandler();
 
@@ -47,30 +44,31 @@ class ClosureCommandHandlerTest extends TestCase
         $commandHandler->handle('foo');
     }
 
-    /**
-     * @test
-     */
-    public function it_throws_when_adding_a_closure_without_an_object_argument()
+    #[Test]
+    public function it_throws_when_adding_a_closure_without_an_object_argument(): void
     {
         $commandHandler = new ClosureCommandHandler();
         $this->expectException(ClosureParameterNotAnObjectException::class);
 
-        $commandHandler->add(function ($params = null) { });
+        $commandHandler->add(function ($params = null): void { });
     }
 
-    /**
-     * @test
-     */
-    public function it_throws_when_adding_a_closure_without_an_object_argument_and_no_params()
+    #[Test]
+    public function it_throws_when_adding_a_closure_without_an_object_argument_and_no_params(): void
     {
         $commandHandler = new ClosureCommandHandler();
         $this->expectException(ClosureParameterNotAnObjectException::class);
 
-        $commandHandler->add(function () { });
+        $commandHandler->add(function (): void { });
     }
 }
 
-class ClosureCommandHandlerTestCommand
+final class ClosureCommandHandlerTestCommand
 {
-    public $handle = false;
+    public bool $handle = false;
+
+    public function setHandled(): void
+    {
+        $this->handle = true;
+    }
 }

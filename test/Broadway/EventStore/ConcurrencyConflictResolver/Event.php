@@ -13,6 +13,6 @@ declare(strict_types=1);
 
 namespace Broadway\EventStore\ConcurrencyConflictResolver;
 
-class Event
+final readonly class Event
 {
 }

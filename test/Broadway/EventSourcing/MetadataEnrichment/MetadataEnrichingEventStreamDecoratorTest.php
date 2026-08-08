@@ -16,14 +16,13 @@ namespace Broadway\EventSourcing\MetadataEnrichment;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class MetadataEnrichingEventStreamDecoratorTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function it_returns_the_original_event_stream_if_no_enrichers_are_registered()
+    #[Test]
+    public function it_returns_the_original_event_stream_if_no_enrichers_are_registered(): void
     {
         $decorator = new MetadataEnrichingEventStreamDecorator();
 
@@ -34,10 +33,8 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
         $this->assertSame($eventStream, $newEventStream);
     }
 
-    /**
-     * @test
-     */
-    public function it_calls_the_enricher_for_every_event()
+    #[Test]
+    public function it_calls_the_enricher_for_every_event(): void
     {
         $enricher = new TracableMetadataEnricher();
         $decorator = new MetadataEnrichingEventStreamDecorator([$enricher]);
@@ -49,10 +46,8 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
         $this->assertEquals(2, $enricher->callCount());
     }
 
-    /**
-     * @test
-     */
-    public function it_returns_a_domain_eventstream_with_messages_with_extra_metadata()
+    #[Test]
+    public function it_returns_a_domain_eventstream_with_messages_with_extra_metadata(): void
     {
         $enricher = new TracableMetadataEnricher();
         $decorator = new MetadataEnrichingEventStreamDecorator([$enricher]);
@@ -72,10 +67,8 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
-    public function it_calls_the_enricher_when_registered_later()
+    #[Test]
+    public function it_calls_the_enricher_when_registered_later(): void
     {
         $constructorEnricher = new TracableMetadataEnricher();
         $newlyRegisteredEnricher = new TracableMetadataEnricher();
@@ -88,7 +81,7 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
         $this->assertEquals(2, $newlyRegisteredEnricher->callCount());
     }
 
-    private function createDomainEventStream()
+    private function createDomainEventStream(): DomainEventStream
     {
         $m1 = DomainMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
         $m2 = DomainMessage::recordNow('id', 42, Metadata::kv('bar', 1337), 'payload');
@@ -97,9 +90,9 @@ class MetadataEnrichingEventStreamDecoratorTest extends TestCase
     }
 }
 
-class TracableMetadataEnricher implements MetadataEnricher
+final class TracableMetadataEnricher implements MetadataEnricher
 {
-    private $calls;
+    public array $calls = [];
 
     public function enrich(Metadata $metadata): Metadata
     {

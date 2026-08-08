@@ -16,14 +16,13 @@ namespace Broadway\EventSourcing;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class EventSourcedAggregateRootTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function it_applies_using_an_incrementing_playhead()
+    #[Test]
+    public function it_applies_using_an_incrementing_playhead(): void
     {
         $aggregateRoot = new MyTestAggregateRoot();
         $aggregateRoot->apply(new AggregateEvent());
@@ -38,10 +37,8 @@ class EventSourcedAggregateRootTest extends TestCase
         $this->assertEquals(2, $i);
     }
 
-    /**
-     * @test
-     */
-    public function it_sets_internal_playhead_when_initializing()
+    #[Test]
+    public function it_sets_internal_playhead_when_initializing(): void
     {
         $aggregateRoot = new MyTestAggregateRoot();
         $aggregateRoot->initializeState($this->toDomainEventStream([new AggregateEvent()]));
@@ -54,10 +51,8 @@ class EventSourcedAggregateRootTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
-    public function it_calls_apply_for_specific_events()
+    #[Test]
+    public function it_calls_apply_for_specific_events(): void
     {
         $aggregateRoot = new MyTestAggregateRoot();
         $aggregateRoot->initializeState($this->toDomainEventStream([new AggregateEvent()]));
@@ -65,7 +60,7 @@ class EventSourcedAggregateRootTest extends TestCase
         $this->assertTrue($aggregateRoot->isCalled);
     }
 
-    private function toDomainEventStream(array $events)
+    private function toDomainEventStream(array $events): DomainEventStream
     {
         $messages = [];
         $playhead = -1;
@@ -80,19 +75,19 @@ class EventSourcedAggregateRootTest extends TestCase
 
 class MyTestAggregateRoot extends EventSourcedAggregateRoot
 {
-    public $isCalled = false;
+    public bool $isCalled = false;
 
     public function getAggregateRootId(): string
     {
         return 'y0l0';
     }
 
-    public function applyAggregateEvent($event)
+    public function applyAggregateEvent($event): void
     {
         $this->isCalled = true;
     }
 }
 
-class AggregateEvent
+final readonly class AggregateEvent
 {
 }

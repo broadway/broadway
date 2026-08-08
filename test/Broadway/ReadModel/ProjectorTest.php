@@ -15,46 +15,40 @@ namespace Broadway\ReadModel;
 
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class ProjectorTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function it_passes_the_event_and_domain_message()
+    #[Test]
+    public function it_passes_the_event_and_domain_message(): void
     {
         $testProjector = new TestProjector();
         $testEvent = new TestEvent();
 
-        $this->assertFalse($testProjector->isCalled());
+        $this->assertFalse($testProjector->isCalled);
 
         $testProjector->handle($this->createDomainMessage($testEvent));
 
-        $this->assertTrue($testProjector->isCalled());
+        $this->assertTrue($testProjector->isCalled);
     }
 
-    private function createDomainMessage($event)
+    private function createDomainMessage($event): DomainMessage
     {
         return DomainMessage::recordNow(1, 1, new Metadata([]), $event);
     }
 }
 
-class TestProjector extends Projector
+final class TestProjector extends Projector
 {
-    private $isCalled = false;
+    public bool $isCalled = false;
 
     public function applyTestEvent($event, DomainMessage $domainMessage)
     {
         $this->isCalled = true;
     }
-
-    public function isCalled()
-    {
-        return $this->isCalled;
-    }
 }
 
-class TestEvent
+final readonly class TestEvent
 {
 }

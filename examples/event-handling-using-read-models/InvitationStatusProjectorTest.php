@@ -20,15 +20,11 @@ class InvitationStatusProjectorTest extends Broadway\ReadModel\Testing\Projector
      */
     protected function createProjector(Broadway\ReadModel\InMemory\InMemoryRepository $repository): Broadway\ReadModel\Projector
     {
-        $this->repository = $repository;
-
         return new InvitationStatusProjector($repository);
     }
 
-    /**
-     * @test
-     */
-    public function it_keeps_track_of_the_status_of_an_invitation_when_someone_is_invited()
+    #[PHPUnit\Framework\Attributes\Test]
+    public function it_keeps_track_of_the_status_of_an_invitation_when_someone_is_invited(): void
     {
         $invitationId = '1337';
         $expectedReadModel = new InvitationStatusReadModel($invitationId);
@@ -44,10 +40,8 @@ class InvitationStatusProjectorTest extends Broadway\ReadModel\Testing\Projector
             ->then([$expectedReadModel]);
     }
 
-    /**
-     * @test
-     */
-    public function it_keeps_track_of_the_status_when_an_invitation_is_accepted()
+    #[PHPUnit\Framework\Attributes\Test]
+    public function it_keeps_track_of_the_status_when_an_invitation_is_accepted(): void
     {
         $invitationId = '1337';
 
@@ -66,10 +60,8 @@ class InvitationStatusProjectorTest extends Broadway\ReadModel\Testing\Projector
             ->then([$expectedReadModel]);
     }
 
-    /**
-     * @test
-     */
-    public function it_keeps_track_of_the_status_when_an_invitation_is_declined()
+    #[PHPUnit\Framework\Attributes\Test]
+    public function it_keeps_track_of_the_status_when_an_invitation_is_declined(): void
     {
         $invitationId = '1337';
 
@@ -86,40 +78,5 @@ class InvitationStatusProjectorTest extends Broadway\ReadModel\Testing\Projector
             ->given([new InvitedEvent($invitationId, 'fritsjanb')])
             ->when(new DeclinedEvent($invitationId))
             ->then([$expectedReadModel]);
-    }
-}
-
-class InvitationStatusCountProjectorTest extends PHPUnit\Framework\TestCase
-{
-    /**
-     * @test
-     */
-    public function it_keeps_track_of_the_status_counts_of_all_invitations()
-    {
-        $projector = new InvitationStatusCountProjector(new CounterRepository());
-
-        $id1 = 'id-1';
-        $id2 = 'id-2';
-        $id3 = 'id-3';
-        $projector->handle($this->createDomainMessageForEvent(new InvitedEvent($id1, 'fritsjanb'), 0));
-        $projector->handle($this->createDomainMessageForEvent(new InvitedEvent($id2, 'John Doe'), 0));
-        $projector->handle($this->createDomainMessageForEvent(new AcceptedEvent($id2), 1));
-        $projector->handle($this->createDomainMessageForEvent(new InvitedEvent($id3, 'Jane Doe'), 0));
-        $projector->handle($this->createDomainMessageForEvent(new DeclinedEvent($id3), 1));
-
-        $expectedCounters = new Counters();
-        $expectedCounters->invitedCounter = 3;
-        $expectedCounters->openCounter = 1;
-        $expectedCounters->acceptedCounter = 1;
-        $expectedCounters->declinedCounter = 1;
-
-        $this->assertEquals($projector->exposeStatusCounts(), $expectedCounters);
-    }
-
-    private function createDomainMessageForEvent(InvitationEvent $event, $playhead): Broadway\Domain\DomainMessage
-    {
-        $occurredOn = Broadway\Domain\DateTime::now();
-
-        return new Broadway\Domain\DomainMessage($event->invitationId, $playhead, new Broadway\Domain\Metadata([]), $event, $occurredOn);
     }
 }

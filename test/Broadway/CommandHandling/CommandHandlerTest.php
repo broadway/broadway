@@ -14,14 +14,14 @@ declare(strict_types=1);
 namespace Broadway\CommandHandling;
 
 use Broadway\CommandHandling\Exception\CommandNotAnObjectException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class CommandHandlerTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function it_delegates_command_to_proper_handle_function()
+    #[Test]
+    public function it_delegates_command_to_proper_handle_function(): void
     {
         $commandHandler = new TestCommandHandler();
         $command = new CommandHandlerTestCommand();
@@ -30,12 +30,9 @@ class CommandHandlerTest extends TestCase
         $this->assertTrue($commandHandler->handled);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider unresolvableCommands
-     */
-    public function handle_should_throw_exception_when_impossible_to_delegate_to_a_valid_method($command)
+    #[Test]
+    #[DataProvider(methodName: 'unresolvableCommands')]
+    public function handle_should_throw_exception_when_impossible_to_delegate_to_a_valid_method($command): void
     {
         $commandHandler = new TestCommandHandler();
 
@@ -44,7 +41,7 @@ class CommandHandlerTest extends TestCase
         $commandHandler->handle($command);
     }
 
-    public function unresolvableCommands()
+    public static function unresolvableCommands(): array
     {
         return [
             [null],
@@ -56,16 +53,16 @@ class CommandHandlerTest extends TestCase
     }
 }
 
-class TestCommandHandler extends SimpleCommandHandler
+final class TestCommandHandler extends SimpleCommandHandler
 {
-    public $handled = false;
+    public bool $handled = false;
 
-    public function handleCommandHandlerTestCommand(CommandHandlerTestCommand $command)
+    public function handleCommandHandlerTestCommand(CommandHandlerTestCommand $command): void
     {
         $this->handled = true;
     }
 }
 
-class CommandHandlerTestCommand
+final readonly class CommandHandlerTestCommand
 {
 }

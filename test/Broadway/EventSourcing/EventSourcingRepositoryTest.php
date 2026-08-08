@@ -21,33 +21,31 @@ use Broadway\EventHandling\TraceableEventBus;
 use Broadway\EventSourcing\AggregateFactory\NamedConstructorAggregateFactory;
 use Broadway\EventSourcing\AggregateFactory\PublicConstructorAggregateFactory;
 use Broadway\EventStore\TraceableEventStore;
+use Broadway\Repository\Repository;
+use PHPUnit\Framework\Attributes\Test;
 
 class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
 {
-    protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, array $eventStreamDecorators)
+    protected function createEventSourcingRepository(TraceableEventStore $eventStore, TraceableEventBus $eventBus, array $eventStreamDecorators): EventSourcingRepository
     {
         return new EventSourcingRepository($eventStore, $eventBus, TestEventSourcedAggregate::class, new PublicConstructorAggregateFactory(), $eventStreamDecorators);
     }
 
-    protected function createAggregate()
+    protected function createAggregate(): TestEventSourcedAggregate
     {
         return new TestEventSourcedAggregate();
     }
 
-    /**
-     * @test
-     */
-    public function it_throws_an_exception_when_instantiated_with_a_class_that_is_not_an_event_sourced_aggregate_root()
+    #[Test]
+    public function it_throws_an_exception_when_instantiated_with_a_class_that_is_not_an_event_sourced_aggregate_root(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
         new EventSourcingRepository($this->eventStore, $this->eventBus, stdClass::class, new PublicConstructorAggregateFactory());
     }
 
-    /**
-     * @test
-     */
-    public function it_can_use_an_alternative_aggregate_factory_to_create_the_aggregate()
+    #[Test]
+    public function it_can_use_an_alternative_aggregate_factory_to_create_the_aggregate(): void
     {
         // make sure events exist in the event store
         $id = 'y0l0';
@@ -66,10 +64,8 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
         $this->assertEquals($aggregate->instantiatedThrough, 'justAnotherInstantiation');
     }
 
-    /**
-     * @test
-     */
-    public function it_throws_an_exception_if_the_static_method_does_not_exist()
+    #[Test]
+    public function it_throws_an_exception_if_the_static_method_does_not_exist(): void
     {
         // make sure events exist in the event store
         $id = 'y0l0';
@@ -83,7 +79,7 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
         $repository->load('y0l0');
     }
 
-    protected function repositoryWithStaticAggregateFactory($staticMethod = null)
+    protected function repositoryWithStaticAggregateFactory($staticMethod = null): Repository
     {
         if (is_null($staticMethod)) {
             $staticFactory = new NamedConstructorAggregateFactory();
@@ -103,28 +99,27 @@ class EventSourcingRepositoryTest extends AbstractEventSourcingRepositoryTest
 
 class TestEventSourcedAggregate extends EventSourcedAggregateRoot
 {
-    public $numbers;
+    public array $numbers;
 
     public function getAggregateRootId(): string
     {
         return '42';
     }
 
-    protected function applyDidNumberEvent($event)
+    protected function applyDidNumberEvent($event): void
     {
         $this->numbers[] = $event->number;
     }
 }
 
-class TestEventSourcedAggregateWithStaticConstructor extends EventSourcedAggregateRoot
+final class TestEventSourcedAggregateWithStaticConstructor extends EventSourcedAggregateRoot
 {
-    public $constructorWasCalled = false;
-    public $instantiatedThrough;
+    public bool $constructorWasCalled = false;
 
-    private function __construct($instantiatedThrough)
-    {
+    private function __construct(
+        public readonly string $instantiatedThrough,
+    ) {
         $this->constructorWasCalled = true;
-        $this->instantiatedThrough = $instantiatedThrough;
     }
 
     public function getAggregateRootId(): string
@@ -132,17 +127,17 @@ class TestEventSourcedAggregateWithStaticConstructor extends EventSourcedAggrega
         return 'y0l0';
     }
 
-    public static function instantiateForReconstitution()
+    public static function instantiateForReconstitution(): self
     {
         return new self(__FUNCTION__);
     }
 
-    public static function justAnotherInstantiation()
+    public static function justAnotherInstantiation(): self
     {
         return new self(__FUNCTION__);
     }
 }
 
-class DidEvent
+final readonly class DidEvent
 {
 }

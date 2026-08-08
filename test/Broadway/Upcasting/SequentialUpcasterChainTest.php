@@ -7,13 +7,12 @@ namespace Broadway\Upcasting;
 use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class SequentialUpcasterChainTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function it_should_upcast_domain_messages_sequentially(): void
     {
         $sequentialUpcasterChain = new SequentialUpcasterChain([
@@ -31,43 +30,33 @@ class SequentialUpcasterChainTest extends TestCase
     }
 }
 
-class SomeEvent
+final readonly class SomeEvent
 {
-    public $name;
-
-    public function __construct(string $name)
+    public function __construct(public string $name)
     {
-        $this->name = $name;
     }
 }
 
-class SomeEventV2
+final readonly class SomeEventV2
 {
-    public $name;
-    public $surname;
-
-    public function __construct(string $name, string $surname)
-    {
-        $this->name = $name;
-        $this->surname = $surname;
+    public function __construct(
+        public string $name,
+        public string $surname,
+    ) {
     }
 }
 
-class SomeEventV3
+final readonly class SomeEventV3
 {
-    public $name;
-    public $surname;
-    public $age;
-
-    public function __construct(string $name, string $surname, int $age)
-    {
-        $this->name = $name;
-        $this->surname = $surname;
-        $this->age = $age;
+    public function __construct(
+        public string $name,
+        public string $surname,
+        public int $age,
+    ) {
     }
 }
 
-class SomeEventV1toV2Upcaster implements Upcaster
+final readonly class SomeEventV1toV2Upcaster implements Upcaster
 {
     public function supports(DomainMessage $domainMessage): bool
     {
@@ -93,7 +82,7 @@ class SomeEventV1toV2Upcaster implements Upcaster
     }
 }
 
-class SomeEventV2toV3Upcaster implements Upcaster
+final readonly class SomeEventV2toV3Upcaster implements Upcaster
 {
     public function supports(DomainMessage $domainMessage): bool
     {

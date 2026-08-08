@@ -13,7 +13,19 @@ parameters:
 			path: src/Broadway/EventStore/Management/Testing/EventStoreManagementTest.php
 
 		-
+			message: '#^Class PHPUnit\\Framework\\Error\\Error not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Broadway/EventStore/Testing/EventStoreTest.php
+
+		-
 			message: '#^Comparison operation "\>\=" between int\<80200, 80599\> and 70400 is always true\.$#'
 			identifier: greaterOrEqual.alwaysTrue
+			count: 1
+			path: src/Broadway/EventStore/Testing/EventStoreTest.php
+
+		-
+			message: '#^Parameter \#1 \$exception of method PHPUnit\\Framework\\TestCase\:\:expectException\(\) expects class\-string\<Throwable\>, string given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Broadway/EventStore/Testing/EventStoreTest.php

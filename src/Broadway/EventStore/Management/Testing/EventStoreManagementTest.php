@@ -23,6 +23,7 @@ use Broadway\EventStore\Management\Criteria;
 use Broadway\EventStore\Management\CriteriaNotSupportedException;
 use Broadway\EventStore\Management\EventStoreManagement;
 use Broadway\Serializer\Serializable;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 abstract class EventStoreManagementTest extends TestCase
@@ -55,7 +56,7 @@ abstract class EventStoreManagementTest extends TestCase
 
     abstract protected function createEventStore();
 
-    /** @test */
+    #[Test]
     public function it_visits_all_events()
     {
         $visitedEvents = $this->visitEvents(Criteria::create());
@@ -63,7 +64,7 @@ abstract class EventStoreManagementTest extends TestCase
         $this->assertVisitedEventsArEquals($this->getEventFixtures(), $visitedEvents);
     }
 
-    /** @test */
+    #[Test]
     public function it_visits_aggregate_root_ids()
     {
         $visitedEvents = $this->visitEvents(Criteria::create()->withAggregateRootIds([
@@ -87,7 +88,7 @@ abstract class EventStoreManagementTest extends TestCase
         ], $visitedEvents);
     }
 
-    /** @test */
+    #[Test]
     public function it_visits_event_types()
     {
         $visitedEvents = $this->visitEvents(Criteria::create()
@@ -109,9 +110,7 @@ abstract class EventStoreManagementTest extends TestCase
         ], $visitedEvents);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_visits_aggregate_root_types()
     {
         $this->expectException(CriteriaNotSupportedException::class);
