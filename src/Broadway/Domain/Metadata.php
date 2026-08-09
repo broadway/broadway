@@ -13,33 +13,24 @@ declare(strict_types=1);
 
 namespace Broadway\Domain;
 
+use Broadway\Serializer\Serializable;
 
 /**
  * Metadata adding extra information to the DomainMessage.
- *
- * @phpstan-import-type SerializableMetaDataData from SerializableMetaDataInterface
- *
- * @template-implements SerializableMetaDataInterface<Metadata>
- *
  */
-final class Metadata implements SerializableMetaDataInterface
+final class Metadata implements Serializable
 {
+    private $values = [];
 
-    /**
-     * @param SerializableMetaDataData $values
-     */
-    public function __construct(
-        private(set) array $values = [] {
-            get => $this->values;
-            set => $value;
-        }
-    ) {
+    public function __construct(array $values = [])
+    {
+        $this->values = $values;
     }
 
     /**
      * Helper method to construct an instance containing the key and value.
      */
-    public static function kv(string $key, mixed $value): self
+    public static function kv($key, $value): self
     {
         return new self([$key => $value]);
     }
@@ -55,7 +46,7 @@ final class Metadata implements SerializableMetaDataInterface
     /**
      * Returns an array with all metadata.
      *
-     * @return SerializableMetaDataData
+     * @return mixed[]
      */
     public function all(): array
     {
@@ -65,7 +56,7 @@ final class Metadata implements SerializableMetaDataInterface
     /**
      * Get a specific metadata value based on key.
      */
-    public function get(string $key): mixed
+    public function get(string $key)
     {
         return $this->values[$key] ?? null;
     }

@@ -55,10 +55,7 @@ class CommandHandlerTest extends TestCase
 
 final class TestCommandHandler extends SimpleCommandHandler
 {
-    private(set) bool $handled = false {
-        get => $this->handled;
-        set => $value;
-    }
+    public bool $handled = false;
 
     public function handleCommandHandlerTestCommand(CommandHandlerTestCommand $command): void
     {

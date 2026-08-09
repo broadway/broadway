@@ -75,10 +75,7 @@ class EventSourcedAggregateRootTest extends TestCase
 
 class MyTestAggregateRoot extends EventSourcedAggregateRoot
 {
-    private(set) bool $isCalled = false {
-        get => $this->isCalled;
-        set  => $value;
-    }
+    public bool $isCalled = false;
 
     public function getAggregateRootId(): string
     {

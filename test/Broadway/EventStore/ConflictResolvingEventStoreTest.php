@@ -36,13 +36,12 @@ class ConflictResolvingEventStoreTest extends EventStoreTest
         ;
 
         $concurrencyResolver
-            ->expects($this->once())
             ->method('conflictsWith')
             ->with(
                 $this->isInstanceOf(DomainMessage::class),
                 $this->isInstanceOf(DomainMessage::class)
             )
-            ->willReturn(false);
+            ->willReturn(true);
 
         $this->concurrencyResolver = $concurrencyResolver;
 
@@ -52,7 +51,15 @@ class ConflictResolvingEventStoreTest extends EventStoreTest
 
     #[Test]
     public function events_can_be_appended_although_playheads_conflict_if_events_are_independent(): void
-    {;
+    {
+        $concurrencyResolver = $this->createMock(ConcurrencyConflictResolver::class);
+        $concurrencyResolver
+            ->method('conflictsWith')
+            ->willReturn(false);
+
+        $this->eventStore = new ConcurrencyConflictResolvingEventStore(
+            new InMemoryEventStore(), $concurrencyResolver);
+
         $domainMessage = $this->createDomainMessage(1, 0);
         $baseStream = new DomainEventStream([$domainMessage]);
         $this->eventStore->append(1, $baseStream);

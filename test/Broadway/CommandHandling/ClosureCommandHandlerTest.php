@@ -65,10 +65,7 @@ class ClosureCommandHandlerTest extends TestCase
 
 final class ClosureCommandHandlerTestCommand
 {
-    private(set) bool $handle = false {
-        get => $this->handle;
-        set => $value;
-    }
+    public bool $handle = false;
 
     public function setHandled(): void
     {

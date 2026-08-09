@@ -94,18 +94,12 @@ class SimpleEventBusTest extends TestCase
 
         $domainEventStream = new DomainEventStream([$domainMessage1]);
 
-        $eventListener1 = new class(
-            $this->eventBus,
-            new DomainEventStream([$domainMessage2])
-        ) implements EventListener {
-            private(set) bool $handled = false {
-                get => $this->handled;
-                set => $value;
-            }
+        $eventListener1 = new class($this->eventBus, new DomainEventStream([$domainMessage2])) implements EventListener {
+            public bool $handled = false;
 
             public function __construct(
                 public readonly EventBus $eventBus,
-                public readonly DomainEventStream $publishableStream
+                public readonly DomainEventStream $publishableStream,
             ) {
             }
 
@@ -170,8 +164,9 @@ class SimpleEventBusTest extends TestCase
     }
 
     /**
-     * @throws Exception
      * @phpstan-return MockObject<EventListener>
+     *
+     * @throws Exception
      */
     private function createEventListenerMock(): EventListener
     {
@@ -183,7 +178,6 @@ class SimpleEventBusTest extends TestCase
         return DomainMessage::recordNow(1, 1, new Metadata([]), new class($payload) {
             public function __construct(public array $data)
             {
-
             }
         });
     }

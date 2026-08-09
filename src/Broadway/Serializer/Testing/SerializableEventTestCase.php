@@ -15,6 +15,7 @@ namespace Broadway\Serializer\Testing;
 
 use Broadway\Serializer\Serializable;
 use Broadway\Serializer\SimpleInterfaceSerializer;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,17 +23,13 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class SerializableEventTestCase extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function its_serializable()
     {
         $this->assertInstanceOf(Serializable::class, $this->createEvent());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function serializing_and_deserializing_yields_the_same_object()
     {
         $serializer = new SimpleInterfaceSerializer();

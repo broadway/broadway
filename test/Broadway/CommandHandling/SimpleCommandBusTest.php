@@ -57,16 +57,12 @@ class SimpleCommandBusTest extends TestCase
             );
 
         $this->commandBus->subscribe(
-            new class($this->commandBus, $command2) implements CommandHandler
-            {
-                private(set) bool $handled = false {
-                    get => $this->handled;
-                    set => $value;
-                }
+            new class($this->commandBus, $command2) implements CommandHandler {
+                public bool $handled = false;
 
                 public function __construct(
                     public readonly CommandBus $commandBus,
-                    public readonly array $dispatchableCommand
+                    public readonly array $dispatchableCommand,
                 ) {
                 }
 
@@ -100,12 +96,12 @@ class SimpleCommandBusTest extends TestCase
                 function ($command) use ($matcher, $command1, $command2) {
                     $this->assertTrue(
                         match (true) {
-                            $matcher->numberOfInvocations() === 1 => $command === $command1,
-                            $matcher->numberOfInvocations() === 2 => $command === $command2,
+                            1 === $matcher->numberOfInvocations() => $command === $command1,
+                            2 === $matcher->numberOfInvocations() => $command === $command2,
                         }
                     );
 
-                    if ($matcher->numberOfInvocations() === 1) {
+                    if (1 === $matcher->numberOfInvocations()) {
                         throw new \Exception('I failed.');
                     }
                 }

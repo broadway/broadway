@@ -15,7 +15,6 @@ require_once __DIR__.'/ReadModelClasses.php';
 
 class InvitationStatusProjectorTest extends Broadway\ReadModel\Testing\ProjectorScenarioTestCase
 {
-
     /**
      * The createProjector function allows you to inject more dependencies into your projector.
      */
@@ -24,7 +23,7 @@ class InvitationStatusProjectorTest extends Broadway\ReadModel\Testing\Projector
         return new InvitationStatusProjector($repository);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function it_keeps_track_of_the_status_of_an_invitation_when_someone_is_invited(): void
     {
         $invitationId = '1337';
@@ -41,7 +40,7 @@ class InvitationStatusProjectorTest extends Broadway\ReadModel\Testing\Projector
             ->then([$expectedReadModel]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function it_keeps_track_of_the_status_when_an_invitation_is_accepted(): void
     {
         $invitationId = '1337';
@@ -61,7 +60,7 @@ class InvitationStatusProjectorTest extends Broadway\ReadModel\Testing\Projector
             ->then([$expectedReadModel]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function it_keeps_track_of_the_status_when_an_invitation_is_declined(): void
     {
         $invitationId = '1337';
@@ -81,5 +80,3 @@ class InvitationStatusProjectorTest extends Broadway\ReadModel\Testing\Projector
             ->then([$expectedReadModel]);
     }
 }
-
-

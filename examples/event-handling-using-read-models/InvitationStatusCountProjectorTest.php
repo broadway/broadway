@@ -15,7 +15,7 @@ require_once __DIR__.'/ReadModelClasses.php';
 
 class InvitationStatusCountProjectorTest extends PHPUnit\Framework\TestCase
 {
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function it_keeps_track_of_the_status_counts_of_all_invitations(): void
     {
         $projector = new InvitationStatusCountProjector(new CounterRepository());

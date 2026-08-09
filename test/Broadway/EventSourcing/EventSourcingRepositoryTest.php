@@ -114,13 +114,10 @@ class TestEventSourcedAggregate extends EventSourcedAggregateRoot
 
 final class TestEventSourcedAggregateWithStaticConstructor extends EventSourcedAggregateRoot
 {
-    private(set) bool $constructorWasCalled = false {
-        get => $this->constructorWasCalled;
-        set  => $value;
-    }
+    public bool $constructorWasCalled = false;
 
     private function __construct(
-        public readonly string $instantiatedThrough
+        public readonly string $instantiatedThrough,
     ) {
         $this->constructorWasCalled = true;
     }

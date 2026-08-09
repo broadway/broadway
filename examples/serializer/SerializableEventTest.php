@@ -21,7 +21,7 @@ class SerializableEventTest extends SerializableEventTestCase
         return new SerializableInviteEvent('c92cba66-7ab9-4e42-9cf2-516813c4537a', 'John');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function it_should_return_the_correct_object(): void
     {
         $serializedData = [
@@ -45,7 +45,7 @@ final readonly class SerializableInviteEvent implements Serializable
 {
     public function __construct(
         private string $invitationId,
-        private string $name
+        private string $name,
     ) {
     }
 
