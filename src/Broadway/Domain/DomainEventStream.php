@@ -22,7 +22,6 @@ namespace Broadway\Domain;
  */
 final readonly class DomainEventStream implements \IteratorAggregate
 {
-
     /**
      * @param array<T> $events
      */

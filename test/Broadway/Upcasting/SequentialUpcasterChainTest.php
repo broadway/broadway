@@ -41,7 +41,7 @@ final readonly class SomeEventV2
 {
     public function __construct(
         public string $name,
-        public string $surname
+        public string $surname,
     ) {
     }
 }
@@ -51,7 +51,7 @@ final readonly class SomeEventV3
     public function __construct(
         public string $name,
         public string $surname,
-        public int $age
+        public int $age,
     ) {
     }
 }

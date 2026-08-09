@@ -58,8 +58,8 @@ class UpcastingExampleTest extends PHPUnit\Framework\TestCase
         self::assertEquals('Italy', $matiux->country());
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
-    #[\PHPUnit\Framework\Attributes\TestDox('It should upcast UserCreatedV1 to UserCreateV3 when only v1 stored')]
+    #[PHPUnit\Framework\Attributes\Test]
+    #[TestDox('It should upcast UserCreatedV1 to UserCreateV3 when only v1 stored')]
     public function it_should_upcast_user_created_v1_to_user_created_v3_when_only_v1_stored(): void
     {
         $userId = Uuid::uuid4()->toString();
@@ -90,7 +90,7 @@ class UpcastingExampleTest extends PHPUnit\Framework\TestCase
         self::assertEquals('N/A', $matiux->country());
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     #[TestDox('It should upcast UserCreatedV1 to UserCreateV3 when v1 and v2 are stored')]
     public function it_should_upcast_user_created_v1_to_user_created_v3_when_v1_and_v2_are_stored(): void
     {

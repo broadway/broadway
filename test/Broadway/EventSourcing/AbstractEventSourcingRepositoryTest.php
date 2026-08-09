@@ -203,11 +203,8 @@ final readonly class TestAggregate implements AggregateRoot
 
 final class TraceableEventstoreDecorator implements EventStreamDecorator
 {
-    private(set) bool $tracing = false {
-        get => $this->tracing;
-        set  => $value;
-    }
-    private(set) array $calls;
+    public bool $tracing = false;
+    public array $calls;
 
     public function decorateForWrite(string $aggregateType, string $aggregateIdentifier, DomainEventStream $eventStream): DomainEventStream
     {
@@ -248,10 +245,7 @@ class TestDecorationMetadataEnricher implements MetadataEnricher
 
 final class TestMetadataPublishedProjector extends Projector
 {
-    private(set) Metadata $metadata {
-        get => $this->metadata;
-        set  => $value;
-    }
+    public Metadata $metadata;
 
     public function applyDidNumberEvent(DidNumberEvent $event, DomainMessage $domainMessage): void
     {

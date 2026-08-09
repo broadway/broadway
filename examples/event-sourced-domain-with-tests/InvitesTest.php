@@ -37,7 +37,7 @@ class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTe
         return Invitation::class;
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function it_can_invite_someone(): void
     {
         $id = $this->generator->generate();
@@ -49,7 +49,7 @@ class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTe
             ->then([new InvitedEvent($id, 'asm89')]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function new_invites_can_be_accepted(): void
     {
         $id = $this->generator->generate();
@@ -63,7 +63,7 @@ class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTe
             ->then([new AcceptedEvent($id)]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function accepting_an_accepted_invite_yields_no_change(): void
     {
         $id = $this->generator->generate();
@@ -77,7 +77,7 @@ class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTe
             ->then([]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function an_accepted_invite_cannot_be_declined(): void
     {
         $this->expectException(RuntimeException::class);
@@ -93,7 +93,7 @@ class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTe
             });
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function new_invites_can_be_declined(): void
     {
         $id = $this->generator->generate();
@@ -107,7 +107,7 @@ class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTe
             ->then([new DeclinedEvent($id)]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function declining_a_declined_invite_yields_no_change(): void
     {
         $id = $this->generator->generate();
@@ -121,7 +121,7 @@ class InvitesTest extends Broadway\EventSourcing\Testing\AggregateRootScenarioTe
             ->then([]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function a_declined_invite_cannot_be_accepted(): void
     {
         $this->expectException(RuntimeException::class);

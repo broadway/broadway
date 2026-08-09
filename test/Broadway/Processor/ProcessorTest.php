@@ -41,10 +41,7 @@ class ProcessorTest extends TestCase
 
 class TestProcessor extends Processor
 {
-    private(set) bool $isCalled = false {
-        get => $this->isCalled;
-        set  => $value;
-    }
+    public bool $isCalled = false;
 
     public function handleTestEvent($event, DomainMessage $domainMessage): void
     {

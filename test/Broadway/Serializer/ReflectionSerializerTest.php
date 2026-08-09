@@ -123,7 +123,7 @@ final readonly class TestReflectableObject
 {
     public function __construct(
         public array $simpleArray,
-        public int $value
+        public int $value,
     ) {
     }
 }
@@ -133,7 +133,7 @@ final readonly class TestReflectable
     public function __construct(
         public array $arrayOfObjects,
         public object $object,
-        public int $simpleValue
+        public int $simpleValue,
     ) {
     }
 }

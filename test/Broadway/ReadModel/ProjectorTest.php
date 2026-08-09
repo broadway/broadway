@@ -41,10 +41,7 @@ class ProjectorTest extends TestCase
 
 final class TestProjector extends Projector
 {
-    private(set) bool $isCalled = false {
-        get => $this->isCalled;
-        set  => $value;
-    }
+    public bool $isCalled = false;
 
     public function applyTestEvent($event, DomainMessage $domainMessage)
     {

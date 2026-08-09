@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Broadway\ReadModel\Testing;
 
 use Broadway\ReadModel\Repository;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 abstract class RepositoryTestCase extends TestCase
@@ -30,9 +31,7 @@ abstract class RepositoryTestCase extends TestCase
 
     abstract protected function createRepository(): Repository;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_saves_and_finds_read_models_by_id()
     {
         $model = $this->createReadModel('1', 'othillo', 'bar');
@@ -42,9 +41,7 @@ abstract class RepositoryTestCase extends TestCase
         $this->assertEquals($model, $this->repository->find(1));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_saves_and_finds_read_models_with_a_value_object_id()
     {
         $id = new TestReadModelId('42');
@@ -55,17 +52,13 @@ abstract class RepositoryTestCase extends TestCase
         $this->assertEquals($model, $this->repository->find($id));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_returns_null_if_not_found_on_empty_repo()
     {
         $this->assertEquals(null, $this->repository->find(2));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_returns_null_if_not_found()
     {
         $model = $this->createReadModel('1', 'othillo', 'bar');
@@ -75,9 +68,7 @@ abstract class RepositoryTestCase extends TestCase
         $this->assertNull($this->repository->find(2));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_finds_by_name()
     {
         $model1 = $this->createReadModel('1', 'othillo', 'bar');
@@ -90,9 +81,7 @@ abstract class RepositoryTestCase extends TestCase
         $this->assertEquals([$model2], $this->repository->findBy(['name' => 'asm89']));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_finds_by_one_element_in_array()
     {
         $model1 = $this->createReadModel('1', 'othillo', 'bar', ['elem1', 'elem2']);
@@ -105,9 +94,7 @@ abstract class RepositoryTestCase extends TestCase
         $this->assertEquals([$model2], $this->repository->findBy(['array' => 'elem4']));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_finds_if_all_clauses_match()
     {
         $model1 = $this->createReadModel('1', 'othillo', 'bar');
@@ -120,9 +107,7 @@ abstract class RepositoryTestCase extends TestCase
         $this->assertEquals([$model2], $this->repository->findBy(['name' => 'asm89', 'foo' => 'baz']));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_does_not_find_when_one_of_the_clauses_doesnt_match()
     {
         $model1 = $this->createReadModel('1', 'othillo', 'bar');
@@ -135,9 +120,7 @@ abstract class RepositoryTestCase extends TestCase
         $this->assertEquals([], $this->repository->findBy(['name' => 'asm89', 'foo' => 'bar']));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_returns_empty_array_when_found_nothing()
     {
         $model1 = $this->createReadModel('1', 'othillo', 'bar');
@@ -149,9 +132,7 @@ abstract class RepositoryTestCase extends TestCase
         $this->assertEquals([], $this->repository->findBy(['name' => 'Jan']));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_returns_empty_array_when_searching_for_empty_array()
     {
         $model = $this->createReadModel('1', 'othillo', 'bar');
@@ -161,9 +142,7 @@ abstract class RepositoryTestCase extends TestCase
         $this->assertEquals([], $this->repository->findBy([]));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_removes_a_readmodel()
     {
         $model = $this->createReadModel('1', 'John', 'Foo', ['foo' => 'bar']);
@@ -174,9 +153,7 @@ abstract class RepositoryTestCase extends TestCase
         $this->assertEquals([], $this->repository->findAll());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_removes_a_read_model_using_a_value_object_as_its_id()
     {
         $id = new TestReadModelId('175');
@@ -189,9 +166,7 @@ abstract class RepositoryTestCase extends TestCase
         $this->assertEquals([], $this->repository->findAll());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_returns_all_read_models()
     {
         $model1 = $this->createReadModel('1', 'othillo', 'bar');

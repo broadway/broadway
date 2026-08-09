@@ -135,10 +135,7 @@ final class TraceableLogger implements LoggerInterface
 
 final class Command
 {
-    private(set) string $name = 'name' {
-        get => $this->name;
-        set => $value;
-    }
+    public string $name = 'name';
 }
 
 final class MyException extends \Exception

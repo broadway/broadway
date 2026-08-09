@@ -9,7 +9,6 @@ use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
-use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -49,7 +48,6 @@ class ReliableEventBusTest extends TestCase
             ->method('handle')
             ->with($domainMessage)
         ;
-
 
         $this->eventBus->subscribe($eventListener1);
         $this->eventBus->subscribe($eventListener2);
@@ -121,18 +119,12 @@ class ReliableEventBusTest extends TestCase
 
         $domainEventStream = new DomainEventStream([$domainMessage1]);
 
-        $eventListener1 = new class(
-            $this->eventBus,
-            new DomainEventStream([$domainMessage2])
-        ) implements EventListener {
-            private(set) bool $handled = false {
-                get => $this->handled;
-                set => $value;
-            }
+        $eventListener1 = new class($this->eventBus, new DomainEventStream([$domainMessage2])) implements EventListener {
+            public bool $handled = false;
 
             public function __construct(
                 public readonly EventBus $eventBus,
-                public readonly DomainEventStream $publishableStream
+                public readonly DomainEventStream $publishableStream,
             ) {
             }
 
@@ -204,7 +196,6 @@ class ReliableEventBusTest extends TestCase
         return DomainMessage::recordNow(1, 1, new Metadata([]), new class($payload) {
             public function __construct(public array $data)
             {
-
             }
         });
     }

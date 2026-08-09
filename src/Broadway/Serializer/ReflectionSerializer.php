@@ -58,9 +58,7 @@ class ReflectionSerializer implements Serializer
         foreach ($properties as $property) {
             $name = $property->getName();
 
-            $property->setAccessible(true);
             $value = $property->getValue($object);
-            $property->setAccessible(false);
 
             $data[$name] = $this->serializeValue($value);
         }
@@ -119,9 +117,7 @@ class ReflectionSerializer implements Serializer
 
             $value = $this->deserializeValue($value);
 
-            $matchedProperty->setAccessible(true);
             $matchedProperty->setValue($object, $value);
-            $matchedProperty->setAccessible(false);
         }
 
         return $object;

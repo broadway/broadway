@@ -23,7 +23,7 @@ final readonly class UpcastingEventStore implements EventStore, EventStoreManage
      */
     public function __construct(
         private EventStore&EventStoreManagement $eventStore,
-        private UpcasterChain $upcasterChain
+        private UpcasterChain $upcasterChain,
     ) {
     }
 

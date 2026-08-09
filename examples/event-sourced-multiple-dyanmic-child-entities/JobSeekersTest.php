@@ -42,7 +42,7 @@ class JobSeekersTest extends Broadway\CommandHandling\Testing\CommandHandlerScen
         return new JobSeekerCommandHandler($repository);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function it_can_start_looking_for_work(): void
     {
         $id = $this->generator->generate();
@@ -54,7 +54,7 @@ class JobSeekersTest extends Broadway\CommandHandling\Testing\CommandHandlerScen
             ->then([new JobSeekerStartedLookingForWorkEvent($id)]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function it_can_add_a_job(): void
     {
         $id = $this->generator->generate();
@@ -66,7 +66,7 @@ class JobSeekersTest extends Broadway\CommandHandling\Testing\CommandHandlerScen
             ->then([new JobWasAddedToJobSeekerEvent($id, 'job-000', 'Title Zero', 'Description for zero.')]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function it_can_describe_a_job(): void
     {
         $id = $this->generator->generate();
@@ -81,7 +81,7 @@ class JobSeekersTest extends Broadway\CommandHandling\Testing\CommandHandlerScen
             ->then([new JobWasDescribedForJobSeekerEvent($id, 'job-000', 'Title Double-Oh-Zero', 'Description for zero.')]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function it_applies_the_describe_event_to_the_correct_job(): void
     {
         $id = $this->generator->generate();
@@ -141,7 +141,7 @@ class JobSeekersTest extends Broadway\CommandHandling\Testing\CommandHandlerScen
         ;
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function it_can_remove_an_accidentally_added_job(): void
     {
         $id = $this->generator->generate();
@@ -165,7 +165,7 @@ class JobSeekersTest extends Broadway\CommandHandling\Testing\CommandHandlerScen
         ;
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function it_cannot_add_the_same_job_if_job_is_already_assigned(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -183,7 +183,7 @@ class JobSeekersTest extends Broadway\CommandHandling\Testing\CommandHandlerScen
             ->then([]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function it_cannot_describe_a_job_it_knows_nothing_about(): void
     {
         $this->expectException(InvalidArgumentException::class);

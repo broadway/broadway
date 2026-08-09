@@ -45,7 +45,7 @@ class NullByteCommandSerializerTest extends TestCase
     }
 }
 
-final readonly class MyCommand
+class MyCommand
 {
     public function __construct(
         public string $public = 'public',

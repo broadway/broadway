@@ -42,7 +42,7 @@ class PartsTest extends Broadway\CommandHandling\Testing\CommandHandlerScenarioT
         return new PartCommandHandler($repository);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function it_can_manufacture(): void
     {
         $id = $this->generator->generate();
@@ -54,7 +54,7 @@ class PartsTest extends Broadway\CommandHandling\Testing\CommandHandlerScenarioT
             ->then([new PartWasManufacturedEvent($id, 'acme', 'Acme, Inc')]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function it_can_rename_manufacturer(): void
     {
         $id = $this->generator->generate();
@@ -66,7 +66,7 @@ class PartsTest extends Broadway\CommandHandling\Testing\CommandHandlerScenarioT
             ->then([new PartManufacturerWasRenamedEvent($id, 'Acme, Inc.')]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[PHPUnit\Framework\Attributes\Test]
     public function it_does_not_rename_manufacturer_to_the_same_name(): void
     {
         $id = $this->generator->generate();

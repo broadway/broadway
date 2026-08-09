@@ -21,6 +21,8 @@ use Broadway\EventStore\EventStreamNotFoundException;
 use Broadway\EventStore\Exception\DuplicatePlayheadException;
 use Broadway\Serializer\Serializable;
 use Broadway\UuidGenerator\Rfc4122\Version4Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Error\Error;
 use PHPUnit\Framework\TestCase;
 
@@ -31,11 +33,8 @@ abstract class EventStoreTest extends TestCase
      */
     protected $eventStore;
 
-    /**
-     * @test
-     *
-     * @dataProvider idDataProvider
-     */
+    #[Test]
+    #[DataProvider('idDataProvider')]
     public function it_creates_a_new_entry_when_id_is_new($id)
     {
         $domainEventStream = new DomainEventStream([
@@ -50,11 +49,8 @@ abstract class EventStoreTest extends TestCase
         $this->assertEquals($domainEventStream, $this->eventStore->load($id));
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider idDataProvider
-     */
+    #[Test]
+    #[DataProvider('idDataProvider')]
     public function it_appends_to_an_already_existing_stream($id)
     {
         $dateTime = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
@@ -83,11 +79,8 @@ abstract class EventStoreTest extends TestCase
         $this->assertEquals($expected, $this->eventStore->load($id));
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider idDataProvider
-     */
+    #[Test]
+    #[DataProvider('idDataProvider')]
     public function it_throws_an_exception_when_requesting_the_stream_of_a_non_existing_aggregate($id)
     {
         $this->expectException(EventStreamNotFoundException::class);
@@ -95,11 +88,8 @@ abstract class EventStoreTest extends TestCase
         $this->eventStore->load($id);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider idDataProvider
-     */
+    #[Test]
+    #[DataProvider('idDataProvider')]
     public function it_throws_an_exception_when_appending_a_duplicate_playhead($id)
     {
         $eventStream = new DomainEventStream([$this->createDomainMessage($id, 0)]);
@@ -110,9 +100,7 @@ abstract class EventStoreTest extends TestCase
         $this->eventStore->append($id, $eventStream);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_throws_an_exception_when_an_id_cannot_be_converted_to_a_string()
     {
         $id = new IdentityThatCannotBeConvertedToAString();
@@ -131,11 +119,8 @@ abstract class EventStoreTest extends TestCase
         $this->eventStore->append($id, new DomainEventStream([]));
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider idDataProvider
-     */
+    #[Test]
+    #[DataProvider('idDataProvider')]
     public function it_loads_events_starting_from_a_given_playhead($id)
     {
         $dateTime = DateTime::fromString('2014-03-12T14:17:19.176169+00:00');
@@ -156,7 +141,7 @@ abstract class EventStoreTest extends TestCase
         $this->assertEquals($expected, $this->eventStore->loadFromPlayhead($id, 2));
     }
 
-    /** @test */
+    #[Test]
     public function empty_set_of_events_can_be_added(): void
     {
         $domainMessage = $this->createDomainMessage(1, 0);
@@ -170,11 +155,8 @@ abstract class EventStoreTest extends TestCase
         $this->assertCount(1, $events);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider idDataProvider
-     */
+    #[Test]
+    #[DataProvider('idDataProvider')]
     public function it_returns_empty_event_stream_when_no_events_are_committed_since_given_playhead($id)
     {
         $this->eventStore->append($id, new DomainEventStream([
@@ -187,7 +169,7 @@ abstract class EventStoreTest extends TestCase
         );
     }
 
-    public function idDataProvider()
+    public static function idDataProvider()
     {
         return [
             'Simple String' => [

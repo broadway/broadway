@@ -61,10 +61,7 @@ class EventDispatcherTest extends TestCase
     private function getTraceableEventListener(): object
     {
         return new class {
-            private(set) bool $isCalled = false {
-                get => $this->isCalled;
-                set  => $value;
-            }
+            public bool $isCalled = false;
 
             public function handleEvent($value1, $value2): void
             {
